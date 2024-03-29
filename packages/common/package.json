@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "module": "true",
   "devDependencies": {
+    "@types/node": "^20.11.30",
     "eslint": "latest",
     "eslint-config-custom": "workspace:*",
     "prettier": "latest",
@@ -15,5 +16,9 @@
   "scripts": {
     "lint": "yarn shared:prettierlint && yarn shared:eslint && yarn shared:tslint",
     "lint:fix": "yarn shared:prettierlint:fix && yarn shared:eslint:fix && yarn shared:tslint"
+  },
+  "dependencies": {
+    "csv-parse": "^5.5.5",
+    "fs": "^0.0.1-security"
   }
 }

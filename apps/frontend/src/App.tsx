@@ -1,30 +1,45 @@
-import React from "react";
+import './App.css';
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import ExampleRoute from "./routes/ExampleRoute.tsx";
-function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      errorElement: <div />,
-      element: <Root />,
-      children: [
-        {
-          path: "",
-          element: <ExampleRoute />,
-        },
-      ],
-    },
-  ]);
+import MaintenancePage from "./routes/MaintenancePage.tsx";
+import Map from "./routes/map.tsx";
+import LoginPage from "./routes/login-page.tsx";
+import NavigationBar from "./components/NavigationBar.tsx";
 
-  return <RouterProvider router={router} />;
-  function Root() {
-    return (
-      <div className="w-full flex flex-col px-20 gap-5">
-        <h1>Welcome to your starter code.</h1>
-        <Outlet />
-      </div>
-    );
-  }
+function App() {
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <Root />,
+            children: [
+                {
+                    path: "",
+                    element: <div>
+                        <Map/>
+
+                    </div>
+
+                },
+                {
+                    path: "/maintenance",
+                    element: <MaintenancePage/>
+                },
+                {
+                    path:"/login",
+                    element:<LoginPage/>
+                }
+
+            ],
+        },
+    ]);
+    return <RouterProvider router={router}></RouterProvider>;
+    function Root() {
+        return (
+            <div className="w-full flex flex-col px-20 gap-5">
+                <NavigationBar/>
+                <Outlet/>
+            </div>
+        );
+    }
 }
 
 export default App;
