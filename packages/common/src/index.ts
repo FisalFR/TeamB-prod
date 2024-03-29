@@ -1,14 +1,14 @@
-import Path from "./Path";
+import Pathfinder from "./pathfinder.ts";
 import Node from "./node";
 import Parser from "./parser";
 
 // Main function
 async function main() {
   try {
-    const finalPath: Path = new Path();
+    const finalPath: Pathfinder = new Pathfinder();
 
-    finalPath.nodeList = await Parser.parseNode("node_edge_info/L1Nodes.csv");
-    finalPath.edgeList = await Parser.parseEdge("node_edge_info/L1Edges.csv");
+    finalPath.nodeList = await Parser.parseNode("node-edge-info/L1Nodes.csv");
+    finalPath.edgeList = await Parser.parseEdge("node-edge-info/L1Edges.csv");
     finalPath.generateNodeMap();
 
     const node1: Node = finalPath.nodeMap.get("CCONF002L1")!;

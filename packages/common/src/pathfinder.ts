@@ -2,7 +2,7 @@ import Node from "./node";
 import Edge from "./edge";
 import Queue from "./Queue";
 
-class Path {
+class Pathfinder {
   nodeList: Node[];
   edgeList: Edge[];
   finalPath: Node[];
@@ -71,4 +71,4 @@ class Path {
   }
 }
 
-export default Path;
+export default Pathfinder;
