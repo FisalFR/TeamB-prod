@@ -2646,6 +2646,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-custom", "workspace:configs/eslint-config-custom"],\
           ["express", "npm:5.0.0-beta.1"],\
           ["express-oauth2-jwt-bearer", "npm:1.6.0"],\
+          ["fs", "npm:0.0.1-security"],\
           ["http-errors", "npm:1.6.3"],\
           ["http-terminator", "npm:3.2.0"],\
           ["jose", "npm:4.15.5"],\
