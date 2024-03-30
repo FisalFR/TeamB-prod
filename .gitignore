@@ -28,7 +28,8 @@ out
 **/yarn-debug.log*
 **/yarn-error.log*
 
-
+.pnp.cjs
+yarn.lock
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
