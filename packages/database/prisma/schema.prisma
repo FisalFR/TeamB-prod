@@ -9,7 +9,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:moshinguyen243@localhost:5432/$postgres?schema=public"
+  url      = env("POSTGRES_URL")
 }
 
 // example table used in the express router example
