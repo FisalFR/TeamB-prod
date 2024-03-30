@@ -1,6 +1,6 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import MaintenancePage from "./routes/MaintenancePage.tsx";
+import MaintenancePage from "./routes/maintenance-page.tsx";
 import Map from "./routes/map.tsx";
 import LoginPage from "./routes/login-page.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";

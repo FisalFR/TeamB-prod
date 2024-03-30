@@ -1,8 +1,8 @@
 import {ChangeEvent, useRef, useState} from 'react';
-import {MaintenanceRequest} from '../common/MaintenanceRequest.tsx';
-import RadioButton from "../components/RadioButton.tsx";
-import Button from "../components/Button.tsx";
-import Dropdown from "../components/dropdown.tsx";
+import {MaintenanceRequest} from '../common/maintenance-request';
+import RadioButton from "../components/RadioButton";
+import Button from "../components/button";
+import Dropdown from "../components/dropdown";
 
 
 export function MaintenancePage() {

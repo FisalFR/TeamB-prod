@@ -6,7 +6,7 @@ import exampleRouter from "./routes/example.ts";
 
 const app: Express = express(); // Setup the backend
 
-// Setup generic middlewear
+// Setup generic middleware
 app.use(
   logger("dev", {
     stream: {
