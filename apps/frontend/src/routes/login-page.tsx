@@ -38,15 +38,16 @@ function LoginPage() {
 
     return (
         <div>
-
+            <h1 className="font-bold text-left font-HeadlandOne text-6xl pb-2">Navigate Seamlessly</h1>
             <div className='centerContent gap-10 w-full h-fit'>
-                <div className = "flex flex-col">
-                    <h1 className="font-bold text-left font-HeadlandOne text-4xl">Navigate Seamlessly</h1>
+                <div className="flex flex-col">
+                    <p className="text-left text-xl">Find your room in Brighams with ease. With pathfinding locate your
+                        destination in the smallest steps. Never get lost, no wasted time, get there stress free.</p>
                     <img src={maze} alt="Maze"
-                     className="left-column my-7 rounded-full bg-white p-3 drop-shadow-md w-[360px]"/>
+                         className="left-column mt-5 rounded-full bg-white p-3 drop-shadow-md w-15"/>
                 </div>
                 <div className={loginWindowVisibility.loginScreen}>
-                    <div className='login-container centerContent bg-deep-blue'>
+                    <div className='login-container centerContent bg-deep-blue px-[50px] py-[40px]'>
                         <h1 className='text-white text-4xl text-left font-bold w-full'>Login</h1>
                         <form className={'flex flex-col centerContent gap-6'} ref={formRef}
                               onSubmit={e => {
