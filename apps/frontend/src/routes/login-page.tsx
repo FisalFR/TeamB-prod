@@ -1,10 +1,11 @@
 import {ChangeEvent, useRef, useState} from "react";
 import {loginInfo} from "../common/login-info";
 import Button from "../components/Button.tsx";
-import TestReactSpring from "../components/testReactSpring.tsx";
+// import TestReactSpring from "../components/testReactSpring.tsx";
 import user_icon from "../assets/user_icon.svg";
 import password_icon from "../assets/password_icon.svg";
-import maze from "../assets/MazeHero.svg";
+import maze from "../assets/MazeHero/MazeHero.svg";
+import mazeLine from "../assets/MazeHero/MazeLine.svg";
 
 function LoginPage() {
     const [input, setInput] = useState<loginInfo>({username: "", password: ""});
@@ -40,13 +41,18 @@ function LoginPage() {
     return (
         <div>
             <h1 className="font-bold text-left font-HeadlandOne text-6xl pb-2">Navigate Seamlessly</h1>
-            <TestReactSpring/>
+            {/*<TestReactSpring/>*/}
             <div className='centerContent gap-10 w-full h-fit'>
                 <div className="flex flex-col">
                     <p className="text-left text-xl">Find your room in Brighams with ease. With pathfinding locate your
                         destination in the smallest steps. Never get lost, no wasted time, get there stress free.</p>
-                    <img src={maze} alt="Maze"
-                         className="left-column mt-5 rounded-full bg-white p-3 drop-shadow-md w-15"/>
+                    <div className="relative">
+                        <img src={maze} alt="Maze"
+                             className="left-column mt-5 rounded-full bg-white p-3 drop-shadow-md w-15 z-0"/>
+                        <img src={mazeLine} alt="MazeLine" className="absolute top-0 left-0 z-10 mt-5 p-3"/>
+                    </div>
+
+
                 </div>
                 <div className={loginWindowVisibility.loginScreen}>
                     <div className='login-container centerContent bg-deep-blue px-[50px] py-[40px]'>
@@ -86,6 +92,7 @@ function LoginPage() {
 
 
     );
+
 }
 
 export default LoginPage;
