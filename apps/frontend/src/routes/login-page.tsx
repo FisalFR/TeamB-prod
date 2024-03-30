@@ -1,6 +1,7 @@
 import {ChangeEvent, useRef, useState} from "react";
 import {loginInfo} from "../common/login-info";
 import Button from "../components/Button.tsx";
+import TestReactSpring from "../components/testReactSpring.tsx";
 import user_icon from "../assets/user_icon.svg";
 import password_icon from "../assets/password_icon.svg";
 import maze from "../assets/MazeHero.svg";
@@ -39,6 +40,7 @@ function LoginPage() {
     return (
         <div>
             <h1 className="font-bold text-left font-HeadlandOne text-6xl pb-2">Navigate Seamlessly</h1>
+            <TestReactSpring/>
             <div className='centerContent gap-10 w-full h-fit'>
                 <div className="flex flex-col">
                     <p className="text-left text-xl">Find your room in Brighams with ease. With pathfinding locate your
