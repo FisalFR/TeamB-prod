@@ -9,7 +9,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("POSTGRES_URL")
+  url      = "postgresql://teamb:teamb20@database.cs.wpi.edu:5432/teambdb?schema=teamb"
+  // postgresql://teamb:teamb20@database.cs.wpi.edu:5432/teambdb?schema=teamb
 }
 
 // example table used in the express router example
@@ -17,4 +18,26 @@ model HighScore {
   id    Int      @id @default(autoincrement())
   time  DateTime
   score Int
+}
+
+model l1Nodes {
+  nodeID    String    @id
+  xcoord    Int
+  ycoord    Int
+  floor     String
+  building  String
+  nodeType  String
+  longName  String
+  shortName String
+  startEdge l1Edges[] @relation(name: "startNode")
+  endEdge   l1Edges[] @relation(name: "endNode")
+}
+
+model l1Edges {
+  startNodeID String
+  endNodeID   String
+  startNode   l1Nodes @relation(name: "startNode", fields: [startNodeID], references: [nodeID])
+  endNode     l1Nodes @relation(name: "endNode", fields: [endNodeID], references: [nodeID])
+
+  @@id([startNodeID, endNodeID])
 }
