@@ -32,7 +32,13 @@ router.post("/", async (req, res) => {
     return node.nodeID;
   });
 
-  res.status(200).json({ nodes: temp });
+
+  console.log(finalPath.nodeMap);
+
+  res.status(200).json({
+      nodes: temp,
+      nodeMap: finalPath.nodeMap,
+  });
 });
 
 export default router;
