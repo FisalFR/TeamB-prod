@@ -4,11 +4,11 @@ import Dropdown from "../components/dropdown.tsx";
 import Button from "../components/Button.tsx";
 
 function LanguageInterpreter(){
-    const [request, setRequest] = useState<LanguageInterpreterType>({language: "", location: ""})
+    const [request, setRequest] = useState<LanguageInterpreterType>({language: "", location: ""});
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         requestScreen: "block",
         submittedScreen: "hidden"
-    })
+    });
     const [cleared, setCleared] = useState(false);
 
     const formRef = useRef<HTMLFormElement>(null);
@@ -45,8 +45,8 @@ function LanguageInterpreter(){
         "Egyptian Arabic",
         "Marathi",
         "Sign Language (ASL)"
-    ]
-    const locationOptions: string[] = ["Day Surgery Family Waiting", "Pre-Op PACU", "Radiation Oncology TX Suite", "Ultrasound", "Medical Records Conference Room", "Abrams Conference Room", "Outpatient Fluoroscopy (Xray)", "Anesthesia Conference Room", "Helen Hogan Conference Room", "Nuclear Medicine", "Cross-Sectional Interventional Radiology (CSIR) MRI", "Volunteers"]
+    ];
+    const locationOptions: string[] = ["Day Surgery Family Waiting", "Pre-Op PACU", "Radiation Oncology TX Suite", "Ultrasound", "Medical Records Conference Room", "Abrams Conference Room", "Outpatient Fluoroscopy (Xray)", "Anesthesia Conference Room", "Helen Hogan Conference Room", "Nuclear Medicine", "Cross-Sectional Interventional Radiology (CSIR) MRI", "Volunteers"];
     function handleSubmitLanguage(e: { preventDefault: () => void; }) {
 
         (formRef.current as HTMLFormElement).requestSubmit();
@@ -62,7 +62,7 @@ function LanguageInterpreter(){
     function handleClearLanguage(e: { preventDefault: () => void; }): void {
         e.preventDefault();
         // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-        setRequest({language: "", location: ""})
+        setRequest({language: "", location: ""});
         // use resetActive from Dropdown?
 
         setCleared(true);
@@ -70,16 +70,16 @@ function LanguageInterpreter(){
     }
     function handleLocationInput(str: string): void {
         setCleared(false);
-        setRequest({...request, location: str})
+        setRequest({...request, location: str});
     }
     function handleLanguageInput(str: string): void {
         setCleared(false);
-        setRequest({...request, language: str})
+        setRequest({...request, language: str});
     }
     function handleNewSubmissionLanguage(): void {
-        setSubmittedWindowVisibility({requestScreen: "block", submittedScreen: "hidden"})
+        setSubmittedWindowVisibility({requestScreen: "block", submittedScreen: "hidden"});
         // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-        setRequest({language: "", location: ""})
+        setRequest({language: "", location: ""});
         // use resetActive from Dropdown?
         setCleared(false);
     }
@@ -121,7 +121,7 @@ function LanguageInterpreter(){
                     <h2 className=" float-right inline-block">What room do you need the interpreter?</h2>
                     <br/>
                     <form ref={formRef} onSubmit={e => {
-                        e.preventDefault()
+                        e.preventDefault();
                     }}>
 
                         <div className="pt-3 float-left inline-block">
