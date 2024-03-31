@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import { MaintenanceRequest } from "common/src/MaintenanceRequest";
-import maintenanceSearch from "../maintenanceSearch";
+import maintenanceFunctions from "../maintenanceFunctions";
 const router: Router = express.Router();
 import client from "../bin/database-connection";
 
@@ -22,13 +22,20 @@ router.get("/:index", (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/update", async (req, res) => {
   const maintenanceForm: MaintenanceRequest = req.body;
   res.status(200).json({
-    message: await maintenanceSearch.maintenanceFinder(
+    message: await maintenanceFunctions.maintenanceFinder(
       maintenanceForm.location,
       maintenanceForm.issue,
     ),
+  });
+});
+
+router.post("/insert", async (req, res) => {
+  const maintenanceForm: MaintenanceRequest = req.body;
+  res.status(200).json({
+    message: await maintenanceFunctions.maintenanceInsert(maintenanceForm),
   });
 });
 

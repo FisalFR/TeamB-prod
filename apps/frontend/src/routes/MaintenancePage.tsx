@@ -21,7 +21,7 @@ export function MaintenancePage() {
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
         if ((formRef.current as HTMLFormElement).checkValidity()) {
-            axios.post("/api/maintenance",request,{
+            axios.post("/api/maintenance/insert",request,{
                 headers: {
                     'Content-Type': 'application/json'
                 }
