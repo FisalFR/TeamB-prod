@@ -1,5 +1,5 @@
-import { PrismaClient } from "../../../packages/database/.prisma/client";
-const prisma = new PrismaClient();
+import client from "./bin/database-connection";
+const prisma = client;
 
 class populateEdge {
   //Populates the database by looping through the array for each attribute and for each
