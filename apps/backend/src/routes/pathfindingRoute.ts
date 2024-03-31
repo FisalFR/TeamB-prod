@@ -32,12 +32,11 @@ router.post("/", async (req, res) => {
     return node.nodeID;
   });
 
-
   console.log(finalPath.nodeMap);
 
   res.status(200).json({
-      nodes: temp,
-      nodeMap: finalPath.nodeMap,
+    nodes: temp,
+    nodeMap: finalPath.nodeMap,
   });
 });
 
