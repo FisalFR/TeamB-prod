@@ -8,9 +8,6 @@ import populateNode from "../../../apps/backend/src/populateNode";
 import populateEdge from "../../../apps/backend/src/populateEdge";
 import writeNode from "../../../apps/backend/src/writeNode";
 import writeEdge from "../../../apps/backend/src/writeEdge";
-import Path from "../../common/src/pathFinder";
-import Node from "../../common/src/node";
-import Parser from "../../common/src/parser";
 
 
 async function main() {
@@ -22,8 +19,6 @@ async function main() {
     //await writeNode.nodeBackToCSV();
     //await writeEdge.edgesBackToCSV();
 }
-
-export default Node;
 
 main()
     .then(async () => {
