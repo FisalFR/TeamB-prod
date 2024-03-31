@@ -1,5 +1,5 @@
 const prisma = client;
-import { MaintenanceRequest } from "common/src/MaintenanceRequest";
+import { MaintenanceRequest } from "common/src/maintenanceRequest";
 import client from "./bin/database-connection";
 
 class maintenanceFunctions {

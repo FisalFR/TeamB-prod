@@ -50,3 +50,9 @@ model maintenances {
   isUrgent String
   feedback String
 }
+
+model languageInterpreters {
+  lid      Int    @id @default(autoincrement())
+  language String
+  location String
+}

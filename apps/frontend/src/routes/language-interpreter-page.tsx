@@ -1,5 +1,5 @@
 import {useRef, useState} from "react";
-import {LanguageInterpreterType} from 'common/src/LanguageInterpreterTypes.ts
+import {LanguageInterpreterType} from 'common/src/languageInterpreterTypes.ts';
 import Dropdown from "../components/dropdown.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
@@ -22,7 +22,7 @@ function LanguageInterpreter(){
         "Spanish",
         "French",
         "Modern Standard Arabic",
-        "Begali",
+        "Bengali",
         "Russian",
         "Nigerian Pidgin",
         "Portuguese",
