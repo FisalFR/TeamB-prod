@@ -4,8 +4,11 @@ import Button from "../components/Button.tsx";
 // import TestReactSpring from "../components/testReactSpring.tsx";
 import user_icon from "../assets/user_icon.svg";
 import password_icon from "../assets/password_icon.svg";
-import maze from "../assets/MazeHero/MazeHero.svg";
-import mazeLine from "../assets/MazeHero/MazeLine.svg";
+// import MySVGComponent from "../components/HeroImage.tsx";
+import AnimatedSVG from "../components/HeroImage.tsx";
+// import maze from "../assets/MazeHero/MazeHero.svg";
+// import mazeLine from "../assets/MazeHero/MazeLine.svg";
+// import HeroImage from "../components/HeroImage.tsx";
 
 function LoginPage() {
     const [input, setInput] = useState<loginInfo>({username: "", password: ""});
@@ -46,11 +49,8 @@ function LoginPage() {
                 <div className="flex flex-col">
                     <p className="text-left text-xl">Find your room in Brighams with ease. With pathfinding locate your
                         destination in the smallest steps. Never get lost, no wasted time, get there stress free.</p>
-                    <div className="relative">
-                        <img src={maze} alt="Maze"
-                             className="left-column mt-5 rounded-full bg-white p-3 drop-shadow-md w-15 z-0"/>
-                        <img src={mazeLine} alt="MazeLine" className="absolute top-0 left-0 z-10 mt-5 p-3"/>
-                    </div>
+                    {/*<HeroImage/>*/}
+                    <AnimatedSVG/>
 
 
                 </div>
