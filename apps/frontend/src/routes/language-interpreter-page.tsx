@@ -1,7 +1,8 @@
 import {useRef, useState} from "react";
-import {LanguageInterpreterType} from "../common/LanguageInterpreterType.tsx";
+import {LanguageInterpreterType} from 'common/src/LanguageInterpreterTypes.ts
 import Dropdown from "../components/dropdown.tsx";
 import Button from "../components/Button.tsx";
+import axios from "axios";
 
 function LanguageInterpreter(){
     const [request, setRequest] = useState<LanguageInterpreterType>({language: "", location: ""});
@@ -53,7 +54,13 @@ function LanguageInterpreter(){
         e.preventDefault();
 
         if ((formRef.current as HTMLFormElement).checkValidity()) {
-            console.log(request);
+            axios.post("/api/languageInterpreter/insert",request,{
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then();
+            setCleared(true);
+            setSubmittedWindowVisibility({formScreen: "hidden", submittedScreen: "block"});
             setCleared(true);
             setSubmittedWindowVisibility({requestScreen: "hidden", submittedScreen: "block"});
         }
