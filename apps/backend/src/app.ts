@@ -5,6 +5,7 @@ import logger from "morgan";
 import exampleRouter from "./routes/example.ts";
 import pathfindingRoute from "./routes/pathfindingRoute";
 import maintenanceRoute from "./routes/maintenanceRoute";
+import languageInterpreterRoute from "./routes/languageInterpreterRoute";
 
 const app: Express = express(); // Setup the backend
 
@@ -26,6 +27,7 @@ app.use(cookieParser()); // Cookie parser
 app.use("/api/high-score", exampleRouter);
 app.use("/api/pathfinding", pathfindingRoute);
 app.use("/api/maintenance", maintenanceRoute);
+app.use("/api/languageInterpreter", languageInterpreterRoute);
 
 app.use("/healthcheck", (req, res) => {
   res.status(200).send();
