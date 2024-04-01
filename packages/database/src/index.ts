@@ -12,10 +12,10 @@ import writeEdge from "../../../apps/backend/src/writeEdge";
 
 async function main() {
     //FOR DATABASES DONT TOUCH, IT AFFECTS THE WHOLE DATABASE -COLIN
-    //const nodeData = await readNode.readNodeCSV("../../data/L1Nodes.csv");
-    //await populateNode.populateNodeDB(nodeData);
-    //const edgeData = await readEdge.readEdgeCSV("../../data/L1Edges.csv");
-    //await populateEdge.populateEdgeDB(edgeData);
+    const nodeData = await readNode.readNodeCSV("../../data/L1Nodes.csv");
+    await populateNode.populateNodeDB(nodeData);
+    const edgeData = await readEdge.readEdgeCSV("../../data/L1Edges.csv");
+    await populateEdge.populateEdgeDB(edgeData);
     //await writeNode.nodeBackToCSV();
     //await writeEdge.edgesBackToCSV();
 }
