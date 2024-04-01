@@ -32,11 +32,16 @@ export function Map(){
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            const nodeCoords = [];
-            for (let i = 0; i < response.data.nodes.length; i++) {
-                nodeCoords.push(response.data.nodes[i]);
+            if (response.data.nodes.length != 0) {
+                const nodeCoords = [];
+                for (let i = 0; i < response.data.nodes.length; i++) {
+                    nodeCoords.push(response.data.nodes[i]);
+                }
+                setPathPoints(nodeCoords);
             }
-            setPathPoints(nodeCoords);
+            else {
+                alert("No path on Floor Lower Level 1 with selected nodes");
+            }
         });
     }
 

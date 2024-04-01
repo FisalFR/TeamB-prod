@@ -34,9 +34,6 @@ router.post("/", async (req, res) => {
   const node1: Node = finalPath.nodeMap.get(pathfinding.startNode)!;
   const node2: Node = finalPath.nodeMap.get(pathfinding.endNode)!;
 
-  const test = finalPath.BFS(node1, node2);
-  console.log(test.length);
-
   const temp = finalPath.BFS(node1, node2).map((node) => {
     //return node.nodeID;
     return [node.xcoord, node.ycoord];
