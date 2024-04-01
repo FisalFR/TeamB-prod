@@ -6,7 +6,7 @@ const router: Router = express.Router();
 
 const database: languageInterpreterTypes[] = [];
 router.get("/", async (req, res) => {
-  const all = await client.languageInterpreters.findMany();
+  const all = await client.languageInterpreterRequests.findMany();
   res.status(200).json(all);
 });
 router.get("/:index", (req, res) => {
