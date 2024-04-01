@@ -1,6 +1,7 @@
 import fs from "fs";
 import { PrismaClient } from "../../../packages/database/.prisma/client";
-const prisma = new PrismaClient();
+import client from "./bin/database-connection";
+const prisma = client;
 
 class writeNode {
   //gets data from nodes table, and puts them into a csv file

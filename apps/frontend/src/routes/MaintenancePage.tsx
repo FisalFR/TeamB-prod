@@ -1,8 +1,9 @@
 import {ChangeEvent, useRef, useState} from 'react';
-import {MaintenanceRequest} from '../common/MaintenanceRequest.tsx';
+import {MaintenanceRequest} from 'common/src/maintenanceRequest.ts';
 import RadioButton from "../components/RadioButton.tsx";
 import Button from "../components/Button.tsx";
 import Dropdown from "../components/dropdown.tsx";
+import axios from "axios";
 
 
 export function MaintenancePage() {
@@ -20,7 +21,11 @@ export function MaintenancePage() {
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
         if ((formRef.current as HTMLFormElement).checkValidity()) {
-            console.log(request);
+            axios.post("/api/maintenance/insert",request,{
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then();
             setCleared(true);
             setSubmittedWindowVisibility({formScreen: "hidden", submittedScreen: "block"});
         }

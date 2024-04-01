@@ -2,9 +2,10 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider   = "prisma-client-js"
-  output     = "../.prisma/client"
-  engineType = "binary"
+  provider        = "prisma-client-js"
+  output          = "../.prisma/client"
+  engineType      = "binary"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -40,4 +41,18 @@ model l1Edges {
   endNode     l1Nodes @relation(name: "endNode", fields: [endNodeID], references: [nodeID])
 
   @@id([startNodeID, endNodeID])
+}
+
+model maintenances {
+  mid      Int    @id @default(autoincrement())
+  issue    String
+  location String
+  isUrgent String
+  feedback String
+}
+
+model languageInterpreters {
+  lid      Int    @id @default(autoincrement())
+  language String
+  location String
 }
