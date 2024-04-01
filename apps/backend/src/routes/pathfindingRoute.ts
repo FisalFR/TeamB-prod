@@ -6,18 +6,18 @@ import Node from "../../../../packages/common/src/node";
 
 const router: Router = express.Router();
 
-const database: Node[] = [];
 
-router.get("/:index", (req, res) => {
-  const index = parseInt(req.params.index);
-  if (index >= 0 && index < database.length) {
-    res.status(200).json(database[index]);
-  } else {
-    res.status(400).json({
-      message: "not a valid index",
-    });
+router.get("/", (req, res) => {
+  const pathArray: number[][] = [];
+  console.log(req.body.nodes);
+  for (const i of req.body.nodes) {
+    pathArray.push([i.x, i.y]);
   }
+  res.body = {
+      path: pathArray,
+  };
 });
+
 router.post("/", async (req, res) => {
   const finalPath: Path = new Path();
   finalPath.nodeList = await Parser.parseNode("../../../data/L1Nodes.csv");
@@ -32,12 +32,12 @@ router.post("/", async (req, res) => {
     return node.nodeID;
   });
 
-  console.log(finalPath.nodeMap);
-
-  res.status(200).json({
+  res.body = {
     nodes: temp,
     nodeMap: finalPath.nodeMap,
-  });
+  };
+  res.status(200).json(res.body);
+
 });
 
 export default router;
