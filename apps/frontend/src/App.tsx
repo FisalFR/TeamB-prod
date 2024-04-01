@@ -5,6 +5,7 @@ import Map from "./routes/map.tsx";
 import LoginPage from "./routes/login-page.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
 import LanguageInterpreter from "./routes/language-interpreter-page.tsx";
+import RequestLogs from "./routes/requests-log-page.tsx";
 function App() {
     const router = createBrowserRouter([
         {
@@ -30,7 +31,12 @@ function App() {
                 {
                     path:"/interpreter",
                     element: <LanguageInterpreter/>
+                },
+                {
+                    path:"/logs",
+                    element:<RequestLogs/>
                 }
+
 
             ],
         },
@@ -40,6 +46,8 @@ function App() {
         return (
             <div className="w-full flex flex-col px-20 gap-5">
                 <NavigationBar/>
+
+
                 <Outlet/>
             </div>
         );
