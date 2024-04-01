@@ -23,8 +23,6 @@ router.get("/", async (req, res) => {
 });
 router.post("/", async (req, res) => {
   const finalPath: Path = new Path();
-  //finalPath.nodeList = await Parser.parseNode("../../../data/L1Nodes.csv");
-  //finalPath.edgeList = await Parser.parseEdge("../../../data/L1Edges.csv");
   finalPath.nodeList = await client.l1Nodes.findMany();
   finalPath.edgeList = await client.l1Edges.findMany();
 
