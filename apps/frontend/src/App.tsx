@@ -4,7 +4,7 @@ import MaintenancePage from "./routes/MaintenancePage.tsx";
 import Map from "./routes/map.tsx";
 import LoginPage from "./routes/login-page.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
-
+import LanguageInterpreter from "./routes/language-interpreter-page.tsx";
 function App() {
     const router = createBrowserRouter([
         {
@@ -26,6 +26,10 @@ function App() {
                 {
                     path:"/login",
                     element:<LoginPage/>
+                },
+                {
+                    path:"/interpreter",
+                    element: <LanguageInterpreter/>
                 }
 
             ],
@@ -41,5 +45,7 @@ function App() {
         );
     }
 }
+
+
 
 export default App;
