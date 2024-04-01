@@ -1,10 +1,14 @@
 import express, { Router } from "express";
 import { languageInterpreterTypes } from "common/src/languageInterpreterTypes";
 import languageInterpreterFunctions from "../languageInterpreterFunctions";
+import client from "../bin/database-connection";
 const router: Router = express.Router();
 
 const database: languageInterpreterTypes[] = [];
-
+router.get("/", async (req, res) => {
+  const all = await client.languageInterpreters.findMany();
+  res.status(200).json(all);
+});
 router.get("/:index", (req, res) => {
   const index = parseInt(req.params.index);
   if (index >= 0 && index < database.length) {
