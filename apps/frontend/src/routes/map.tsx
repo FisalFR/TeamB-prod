@@ -2,17 +2,23 @@ import ll1map from "../assets/floors/00_thelowerlevel1.png";
 import Select from "../components/Select.tsx";
 import PathVisual from "../components/PathVisual.tsx";
 import Button from "../components/Button.tsx";
-import {ChangeEvent, useRef, useState} from "react";
+import {ChangeEvent, useEffect, useRef, useState} from "react";
+import axios from "axios";
+import {startEndNodes} from "common/src/pathfinding.ts";
 
 export function Map(){
-    const nodes = ["node1", "node2", "node3", "node4"];
 
-    const testPathPoints = [
-        [2665, 1043], [2490, 1043], [2445, 1043], [2310, 1043], [2215, 1045], [2220, 974], [2220, 904], [2185, 904], [2130, 904]];
+    //const testPathPoints = [
+    //    [2665, 1043], [2490, 1043], [2445, 1043], [2310, 1043], [2215, 1045], [2220, 974], [2220, 904], [2185, 904], [2130, 904]];
 
     const [zoom, setZoom] = useState(0.2);
-    const [startNode, setStartNode] = useState("");
-    const [endNode, setEndNode] = useState("");
+    const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
+
+    const [nodes, setNodes] = useState(["Error accessing map points"]);
+
+    const [nodeStringToID, setNodesStringToID] = useState({});
+
+    const [pathPoints, setPathPoints] = useState([2665, 1043]);
 
     const divRef = useRef<HTMLDivElement>(null);
     function zoomSlider(e: ChangeEvent<HTMLInputElement>) {
@@ -21,22 +27,46 @@ export function Map(){
     }
 
     function findPath() {
-        alert(startNode + ", " + endNode);
+        axios.post("/api/pathfinding", request,{
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            const nodeCoords = [];
+            for (let i = 0; i < response.data.nodes.length; i++) {
+                nodeCoords.push(response.data.nodes[i]);
+            }
+            setPathPoints(nodeCoords);
+        });
     }
 
     function handleStartChange(e: ChangeEvent<HTMLInputElement>) {
-        setStartNode(e.target.value);
+        setRequest({...request, startNode: nodeStringToID[e.target.value]});
     }
     function handleEndChange(e: ChangeEvent<HTMLInputElement>) {
-        setEndNode(e.target.value);
+        setRequest({...request, endNode: nodeStringToID[e.target.value]});
     }
+
+    useEffect( () => {
+        axios.get("/api/pathfinding/").then((response) => {
+            const nodeStrings = [];
+            const strToID = {};
+            for (let i = 0; i < response.data.length; i++) {
+                nodeStrings.push(response.data[i].longName);
+                strToID[response.data[i].longName] = response.data[i].nodeID;
+            }
+            setNodes(nodeStrings);
+            setNodesStringToID(strToID);
+            setRequest({startNode: strToID[nodeStrings[0]], endNode: strToID[nodeStrings[0]]});
+        });
+    }, []);
 
     return (
         <div div className="centerContent gap-10 w-full h-fit">
             <div>
                 <p className="font-HeadlandOne text-3xl py-3">Floor: Lower Level 1</p>
                 <div className="w-fit h-fit max-w-[1000px] max-h-[690px] overflow-scroll" ref={divRef}>
-                    <PathVisual path={testPathPoints} image={ll1map} width={5000} height={3400}
+                    <PathVisual path={pathPoints} image={ll1map} width={5000} height={3400}
                             scale={zoom}/>
                 </div>
                 <br/>
