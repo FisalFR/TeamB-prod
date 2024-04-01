@@ -7,18 +7,16 @@ import client from "../bin/database-connection";
 
 const router: Router = express.Router();
 
-const database: Node[] = [];
-
-router.get("/:index", (req, res) => {
-  const index = parseInt(req.params.index);
-  if (index >= 0 && index < database.length) {
-    res.status(200).json(database[index]);
-  } else {
-    res.status(400).json({
-      message: "not a valid index",
-    });
+/*router.get("/", (req, res) => {
+  const pathArray: number[][] = [];
+  console.log(req.body.nodes);
+  for (const i of req.body.nodes) {
+    pathArray.push([i.x, i.y]);
   }
-});
+  res.body = {
+    path: pathArray,
+  };
+});*/
 router.get("/", async (req, res) => {
   const all = await client.l1Nodes.findMany();
   res.status(200).json(all);
@@ -36,17 +34,19 @@ router.post("/", async (req, res) => {
   const node1: Node = finalPath.nodeMap.get(pathfinding.startNode)!;
   const node2: Node = finalPath.nodeMap.get(pathfinding.endNode)!;
 
+  const test = finalPath.BFS(node1, node2);
+  console.log(test.length);
+
   const temp = finalPath.BFS(node1, node2).map((node) => {
     //return node.nodeID;
     return [node.xcoord, node.ycoord];
   });
 
-  console.log(finalPath.nodeMap);
-
-  res.status(200).json({
+  res.body = {
     nodes: temp,
     nodeMap: finalPath.nodeMap,
-  });
+  };
+  res.status(200).json(res.body);
 });
 
 export default router;
