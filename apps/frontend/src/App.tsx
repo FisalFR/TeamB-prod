@@ -5,11 +5,12 @@ import Map from "./routes/map.tsx";
 import LoginPage from "./routes/login-page.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
 import LanguageInterpreter from "./routes/language-interpreter-page.tsx";
+import CsvManager from "./routes/csv-manager.tsx";
 function App() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <Root />,
+            element: <Root/>,
             children: [
                 {
                     path: "",
@@ -30,8 +31,11 @@ function App() {
                 {
                     path:"/interpreter",
                     element: <LanguageInterpreter/>
+                },
+                {
+                    path:"/csv-manager",
+                    element: <CsvManager/>
                 }
-
             ],
         },
     ]);

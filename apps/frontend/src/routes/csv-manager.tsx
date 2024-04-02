@@ -1,21 +1,28 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import Button from "../components/button.tsx";
+import Button from "../components/button.tsx";
+import Node from "packages/common/src/node.ts";
+// import Edge from "packages/common/src/edge.ts";
+import { parse } from "csv-parse/browser/esm/sync";
 import {Table} from "react-bootstrap";
+import { Importer, ImporterField } from 'react-csv-importer';
+
+// Refactor the axios portion to use the correct format for issuing a get request; see apps/backend/src/routes/pathfindingRoute.ts
 
 export function CsvManager() {
     // Default Data Importing
-    const [nodeData, setNodeData] = useState([]);
+    const [nodeData, setNodeData] = useState([]); // TODO ask Nick about adding <Node[] | undefined> to make useState type-safe
 
     // With no dependencies listed, the Effect will re-run after every re-render of the component.
     useEffect(() => {
-        fetchData();
+        getNodeData();
     }, []);
 
-    const fetchData = async () => {
+    function getNodeData() {
         try {
-            const response = await axios.get("/api/teambdb@database.cs.wpi.edu/teambdb/teamb/tables/l1Nodes");
-            const agents = await response.json();
+            // local csv lives at "../../../data/L1Nodes.csv"
+            const response = axios.get("postgresql://teamb:teamb20@database.cs.wpi.edu:5432/teambdb?schema=teamb");
+            const agents = response.json();
             if (response.status == 200) {
                 console.log("Received node data from database.");
             }
@@ -25,7 +32,19 @@ export function CsvManager() {
         }
     };
 
-    //
+    async function postNodeData() {
+        // TODO fix type of outgoingNodes
+        const outgoingNodes:Node[] = {};
+
+        // TODO direct post request to local db?
+        const res = await axios.post("", outgoingNodes, {
+            "Content-Type": "application/json"
+        });
+        if (res.status == 200) {
+            console.log("Node data was sent to the database.");
+        }
+    }
+
     // const [tableVisibility, setTableVisibility] = useState({
     //     nodeTable: "block",
     //     edgeTable: "hidden"
@@ -39,10 +58,19 @@ export function CsvManager() {
     //     setTableVisibility({nodeTable: "hidden", edgeTable: "block"});
     // }
 
+    // function handleImport(): void {
+    //
+    // }
+    //
+    // function handleExport(): void {
+    //
+    // }
+
     return (
         <div className={"csvManager"}>
             {/*<Button></Button>*/}
             {/*<Button></Button>*/}
+            <Button onClick={() => postNodeData().then()} children={}>Push to Database</Button>
 
             <div className={"nodeTable"}>
                 <section>
