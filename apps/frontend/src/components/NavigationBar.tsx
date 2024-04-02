@@ -12,8 +12,8 @@ export function NavigationBar() {
                 <nav
                     className="uppercase divide-x divide-solid centerContent">
                     <NavLink href="/maintenance"> Maintenance </NavLink>
-                    <NavLink href="/"> Map </NavLink>
-                    <NavLink href="/login"> Login </NavLink>
+                    <NavLink href="/map"> Map </NavLink>
+                    <NavLink href="/"> Login </NavLink>
                 </nav>
             </div></>
         );
