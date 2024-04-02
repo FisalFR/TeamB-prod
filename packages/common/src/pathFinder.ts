@@ -2,6 +2,7 @@ import Node from "./node";
 import Edge from "./edge";
 import Queue from "./Queue";
 import PriorityQueue from "./PriorityQueue";
+import Stack from "./Stack";
 
 class Path {
   nodeList: Node[];
@@ -50,6 +51,29 @@ class Path {
         return this.reconstructPath(cameFrom, startNode, endNode);
     }
 
+
+  // Function to return the path from startNode to endNode using DFS
+  DFS(startNode: Node, endNode: Node): Node[] {
+    console.log("I MADE IT TO DFS");
+    const frontier: Stack<Node> = new Stack<Node>();
+    frontier.push(startNode);
+    const cameFrom = new Map();
+    cameFrom.set(startNode, null);
+
+    while (!frontier.isEmpty()) {
+      const current = frontier.pop()!;
+      if (current.nodeID == endNode.nodeID) {
+        break;
+      }
+      for (const next of current.neighbors) {
+        if (!cameFrom.has(next)) {
+          frontier.push(next);
+          cameFrom.set(next, current);
+        }
+      }
+    }
+    return this.reconstructPath(cameFrom, startNode, endNode);
+  }
 
   // Function to return the path from startNode to endNode using BFS
   BFS(startNode: Node, endNode: Node): Node[] {
