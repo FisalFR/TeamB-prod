@@ -23,8 +23,6 @@ router.get("/", async (req, res) => {
 });
 router.post("/", async (req, res) => {
   const finalPath: Path = new Path();
-  //finalPath.nodeList = await Parser.parseNode("../../../data/L1Nodes.csv");
-  //finalPath.edgeList = await Parser.parseEdge("../../../data/L1Edges.csv");
   finalPath.nodeList = await client.l1Nodes.findMany();
   finalPath.edgeList = await client.l1Edges.findMany();
 
@@ -34,7 +32,7 @@ router.post("/", async (req, res) => {
   const node1: Node = finalPath.nodeMap.get(pathfinding.startNode)!;
   const node2: Node = finalPath.nodeMap.get(pathfinding.endNode)!;
 
-  const temp = finalPath.BFS(node1, node2).map((node) => {
+  const temp = finalPath.AStar(node1, node2).map((node) => {
     //return node.nodeID;
     return [node.xcoord, node.ycoord];
   });
