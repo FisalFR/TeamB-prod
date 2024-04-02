@@ -1,66 +1,119 @@
-//import {useState} from "react";
-//import React, {useEffect, useState} from "react";
-import { JSX } from "react/jsx-runtime";
-//import axios from "axios";
-// import {node} from "prop-types";
+// import { JSX } from "react/jsx-runtime";
+// import { motion } from "framer-motion";
+//
+// function PathVisual(props: { path: number[][]; image: string; width: number; height: number; scale:number; showPath: boolean} ) {
+//     const pathArray = props.path;
+//
+//     const draw = {
+//         hidden: { pathLength: 0, opacity: 1 },
+//         visible: {
+//             opacity: 1,
+//             pathLength: 1,
+//             transition: {
+//                 duration: 5,
+//                 ease: "linear",
+//             },
+//         }
+//     };
+//
+//     function createPaths() {
+//         const lines: JSX.Element[] = [];
+//         for (let i = 0; i < pathArray.length - 1; i++){
+//             lines.push(
+//                 <line
+//                     x1={pathArray[i][0]}
+//                     y1={pathArray[i][1]}
+//                     x2={pathArray[i+1][0]}
+//                     y2={pathArray[i+1][1]}
+//                     stroke="#009CA6"
+//                     strokeWidth={4}
+//                 />);
+//         }
+//         return lines;
+//     }
+//
+//     function LinesToPath({ lines }) {
+//         const pathD = lines.reduce((acc, line) => {
+//             const { props } = line;
+//             const { x1, y1, x2, y2 } = props;
+//             return acc + `M ${x1} ${y1} L ${x2} ${y2} `;
+//         }, '');
+//
+//         // Close the path by connecting the last point to the first point
+//         const fullPathD = pathD + 'Z';
+//
+//         return (
+//             <motion.path d={fullPathD} stroke="#009CA6" fill="none" variants={draw} initial="hidden" animate="visible"/>
+//         );
+//     }
+//
+//
+//     const viewBox = "0 0 " + (props.width)  + " " + (props.height);
+//
+//     return (
+//         <motion.svg width={props.width * props.scale}
+//                     height={props.height * props.scale}
+//                     viewBox={viewBox}
+//                     initial="hidden"
+//                     animate="visible"
+//                     variants={draw}>
+//             <image xlinkHref={props.image} width={props.width} height={props.height}></image>
+//             <LinesToPath lines={createPaths()} />
+//             function
+//             <circle cx={pathArray[0][0]} cy={pathArray[0][1]} r={8} fill="blue"/>
+//             <circle cx={pathArray[pathArray.length - 1][0]} cy={pathArray[pathArray.length - 1][1]} r={8} fill="blue"/>
+//         </motion.svg>
+//     );
+//
+// }
+//
+// export default PathVisual;
 
 
 
-function PathVisual(props: { path: number[][]; image: string; width: number; height: number; scale:number} ) {
+// import { JSX } from "react/jsx-runtime";
+import { motion } from "framer-motion";
+
+function PathVisual(props: { path: number[][]; image: string; width: number; height: number; scale:number; showPath: boolean} ) {
     const pathArray = props.path;
-    //const [pathNodes, setPathNodes] = useState<Node[]>([]);
-    //const [tempPathArray, setTempPathArray] = useState<number[][]>([]);
-    //const [nodeMap, setNodeMap] = useState<Map<string, Node>>(new Map());
 
-    /*useEffect(() => {
-        const data = {
-            startNode: 'CCONF001L1',
-            endNode: 'CCONF002L1',
-        };
-
-        axios.post("http://localhost:3000/api/pathfinding", data)
-            .then((response) => {
-                console.log("DID A POST????");
-                setPathNodes(response.data.nodes);
-                console.log(pathNodes);
-                setNodeMap(response.data.nodeMap);
-                console.log(nodeMap);
-            })
-            .catch((error) => {
-                console.error("There has been a problem with your fetch operation:", error);
-            });
-    }, );
-
-    useEffect(() => {
-        axios.get("http://localhost:3000/api/pathfinding").then((response) => {
-            console.log("DID A GET????");
-            setTempPathArray(response.data.path);
-            console.log(tempPathArray);
-
-        }).catch((error) => {
-            console.error("There has been an a problem with your fetch operation:", error);
-        });
-    }, );*/
-
-
-
-    function createPaths() {
-        const lines: JSX.Element[] = [];
-        for (let i = 0; i < pathArray.length - 1; i++){
-            lines.push(<line x1={pathArray[i][0]} y1={pathArray[i][1]} x2={pathArray[i+1][0]} y2={pathArray[i+1][1]} stroke="red" strokeWidth={4} />);
+    const draw = {
+        hidden: { pathLength: 0, opacity: 1 },
+        visible: {
+            opacity: 1,
+            pathLength: 1,
+            transition: {
+                duration: 5,
+                ease: "linear",
+            },
         }
-        return lines;
+    };
+
+    function createPath() {
+        let path = `M ${pathArray[0][0]} ${pathArray[0][1]}`;
+        for (let i = 1; i < pathArray.length; i++) {
+            path += ` L ${pathArray[i][0]} ${pathArray[i][1]}`;
+        }
+        return path;
     }
 
     const viewBox = "0 0 " + (props.width)  + " " + (props.height);
 
     return (
-        <svg width={props.width * props.scale} height={props.height * props.scale} viewBox={viewBox}>
+        <motion.svg width={props.width * props.scale}
+                    height={props.height * props.scale}
+                    viewBox={viewBox}
+                    initial="hidden"
+                    animate="visible"
+                    variants={draw}>
             <image xlinkHref={props.image} width={props.width} height={props.height}></image>
-            {createPaths()}
+            <motion.path d={createPath()} stroke="#009CA6" fill="none" initial="hidden"
+                         animate="visible"
+                         variants={draw}/>
             <circle cx={pathArray[0][0]} cy={pathArray[0][1]} r={8} fill="blue"/>
-            <circle cx={pathArray[pathArray.length-1][0]} cy={pathArray[pathArray.length-1][1]} r={8} fill="blue"/>
-        </svg>
+            <circle cx={pathArray[pathArray.length - 1][0]} cy={pathArray[pathArray.length - 1][1]} r={8}
+                    fill="blue"/>
+        </motion.svg>
     );
 }
 
