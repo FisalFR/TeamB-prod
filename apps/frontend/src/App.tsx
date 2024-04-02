@@ -5,7 +5,7 @@ import Map from "./routes/map.tsx";
 import LoginPage from "./routes/login-page.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
 import LanguageInterpreter from "./routes/language-interpreter-page.tsx";
-import RequestLogs, {RequestMaintenanceLogs} from "./routes/requests-log-page.tsx";
+import LogBook from "./routes/requests-log-page.tsx";
 function App() {
     const router = createBrowserRouter([
         {
@@ -34,8 +34,7 @@ function App() {
                 },
                 {
                     path:"/logs",
-                    element:<RequestLogs/>,
-                    element:<RequestMaintenanceLogs/>
+                    element:<LogBook/>,
 
 
                 }
