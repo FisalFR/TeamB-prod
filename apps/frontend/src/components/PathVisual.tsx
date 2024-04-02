@@ -94,6 +94,7 @@ function PathVisual(props: { path: number[][]; image: string; width: number; hei
         for (let i = 1; i < pathArray.length; i++) {
             path += ` L ${pathArray[i][0]} ${pathArray[i][1]}`;
         }
+        console.log(path);
         return path;
     }
 

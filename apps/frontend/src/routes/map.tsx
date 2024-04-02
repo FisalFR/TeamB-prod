@@ -71,8 +71,7 @@ export function Map(){
             <div>
                 <p className="font-HeadlandOne text-3xl py-3">Floor: Lower Level 1</p>
                 <div className="w-fit h-fit max-w-[1000px] max-h-[690px] overflow-scroll" ref={divRef}>
-                    <PathVisual path={pathPoints} image={ll1map} width={5000} height={3400}
-                            scale={zoom}/>
+                    <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={ll1map} width={5000} height={3400} scale={zoom}/>
                 </div>
                 <br/>
                 <input type="range" min="1" max="10" step="any" defaultValue="1" onChange={zoomSlider} id="myRange"></input>
