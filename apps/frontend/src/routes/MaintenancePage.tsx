@@ -1,5 +1,5 @@
 import {ChangeEvent, useRef, useState} from 'react';
-import {MaintenanceRequest} from 'common/src/maintenanceRequest.ts';
+import {MaintenanceRequest} from 'common/src/MaintenanceRequest.ts';
 import RadioButton from "../components/RadioButton.tsx";
 import Button from "../components/Button.tsx";
 import Dropdown from "../components/dropdown.tsx";
