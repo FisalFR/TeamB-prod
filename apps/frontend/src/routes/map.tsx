@@ -74,16 +74,16 @@ export function Map(){
     }, []);
 
     return (
-        <div div className="centerContent gap-10 w-full h-fit">
-            <div>
+        <div div className="centerContent gap-10 w-full h-full">
+            <div className="">
                 <p className="font-HeadlandOne text-3xl py-3">Floor: Lower Level 1</p>
-                <div className="w-fit h-fit max-w-[1000px] max-h-[680px] overflow-scroll" ref={divRef}>
+                <div className="w-fit max-w-[1000px] max-h-[calc(100vh-200px)] overflow-scroll" ref={divRef}>
                     <PathVisual path={pathPoints} image={ll1map} width={5000} height={3400}
                                 scale={zoom} showPath = {showPath}/>
                 </div>
                 <br/><br/>
             </div>
-            <div>
+            <div className="text-left w-fit">
                 <span className="text-3xl">- </span>
                 <input type="range" min="1" max="10" step="any" defaultValue="1" onChange={zoomSlider}
                        id="myRange"></input><span className="text-3xl"> +</span><br/><br/>
