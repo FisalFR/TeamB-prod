@@ -31,7 +31,7 @@ function LoginPage() {
         if ((formRef.current as HTMLFormElement).checkValidity()) {
             console.log(input);
             if(input.username == "admin" && input.password == "admin"){
-                navigate("/");
+                navigate("/map");
                 return;
             }
             setLoginWindowVisibility({loginScreen: "hidden", submittedScreen: "block"});
@@ -46,8 +46,6 @@ function LoginPage() {
 
 
     return (
-
-
                 <div>
                     <h1 className="font-bold text-left font-HeadlandOne text-6xl pb-2">Navigate Seamlessly</h1>
                     <div className='centerContent gap-10 w-full h-fit'>
@@ -93,8 +91,6 @@ function LoginPage() {
                         </div>
                     </div>
                 </div>
-
-
     );
 
 }
