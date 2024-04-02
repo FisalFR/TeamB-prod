@@ -1,8 +1,14 @@
 import {NavLink} from "./NavLink.tsx";
 import bwhLogo from "../assets/bwh-logo-white.svg";
-
+import NavDropDown from "../components/navDropDown.tsx";
 export function NavigationBar() {
     {
+        const dropdownList = [
+            ["/maintenance", "Maintenance"],
+            ["/interpreter", "Interpreter"],
+            ["/logs", "Request Logs"]
+
+        ];
         return (
 
             <><div className="h-14 w-full"> </div>
@@ -11,11 +17,18 @@ export function NavigationBar() {
                      alt="Brighams Logo White"></img>
                 <nav
                     className="uppercase divide-x divide-solid centerContent">
-                    <NavLink href="/maintenance"> Maintenance </NavLink>
-                    <NavLink href="/map"> Map </NavLink>
-                    <NavLink href="/"> Login </NavLink>
+
+                    <NavDropDown mainLink= {["/logs", "Request"]} dropdownLinks={dropdownList}/>
+                    <NavLink href="/">Map</NavLink>
+                    <NavLink href="/login">Login</NavLink>
+
+
                 </nav>
-            </div></>
+            </div>
+
+
+
+            </>
         );
     }
 }

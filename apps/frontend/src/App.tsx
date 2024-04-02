@@ -1,11 +1,13 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+
 import MaintenancePage from "./routes/MaintenancePage";
 import Map from "./routes/map";
 import LoginPage from "./routes/login-page";
 import NavigationBar from "./components/NavigationBar";
 import LanguageInterpreter from "./routes/language-interpreter-page";
 import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
+import LogBook from "./routes/requests-log-page.tsx";
 
 function App() {
     const router = createBrowserRouter([
@@ -21,7 +23,7 @@ function App() {
                         </div>
                 },
                 {
-                    path: "",
+             path: "",
                     element: <Root/>,
                     children: [
                         {
@@ -36,6 +38,13 @@ function App() {
                             path:"interpreter",
                             element: <LanguageInterpreter/>
                         },
+                         {
+                           path:"/logs",
+                           element:<LogBook/>,
+
+
+                       },
+
             ],
         },
     ]}]);
@@ -48,6 +57,8 @@ function App() {
         return (
             <div className="w-full flex flex-col px-20 gap-5">
                 <NavigationBar/>
+
+
                 <Outlet/>
             </div>
         );
