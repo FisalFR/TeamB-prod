@@ -1,14 +1,17 @@
-import {ChangeEvent, useRef, Redirect, useState} from "react";
+import {ChangeEvent, useRef, useState} from "react";
 import {loginInfo} from "../common/login-info";
 import Button from "../components/Button.tsx";
 import user_icon from "../assets/user_icon.svg";
 import password_icon from "../assets/password_icon.svg";
 import AnimatedSVG from "../components/HeroImage.tsx";
+import { useNavigate } from "react-router-dom";
 
 
 function LoginPage() {
+
+    const navigate = useNavigate();
+
     const [input, setInput] = useState<loginInfo>({username: "", password: ""});
-    const [redirect, setRedirect] = useState(false);
     const [loginWindowVisibility, setLoginWindowVisibility] = useState({
         loginScreen: "block",
         submittedScreen: "hidden"
@@ -27,7 +30,10 @@ function LoginPage() {
         (formRef.current as HTMLFormElement).requestSubmit();
         if ((formRef.current as HTMLFormElement).checkValidity()) {
             console.log(input);
-            setRedirect(true);
+            if(input.username == "admin" && input.password == "admin"){
+                navigate("/");
+                return;
+            }
             setLoginWindowVisibility({loginScreen: "hidden", submittedScreen: "block"});
         }
     }
@@ -36,13 +42,12 @@ function LoginPage() {
         console.log("Logged out");
         setLoginWindowVisibility({loginScreen: "block", submittedScreen: "hidden"});
         setInput({username: "", password: ""});
-        setRedirect(false);
     }
 
 
     return (
-        <>
-            {redirect ? ( <Redirect to =''/> ) : (
+
+
                 <div>
                     <h1 className="font-bold text-left font-HeadlandOne text-6xl pb-2">Navigate Seamlessly</h1>
                     <div className='centerContent gap-10 w-full h-fit'>
@@ -88,8 +93,6 @@ function LoginPage() {
                         </div>
                     </div>
                 </div>
-            ) }
-        </>
 
 
     );
