@@ -1,5 +1,5 @@
 import {ChangeEvent, useRef, useState} from 'react';
-import {MaintenanceRequest} from 'common/src/maintenanceRequest.ts';
+import {MaintenanceRequest} from 'common/src/MaintenanceRequest.ts';
 import RadioButton from "../components/RadioButton.tsx";
 import Button from "../components/Button.tsx";
 import Dropdown from "../components/dropdown.tsx";
@@ -59,54 +59,55 @@ export function MaintenancePage() {
 
     function handleNewSubmission(): void {
         setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
-        // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
         setRequest({issue: "", location: "", isUrgent: "", feedback: ""});
-        // use resetActive from Dropdown?
         setCleared(false);
     }
 
     return (
-        <div className={"maintenanceRequestPage"}>
+        <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
                 <h1 className={"text-3xl font-HeadlandOne py-4"}>Welcome to the Maintenance page!</h1>
+                <p>Fill out the form below to report an issue and make a maintenance request.</p>
+
                 <form ref = {formRef} onSubmit={e => {e.preventDefault();}}>
-                    <p className={"text-left font-bold"}>What kind of issue would you like to report?</p>
-                    <RadioButton value={"Elevator"} name={"issue"} id={"issue1"} state={request.issue}
-                                 onChange={handleIssueInput} required={true}/>
-                    <RadioButton value={"Power"} name={"issue"} id={"issue2"} state={request.issue}
-                                 onChange={handleIssueInput} required={true}/>
-                    <RadioButton value={"Plumbing"} name={"issue"} id={"issue3"} state={request.issue}
-                                 onChange={handleIssueInput} required={true}/>
-                    <RadioButton value={"Door not working"} name={"issue"} id={"issue4"} state={request.issue}
-                                 onChange={handleIssueInput} required={true}/>
-                    <RadioButton value={"Alarm ringing"} name={"issue"} id={"issue5"} state={request.issue}
-                                 onChange={handleIssueInput} required={true}/>
-                    <RadioButton value={"Other"} name={"issue"} id={"issue6"} state={request.issue}
-                                 onChange={handleIssueInput} required={true}/>
+                    <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
+                        <div>
+                            <p className={"text-left font-bold"}>What kind of issue?</p>
+                            <RadioButton value={"Elevator"} name={"issue"} id={"issue1"} state={request.issue}
+                                         onChange={handleIssueInput} required={true}/>
+                            <RadioButton value={"Power"} name={"issue"} id={"issue2"} state={request.issue}
+                                         onChange={handleIssueInput} required={true}/>
+                            <RadioButton value={"Plumbing"} name={"issue"} id={"issue3"} state={request.issue}
+                                         onChange={handleIssueInput} required={true}/>
+                            <RadioButton value={"Repair"} name={"issue"} id={"issue4"} state={request.issue}
+                                         onChange={handleIssueInput} required={true}/>
+                            <RadioButton value={"Other"} name={"issue"} id={"issue5"} state={request.issue}
+                                         onChange={handleIssueInput} required={true}/>
+                        </div>
 
-                    <br/>
+                        <div>
+                            <p className={"text-left font-bold"}>What location is this issue in?</p>
+                            <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
+                                      id={"dropdown1"} value = {cleared}
+                                      setInput={handleLocationInput} required={true}/>
 
-                    <p className={"text-left font-bold"}>What location is this issue in?</p>
-                    <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
-                              id={"dropdown1"} value = {cleared}
-                              setInput={handleLocationInput} required={true}/>
+                            <br/>
 
-                    <br/>
+                            <p className={"text-left font-bold"}>Is this an urgent issue?</p>
+                            <RadioButton value={"Yes"} name={"urgency"} id={"urgency1"} state={request.isUrgent}
+                                         onChange={handleUrgentCheck} required={true}/>
+                            <RadioButton value={"No"} name={"urgency"} id={"urgency2"} state={request.isUrgent}
+                                         onChange={handleUrgentCheck} required={true}/>
 
-                    <p className={"text-left font-bold"}>Is this an urgent issue?</p>
-                    <RadioButton value={"Yes"} name={"urgency"} id={"urgency1"} state={request.isUrgent}
-                                 onChange={handleUrgentCheck} required={true}/>
-                    <RadioButton value={"No"} name={"urgency"} id={"urgency2"} state={request.isUrgent}
-                                 onChange={handleUrgentCheck} required={true}/>
+                            <br/>
+                        </div>
+                    </div>
 
-                    <br/>
-
-                    {/*TODO change flex?*/}
-                    <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Additional Feedback</label>
+                    <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Description of issue</label>
                     <textarea id={"feedback"} className={"w-full max-w-full h-28 max-h-28 p-1"}
                               onChange={handleFeedbackInput}
-                              value={request.feedback} required={request.issue==="Other"}
-                              placeholder="Enter Text Here ..."/><br/>
+                              value={request.feedback} required={true}
+                              placeholder="Enter detailed description here..."/><br/>
 
                     <div className={"formButtons flex gap-4 my-4"}>
                         <Button onClick={handleSubmit} children={"Submit"}/>

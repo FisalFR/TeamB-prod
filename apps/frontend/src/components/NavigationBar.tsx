@@ -17,9 +17,11 @@ export function NavigationBar() {
                      alt="Brighams Logo White"></img>
                 <nav
                     className="uppercase divide-x divide-solid centerContent">
+
                     <NavDropDown mainLink= {["/logs", "Request"]} dropdownLinks={dropdownList}/>
                     <NavLink href="/">Map</NavLink>
                     <NavLink href="/login">Login</NavLink>
+
 
                 </nav>
             </div>
