@@ -1,11 +1,12 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import MaintenancePage from "./routes/MaintenancePage.tsx";
-import Map from "./routes/map.tsx";
-import LoginPage from "./routes/login-page.tsx";
-import NavigationBar from "./components/NavigationBar.tsx";
-import LanguageInterpreter from "./routes/language-interpreter-page.tsx";
+import MaintenancePage from "./routes/MaintenancePage";
+import Map from "./routes/map";
+import LoginPage from "./routes/login-page";
+import NavigationBar from "./components/NavigationBar";
+import LanguageInterpreter from "./routes/language-interpreter-page";
 function App() {
+
     const router = createBrowserRouter([
         {
             path: "/",
@@ -35,7 +36,12 @@ function App() {
             ],
         },
     ]);
-    return <RouterProvider router={router}></RouterProvider>;
+    return (
+        <RouterProvider router={router}></RouterProvider>
+
+
+
+    );
     function Root() {
         return (
             <div className="w-full flex flex-col px-20 gap-5">

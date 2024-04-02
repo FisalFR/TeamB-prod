@@ -1,8 +1,8 @@
 import {ChangeEvent, useRef, useState} from 'react';
-import {MaintenanceRequest} from 'common/src/maintenanceRequest.ts';
-import RadioButton from "../components/RadioButton.tsx";
-import Button from "../components/Button.tsx";
-import Dropdown from "../components/dropdown.tsx";
+import {MaintenanceRequest} from 'common/src/MaintenanceRequest';
+import RadioButton from "../components/RadioButton";
+import Button from "../components/Button";
+import Dropdown from "../components/dropdown";
 import axios from "axios";
 
 
