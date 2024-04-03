@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"; // , useMemo
 import axios from "axios";
 import Table from "../components/Table.tsx";
-import Button from "../components/button.tsx";
+import Button from "../components/Button.tsx";
 
 // import useTable from "react-table";
 
