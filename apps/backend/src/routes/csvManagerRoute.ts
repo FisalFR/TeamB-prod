@@ -4,6 +4,8 @@ const router: Router = express.Router();
 import client from "../bin/database-connection";
 import populateNode from "../populateNode";
 import populateEdge from "../populateEdge";
+import writeNode from "../writeNode.ts";
+import writeEdge from "../writeEdge";
 
 router.use(fileUpload());
 
@@ -70,6 +72,21 @@ router.post("/uploadEdges", function (req, res) {
   }
 
   res.send("File uploaded!");
+});
+
+router.get("/exportNodes", async (req, res) => {
+  const nodeFile = await writeNode.nodeDownload();
+  console.log(nodeFile);
+  res.setHeader("Content-disposition", "attachment; filename=nodeDataFile.csv");
+  res.set("Content-Type", "text/csv");
+  res.status(200).send(nodeFile);
+});
+router.get("/exportEdges", async (req, res) => {
+  const nodeFile = await writeEdge.edgeDownload();
+  console.log(nodeFile);
+  res.setHeader("Content-disposition", "attachment; filename=edgeDataFile.csv");
+  res.set("Content-Type", "text/csv");
+  res.status(200).send(nodeFile);
 });
 
 export default router;

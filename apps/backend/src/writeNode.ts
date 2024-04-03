@@ -42,5 +42,40 @@ class writeNode {
     fs.writeFileSync("../../data/nodesBack.csv", finalNodesString);
     console.log("Wrote to the data nodesBack.csv file");
   }
+
+  static async nodeDownload() {
+    //nodes
+    //fetch the data from the table
+    const nodesData = await prisma.l1Nodes.findMany();
+
+    //creates the header row in the csv file
+    const headersNodes = [
+      "nodeID",
+      "xcoord",
+      "ycoord",
+      "floor",
+      "building",
+      "nodeType",
+      "longName",
+      "shortName",
+    ];
+    let finalNodesString = headersNodes.join(",") + "\n";
+
+    // create the rows for the csv file
+    nodesData.forEach((node) => {
+      const row = [
+        node.nodeID,
+        node.xcoord,
+        node.ycoord,
+        node.floor,
+        node.building,
+        node.nodeType,
+        node.longName,
+        node.shortName,
+      ];
+      finalNodesString += row.join(",") + "\n";
+    });
+    return finalNodesString;
+  }
 }
 export default writeNode;
