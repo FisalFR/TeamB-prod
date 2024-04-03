@@ -1,4 +1,4 @@
-export type LanguageInterpreterTypes={
+export type LanguageInterpreterTypes = {
     language: string;
     location: string;
 }
