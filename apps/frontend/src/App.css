@@ -64,5 +64,5 @@ input[type="radio"]:checked::before {
 }
 
 .navbar {
-  grid-template-columns: 30% 1fr 30%;
+  grid-template-columns: 20% 1fr 20%;
 }
