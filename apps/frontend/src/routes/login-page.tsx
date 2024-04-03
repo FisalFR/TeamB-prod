@@ -4,12 +4,12 @@ import Button from "../components/Button.tsx";
 import user_icon from "../assets/user_icon.svg";
 import password_icon from "../assets/password_icon.svg";
 import AnimatedSVG from "../components/HeroImage.tsx";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 
 function LoginPage() {
 
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     const [input, setInput] = useState<loginInfo>({username: "", password: ""});
     const [loginWindowVisibility, setLoginWindowVisibility] = useState({
@@ -31,8 +31,9 @@ function LoginPage() {
         if ((formRef.current as HTMLFormElement).checkValidity()) {
             console.log(input);
             if(input.username == "admin" && input.password == "admin"){
-                navigate("/map");
-                return;
+                //navigate("/map");
+                //return;
+                redirectToMap();
             }
             else {
                 alert("Invalid username or password");
@@ -42,7 +43,16 @@ function LoginPage() {
     }
 
     function guestLogin() {
-        navigate("/map");
+        //navigate("/map");
+        redirectToMap();
+    }
+
+    function redirectToMap() {
+        const element = document.createElement("a");
+        element.href = "/map";
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
     }
 
     function handleLogout() {
