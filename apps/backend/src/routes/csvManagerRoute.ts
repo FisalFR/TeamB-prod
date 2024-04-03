@@ -2,32 +2,10 @@ import express, { Router } from "express";
 import fileUpload from "express-fileupload";
 const router: Router = express.Router();
 import client from "../bin/database-connection";
-import readNode from "../readNode";
 import populateNode from "../populateNode";
-import readEdge from "../readEdge";
 import populateEdge from "../populateEdge";
-import { filePath } from "common/src/file-path";
-import fs from "fs";
 
 router.use(fileUpload());
-
-router.post("/upload", function (req, res) {
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send("No files were uploaded.");
-  }
-
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  const importedNodesFile = req.files.importedNodes;
-  console.log(importedNodesFile);
-
-  client.l1Edges.deleteMany({}); // deletes all records of Edges table
-  client.l1Nodes.deleteMany({}); // deletes all records of Nodes table
-
-  // Store info in .env ???
-  // populateNode.populateNodeDB(importedNodesFile);
-
-  res.send(importedNodesFile); // "File uploaded!"
-});
 
 router.get("/", async (req, res) => {
   // TODO add if statement or refactor to use a different URL
@@ -35,32 +13,59 @@ router.get("/", async (req, res) => {
   res.status(200).json(allNodes);
 });
 
-router.post("/nodes", async (req, res) => {
-  await client.l1Edges.deleteMany({}); // deletes all records of Edges table
-  await client.l1Nodes.deleteMany({}); // deletes all records of Nodes table
+router.post("/uploadNodes", function (req, res) {
+  client.l1Edges.deleteMany().then(); // deletes all records of Edges table
+  client.l1Nodes.deleteMany().then(); // deletes all records of Nodes table
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
 
-  // TODO refactor and remove
-  const incomingNodes: filePath = req.body;
+  const importedNodesFile = req.files.importedNodes;
 
-  fs.writeFileSync("../../data/" + incomingNodes, "");
+  // for debugging
+  // if (!Array.isArray(importedNodesFile)) {
+  //   // Resolves type ambiguity to allow the use of importedNodesFile.data
+  //   console.log(importedNodesFile.data);
+  //   console.log(importedNodesFile.data.toString());
+  // }
 
-  res.status(200).json({
-    message: await populateNode.populateNodeDB(
-      await readNode.readNodeCSV(incomingNodes.filePath),
-    ),
-  });
+  if (!Array.isArray(importedNodesFile)) {
+    // Resolves type ambiguity to allow the use of importedNodesFile.data
+    const nodes = importedNodesFile.data
+      .toString()
+      .split("\n")
+      .map((row: string): string[] => {
+        return row.split(",");
+      });
+    nodes.shift();
+    populateNode.populateNodeDB(nodes).then();
+  }
+
+  res.send("File uploaded!");
 });
 
-router.post("/edges", async (req, res) => {
-  await client.l1Edges.deleteMany({}); // deletes all records of Edges table
+router.post("/uploadEdges", function (req, res) {
+  client.l1Edges.deleteMany().then(); // deletes all records of Edges table
 
-  const incomingEdges: string = req.body;
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
 
-  res.status(200).json({
-    message: await populateEdge.populateEdgeDB(
-      await readEdge.readEdgeCSV(incomingEdges),
-    ),
-  });
+  const importedEdgesFile = req.files.importedEdges;
+
+  if (!Array.isArray(importedEdgesFile)) {
+    // Resolves type ambiguity to allow the use of importedEdgesFile.data
+    const edges = importedEdgesFile.data
+      .toString()
+      .split("\n")
+      .map((row: string): string[] => {
+        return row.split(",");
+      });
+    edges.shift();
+    populateEdge.populateEdgeDB(edges).then();
+  }
+
+  res.send("File uploaded!");
 });
 
 export default router;

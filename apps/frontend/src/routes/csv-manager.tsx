@@ -80,10 +80,18 @@ export function CsvManager() {
     return (
         <div className={"csvManager"}>
             <form id='uploadForm'
-                  action='http://localhost:3000/api/csvManager/upload'
+                  action='http://localhost:3000/api/csvManager/uploadNodes'
                   method='post'
                   encType="multipart/form-data">
-                <input type="file" name="sampleFile"/>
+                <input type="file" name="importedNodes"/>
+                <input type='submit' value='Upload!'/>
+            </form>
+
+            <form id='uploadForm'
+                  action='http://localhost:3000/api/csvManager/uploadEdges'
+                  method='post'
+                  encType="multipart/form-data">
+                <input type="file" name="importedEdges"/>
                 <input type='submit' value='Upload!'/>
             </form>
 
