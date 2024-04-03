@@ -1143,6 +1143,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/busboy@npm:*":
+  version: 1.5.3
+  resolution: "@types/busboy@npm:1.5.3"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 9ec0a125723e594816d06f6ddf5a4f8dda4855734719bb6e38bdc6fdaf59416f270744862ee54c755075af26e9f5467cc00db803ae1d88f45c1431f61a48ae58
+  languageName: node
+  linkType: hard
+
 "@types/cacheable-request@npm:^6.0.1":
   version: 6.0.3
   resolution: "@types/cacheable-request@npm:6.0.3"
@@ -1217,6 +1226,16 @@ __metadata:
   version: 1.0.5
   resolution: "@types/estree@npm:1.0.5"
   checksum: 7de6d928dd4010b0e20c6919e1a6c27b61f8d4567befa89252055fad503d587ecb9a1e3eab1b1901f923964d7019796db810b7fd6430acb26c32866d126fd408
+  languageName: node
+  linkType: hard
+
+"@types/express-fileupload@npm:^1":
+  version: 1.5.0
+  resolution: "@types/express-fileupload@npm:1.5.0"
+  dependencies:
+    "@types/busboy": "npm:*"
+    "@types/express": "npm:*"
+  checksum: 36dd4181d73c07e2878e50efa672e98d31117b1cb340cf2b8313d84461a3e31ab5c58aaf8c688ea028016aeafb3450dd47a734a184f291e4c47fd69a505967f9
   languageName: node
   linkType: hard
 
@@ -1406,6 +1425,15 @@ __metadata:
     "@types/history": "npm:^4.7.11"
     "@types/react": "npm:*"
   checksum: 72d78d2f4a4752ec40940066b73d7758a0824c4d0cbeb380ae24c8b1cdacc21a6fc835a99d6849b5b295517a3df5466fc28be038f1040bd870f8e39e5ded43a4
+  languageName: node
+  linkType: hard
+
+"@types/react-table@npm:^7":
+  version: 7.7.20
+  resolution: "@types/react-table@npm:7.7.20"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: adf86958dd5b2e044d23fc7896f758b5ec59987891b41e9b02d935d666e999a518b0bdd8ba5bd60d644f20147de0ec3cf5f6a12b75516f1fad43fb3b4fd8361f
   languageName: node
   linkType: hard
 
@@ -2327,6 +2355,15 @@ __metadata:
   version: 2.0.0
   resolution: "buffer-writer@npm:2.0.0"
   checksum: fdca8e28c55704de7af2f41c8f875293de69ad22005d5041d54aa916d125cead00afa969bc09e4702ae6b66e098409958c06bebfc97fcf8fa4ea5afcae088cd9
+  languageName: node
+  linkType: hard
+
+"busboy@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "busboy@npm:1.6.0"
+  dependencies:
+    streamsearch: "npm:^1.1.0"
+  checksum: bee10fa10ea58e7e3e7489ffe4bda6eacd540a17de9f9cd21cc37e297b2dd9fe52b2715a5841afaec82900750d810d01d7edb4b2d456427f449b92b417579763
   languageName: node
   linkType: hard
 
@@ -3551,6 +3588,15 @@ __metadata:
   version: 3.1.1
   resolution: "exponential-backoff@npm:3.1.1"
   checksum: 2d9bbb6473de7051f96790d5f9a678f32e60ed0aa70741dc7fdc96fec8d631124ec3374ac144387604f05afff9500f31a1d45bd9eee4cdc2e4f9ad2d9b9d5dbd
+  languageName: node
+  linkType: hard
+
+"express-fileupload@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "express-fileupload@npm:1.5.0"
+  dependencies:
+    busboy: "npm:^1.6.0"
+  checksum: 08ed9aa710b49c51ac6ba8b688424ed3e93b8155fd0450471a00348cccf599b08bd17a5fa132c3f4d44c0054aaeec19b307a4c80b2a0768a73693624b0b2d763
   languageName: node
   linkType: hard
 
@@ -6117,6 +6163,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-table@npm:^7.8.0":
+  version: 7.8.0
+  resolution: "react-table@npm:7.8.0"
+  peerDependencies:
+    react: ^16.8.3 || ^17.0.0-0 || ^18.0.0
+  checksum: 0c87db8f8823f8eca7a5521d406fa0c75d79972d47768f0c8347af3fa51f9856eea449186a0e2db2effc54d1d74a4e3477855cdbe9adf836d7dfac3a6ec5cdbf
+  languageName: node
+  linkType: hard
+
 "react-transition-group@npm:^4.4.5":
   version: 4.4.5
   resolution: "react-transition-group@npm:4.4.5"
@@ -6678,8 +6733,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "softeng-starter-code@workspace:."
   dependencies:
+    "@types/express-fileupload": "npm:^1"
     "@types/react": "npm:^18.0.37"
     "@types/react-dom": "npm:^18.0.11"
+    "@types/react-table": "npm:^7"
     "@vitest/ui": "npm:^0.33.0"
     "@yarnpkg/pnpify": "npm:^4.0.0-rc.45"
     csv: "npm:^6.3.8"
@@ -6689,6 +6746,7 @@ __metadata:
     dotenv-cli: "npm:^7.4.0"
     eslint: "npm:^8.56.0"
     eslint-config-custom: "workspace:*"
+    express-fileupload: "npm:^1.5.0"
     fs: "npm:^0.0.1-security"
     happy-dom: "npm:^10.6.3"
     husky: "npm:^8.0.0"
@@ -6699,6 +6757,7 @@ __metadata:
     react-bootstrap: "npm:^2.10.0"
     react-csv-importer: "npm:^0.8.1"
     react-dom: "npm:^18.2.0"
+    react-table: "npm:^7.8.0"
     tsconfig-custom: "workspace:*"
     turbo: "npm:latest"
     typescript: "npm:^5.0.4"
@@ -6784,6 +6843,13 @@ __metadata:
   version: 3.3.1
   resolution: "stream-transform@npm:3.3.1"
   checksum: 361cccfa7c1bf9886639a19f7c41d0b69e50f827f6cf8228746b7687473614b8506c653f71f074a20db4270bbd9ef0d3ed96cbf0932f37810cca633a4991d72e
+  languageName: node
+  linkType: hard
+
+"streamsearch@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "streamsearch@npm:1.1.0"
+  checksum: 612c2b2a7dbcc859f74597112f80a42cbe4d448d03da790d5b7b39673c1197dd3789e91cd67210353e58857395d32c1e955a9041c4e6d5bae723436b3ed9ed14
   languageName: node
   linkType: hard
 

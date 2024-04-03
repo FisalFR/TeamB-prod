@@ -1,6 +1,6 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import MaintenancePage from "./routes/MaintenancePage";
+import MaintenancePage from "./routes/maintenance-page";
 import Map from "./routes/map";
 import LoginPage from "./routes/login-page";
 import NavigationBar from "./components/NavigationBar";
@@ -37,7 +37,7 @@ function App() {
                             element: <LanguageInterpreter/>
                         },
                         {
-                            path:"/csv-manager",
+                            path:"csvManager",
                             element: <CsvManager/>
                         }
             ],
