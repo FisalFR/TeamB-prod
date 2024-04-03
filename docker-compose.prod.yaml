@@ -5,17 +5,17 @@ x-prod-args: &prod-args
   PORT: *prod-port # Duplicate this under the name that the env variable will expect. Build args will override as necessary
 
 x-db-info: &db-args
-  POSTGRES_PASSWORD: r7m4YGMRbTzxkIt9MfiZ
+  POSTGRES_PASSWORD: postgres
   POSTGRES_USER: postgres
   POSTGRES_DB: postgres
 
 # Port and URL for the DB
 x-db-loc: &db-loc
-  POSTGRES_CONTAINER: team-b-prod.c5oy0o4oecy5.us-east-1.rds.amazonaws.com
+  POSTGRES_CONTAINER: teamb-db.c5oy0o4oecy5.us-east-1.rds.amazonaws.com
   POSTGRES_PORT: &pg-port "5432"
 
   # The environment variables will expect this to already be formed, build args will override it
-  POSTGRES_URL: postgresql://postgres:postgres@team-b-prod.c5oy0o4oecy5.us-east-1.rds.amazonaws.com:5432/teambdb?schema=public
+  POSTGRES_URL: postgresql://postgres:postgres@teamb-db.c5oy0o4oecy5.us-east-1.rds.amazonaws.com:5432/team-b-prod?schema=public
 
 # Health check for all processes
 x-health-check: &health-check
@@ -86,7 +86,7 @@ services:
 
       # The 443 entrypoint is the actual site
       - "traefik.http.routers.frontend-https.entrypoints=websecure"
-      - "traefik.http.routers.frontend-https.rule=Host(`ec2-34-227-143-108.compute-1.amazonaws.com`)"
+      - "traefik.http.routers.frontend-https.rule=Host(`ec2-18-206-160-175.compute-1.amazonaws.com`)"
       - "traefik.http.routers.frontend-https.tls=true"
 
       # Despite the "loadbalancer" naming, this just describes what port this container exposes
@@ -121,7 +121,7 @@ services:
 
       # The 443 entrypoint is the actual site
       - "traefik.http.routers.backend-https.entrypoints=websecure"
-      - "traefik.http.routers.backend-https.rule=Host(`ec2-34-227-143-108.compute-1.amazonaws.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.backend-https.rule=Host(`ec2-18-206-160-175.compute-1.amazonaws.com`) && PathPrefix(`/api`)"
       - "traefik.http.routers.backend-https.tls=true"
 
       # Despite the "loadbalancer" naming, this just describes what port this container exposes
