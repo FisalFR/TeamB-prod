@@ -87,7 +87,7 @@ export function CsvManager() {
             <h2 className={"text-3xl font-HeadlandOne py-4"}>Map CSV Manager</h2>
             <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Node CSV</h3>
             <form id='uploadForm'
-                  action='http://localhost:3000/api/csvManager/uploadNodes'
+                  action='/api/csvManager/uploadNodes'
                   method='post'
                   encType="multipart/form-data">
                 <input type="file" name="importedNodes"/>
@@ -97,7 +97,7 @@ export function CsvManager() {
 
             <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Edge CSV</h3>
             <form id='uploadForm'
-                  action='http://localhost:3000/api/csvManager/uploadEdges'
+                  action='/api/csvManager/uploadEdges'
                   method='post'
                   encType="multipart/form-data">
                 <input type="file" name="importedEdges"/>
