@@ -35,12 +35,4 @@ router.post("/", async (req, res) => {
   res.status(200).json(res.body);
 });
 
-router.get("/export", async (req, res) => {
-  const nodeFile = await writeNode.nodeDownload();
-  console.log(nodeFile);
-  res.setHeader("Content-disposition", "attachment; filename=nodeDataFile.csv");
-  res.set("Content-Type", "text/csv");
-  res.status(200).send(nodeFile);
-});
-
 export default router;

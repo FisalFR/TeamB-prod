@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"; // , useMemo
 import axios from "axios";
 import Table from "../components/Table.tsx";
+import Button from "../components/button.tsx";
 
 // import useTable from "react-table";
 
@@ -53,28 +54,72 @@ export function CsvManager() {
         });
     }, []);
 
+    function handleExportNodes(): void {
+        axios.get("/api/csvManager/exportNodes").then((response) => {
+            const csvData = response.data;
+            const blob = new Blob([csvData], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const element = document.createElement("a");
+            element.href = url;
+            element.download = "nodeDataFile.csv";
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        });
+    }
+
+    function handleExportEdges(): void {
+        axios.get("/api/csvManager/exportEdges").then((response) => {
+            const csvData = response.data;
+            const blob = new Blob([csvData], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const element = document.createElement("a");
+            element.href = url;
+            element.download = "edgeDataFile.csv";
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        });
+    }
+
     return (
         <div className={"csvManager"}>
-            <label>Node CSV:</label>
+            <h2 className={"text-3xl font-HeadlandOne py-4"}>Map CSV Manager</h2>
+            <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Node CSV</h3>
             <form id='uploadForm'
                   action='http://localhost:3000/api/csvManager/uploadNodes'
                   method='post'
                   encType="multipart/form-data">
                 <input type="file" name="importedNodes"/>
-                <input type='submit' value='Upload!'/>
+                <input type='submit' value='Upload!' className="px-5 py-2 bg-deep-blue font-bold text-white w-fit rounded"/>
             </form>
+            <br/>
 
-            <label>Edge CSV:</label>
+            <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Edge CSV</h3>
             <form id='uploadForm'
                   action='http://localhost:3000/api/csvManager/uploadEdges'
                   method='post'
                   encType="multipart/form-data">
                 <input type="file" name="importedEdges"/>
-                <input type='submit' value='Upload!'/>
+                <input type='submit' value='Upload!' className="px-5 py-2 bg-deep-blue font-bold text-white w-fit rounded"/>
             </form>
 
-            <Table data={nodeData} headings={["Name", "Node ID", "X-Coord","Y-Coord"]} keys={ ["name", "id", "xcord","ycord"] }/>
-            <Table data={edgeData} headings={["Start Node", "End Node"]} keys={ ["startNodeID", "endNodeID"] }/>
+            <div className="centerContent gap-10 p-10">
+                {<Button onClick={handleExportNodes}>Download Nodes</Button>}
+                {<Button onClick={handleExportEdges}>Download Edges</Button>}
+            </div>
+            <div className="centerContent gap-5 flex-col w-full py-10">
+                <h3 className={"text-xl font-HeadlandOne"}>Nodes</h3>
+                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full">
+                    <Table data={nodeData} headings={["Name", "Node ID", "X-Coord", "Y-Coord"]}
+                           keys={["name", "id", "xcord", "ycord"]}/>
+                </div>
+                <br/>
+                <h3 className={"text-xl font-HeadlandOne"}>Edges</h3>
+                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full">
+                    <Table data={edgeData} headings={["Start Node", "End Node"]} keys={["startNodeID", "endNodeID"]}/>
+                </div>
+            </div>
         </div>
     );
 }

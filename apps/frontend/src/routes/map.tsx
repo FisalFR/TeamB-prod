@@ -73,19 +73,6 @@ export function Map(){
         });
     }, []);
 
-    function handleExport(): void {
-        axios.get("/api/pathfinding/export").then((response) => {
-            const csvData = response.data;
-            const blob = new Blob([csvData], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const element = document.createElement("a");
-            element.href = url;
-            element.download = "nodeDataFile.csv";
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
-        });
-    }
 
     return (
         <div className="centerContent gap-10 w-full h-full">
@@ -106,8 +93,6 @@ export function Map(){
                 <span style={{color: "#F6BD38"}}>● </span>
                 <Select label="Ending Location: " id="nodeEndSelect" options={nodes} onChange={handleEndChange}/><br/><br/>
                 <Button onClick={findPath} children={"Find Path"}/>
-
-                <Button onClick={handleExport}>download</Button>
             </div>
         </div>
     );

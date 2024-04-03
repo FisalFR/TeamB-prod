@@ -2958,6 +2958,7 @@ const RAW_RUNTIME_STATE =
           ["@swc/helpers", "npm:0.5.8"],\
           ["@types/cookie-parser", "npm:1.4.7"],\
           ["@types/express", "npm:4.17.21"],\
+          ["@types/express-fileupload", "npm:1.5.0"],\
           ["@types/http-errors", "npm:2.0.4"],\
           ["@types/morgan", "npm:1.9.9"],\
           ["@types/node", "npm:20.11.30"],\
@@ -2969,6 +2970,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-custom", "workspace:configs/eslint-config-custom"],\
           ["express", "npm:5.0.0-beta.1"],\
+          ["express-fileupload", "npm:1.5.0"],\
           ["express-oauth2-jwt-bearer", "npm:1.6.0"],\
           ["fs", "npm:0.0.1-security"],\
           ["http-errors", "npm:1.6.3"],\
