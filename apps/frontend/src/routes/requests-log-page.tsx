@@ -1,45 +1,36 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Table from "../components/Table.tsx";
 
 function LogBook() {
-    const [logs, setLogs] = useState([]);
+
+    const [interpreterReq, setInterpreterReq] = useState([]);
+    const [maintenanceReq, setMaintenanceReq] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const languageResponse = await axios.get("/api/languageInterpreter");
-                const maintenanceResponse = await axios.get("/api/maintenance");
 
-                const newLogs = [
-                    ...languageResponse.data.map(request => ({
-                        type: "Language",
-                        message: `Language: ${request.language}, Location: ${request.location}`
-                    })),
-                    ...maintenanceResponse.data.map(request => ({
-                        type: "Maintenance",
-                        message: `Issue: ${request.issue}, Location: ${request.location}, Urgent: ${request.isUrgent ? "Yes" : "No"}, Feedback: ${request.feedback}`
-                    }))
-                ];
-
-                setLogs(prevLogs => [...prevLogs, ...newLogs]);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-
-        fetchData();
+        axios.get("/api/languageInterpreter/").then((response) => {
+            setInterpreterReq(response.data.reverse());
+        });
+        axios.get("/api/maintenance/").then((response) => {
+            setMaintenanceReq(response.data.reverse());
+        });
     }, []);
 
     return (
-        <div style={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-            <h2 style={{ fontSize: "18px", margin: "0", marginBottom: "10px" }}>Log Book</h2>
-            <div style={{ width: "100%", overflowY: "auto", padding: "10px", boxSizing: "border-box" }}>
-                {logs.map((log, index) => (
-                    <div key={index} style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px", marginBottom: "10px" }}>
-                        <strong>{log.type}</strong>
-                        <p>{log.message}</p>
-                    </div>
-                ))}
+        <div className="overflow-scroll pb-12">
+            <h2 className={"text-3xl font-HeadlandOne py-4"}>Log Book</h2>
+
+            <h2 className={"text-2xl font-HeadlandOne py-4"}>Interpreter Requests</h2>
+            <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue">
+                <Table data={interpreterReq} headings={["Language", "Location"]}
+                       keys={["language", "location"]}/>
+            </div>
+            <br/>
+            <h2 className={"text-2xl font-HeadlandOne py-4"}>Maintenance Requests</h2>
+            <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue">
+                <Table data={maintenanceReq} headings={["Issue", "Location", "Urgent", "Feedback"]}
+                       keys={["issue", "location", "isUrgent", "feedback"]}/>
             </div>
         </div>
     );
