@@ -20,13 +20,12 @@ router.get("/edges", async (req, res) => {
 });
 
 router.post("/uploadNodes", function (req, res) {
-
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send("No files were uploaded.");
   }
-    client.l1Edges.deleteMany().then(); // deletes all records of Edges table
-    client.l1Nodes.deleteMany().then(); // deletes all records of Nodes table
-    const importedNodesFile = req.files.importedNodes;
+  client.l1Edges.deleteMany().then(); // deletes all records of Edges table
+  client.l1Nodes.deleteMany().then(); // deletes all records of Nodes table
+  const importedNodesFile = req.files.importedNodes;
 
   // for debugging
   // if (!Array.isArray(importedNodesFile)) {
@@ -49,6 +48,7 @@ router.post("/uploadNodes", function (req, res) {
 });
 
 router.post("/uploadEdges", function (req, res) {
+  console.log(req);
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send("No files were uploaded.");
   }
@@ -66,7 +66,6 @@ router.post("/uploadEdges", function (req, res) {
     edges.shift();
     populateEdge.populateEdgeDB(edges).then(res.send("File uploaded!"));
   }
-
 });
 
 router.get("/exportNodes", async (req, res) => {

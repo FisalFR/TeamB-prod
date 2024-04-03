@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"; // , useMemo
+import {useState, useEffect, useRef} from "react"; // , useMemo
 import axios from "axios";
 import Table from "../components/Table.tsx";
 import Button from "../components/Button.tsx";
@@ -10,29 +10,8 @@ export function CsvManager() {
     const [nodeData, setNodeData] = useState(["Error accessing node data."]);
     const [edgeData, setEdgeData] = useState(["Error accessing edge data."]);
 
-    // const Table = ({}) => {
-    //     const columns = useMemo(
-    //         () => [
-    //             {Header: "Node  ID", accessor: "node_id"},
-    //             {Header: "X-Coordinate", accessor: "x_coordinate"},
-    //             {Header: "Y-Coordinate", accessor: "y_coordinate"},
-    //             {Header: "Floor", accessor: "floor"},
-    //             {Header: "Building", accessor: "building"},
-    //             {Header: "Node Type", accessor: "node_type"},
-    //             {Header: "Long Name", accessor: "long_name"},
-    //             {Header: "Short Name", accessor: "short_name"}
-    //         ],
-    //         []
-    //     );
-    // };
-
-    // const tableInstance {
-    //     getTableProps,
-    //     getTableBodyProps,
-    //     headerGroups,
-    //     rows,
-    //     prepareRow
-    // } = useTable({ columns, nodeData });
+    const formRefNodes = useRef<HTMLFormElement>(null);
+    const formRefEdges = useRef<HTMLFormElement>(null);
 
     // TODO extract to external function to be called here and in map.tsx
     // With no dependencies listed, the Effect will re-run after every re-render of the component.
@@ -82,26 +61,45 @@ export function CsvManager() {
         });
     }
 
+    function handleImportNodes() {
+        const formNodeData = new FormData(formRefNodes.current as HTMLFormElement);
+        axios.post("/api/csvManager/uploadNodes",formNodeData,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then((response) => {
+            alert(response.data);
+        }
+        );
+    }
+
+    function handleImportEdges() {
+        const formEdgeData = new FormData(formRefEdges.current as HTMLFormElement);
+        axios.post("/api/csvManager/uploadEdges",formEdgeData,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then((response) => {
+                alert(response.data);
+            }
+        );
+    }
+
+
     return (
         <div className={"csvManager"}>
             <h2 className={"text-3xl font-HeadlandOne py-4"}>Map CSV Manager</h2>
             <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Node CSV</h3>
-            <form id='uploadForm'
-                  action='/api/csvManager/uploadNodes'
-                  method='post'
-                  encType="multipart/form-data">
+            <form ref = {formRefNodes} onSubmit={e => {e.preventDefault();}}>
                 <input type="file" name="importedNodes"/>
-                <input type='submit' value='Upload!' className="px-5 py-2 bg-deep-blue font-bold text-white w-fit rounded"/>
+                <Button onClick={handleImportNodes}>Upload</Button>
             </form>
             <br/>
 
             <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Edge CSV</h3>
-            <form id='uploadForm'
-                  action='/api/csvManager/uploadEdges'
-                  method='post'
-                  encType="multipart/form-data">
+            <form ref = {formRefEdges} onSubmit={e => {e.preventDefault();}}>
                 <input type="file" name="importedEdges"/>
-                <input type='submit' value='Upload!' className="px-5 py-2 bg-deep-blue font-bold text-white w-fit rounded"/>
+                <Button onClick={handleImportEdges}>Upload</Button>
             </form>
 
             <div className="centerContent gap-10 p-10">
