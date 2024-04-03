@@ -63,7 +63,7 @@ router.post("/uploadEdges", function (req, res) {
     // Resolves type ambiguity to allow the use of importedEdgesFile.data
     const edges = importedEdgesFile.data
       .toString()
-      .split("\n")
+      .split("\r\n")
       .map((row: string): string[] => {
         return row.split(",");
       });
