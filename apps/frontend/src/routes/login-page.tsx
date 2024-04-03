@@ -1,6 +1,6 @@
 import {ChangeEvent, useRef, useState} from "react";
 import {loginInfo} from "../common/login-info";
-import Button from "../components/Button.tsx";
+import Button from "../components/button.tsx";
 import user_icon from "../assets/user_icon.svg";
 import password_icon from "../assets/password_icon.svg";
 import AnimatedSVG from "../components/HeroImage.tsx";

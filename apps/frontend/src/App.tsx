@@ -7,6 +7,7 @@ import LoginPage from "./routes/login-page";
 import NavigationBar from "./components/NavigationBar";
 import LanguageInterpreter from "./routes/language-interpreter-page";
 import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
+import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
 
 function App() {
@@ -38,7 +39,11 @@ function App() {
                             path:"interpreter",
                             element: <LanguageInterpreter/>
                         },
-                         {
+                        {
+                            path:"csvManager",
+                            element: <CsvManager/>
+                        },
+                        {
                            path:"/logs",
                            element:<LogBook/>,
 
