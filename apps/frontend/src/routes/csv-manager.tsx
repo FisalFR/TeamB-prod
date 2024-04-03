@@ -7,6 +7,7 @@ import Table from "../components/Table.tsx";
 export function CsvManager() {
     // TODO refactor to work with two separate GET URLs based on radio button input
     const [nodeData, setNodeData] = useState(["Error accessing node data."]);
+    const [edgeData, setEdgeData] = useState(["Error accessing edge data."]);
 
     // const Table = ({}) => {
     //     const columns = useMemo(
@@ -35,12 +36,20 @@ export function CsvManager() {
     // TODO extract to external function to be called here and in map.tsx
     // With no dependencies listed, the Effect will re-run after every re-render of the component.
     useEffect( () => {
-        axios.get("/api/csvManager/").then((response) => {
+        axios.get("/api/csvManager/nodes").then((response) => {
             const tempNodeData = [];
             for (let i = 0; i < response.data.length; i++) {
                 tempNodeData.push({name: response.data[i].longName, id: response.data[i].nodeID, xcord: response.data[i].xcoord, ycord: response.data[i].ycoord});
             }
             setNodeData(tempNodeData);
+        });
+
+        axios.get("/api/csvManager/edges").then((response) => {
+            const tempEdgeData = [];
+            for (let i = 0; i < response.data.length; i++) {
+                tempEdgeData.push({startNodeID: response.data[i].startNodeID, endNodeID: response.data[i].endNodeID});
+            }
+            setEdgeData(tempEdgeData);
         });
     }, []);
 
@@ -65,6 +74,7 @@ export function CsvManager() {
             </form>
 
             <Table data={nodeData} headings={["Name", "Node ID", "X-Coord","Y-Coord"]} keys={ ["name", "id", "xcord","ycord"] }/>
+            <Table data={edgeData} headings={["Start Node", "End Node"]} keys={ ["startNodeID", "endNodeID"] }/>
         </div>
     );
 }

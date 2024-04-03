@@ -7,10 +7,14 @@ import populateEdge from "../populateEdge";
 
 router.use(fileUpload());
 
-router.get("/", async (req, res) => {
-  // TODO add if statement or refactor to use a different URL
+router.get("/nodes", async (req, res) => {
   const allNodes = await client.l1Nodes.findMany();
   res.status(200).json(allNodes);
+});
+
+router.get("/edges", async (req, res) => {
+  const allEdges = await client.l1Edges.findMany();
+  res.status(200).json(allEdges);
 });
 
 router.post("/uploadNodes", function (req, res) {
