@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://teamb:teamb20@database.cs.wpi.edu:5432/teambdb?schema=teamb"
+  url      = env("POSTGRES_URL")
   // postgresql://teamb:teamb20@database.cs.wpi.edu:5432/teambdb?schema=teamb
 }
 
