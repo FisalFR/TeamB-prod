@@ -95,7 +95,12 @@ class Path {
         }
       }
     }
-    return this.reconstructPath(cameFrom, startNode, endNode);
+    if (cameFrom.has(endNode)) {
+        return this.reconstructPath(cameFrom, startNode, endNode);
+    }
+    else {
+        return [];
+    }
   }
 
   // Function to generate Node Maps

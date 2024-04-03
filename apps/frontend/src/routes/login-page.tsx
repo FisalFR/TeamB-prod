@@ -47,14 +47,12 @@ function LoginPage() {
 
     return (
                 <div>
-                    <h1 className="font-bold text-left font-HeadlandOne text-6xl pb-2">Navigate Seamlessly</h1>
+                    <h1 className="px-6 font-bold text-left font-HeadlandOne text-6xl">Navigate Seamlessly</h1>
                     <div className='centerContent gap-10 w-full h-fit'>
-                        <div className="flex flex-col">
-                            <p className="text-left text-xl">Find your room in Brighams with ease. With pathfinding locate your
+                        <div className="centerContent flex-col">
+                            <p className="text-left text-xl p-6">Find your room in Brigham & Women's with ease. With pathfinding locate your
                                 destination in the smallest steps. Never get lost, no wasted time, get there stress free.</p>
                             <AnimatedSVG/>
-
-
                         </div>
                         <div className={loginWindowVisibility.loginScreen}>
                             <div className='login-container centerContent bg-deep-blue px-[50px] py-[40px]'>
