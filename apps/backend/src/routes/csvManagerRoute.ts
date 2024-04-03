@@ -39,7 +39,7 @@ router.post("/uploadNodes", function (req, res) {
     // Resolves type ambiguity to allow the use of importedNodesFile.data
     const nodes = importedNodesFile.data
       .toString()
-      .split("\n")
+      .split("\r\n")
       .map((row: string): string[] => {
         return row.split(",");
       });
