@@ -42,8 +42,8 @@ function App() {
                         {
                             path:"csvManager",
                             element: <CsvManager/>
-                        }
-                         {
+                        },
+                        {
                            path:"/logs",
                            element:<LogBook/>,
 
