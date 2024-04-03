@@ -34,8 +34,15 @@ function LoginPage() {
                 navigate("/map");
                 return;
             }
-            setLoginWindowVisibility({loginScreen: "hidden", submittedScreen: "block"});
+            else {
+                alert("Invalid username or password");
+            }
+            //setLoginWindowVisibility({loginScreen: "hidden", submittedScreen: "block"});
         }
+    }
+
+    function guestLogin() {
+        navigate("/map");
     }
 
     function handleLogout() {
@@ -73,6 +80,7 @@ function LoginPage() {
                                                value={input.password} required={true}/>
                                     </div>
                                     <Button onClick={handleLogin} children="Login"/>
+                                    <Button onClick={guestLogin} children="Login as Guest"/>
                                 </form>
                             </div>
                         </div>
