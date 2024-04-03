@@ -16,20 +16,24 @@ import {NavLink} from "./NavLink.tsx";
      };
      function createDropdown(){
          return props.dropdownLinks.map((link) =>
-             <NavLink href={link[0]} children="">
+             <div className="centerContent py-1">
+             <NavLink href={link[0]}>
                  {link[1]}
              </NavLink>
+             </div>
 
          );}
     return(
-        <div className="w-full relative" onMouseEnter = {handleMouseEnter}
+        <div className="w-fit relative" onMouseEnter = {handleMouseEnter}
              onMouseLeave = {handleMouseLeave}>
 
-            <NavLink href={props.mainLink[0]} children="">
-                {props.mainLink[1]}
-            </NavLink>
+            <div className="px-16">
+                <NavLink href={props.mainLink[0]}>
+                    {props.mainLink[1]}
+                </NavLink>
+            </div>
             {isSeen && (
-                <div className= "right-5 bg-deep-blue absolute px-2">
+                <div className= "bg-deep-blue absolute w-full">
                     {createDropdown()}
                 </div>
             )}
