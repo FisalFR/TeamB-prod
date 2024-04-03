@@ -20,13 +20,13 @@ router.get("/edges", async (req, res) => {
 });
 
 router.post("/uploadNodes", function (req, res) {
-  client.l1Edges.deleteMany().then(); // deletes all records of Edges table
-  client.l1Nodes.deleteMany().then(); // deletes all records of Nodes table
+
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send("No files were uploaded.");
   }
-
-  const importedNodesFile = req.files.importedNodes;
+    client.l1Edges.deleteMany().then(); // deletes all records of Edges table
+    client.l1Nodes.deleteMany().then(); // deletes all records of Nodes table
+    const importedNodesFile = req.files.importedNodes;
 
   // for debugging
   // if (!Array.isArray(importedNodesFile)) {
@@ -44,21 +44,17 @@ router.post("/uploadNodes", function (req, res) {
         return row.split(",");
       });
     nodes.shift();
-    populateNode.populateNodeDB(nodes).then();
+    populateNode.populateNodeDB(nodes).then(res.send("File uploaded!"));
   }
-
-  res.send("File uploaded!");
 });
 
 router.post("/uploadEdges", function (req, res) {
-  client.l1Edges.deleteMany().then(); // deletes all records of Edges table
-
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send("No files were uploaded.");
   }
 
   const importedEdgesFile = req.files.importedEdges;
-
+  client.l1Edges.deleteMany().then(); // deletes all records of Edges table
   if (!Array.isArray(importedEdgesFile)) {
     // Resolves type ambiguity to allow the use of importedEdgesFile.data
     const edges = importedEdgesFile.data
@@ -68,10 +64,9 @@ router.post("/uploadEdges", function (req, res) {
         return row.split(",");
       });
     edges.shift();
-    populateEdge.populateEdgeDB(edges).then();
+    populateEdge.populateEdgeDB(edges).then(res.send("File uploaded!"));
   }
 
-  res.send("File uploaded!");
 });
 
 router.get("/exportNodes", async (req, res) => {
