@@ -4,6 +4,7 @@ import Path from "../../../../packages/common/src/pathFinder";
 //import Parser from "../../../../packages/common/src/parser";
 import Node from "../../../../packages/common/src/node";
 import client from "../bin/database-connection";
+import writeNode from "../writeNode";
 
 const router: Router = express.Router();
 
@@ -32,6 +33,14 @@ router.post("/", async (req, res) => {
     nodeMap: finalPath.nodeMap,
   };
   res.status(200).json(res.body);
+});
+
+router.get("/export", async (req, res) => {
+  const nodeFile = await writeNode.nodeDownload();
+  console.log(nodeFile);
+  res.setHeader("Content-disposition", "attachment; filename=nodeDataFile.csv");
+  res.set("Content-Type", "text/csv");
+  res.status(200).send(nodeFile);
 });
 
 export default router;
