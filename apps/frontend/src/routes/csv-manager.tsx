@@ -75,15 +75,15 @@ export function CsvManager() {
 
     function handleImportEdges() {
         const formEdgeData = new FormData(formRefEdges.current as HTMLFormElement);
-        axios.post("/api/csvManager/uploadEdges",formEdgeData,{
+        axios.post("/api/csvManager/uploadEdges", formEdgeData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((response) => {
-                alert(response.data);
-            }
-        );
-    }
+            alert(response.data[0].result.message);
+        });
+    };
+
 
 
     return (

@@ -54,7 +54,7 @@ router.post("/uploadNodes", function (req, res) {
 
 router.post("/uploadEdges", async (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send("No files were uploaded.");
+    return res.status(400).send({ message: "No files were uploaded." });
   }
   const importedEdgesFile = req.files.importedEdges;
 
@@ -71,14 +71,19 @@ router.post("/uploadEdges", async (req, res) => {
       client.l1Edges.deleteMany().then(() => {
         populateEdge.populateEdgeDB(edges).then((isValid) => {
           if (!isValid) {
-            res.status(400).send("Invalid edge files.");
+            res.status(400).send({ message: "Invalid edge files." });
           } else {
-            res.status(501).send("Files were uploaded.");
+            res.status(501).send({ message: "Files were uploaded." });
           }
         });
       });
     } catch (error) {
-      return res.status(400).send("No files were uploaded.");
+      //res.status(400).json("No files were uploaded!");
+      res.body = {
+        message: "No files were uploaded",
+      };
+      res.status(400);
+      res.send({ message: "No files were uploaded." });
     }
   }
 });
