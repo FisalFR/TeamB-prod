@@ -16,6 +16,10 @@ export function CsvManager() {
     // TODO extract to external function to be called here and in map.tsx
     // With no dependencies listed, the Effect will re-run after every re-render of the component.
     useEffect( () => {
+        resetTable();
+    }, []);
+
+    function resetTable() {
         axios.get("/api/csvManager/nodes").then((response) => {
             const tempNodeData = [];
             for (let i = 0; i < response.data.length; i++) {
@@ -31,7 +35,7 @@ export function CsvManager() {
             }
             setEdgeData(tempEdgeData);
         });
-    }, []);
+    }
 
     function handleExportNodes(): void {
         axios.get("/api/csvManager/exportNodes").then((response) => {
@@ -69,21 +73,23 @@ export function CsvManager() {
             }
         }).then((response) => {
             alert(response.data);
+            resetTable();
         }
         );
     }
 
     function handleImportEdges() {
         const formEdgeData = new FormData(formRefEdges.current as HTMLFormElement);
-        axios.post("/api/csvManager/uploadEdges",formEdgeData,{
+        axios.post("/api/csvManager/uploadEdges", formEdgeData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((response) => {
-                alert(response.data);
-            }
-        );
-    }
+            alert(response.data);
+            resetTable();
+        });
+    };
+
 
 
     return (
