@@ -6,7 +6,7 @@ import populateNode from "../populateNode";
 import populateEdge from "../populateEdge";
 import writeNode from "../writeNode.ts";
 import writeEdge from "../writeEdge";
-import edge from "common/src/edge";
+//import edge from "common/src/edge";
 
 router.use(fileUpload());
 
@@ -22,7 +22,7 @@ router.get("/edges", async (req, res) => {
 
 router.post("/uploadNodes", function (req, res) {
   if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send("No files were uploaded.");
+    return res.send("No files were uploaded.");
   }
   const importedNodesFile = req.files.importedNodes;
   if (!Array.isArray(importedNodesFile)) {
@@ -39,15 +39,15 @@ router.post("/uploadNodes", function (req, res) {
         client.l1Nodes.deleteMany().then(() => {
           populateNode.populateNodeDB(nodes).then((isValid) => {
             if (!isValid) {
-              res.status(400).send("Invalid node files.");
+              return res.send("Invalid node files.");
             } else {
-              res.status(501).send("Files were uploaded.");
+              return res.send("Files were uploaded.");
             }
           });
         });
       });
     } catch (error) {
-      return res.status(400).send("No files were uploaded.");
+      return res.send("No files were uploaded.");
     }
   }
 });
@@ -71,33 +71,28 @@ router.post("/uploadEdges", async (req, res) => {
       client.l1Edges.deleteMany().then(() => {
         populateEdge.populateEdgeDB(edges).then((isValid) => {
           if (!isValid) {
-            res.status(400).send({ message: "Invalid edge files." });
+            return res.send("Invalid edge files.");
           } else {
-            res.status(501).send({ message: "Files were uploaded." });
+            return res.send("Files were uploaded.");
           }
         });
       });
     } catch (error) {
-      //res.status(400).json("No files were uploaded!");
-      res.body = {
-        message: "No files were uploaded",
-      };
-      res.status(400);
-      res.send({ message: "No files were uploaded." });
+      return res.send("No files were uploaded.");
     }
   }
 });
 
 router.get("/exportNodes", async (req, res) => {
   const nodeFile = await writeNode.nodeDownload();
-  console.log(nodeFile);
+  //console.log(nodeFile);
   res.setHeader("Content-disposition", "attachment; filename=nodeDataFile.csv");
   res.set("Content-Type", "text/csv");
   res.status(200).send(nodeFile);
 });
 router.get("/exportEdges", async (req, res) => {
   const nodeFile = await writeEdge.edgeDownload();
-  console.log(nodeFile);
+  //console.log(nodeFile);
   res.setHeader("Content-disposition", "attachment; filename=edgeDataFile.csv");
   res.set("Content-Type", "text/csv");
   res.status(200).send(nodeFile);
