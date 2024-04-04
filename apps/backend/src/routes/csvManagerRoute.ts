@@ -54,7 +54,7 @@ router.post("/uploadNodes", function (req, res) {
 
 router.post("/uploadEdges", async (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send({ message: "No files were uploaded." });
+    return res.send("No files were uploaded.");
   }
   const importedEdgesFile = req.files.importedEdges;
 
