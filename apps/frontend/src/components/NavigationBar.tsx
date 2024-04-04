@@ -7,8 +7,8 @@ export function NavigationBar() {
         const dropdownList = [
             ["/maintenance", "Maintenance"],
             ["/interpreter", "Interpreter"],
-            ["/logs", "Request Logs"]
-
+            ["/logs", "Request Logs"],
+            ["/csvManager", "CSV Manager"]
         ];
         return (
 
@@ -31,8 +31,6 @@ export function NavigationBar() {
                     </div>
                 </div>
             </div>
-
-
             </>
         );
     }

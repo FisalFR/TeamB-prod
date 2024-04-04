@@ -73,6 +73,7 @@ export function Map(){
         });
     }, []);
 
+
     return (
         <div className="centerContent gap-10 w-full h-full">
             <div className="">

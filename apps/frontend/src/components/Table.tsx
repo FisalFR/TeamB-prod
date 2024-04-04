@@ -4,7 +4,7 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
 
     function createTableHeader(){
         return props.headings.map((heading) =>
-            <th className="border-collapse p-2 border-solid border-[1px] border-deep-blue bg-deep-blue text-bone-white">
+            <th className="border-collapse p-2 border-solid border-t-[0px] border-[1px] border-deep-blue bg-deep-blue text-bone-white">
                 {heading}
             </th>
 
@@ -19,14 +19,14 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
         );}
     function createRow(request){
         return props.keys.map((key) =>
-            <td className="border-collapse p-2 border-solid border-[1px] border-deep-blue">
+            <td className="border-collapse p-2 border-solid border-[1px] border-t-[0px] border-deep-blue">
                 {request[key]}
             </td>
 
         );}
 
     return(
-        <table className="overflow-scroll border-collapse p-6 border-solid border-[1px] border-deep-blue w-full bg-white">
+        <table className="overflow-scroll border-collapse p-6 border-solid border-[1px] border-t-[0px] border-deep-blue w-full bg-white">
             <thead className="sticky top-0">
                 {createTableHeader()}
             </thead>

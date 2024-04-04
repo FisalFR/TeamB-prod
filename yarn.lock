@@ -1143,6 +1143,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/busboy@npm:*":
+  version: 1.5.3
+  resolution: "@types/busboy@npm:1.5.3"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 9ec0a125723e594816d06f6ddf5a4f8dda4855734719bb6e38bdc6fdaf59416f270744862ee54c755075af26e9f5467cc00db803ae1d88f45c1431f61a48ae58
+  languageName: node
+  linkType: hard
+
 "@types/cacheable-request@npm:^6.0.1":
   version: 6.0.3
   resolution: "@types/cacheable-request@npm:6.0.3"
@@ -1217,6 +1226,16 @@ __metadata:
   version: 1.0.5
   resolution: "@types/estree@npm:1.0.5"
   checksum: 7de6d928dd4010b0e20c6919e1a6c27b61f8d4567befa89252055fad503d587ecb9a1e3eab1b1901f923964d7019796db810b7fd6430acb26c32866d126fd408
+  languageName: node
+  linkType: hard
+
+"@types/express-fileupload@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "@types/express-fileupload@npm:1.5.0"
+  dependencies:
+    "@types/busboy": "npm:*"
+    "@types/express": "npm:*"
+  checksum: 36dd4181d73c07e2878e50efa672e98d31117b1cb340cf2b8313d84461a3e31ab5c58aaf8c688ea028016aeafb3450dd47a734a184f291e4c47fd69a505967f9
   languageName: node
   linkType: hard
 
@@ -1406,6 +1425,15 @@ __metadata:
     "@types/history": "npm:^4.7.11"
     "@types/react": "npm:*"
   checksum: 72d78d2f4a4752ec40940066b73d7758a0824c4d0cbeb380ae24c8b1cdacc21a6fc835a99d6849b5b295517a3df5466fc28be038f1040bd870f8e39e5ded43a4
+  languageName: node
+  linkType: hard
+
+"@types/react-table@npm:^7":
+  version: 7.7.20
+  resolution: "@types/react-table@npm:7.7.20"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: adf86958dd5b2e044d23fc7896f758b5ec59987891b41e9b02d935d666e999a518b0bdd8ba5bd60d644f20147de0ec3cf5f6a12b75516f1fad43fb3b4fd8361f
   languageName: node
   linkType: hard
 
@@ -1626,6 +1654,24 @@ __metadata:
   version: 1.2.0
   resolution: "@ungap/structured-clone@npm:1.2.0"
   checksum: c6fe89a505e513a7592e1438280db1c075764793a2397877ff1351721fe8792a966a5359769e30242b3cd023f2efb9e63ca2ca88019d73b564488cc20e3eab12
+  languageName: node
+  linkType: hard
+
+"@use-gesture/core@npm:10.3.1":
+  version: 10.3.1
+  resolution: "@use-gesture/core@npm:10.3.1"
+  checksum: 66c5bda4cf75927e0d1f9cb1b1a0a06d9812f918dfd634b768b6011385ce7b295ca89e0b016f4fe7a6d97d571726653b75c4271fd7f635bb8c159bf7886ce21c
+  languageName: node
+  linkType: hard
+
+"@use-gesture/react@npm:^10.2.11":
+  version: 10.3.1
+  resolution: "@use-gesture/react@npm:10.3.1"
+  dependencies:
+    "@use-gesture/core": "npm:10.3.1"
+  peerDependencies:
+    react: ">= 16.8.0"
+  checksum: 2c01c1b73bbdeecb9d51370f9117418953accad6789818e1b50f505dcba9e38685612b3fcb25a5dfcbf3a10ae561506378f5ab7586c773c4485ef86107d53898
   languageName: node
   linkType: hard
 
@@ -2117,6 +2163,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"attr-accept@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "attr-accept@npm:2.2.2"
+  checksum: c867ed41ed749988ad2a6fc70eb2498b9c3c2d58aaad2a8d05422a383058f9d29e50c4bca363c5ee7433df738a7920cc95377bbce8678e817fb498299dd82010
+  languageName: node
+  linkType: hard
+
 "autoprefixer@npm:^10.4.18":
   version: 10.4.19
   resolution: "autoprefixer@npm:10.4.19"
@@ -2154,6 +2207,7 @@ __metadata:
     "@swc/helpers": "npm:^0.5.1"
     "@types/cookie-parser": "npm:^1.4.3"
     "@types/express": "npm:^4.17.17"
+    "@types/express-fileupload": "npm:^1.5.0"
     "@types/http-errors": "npm:^2.0.1"
     "@types/morgan": "npm:^1.9.4"
     "@types/node": "npm:^20.2.3"
@@ -2165,6 +2219,7 @@ __metadata:
     eslint: "npm:latest"
     eslint-config-custom: "workspace:*"
     express: "npm:5.0.0-beta.1"
+    express-fileupload: "npm:^1.5.0"
     express-oauth2-jwt-bearer: "npm:^1.5.0"
     fs: "npm:^0.0.1-security"
     http-errors: "npm:~1.6.3"
@@ -2302,6 +2357,15 @@ __metadata:
   version: 2.0.0
   resolution: "buffer-writer@npm:2.0.0"
   checksum: fdca8e28c55704de7af2f41c8f875293de69ad22005d5041d54aa916d125cead00afa969bc09e4702ae6b66e098409958c06bebfc97fcf8fa4ea5afcae088cd9
+  languageName: node
+  linkType: hard
+
+"busboy@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "busboy@npm:1.6.0"
+  dependencies:
+    streamsearch: "npm:^1.1.0"
+  checksum: bee10fa10ea58e7e3e7489ffe4bda6eacd540a17de9f9cd21cc37e297b2dd9fe52b2715a5841afaec82900750d810d01d7edb4b2d456427f449b92b417579763
   languageName: node
   linkType: hard
 
@@ -3529,6 +3593,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"express-fileupload@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "express-fileupload@npm:1.5.0"
+  dependencies:
+    busboy: "npm:^1.6.0"
+  checksum: 08ed9aa710b49c51ac6ba8b688424ed3e93b8155fd0450471a00348cccf599b08bd17a5fa132c3f4d44c0054aaeec19b307a4c80b2a0768a73693624b0b2d763
+  languageName: node
+  linkType: hard
+
 "express-oauth2-jwt-bearer@npm:^1.5.0":
   version: 1.6.0
   resolution: "express-oauth2-jwt-bearer@npm:1.6.0"
@@ -3659,6 +3732,15 @@ __metadata:
   dependencies:
     flat-cache: "npm:^3.0.4"
   checksum: 099bb9d4ab332cb93c48b14807a6918a1da87c45dce91d4b61fd40e6505d56d0697da060cb901c729c90487067d93c9243f5da3dc9c41f0358483bfdebca736b
+  languageName: node
+  linkType: hard
+
+"file-selector@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "file-selector@npm:0.5.0"
+  dependencies:
+    tslib: "npm:^2.0.3"
+  checksum: bbbfc5d9d1602e4bc376d67b62f44576301a8c7ae91dd6d57647b31ea497a37cef4b8a367def31f8a4a4ec6e96db886c2f509a816f8b395c3b6020f1a3dbdb1d
   languageName: node
   linkType: hard
 
@@ -5334,6 +5416,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"papaparse@npm:^5.3.0":
+  version: 5.4.1
+  resolution: "papaparse@npm:5.4.1"
+  checksum: 5e6dc978187182ad2efa1d264ffe73d2042cd23b8fb1dcb0b0f5c8c7c772c11e3eb4e166fb0893880ed24529a96abe9065d704cc5b4cb96abf037413cfe43788
+  languageName: node
+  linkType: hard
+
 "parent-module@npm:^1.0.0":
   version: 1.0.1
   resolution: "parent-module@npm:1.0.1"
@@ -5963,6 +6052,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-csv-importer@npm:^0.8.1":
+  version: 0.8.1
+  resolution: "react-csv-importer@npm:0.8.1"
+  dependencies:
+    "@use-gesture/react": "npm:^10.2.11"
+    papaparse: "npm:^5.3.0"
+    react-dropzone: "npm:^12.1.0"
+  peerDependencies:
+    react: ^16.8.0 || >=17.0.0
+    react-dom: ^16.8.0 || >=17.0.0
+  checksum: b5c58087bfe49ea48c4005bcf0426bfe353593456101b40c7471c03fc37e09d1c012c7c2ca475f248b06b9135ad62228c1215402eee1298e84c31f6ae47eb3c7
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
@@ -5972,6 +6075,19 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: ca5e7762ec8c17a472a3605b6f111895c9f87ac7d43a610ab7024f68cd833d08eda0625ce02ec7178cc1f3c957cf0b9273cdc17aa2cd02da87544331c43b1d21
+  languageName: node
+  linkType: hard
+
+"react-dropzone@npm:^12.1.0":
+  version: 12.1.0
+  resolution: "react-dropzone@npm:12.1.0"
+  dependencies:
+    attr-accept: "npm:^2.2.2"
+    file-selector: "npm:^0.5.0"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    react: ">= 16.8"
+  checksum: cafea162568d6ac5ec5100dec93a994ace8e4870a81aef7eb356ca621394c5bb7c4f536f275ba1d1bc320092fd546f2c58b89d3f1b2b0a7e3dcc0a76839a502b
   languageName: node
   linkType: hard
 
@@ -6046,6 +6162,15 @@ __metadata:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: f763fb64b16b59b7b98816b88898d1697906aebd0d9067bdb2af61d2522b3a313d1117e139e75e39f0cd438e1d110956cfb3573bdefb5516ffba3e7aa618d87e
+  languageName: node
+  linkType: hard
+
+"react-table@npm:^7.8.0":
+  version: 7.8.0
+  resolution: "react-table@npm:7.8.0"
+  peerDependencies:
+    react: ^16.8.3 || ^17.0.0-0 || ^18.0.0
+  checksum: 0c87db8f8823f8eca7a5521d406fa0c75d79972d47768f0c8347af3fa51f9856eea449186a0e2db2effc54d1d74a4e3477855cdbe9adf836d7dfac3a6ec5cdbf
   languageName: node
   linkType: hard
 
@@ -6610,8 +6735,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "softeng-starter-code@workspace:."
   dependencies:
+    "@types/express-fileupload": "npm:^1.5.0"
     "@types/react": "npm:^18.0.37"
     "@types/react-dom": "npm:^18.0.11"
+    "@types/react-table": "npm:^7"
     "@vitest/ui": "npm:^0.33.0"
     "@yarnpkg/pnpify": "npm:^4.0.0-rc.45"
     csv: "npm:^6.3.8"
@@ -6621,6 +6748,7 @@ __metadata:
     dotenv-cli: "npm:^7.4.0"
     eslint: "npm:^8.56.0"
     eslint-config-custom: "workspace:*"
+    express-fileupload: "npm:^1.5.0"
     fs: "npm:^0.0.1-security"
     happy-dom: "npm:^10.6.3"
     husky: "npm:^8.0.0"
@@ -6629,7 +6757,9 @@ __metadata:
     prettier-config-custom: "workspace:*"
     react: "npm:^18.2.0"
     react-bootstrap: "npm:^2.10.0"
+    react-csv-importer: "npm:^0.8.1"
     react-dom: "npm:^18.2.0"
+    react-table: "npm:^7.8.0"
     tsconfig-custom: "workspace:*"
     turbo: "npm:latest"
     typescript: "npm:^5.0.4"
@@ -6715,6 +6845,13 @@ __metadata:
   version: 3.3.1
   resolution: "stream-transform@npm:3.3.1"
   checksum: 361cccfa7c1bf9886639a19f7c41d0b69e50f827f6cf8228746b7687473614b8506c653f71f074a20db4270bbd9ef0d3ed96cbf0932f37810cca633a4991d72e
+  languageName: node
+  linkType: hard
+
+"streamsearch@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "streamsearch@npm:1.1.0"
+  checksum: 612c2b2a7dbcc859f74597112f80a42cbe4d448d03da790d5b7b39673c1197dd3789e91cd67210353e58857395d32c1e955a9041c4e6d5bae723436b3ed9ed14
   languageName: node
   linkType: hard
 
@@ -7069,7 +7206,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"tslib@npm:^2.4.0":
+"tslib@npm:^2.0.3, tslib@npm:^2.4.0":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: bd26c22d36736513980091a1e356378e8b662ded04204453d353a7f34a4c21ed0afc59b5f90719d4ba756e581a162ecbf93118dc9c6be5acf70aa309188166ca
