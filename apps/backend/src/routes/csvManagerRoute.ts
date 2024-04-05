@@ -13,12 +13,12 @@ import EdgeType from "common/src/EdgeType";
 router.use(fileUpload());
 
 router.get("/nodes", async (req, res) => {
-  const allNodes = await client.l1Nodes.findMany();
+  const allNodes = await client.nodes.findMany();
   res.status(200).json(allNodes);
 });
 
 router.get("/edges", async (req, res) => {
-  const allEdges = await client.l1Edges.findMany();
+  const allEdges = await client.edges.findMany();
   res.status(200).json(allEdges);
 });
 
@@ -76,8 +76,8 @@ router.post("/uploadNodes", function (req, res) {
       if (filteredNodes.length != nodes.length) {
         return res.send("Invalid node files.");
       }
-      client.l1Edges.deleteMany().then(() => {
-        client.l1Nodes.deleteMany().then(() => {
+      client.edges.deleteMany().then(() => {
+        client.nodes.deleteMany().then(() => {
           nodes.shift();
           populateNode.populateManyNodeDB(nodes).then((isValid) => {
             if (!isValid) {
@@ -135,7 +135,7 @@ router.post("/uploadEdges", async (req, res) => {
         edges.shift();
         populateEdge.populateManyEdgeDB(edges).then((isValid) => {
           if (!isValid) {
-            return res.send("Invalid edge files. there");
+            return res.send("Invalid edge files.");
           } else {
             return res.send("Files were uploaded.");
           }

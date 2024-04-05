@@ -12,7 +12,7 @@ class populateNode {
         if (nodeData[i][0] == "") {
           break;
         }
-        await prisma.l1Nodes.create({
+        await prisma.nodes.create({
           data: {
             nodeID: nodeData[i][0],
             xcoord: parseInt(nodeData[i][1]),
@@ -43,4 +43,5 @@ class populateNode {
     }
   }
 }
+
 export default populateNode;

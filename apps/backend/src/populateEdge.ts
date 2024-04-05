@@ -12,9 +12,9 @@ class populateEdge {
         if (edgeData[i][0] == "") {
           break;
         }
-        await prisma.l1Nodes.create({
+        await prisma.edges.create({
           data: {
-            eid: edgeData[i][0],
+            edgeID: edgeData[i][0],
             startNodeID: edgeData[i][1],
             endNodeID: edgeData[i][2],
           },
