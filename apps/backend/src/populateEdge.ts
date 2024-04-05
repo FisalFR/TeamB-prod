@@ -5,7 +5,7 @@ const prisma = client;
 class populateEdge {
   //Populates the database by looping through the array for each attribute and for each
   //attribute add it to the column for the database
-  static async populateEdgeDB(edgeData: string[]) {
+  static async populateEdgeDB(edgeData: string[][]) {
     try {
       for (let i = 0; i < edgeData.length; i++) {
         //Checks for empty space at the end of the csv file
