@@ -32,7 +32,7 @@ export function CsvManager() {
         axios.get("/api/csvManager/edges").then((response) => {
             const tempEdgeData = [];
             for (let i = 0; i < response.data.length; i++) {
-                tempEdgeData.push({edgeID: response.data[i].edgeID, startNode: response.data[i].startNode, endNode: response.data[i].endNode});
+                tempEdgeData.push({edgeID: response.data[i].edgeID, startNodeID: response.data[i].startNodeID, endNodeID: response.data[i].endNodeID});
             }
             setEdgeData(tempEdgeData);
         });
@@ -122,7 +122,7 @@ export function CsvManager() {
                 <br/>
                 <h3 className={"text-xl font-HeadlandOne"}>Edges</h3>
                 <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full">
-                    <Table data={edgeData} headings={["Edge ID", "Start Node", "End Node"]} keys={["edgeID", "startNode", "endNode"]}/>
+                    <Table data={edgeData} headings={["Edge ID", "Start Node", "End Node"]} keys={["edgeID", "startNodeID", "endNodeID"]}/>
                 </div>
             </div>
         </div>

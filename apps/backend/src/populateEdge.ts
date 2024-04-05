@@ -29,7 +29,7 @@ class populateEdge {
   static async populateManyEdgeDB(edgeData: EdgeType[]) {
     try {
       edgeData.length;
-      await prisma.l1Edges.createMany({
+      await prisma.edges.createMany({
         data: edgeData,
       });
       return true;

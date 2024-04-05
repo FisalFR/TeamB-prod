@@ -8,9 +8,4 @@ class Edge {
   }
 }
 
-export type EdgeType = {
-    edgeID: string
-    startNode: string;
-    endNode: string;
-}
 export default Edge;

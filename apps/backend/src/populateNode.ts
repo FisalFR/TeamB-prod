@@ -34,7 +34,7 @@ class populateNode {
   static async populateManyNodeDB(nodeData: NodeType[]) {
     try {
       nodeData.length;
-      await prisma.l1Nodes.createMany({
+      await prisma.nodes.createMany({
         data: nodeData,
       });
       return true;

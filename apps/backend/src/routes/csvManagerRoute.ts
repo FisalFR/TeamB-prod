@@ -131,7 +131,7 @@ router.post("/uploadEdges", async (req, res) => {
       if (filteredEdges.length != edges.length) {
         return res.send("Invalid edge files.");
       }
-      client.l1Edges.deleteMany().then(() => {
+      client.edges.deleteMany().then(() => {
         edges.shift();
         populateEdge.populateManyEdgeDB(edges).then((isValid) => {
           if (!isValid) {
