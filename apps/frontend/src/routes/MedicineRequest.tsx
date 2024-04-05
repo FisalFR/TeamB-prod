@@ -89,9 +89,9 @@ export function MedicineRequest(){
 
     return(
 
-        <div className="centerContentt">
+        <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
-                <h1 className={"text-3xl font-HeadlandOne"}>Medicine Delivery Request</h1>
+                <h1 className={"text-3xl font-HeadlandOne pt-8 pb-4"}>Medicine Delivery Request</h1>
                 <p>Fill out the form below to schedule a medicine delivery</p>
 
 
@@ -131,7 +131,12 @@ export function MedicineRequest(){
                                           id={"dropdown1"} value={cleared}
                                           setInput={handleLocationInput} required={true}/>
                             </div>
-                            <br/>
+
+
+
+                        </div>
+                        <div>
+
 
                             <p className={"text-left font-bold"}>Medication</p>
                             <div className={"border-solid border-deep-blue border-2 rounded"}>
@@ -139,10 +144,10 @@ export function MedicineRequest(){
                                           id={"dropdown2"} value={cleared}
                                           setInput={handleMedicineInput} required={true}/>
                             </div>
-                        </div>
-                        <div>
 
-                            <p className={"text-left font-bold"}>Quantity</p>
+                            <br/>
+
+                            <p className={"text-left font-bold pt-1"}>Quantity</p>
                             <input
                                 className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2"}
                                 type="number" required/>
@@ -152,7 +157,7 @@ export function MedicineRequest(){
                             <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Additional
                                 Comments</label>
                             <textarea id={"feedback"}
-                                      className={"w-full max-w-full h-28 max-h-28 p-1 border-solid border-deep-blue border-2 rounded"}
+                                      className={"w-full max-w-full h-40 max-h-40   p-1 border-solid border-deep-blue border-2 rounded"}
                                       onChange={handleFeedbackInput}
                                       value={request.additionalComments} required={true}
                                       placeholder="Enter detailed description here..."/><br/>
