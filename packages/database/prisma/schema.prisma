@@ -35,12 +35,11 @@ model l1Nodes {
 }
 
 model l1Edges {
+  edgeID      String  @id
   startNodeID String
   endNodeID   String
   startNode   l1Nodes @relation(name: "startNode", fields: [startNodeID], references: [nodeID])
   endNode     l1Nodes @relation(name: "endNode", fields: [endNodeID], references: [nodeID])
-
-  @@id([startNodeID, endNodeID])
 }
 
 model languageInterpreterRequests {

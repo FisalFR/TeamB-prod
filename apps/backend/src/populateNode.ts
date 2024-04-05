@@ -1,4 +1,5 @@
 import client from "./bin/database-connection";
+import NodeType from "common/src/NodeType";
 const prisma = client;
 
 class populateNode {
@@ -24,6 +25,18 @@ class populateNode {
           },
         });
       }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  static async populateManyNodeDB(nodeData: NodeType[]) {
+    try {
+      nodeData.length;
+      await prisma.l1Nodes.createMany({
+        data: nodeData,
+      });
       return true;
     } catch (error) {
       return false;

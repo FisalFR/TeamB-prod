@@ -1,4 +1,5 @@
 import client from "./bin/database-connection";
+import EdgeType from "common/src/EdgeType";
 const prisma = client;
 
 class populateEdge {
@@ -11,13 +12,26 @@ class populateEdge {
         if (edgeData[i][0] == "") {
           break;
         }
-        await prisma.l1Edges.create({
+        await prisma.l1Nodes.create({
           data: {
-            startNodeID: edgeData[i][0],
-            endNodeID: edgeData[i][1],
+            eid: edgeData[i][0],
+            startNodeID: edgeData[i][1],
+            endNodeID: edgeData[i][2],
           },
         });
       }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  static async populateManyEdgeDB(edgeData: EdgeType[]) {
+    try {
+      edgeData.length;
+      await prisma.l1Edges.createMany({
+        data: edgeData,
+      });
       return true;
     } catch (error) {
       return false;
