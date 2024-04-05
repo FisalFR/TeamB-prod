@@ -9,6 +9,7 @@ import LanguageInterpreter from "./routes/language-interpreter-page";
 import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
 import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
+import GiftDelivery from "./routes/gift-delivery.tsx";
 
 function App() {
     const router = createBrowserRouter([
@@ -49,6 +50,12 @@ function App() {
 
 
                        },
+                        {
+                            path:"/giftdelivery",
+                            element:<GiftDelivery/>,
+
+
+                        },
 
             ],
         },
