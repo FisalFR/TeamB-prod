@@ -11,7 +11,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_URL")
-  // postgresql://teamb:teamb20@database.cs.wpi.edu:5432/teambdb?schema=teamb
+  // url      = "postgresql://teamb:teamb20@database.cs.wpi.edu:5432/teambdb?schema=teamb"
 }
 
 // example table used in the express router example
