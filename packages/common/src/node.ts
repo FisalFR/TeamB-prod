@@ -1,4 +1,4 @@
-type Node = {
+export type Node = {
     nodeID: string;
     xcoord: number;
     ycoord: number;
@@ -11,4 +11,13 @@ type Node = {
 
 }
 
-export default Node;
+export type NodeType = {
+    nodeID: string;
+    xcoord: number;
+    ycoord: number;
+    floor: string;
+    building: string;
+    nodeType: string;
+    longName: string;
+    shortName: string;
+}
