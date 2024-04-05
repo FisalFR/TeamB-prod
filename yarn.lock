@@ -2863,6 +2863,7 @@ __metadata:
   resolution: "database@workspace:packages/database"
   dependencies:
     "@prisma/client": "npm:4.15.0"
+    dotenv-cli: "npm:^7.4.1"
     eslint: "npm:latest"
     eslint-config-custom: "workspace:*"
     prettier: "npm:latest"
@@ -3062,7 +3063,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv-cli@npm:^7.4.0":
+"dotenv-cli@npm:^7.4.0, dotenv-cli@npm:^7.4.1":
   version: 7.4.1
   resolution: "dotenv-cli@npm:7.4.1"
   dependencies:
