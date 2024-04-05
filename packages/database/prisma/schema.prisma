@@ -37,10 +37,10 @@ model nodes {
 
 model edges {
   edgeID      String @id
-  startNodeID   String
-  endNodeID     String
-  startNode nodes  @relation(name: "startNode", fields: [startNodeID], references: [nodeID])
-  endNode   nodes  @relation(name: "endNode", fields: [endNodeID], references: [nodeID])
+  startNodeID String
+  endNodeID   String
+  startNode   nodes  @relation(name: "startNode", fields: [startNodeID], references: [nodeID])
+  endNode     nodes  @relation(name: "endNode", fields: [endNodeID], references: [nodeID])
 }
 
 model languageInterpreterRequests {
@@ -86,4 +86,14 @@ model maintenances {
   location String
   isUrgent String
   feedback String
+}
+
+model medicineRequests {
+  medicineRequestID  Int    @id @default(autoincrement())
+  employeeName       String
+  priority           String
+  location           String
+  medicine           String
+  quantity           Int
+  additionalComments String
 }
