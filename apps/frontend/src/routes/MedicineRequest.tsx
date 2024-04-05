@@ -1,9 +1,8 @@
 import React, {useRef, useState, ChangeEvent} from "react";
 import {MedicineRequestType} from "../../../../packages/common/src/MedicineRequestType.ts";
-import Button from "../components/Button.tsx"s
+import Button from "../components/Button.tsx";
 import RadioButton from "../components/RadioButton.tsx";
 import Dropdown from "../components/dropdown.tsx";
-import Table from "../components/Table.tsx";
 
 export function MedicineRequest(){
     const [request, setRequest] = useState<MedicineRequestType>({
@@ -33,7 +32,7 @@ export function MedicineRequest(){
             setCleared(true);
             setSubmittedWindowVisibility({formScreen: "hidden", submittedScreen: "block"});
         }
-
+        setRequestList([...requestList, request]);
         requestList.push(request);
     }
 
@@ -90,9 +89,9 @@ export function MedicineRequest(){
 
     return(
 
-        <div className="centerContent">
+        <div className="centerContentt">
             <div className={submittedWindowVisibility.formScreen}>
-                <h1 className={"text-3xl font-HeadlandOne py-4"}>Medicine Delivery Request</h1>
+                <h1 className={"text-3xl font-HeadlandOne"}>Medicine Delivery Request</h1>
                 <p>Fill out the form below to schedule a medicine delivery</p>
 
 
@@ -114,11 +113,13 @@ export function MedicineRequest(){
                             <div className={"border-solid border-deep-blue border-2 rounded"}>
                                 <RadioButton value={"Low"} name={"priority"} id={"priority1"} state={request.priority}
                                              onChange={handlePriorityInput} required={true}/>
-                                <RadioButton value={"Medium"} name={"priority"} id={"priority2"} state={request.priority}
+                                <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
+                                             state={request.priority}
                                              onChange={handlePriorityInput} required={true}/>
                                 <RadioButton value={"High"} name={"priority"} id={"priority3"} state={request.priority}
                                              onChange={handlePriorityInput} required={true}/>
-                                <RadioButton value={"Emergency"} name={"priority"} id={"priority4"} state={request.priority}
+                                <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
+                                             state={request.priority}
                                              onChange={handlePriorityInput} required={true}/>
                             </div>
 
@@ -160,7 +161,7 @@ export function MedicineRequest(){
                         </div>
                     </div>
 
-                    <div className={"formButtons flex-auto object-center space-x-5"}>
+                    <div className={"formButtons flex-auto object-center space-x-5 pb-16"}>
                         <Button onClick={handleSubmit} children={"Submit"}/>
                         <Button onClick={handleClear} children={"Clear"}/>
                     </div>
@@ -197,18 +198,6 @@ export function MedicineRequest(){
                 </div>
             </div>
 
-            <div className={"p-10"}/>
-
-            <div className="pb-12 p-1">
-                <h2 className={"text-3xl font-HeadlandOne py-4"}>Log Book</h2>
-
-                <h2 className={"text-2xl font-HeadlandOne py-4"}>Medicine Requests</h2>
-                <div className="max-h-[60vh]  border-solid border-b-[1px] border-deep-blue">
-                    <Table data={requestList}
-                           headings={["Employee Name", "Priority", "Location", "Medicine", "Quantity", "Additional Comments"]}
-                           keys={["employeeName", "priority", "location", "medicine", "quantity", "additionalComments"]}/>
-                </div>
-            </div>
 
         </div>
     );
