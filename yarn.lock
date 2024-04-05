@@ -2215,6 +2215,7 @@ __metadata:
     "@types/supertest": "npm:^2.0.12"
     common: "workspace:*"
     cookie-parser: "npm:~1.4.4"
+    csv-parse: "npm:^5.5.5"
     database: "workspace:*"
     eslint: "npm:latest"
     eslint-config-custom: "workspace:*"

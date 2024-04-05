@@ -2,6 +2,7 @@ import {useState, useEffect, useRef} from "react"; // , useMemo
 import axios from "axios";
 import Table from "../components/Table.tsx";
 import Button from "../components/Button.tsx";
+//import {LoadingDot} from "../components/loadingDot.tsx";
 
 // import useTable from "react-table";
 
@@ -31,7 +32,7 @@ export function CsvManager() {
         axios.get("/api/csvManager/edges").then((response) => {
             const tempEdgeData = [];
             for (let i = 0; i < response.data.length; i++) {
-                tempEdgeData.push({startNodeID: response.data[i].startNodeID, endNodeID: response.data[i].endNodeID});
+                tempEdgeData.push({edgeID: response.data[i].edgeID, startNodeID: response.data[i].startNodeID, endNodeID: response.data[i].endNodeID});
             }
             setEdgeData(tempEdgeData);
         });
@@ -121,7 +122,7 @@ export function CsvManager() {
                 <br/>
                 <h3 className={"text-xl font-HeadlandOne"}>Edges</h3>
                 <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full">
-                    <Table data={edgeData} headings={["Start Node", "End Node"]} keys={["startNodeID", "endNodeID"]}/>
+                    <Table data={edgeData} headings={["Edge ID", "Start Node", "End Node"]} keys={["edgeID", "startNodeID", "endNodeID"]}/>
                 </div>
             </div>
         </div>
