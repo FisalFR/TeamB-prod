@@ -3,6 +3,7 @@ import {MedicineRequestType} from "../../../../packages/common/src/MedicineReque
 import Button from "../components/Button.tsx";
 import RadioButton from "../components/RadioButton.tsx";
 import Dropdown from "../components/dropdown.tsx";
+import axios from "axios";
 
 export function MedicineRequest(){
     const [request, setRequest] = useState<MedicineRequestType>({
@@ -29,6 +30,11 @@ export function MedicineRequest(){
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
         if ((formRef.current as HTMLFormElement).checkValidity()) {
+            axios.post("/api/medicine/insert",request,{
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then();
             setCleared(true);
             setSubmittedWindowVisibility({formScreen: "hidden", submittedScreen: "block"});
         }
