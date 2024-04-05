@@ -1,4 +1,4 @@
-type Node = {
+export type Node = {
     nodeID: string;
     xcoord: number;
     ycoord: number;
@@ -10,5 +10,4 @@ type Node = {
     neighbors: Node[];
 
 }
-
 export default Node;

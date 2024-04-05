@@ -9,13 +9,13 @@ import writeNode from "../writeNode";
 const router: Router = express.Router();
 
 router.get("/", async (req, res) => {
-  const all = await client.l1Nodes.findMany();
+  const all = await client.nodes.findMany();
   res.status(200).json(all);
 });
 router.post("/", async (req, res) => {
   const finalPath: Path = new Path();
-  finalPath.nodeList = await client.l1Nodes.findMany();
-  finalPath.edgeList = await client.l1Edges.findMany();
+  finalPath.nodeList = await client.nodes.findMany();
+  finalPath.edgeList = await client.edges.findMany();
 
   finalPath.generateNodeMap();
   const pathfinding: startEndNodes = req.body;
