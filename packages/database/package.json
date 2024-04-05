@@ -22,8 +22,8 @@
     "build:dev": "yarn -T run pnpify prisma generate",
     "migrate:dev": "yarn run dotenv -e ../../.env -- prisma migrate dev --skip-generate",
     "migrate:reset": "yarn run dotenv -e ../../.env -- prisma migrate reset --skip-generate",
-    "migrate:deploy": "prisma migrate deploy",
-    "migrate:resolve": "prisma migrate resolve",
+    "migrate:deploy": "yarn run dotenv -e ../../.env -- prisma migrate deploy",
+    "migrate:resolve": "yarn run dotenv -e ../../.env -- prisma migrate resolve",
     "db:pull": "prisma db pull --skip-generate",
     "db:push": "prisma db push --skip-generate"
   },
