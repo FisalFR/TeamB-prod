@@ -13,7 +13,7 @@ import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
 
 function App() {
-    const navigate = useNavigate();
+
     const router = createBrowserRouter([
         {
             path: "/",
@@ -58,37 +58,36 @@ function App() {
     ]}]);
 
     return (
-        <Auth0Provider
-            useRefreshTokens
-            cacheLocation="localstorage"
-            domain="dev-k4ad0ftyhamxq164.us.auth0.com"
-            clientId="W2sGPVM38yYzHtAfDSPdccDIf1ztmCC5"
-            onRedirectCallback={(appState:AppState)=>{
-                navigate(appState?.returnTo || window.location.pathname);
-            }}
-            authorizationParams={{
-                redirect_uri: window.location.origin,
-                audience:'/api',
-                scope:"openid profile email offline_access",
-            }}
-
-
-
-
-        >
             <RouterProvider router={router}></RouterProvider>
-        </Auth0Provider>
 
     );
 
     function Root() {
+        const navigate = useNavigate();
         return (
+            <Auth0Provider
+                useRefreshTokens
+                cacheLocation="localstorage"
+                domain="dev-k4ad0ftyhamxq164.us.auth0.com"
+                clientId="W2sGPVM38yYzHtAfDSPdccDIf1ztmCC5"
+                onRedirectCallback={(appState:AppState)=>{
+                    navigate(appState?.returnTo || window.location.pathname);
+                }}
+                authorizationParams={{
+                    redirect_uri: window.location.origin,
+                    audience:'/api',
+                    scope:"openid profile email offline_access",
+                }}
+
+
+            >
             <div className="w-full flex flex-col px-20 gap-5">
                 <NavigationBar/>
 
 
                 <Outlet/>
             </div>
+            </Auth0Provider>
         );
     }
 }
