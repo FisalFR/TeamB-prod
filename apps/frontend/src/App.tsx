@@ -1,5 +1,7 @@
+
+import {AppState, Auth0Provider} from "@auth0/auth0-react";
 import './App.css';
-import { createBrowserRouter, RouterProvider, Outlet} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet, useNavigate} from "react-router-dom";
 
 import MaintenancePage from "./routes/MaintenancePage";
 import Map from "./routes/map";
@@ -11,6 +13,7 @@ import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
 
 function App() {
+    const navigate = useNavigate();
     const router = createBrowserRouter([
         {
             path: "/",
@@ -55,7 +58,27 @@ function App() {
     ]}]);
 
     return (
-        <RouterProvider router={router}></RouterProvider>
+        <Auth0Provider
+            useRefreshTokens
+            cacheLocation="localstorage"
+            domain="dev-k4ad0ftyhamxq164.us.auth0.com"
+            clientId="W2sGPVM38yYzHtAfDSPdccDIf1ztmCC5"
+            onRedirectCallback={(appState:AppState)=>{
+                navigate(appState?.returnTo || window.location.pathname);
+            }}
+            authorizationParams={{
+                redirect_uri: window.location.origin,
+                audience:'/api',
+                scope:"openid profile email offline_access",
+            }}
+
+
+
+
+        >
+            <RouterProvider router={router}></RouterProvider>
+        </Auth0Provider>
+
     );
 
     function Root() {
