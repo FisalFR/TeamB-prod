@@ -4,7 +4,16 @@ import Button from "../components/Button.tsx";
 import user_icon from "../assets/user_icon.svg";
 import password_icon from "../assets/password_icon.svg";
 import AnimatedSVG from "../components/HeroImage.tsx";
+//import {Auth0Client} from "@auth0/auth0-spa-js";
+//import { useAuth0 } from "@auth0/auth0-react";
+//import {Auth0Client} from "@auth0/auth0-spa-js";
+import auth0 from "../contexts/auth0-client";
+
+///import {auth0} from "../contexts/auth0-context";
 //import { useNavigate } from "react-router-dom";
+
+
+
 
 function LoginPage() {
 
@@ -24,7 +33,22 @@ function LoginPage() {
         setInput({...input, password: e.target.value});
     }
 
+   /* const LoginButton = () =>{
+        const { loginWithRedirect } = useAuth0();
+        return <button onClick={() => loginWithRedirect()}>Log In</button>;
+    };
+*/
     function handleLogin() {
+        document.addEventListener('click',async () =>{
+            await auth0.loginWithRedirect({
+                authorizationParams:{
+                    redirect_uri: 'http://localhost:3000/map'
+                }
+            });
+            const user = await auth0.getUser();
+            console.log(user);
+        });
+
        (formRef.current as HTMLFormElement).requestSubmit();
         if ((formRef.current as HTMLFormElement).checkValidity()) {
             console.log(input);
@@ -37,7 +61,7 @@ function LoginPage() {
                 alert("Invalid username or password");
             }
             //setLoginWindowVisibility({loginScreen: "hidden", submittedScreen: "block"});
-        };
+        }
     }
 
     function guestLogin() {
@@ -59,7 +83,7 @@ function LoginPage() {
         setLoginWindowVisibility({loginScreen: "block", submittedScreen: "hidden"});
         setInput({username: "", password: ""});
 
-        };
+        }
 
 
 
