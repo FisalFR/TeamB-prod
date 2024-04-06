@@ -1,47 +1,45 @@
-import {useRef, useState} from 'react';
-import {giftInfo} from "../common/giftInfo.ts";
-import Table from "../components/Table.tsx";
+//import {useRef, useState} from 'react';
+//import {giftInfo} from "../common/giftInfo.ts";
+//import Table from "../components/Table.tsx";
 import Button from "../components/Button.tsx";
 import ShopCard from "../components/shopCard.tsx";
+import {useState} from "react";
 
 function GiftDelivery() {
 
-    const cost = {"Flowers": 10.99,
-        "Balloons": 15.99,
-        "Candy": 3.00,
-        "Plushie": 8.00};
-
-    const nameRef = useRef<HTMLInputElement>(null);
-    const priorityRef = useRef<HTMLSelectElement>(null);
-    const locationRef = useRef<HTMLInputElement>(null);
-    const giftTypeRef = useRef<HTMLSelectElement>(null);
-    const quantityRef = useRef<HTMLInputElement>(null);
-    const statusRef = useRef<HTMLSelectElement>(null);
-    const anonRef = useRef<HTMLInputElement>(null);
-
-    const [requestList, setRequestList] = useState<giftInfo[]>([]);
+    const [cart, setCart] = useState({});
+    const itemCosts={
+        "Tulip": 3.99,
+        "Rose": 5.99,
+        "Bouquet of Tulips": 21.99,
+        "Bouquet of Roses": 29.99,
+        "Teddy Bear": 5.99,
+        "Green Dinosaur": 10.99,
+        "Pink Dinosaur": 10.99,
+        "Heart": 3.99,
+        "Get Well Soon Balloon": 3.99,
+        "Red Heart Balloon": 3.99,
+        "Rainbow Balloon": 3.99,
+        "Assorted Chocolate Bundle":5.99,
+        "Heart-Shaped Lollipop": 3.99,
+        "Popsicle":1.99,
+        "Caramel": 3.99
+    };
     function handleSubmit(){
-        const typeString = (giftTypeRef.current as HTMLSelectElement).value;
-        const newRequest =
-            {name: (nameRef.current as HTMLInputElement).value,
-                priority: (priorityRef.current as HTMLSelectElement).value,
-                location: (locationRef.current as HTMLInputElement).value,
-                giftType: (giftTypeRef.current as HTMLSelectElement).value,
-                quantity: parseInt((quantityRef.current as HTMLInputElement).value),
-                status: (statusRef.current as HTMLSelectElement).value,
-                isAnon: (anonRef.current as HTMLInputElement).checked,
-                cost: cost[typeString as keyof typeof cost] * parseInt((quantityRef.current as HTMLInputElement).value) };
-        //console.log(newRequest);
-        setRequestList(requestList => [...requestList,newRequest]);
         //alert(request.isAnon);
+    }
 
-        (nameRef.current as HTMLInputElement).value = "";
-        (priorityRef.current as HTMLSelectElement).value = "";
-        (locationRef.current as HTMLInputElement).value = "";
-        (giftTypeRef.current as HTMLSelectElement).value = "";
-        (quantityRef.current as HTMLInputElement).value = "";
-        (statusRef.current as HTMLSelectElement).value = "";
-        (anonRef.current as HTMLInputElement).checked = false;
+    function changeCart(item: string, quantity: number){
+        const newCart = cart;
+        newCart[item]=quantity;
+        setCart(newCart);
+        //alert(item);
+        //alert(quantity);
+        alert(itemCosts[item]);
+    }
+
+    function createCart(){
+       let rowDivs = [];
 
     }
 
@@ -54,52 +52,111 @@ function GiftDelivery() {
             <form onSubmit={e => {
                 e.preventDefault();
             }}>
-                <label htmlFor="name">Name: </label>
-                <input type="text" id="name" name="name" ref={nameRef}></input> <br/> <br/>
+                <br/><br/>
+                <div className="flex flex-row gap-10 flex-wrap font-HeadlandOne text-md text-Ash-black justify-center ">
+                    <div>
+                        <label htmlFor="recieverName">To: </label>
+                        <input type="text" id="recieverName" name="recieverName"></input> <br/> <br/>
+                    </div>
 
-                <label htmlFor="priority"> Request Priority: </label>
-                <select name="priority" id="priority" ref={priorityRef}>
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
-                    <option value="Emergency">Emergency</option>
-                </select> <br/> <br/>
+                    <div>
+                        <label htmlFor="senderName">From: </label>
+                        <input type="text" id="senderName" name="senderName"></input> <br/> <br/>
+                    </div>
+                    <div>
+                        <label htmlFor="location">Location: </label>
+                        <input type="text" id="location" name="location"></input> <br/> <br/>
+                    </div>
 
-                <label htmlFor="location">Location: </label>
-                <input type="text" id="location" name="location" ref={locationRef}></input> <br/> <br/>
+                </div>
+                <br/><br/>
 
-                <label htmlFor="giftType"> Type of Gift: </label>
-                <select name="giftType" id="giftType" ref={giftTypeRef}>
-                    <option value="Flowers">Flowers-$10.99</option>
-                    <option value="Balloons">Balloons-$15.99</option>
-                    <option value="Candy">Candy-$3.00</option>
-                    <option value=" Stuffed Animal ">Stuffed Animal-$8.00</option>
-                </select> <br/> <br/>
+                <label htmlFor="message" className="font-HeadlandOne text-md text-Ash-black justify-center">Send a Message: </label>
+                <textarea  id="message" name="message" rows={4} cols={40} ></textarea> <br/> <br/>
 
-                <label htmlFor="quantity">Quantity: </label>
-                <input type="number" id="quantity" name="quantity" min="1" max="10" ref={quantityRef}></input> <br/>
+                {/*Flowers*/}
+                <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
+                    Flowers:
+                </h1>
                 <br/>
+                <div className="flex flex-row gap-10 w-full overflow-scroll">
+                    <ShopCard image="url" cost={3.99} name="Tulip" altName="Single Tulip"
+                              changeCart={changeCart}/>
+                    <ShopCard image="url" cost={5.99} name="Rose" altName="Single Rose"
+                              changeCart={changeCart}/>
+                    <ShopCard image="url" cost={21.99} name="Bouquet of Tulips" altName="Bouquet of Tulips"
+                              changeCart={changeCart}/>
+                    <ShopCard image="url" cost={29.99} name="Bouquet of Roses" altName="Bouquet of Roses"
+                              changeCart={changeCart}/>
+                </div>
+                <br/><br/>
 
-                <label htmlFor="status"> Status of Request: </label>
-                <select name="status" id="status" ref={statusRef}>
-                    <option value="Unassigned">Unassigned</option>
-                    <option value="Assigned">Assigned</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Closed">Closed</option>
-                </select> <br/> <br/>
+                {/*Stuffed Animals*/}
+                <br/><br/>
+                <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
+                    Stuffed Animals:
+                </h1>
+                <br/>
+                <div className="flex flex-row gap-10 w-full overflow-scroll">
+                    <ShopCard image="url" cost={5.99} name="Teddy Bear" altName="Teddy Bear"
+                              changeCart={changeCart}/>
+                    <ShopCard image="url" cost={10.99} name="Green Dinosaur" altName="Green Dinosaur"
+                              changeCart={changeCart}/>
+                    <ShopCard image="url" cost={10.99} name="Pink Dinosaur" altName="Pink Dinosaur"
+                              changeCart={changeCart}/>
+                    <ShopCard image="url" cost={3.99} name="Heart" altName="Heart"
+                              changeCart={changeCart}/>
+                </div>
+                <br/><br/>
 
-                <label htmlFor="isAnon">Is this delivery anonymous? </label>
-                <input type="checkbox" id="isAnon" name="isAnon" ref={anonRef}></input><br/> <br/>
+                {/*Balloons*/}
+                <br/><br/>
+                <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
+                    Balloons:
+                </h1>
+                <br/>
+                <div className="flex flex-row gap-10 w-full overflow-scroll">
+                    <ShopCard image="url" cost={3.99} name="Get Well Soon Balloon" altName="Get Well Soon Balloon"
+                              changeCart={changeCart}/>
+                    <ShopCard image="url" cost={3.99} name="Red Heart Balloon" altName="Red Heart Balloon"
+                              changeCart={changeCart}/>
+                    <ShopCard image="url" cost={3.99} name="Rainbow Balloon" altName="Rainbow Balloon"
+                              changeCart={changeCart}/>
+                    <ShopCard image="url" cost={3.99} name="Happy Sunshine Balloon" altName="Smiling Sunshine Balloon"
+                              changeCart={changeCart}/>
+                </div>
+                <br/><br/>
+
+                {/*Candy*/}
+                <br/><br/>
+                <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
+                    Candy:
+                </h1>
+                <br/>
+                <div className="flex flex-row gap-10 w-full overflow-x-scroll h-fit">
+                    <ShopCard image="url" cost={5.99} name="Assorted Chocolate Bundle" altName="Assorted Chocolates"
+                              changeCart={changeCart}/>
+                    <ShopCard image="url" cost={3.99} name="Heart-Shaped Lollipop" altName="Heart-Shaped Lollipops"
+                              changeCart={changeCart}/>
+                    <ShopCard image="url" cost={1.99} name="Popsicle" altName="Popsicle"
+                              changeCart={changeCart}/>
+                    <ShopCard image="url" cost={3.99} name="Caramel" altName="Caramel"
+                              changeCart={changeCart}/>
+                </div>
+                <br/><br/>
 
                 <Button onClick={handleSubmit} children={"Submit"}/>
                 <br/><br/>
-                <ShopCard image="ahhhh" cost={26.99} name="Really cool singular flower"/>
-                <br/><br/>
-                <Table data={requestList}
-                       headings={[" Name ", " Priority ", " Location ", " Gift Type ", " Quantity ", " Status ", " isAnon ", " Cost "]}
-                       keys={["name", "priority", "location", "giftType", "quantity", "status", "isAnon", "cost"]}/>
+
 
             </form>
+
+            <div>
+                <h2>
+                    Cart
+                </h2>
+                {createCart}
+            </div>
 
         </>
     );
