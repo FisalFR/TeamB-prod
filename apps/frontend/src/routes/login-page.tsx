@@ -6,11 +6,9 @@ import password_icon from "../assets/password_icon.svg";
 import AnimatedSVG from "../components/HeroImage.tsx";
 //import { useNavigate } from "react-router-dom";
 
-
 function LoginPage() {
 
     //const navigate = useNavigate();
-
     const [input, setInput] = useState<loginInfo>({username: "", password: ""});
     const [loginWindowVisibility, setLoginWindowVisibility] = useState({
         loginScreen: "block",
@@ -26,8 +24,8 @@ function LoginPage() {
         setInput({...input, password: e.target.value});
     }
 
-    function handleLogin() {
-        (formRef.current as HTMLFormElement).requestSubmit();
+    async function handleLogin() {
+       (formRef.current as HTMLFormElement).requestSubmit();
         if ((formRef.current as HTMLFormElement).checkValidity()) {
             console.log(input);
             if(input.username == "admin" && input.password == "admin"){
@@ -39,7 +37,7 @@ function LoginPage() {
                 alert("Invalid username or password");
             }
             //setLoginWindowVisibility({loginScreen: "hidden", submittedScreen: "block"});
-        }
+        };
     }
 
     function guestLogin() {
@@ -55,11 +53,13 @@ function LoginPage() {
         document.body.removeChild(element);
     }
 
-    function handleLogout() {
+    async function handleLogout() {
         console.log("Logged out");
         setLoginWindowVisibility({loginScreen: "block", submittedScreen: "hidden"});
         setInput({username: "", password: ""});
-    }
+
+        };
+
 
 
     return (
