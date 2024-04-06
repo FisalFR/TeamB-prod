@@ -31,14 +31,16 @@ router.post("/", async (req, res) => {
   const node2: Node = finalPath.nodeMap.get(pathfinding.endNode)!;
 
 
-  const path = finalPath.BFS(node1, node2);
+  const path = finalPath.BFS(node1, node2); // Making the path
+  // Making the path into a list of coordinates
   const nodeCoords = finalPath.BFS(node1, node2).map((node) => {
     //return node.nodeID;
     return [node.xcoord, node.ycoord];
   });
+
+
   // Section to return a map of Floors and their respective continuous path fragments
   const floorMap = new Map<string, Node[][]>;
-
     for (let Node of path) {
         if (!floorMap.has(Node.floor)) {
             floorMap.set(Node.floor, [[Node]]);
@@ -55,10 +57,15 @@ router.post("/", async (req, res) => {
         }
     }
 
+    // Nuking the neighbors because JSON doesn't like circular structures
+    path.map((node) => {
+        node. neighbors = [];
+    });
+
 
   res.body = {
     nodeCoords: nodeCoords,
-    // nodes: path,
+    nodes: path,
     nodeMap: finalPath.nodeMap,
     floorMap: floorMap
   };

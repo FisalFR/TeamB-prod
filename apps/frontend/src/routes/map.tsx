@@ -33,7 +33,7 @@ export function Map(){
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if (response.data.nodeCooNrds.length != 0) {
+            if (response.data.nodeCoords.length != 0) {
                 const nodeCoords = [];
                 for (let i = 0; i < response.data.nodeCoords.length; i++) {
                     nodeCoords.push(response.data.nodeCoords[i]);
