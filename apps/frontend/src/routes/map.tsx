@@ -8,7 +8,7 @@ import {startEndNodes} from "common/src/pathfinding.ts";
 
 export function Map(){
 
-    const [zoom, setZoom] = useState(0.2);
+    // const [zoom, setZoom] = useState(0.2);
     const [pathPoints, setPathPoints] = useState([0, 0]);
     const [showPath, setShowPath] = useState(false);
 
@@ -21,11 +21,11 @@ export function Map(){
 
 
     const divRef = useRef<HTMLDivElement>(null);
-    function zoomSlider(e: ChangeEvent<HTMLInputElement>) {
-        setZoom(0.2 * parseFloat(e.target.value));
-        //const scrollDiv = (divRef.current as HTMLDivElement);
-        //scrollDiv.scroll(scrollDiv.scrollLeft + (scrollDiv.scrollWidth-scrollDiv.clientWidth)/2, 0);
-    }
+    // function zoomSlider(e: ChangeEvent<HTMLInputElement>) {
+    //     setZoom(0.2 * parseFloat(e.target.value));
+    //     //const scrollDiv = (divRef.current as HTMLDivElement);
+    //     //scrollDiv.scroll(scrollDiv.scrollLeft + (scrollDiv.scrollWidth-scrollDiv.clientWidth)/2, 0);
+    // }
 
     function findPath() {
         axios.post("/api/pathfinding", request,{
@@ -73,26 +73,28 @@ export function Map(){
         });
     }, []);
 
-
     return (
         <div className="centerContent gap-10 w-full h-full">
-            <div className="">
-                <p className="font-HeadlandOne text-3xl py-3">Floor: Lower Level 1</p>
-                <div className="w-fit h-fit max-w-[1000px] max-h-[calc(100vh-200px)] overflow-scroll" ref={divRef}>
-                    <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={ll1map} width={5000} height={3400}
-                            scale={zoom} showPath={showPath}/>
+            <div className="relative"> {/* Add relative positioning here */}
+                <div className="w-full h-full overflow-scroll" ref={divRef}>
+                    <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={ll1map} width={5000}
+                                height={3400}
+                                // scale={zoom}
+                                scale={0.2}
+                                showPath={showPath}/>
                 </div>
-                <br/><br/>
-            </div>
-            <div className="text-left w-fit">
-                <span className="text-3xl">- </span>
-                <input type="range" min="1" max="10" step="any" defaultValue="1" onChange={zoomSlider}
-                       id="myRange"></input><span className="text-3xl"> +</span><br/><br/>
-                <span style={{color: "#012D5A"}}>● </span>
-                <Select label="Starting Location: " id="nodeStartSelect" options={nodes} onChange={handleStartChange}/><br/><br/>
-                <span style={{color: "#F6BD38"}}>● </span>
-                <Select label="Ending Location: " id="nodeEndSelect" options={nodes} onChange={handleEndChange}/><br/><br/>
-                <Button onClick={findPath} children={"Find Path"}/>
+                <div className="absolute top-0 left-0"> {/* Add absolute positioning here */}
+                    <span className="text-3xl">- </span>
+                    {/*<input type="range" min="1" max="10" step="any" defaultValue="1" onChange={zoomSlider}*/}
+                    {/*       id="myRange"></input><span className="text-3xl"> +</span><br/><br/>*/}
+                    <span style={{color: "#012D5A"}}>● </span>
+                    <Select label="Starting Location: " id="nodeStartSelect" options={nodes}
+                            onChange={handleStartChange}/><br/><br/>
+                    <span style={{color: "#F6BD38"}}>● </span>
+                    <Select label="Ending Location: " id="nodeEndSelect" options={nodes}
+                            onChange={handleEndChange}/><br/><br/>
+                    <Button onClick={findPath} children={"Find Path"}/>
+                </div>
             </div>
         </div>
     );
