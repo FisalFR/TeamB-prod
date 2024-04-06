@@ -29,7 +29,6 @@ class languageInterpreterFunctions {
       data: {
         languageRequest: UUID,
         language: request.language,
-        //location: request.location,
       },
     });
   }
