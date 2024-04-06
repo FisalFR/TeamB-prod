@@ -30,14 +30,42 @@ router.post("/", async (req, res) => {
   const node1: Node = finalPath.nodeMap.get(pathfinding.startNode)!;
   const node2: Node = finalPath.nodeMap.get(pathfinding.endNode)!;
 
-  const temp = finalPath.BFS(node1, node2).map((node) => {
+
+  const path = finalPath.BFS(node1, node2);
+  const nodeCoords = finalPath.BFS(node1, node2).map((node) => {
     //return node.nodeID;
     return [node.xcoord, node.ycoord];
   });
+  // Section to return a map of Floors and their respective continuous path fragments
+  const floorMap = new Map<string, Node[][]>;
+  let lastNode: Node;
+  for (let Node of path){
+      if (!floorMap.has(Node.floor)){
+            floorMap[Node.floor] = [];
+            floorMap[Node.floor].push(Node[0]);
+      } else if (floorMap.has(Node.floor) && Node.neighbors.includes(lastNode)){
+          for (let i =0; i < floorMap[Node.floor].length; i++){
+              if (floorMap[Node.floor][i].length === 0){
+                  floorMap[Node.floor][i-1].push(Node);
+              }
+          }
+      } else if (floorMap.has(Node.floor) && !Node.neighbors.includes(lastNode)){
+          for (let i =0; i < floorMap[Node.floor].length; i++){
+              if (floorMap[Node.floor][i].length === 0){
+                  floorMap[Node.floor][i].push(Node);
+              }
+          }
+      }
+      lastNode = Node;
+  }
+
+
 
   res.body = {
-    nodes: temp,
+    nodeCoords: nodeCoords,
+    nodes: path,
     nodeMap: finalPath.nodeMap,
+    floorMap: floorMap
   };
   res.status(200).json(res.body);
 });

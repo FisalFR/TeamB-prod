@@ -33,10 +33,10 @@ export function Map(){
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if (response.data.nodes.length != 0) {
+            if (response.data.nodeCoords.length != 0) {
                 const nodeCoords = [];
-                for (let i = 0; i < response.data.nodes.length; i++) {
-                    nodeCoords.push(response.data.nodes[i]);
+                for (let i = 0; i < response.data.nodeCoords.length; i++) {
+                    nodeCoords.push(response.data.nodeCoords[i]);
                 }
                 setPathPoints(nodeCoords);
                 setShowPath(true);
