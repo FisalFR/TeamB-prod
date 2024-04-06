@@ -5,10 +5,47 @@ import client from "../bin/database-connection";
 const router: Router = express.Router();
 
 const database: languageInterpreterTypes[] = [];
+// router.get("/", async (req, res) => {
+//   const all = await client.languageInterpreterRequests.findMany();
+//   res.status(200).json(all);
+// });
+
 router.get("/", async (req, res) => {
-  const all = await client.languageInterpreterRequests.findMany();
-  res.status(200).json(all);
+  // const all = await client.$queryRaw`
+  //     SELECT
+  //       forms.*,
+  //       languageInterpreterRequests.language as language
+  //     FROM
+  //       forms
+  //     INNER JOIN
+  //         languageInterpreterRequests
+  //     ON
+  //       forms.formID = languageInterpreterRequests.languageRequest;
+  //   `;
+
+  const allForms = await client.forms.findMany({
+    include: {
+      languageRequests: {
+        select: {
+          language: true,
+        },
+      },
+    },
+  });
+
+  // Map over each form and extract the language string from languageRequests
+  const formsWithLanguageStrings = allForms.map((form) => {
+    // If languageRequests exist for this form, concatenate their languages into a string
+    const languages = form.languageRequests
+      .map((request) => request.language)
+      .join(", ");
+    // Return the form object with the language string
+    return { ...form, language: languages };
+  });
+  console.log(formsWithLanguageStrings);
+  res.status(200).json(formsWithLanguageStrings);
 });
+
 router.get("/:index", (req, res) => {
   const index = parseInt(req.params.index);
   if (index >= 0 && index < database.length) {
