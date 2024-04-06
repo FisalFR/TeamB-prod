@@ -24,7 +24,7 @@ function LoginPage() {
         setInput({...input, password: e.target.value});
     }
 
-    async function handleLogin() {
+    function handleLogin() {
        (formRef.current as HTMLFormElement).requestSubmit();
         if ((formRef.current as HTMLFormElement).checkValidity()) {
             console.log(input);
@@ -53,7 +53,8 @@ function LoginPage() {
         document.body.removeChild(element);
     }
 
-    async function handleLogout() {
+
+    function handleLogout() {
         console.log("Logged out");
         setLoginWindowVisibility({loginScreen: "block", submittedScreen: "hidden"});
         setInput({username: "", password: ""});
