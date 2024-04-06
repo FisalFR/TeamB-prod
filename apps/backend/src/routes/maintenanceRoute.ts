@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express, { request, Router } from "express";
 import { MaintenanceRequest } from "common/src/maintenanceRequest";
 import maintenanceFunctions from "../maintenanceFunctions";
 const router: Router = express.Router();
@@ -7,8 +7,13 @@ import client from "../bin/database-connection";
 const database: MaintenanceRequest[] = [];
 
 router.get("/", async (req, res) => {
-  const all = await client.maintenances.findMany();
-  res.status(200).json(all);
+  const formsWithMaintenance = await client.$queryRaw`
+        SELECT *
+        FROM forms
+        JOIN maintenances
+        ON forms."formID" = maintenances."maintenanceRequest"
+    `;
+  res.status(200).json(formsWithMaintenance);
 });
 
 router.get("/:index", (req, res) => {

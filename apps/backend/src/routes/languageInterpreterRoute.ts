@@ -5,10 +5,16 @@ import client from "../bin/database-connection";
 const router: Router = express.Router();
 
 const database: languageInterpreterTypes[] = [];
+
 router.get("/", async (req, res) => {
-  const all = await client.languageInterpreterRequests.findMany();
-  res.status(200).json(all);
+  const formsWithLanguageStrings = await client.$queryRaw`
+    SELECT *
+    FROM forms
+    JOIN "languageInterpreterRequests"
+    ON forms."formID" = "languageInterpreterRequests"."languageRequest"`;
+  res.status(200).json(formsWithLanguageStrings);
 });
+
 router.get("/:index", (req, res) => {
   const index = parseInt(req.params.index);
   if (index >= 0 && index < database.length) {
