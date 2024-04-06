@@ -1,25 +1,18 @@
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-// import Table from "../components/Table.tsx";
-
 import Dropdown from "../components/dropdown.tsx";
 import Table from "../components/Table.tsx";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {MaintenanceRequest} from "common/src/maintenanceRequest.ts";
+import axios from "axios";
 function LogBook() {
 
     // const [interpreterReq, setInterpreterReq] = useState([]);
-    // const [maintenanceReq, setMaintenanceReq] = useState([]);
-    //
-    // useEffect(() => {
-    //
-    //     axios.get("/api/languageInterpreter/").then((response) => {
-    //         setInterpreterReq(response.data.reverse());
-    //     });
-    //     axios.get("/api/maintenance/").then((response) => {
-    //         setMaintenanceReq(response.data.reverse());
-    //     });
-    // }, []);
+     const [maintenanceReq, setMaintenanceReq] = useState([]);
+
+     useEffect(() => {
+         axios.get("/api/maintenance/").then((response) => {
+             setMaintenanceReq(response.data.reverse());
+         });
+     }, []);
     const [request, setRequest] = useState<MaintenanceRequest>({issue: "", location: "", isUrgent: "", feedback: ""});
     const requestTypeOptions = ["Maintenance", "Interpreter"];
     const [cleared, setCleared] = useState(false);
@@ -33,12 +26,13 @@ function LogBook() {
 
 
     return (
-        <div className="">
+        <div className="flex ">
             {/*Form to filter current requests*/}
-            <div>
+            <div className=" h-full mx-3 space-y-7">
+                <div className="rounded-2xl bg-deep-blue bg-opacity-5">
                 <form
-                    className="border-solid border-deep-blue border-r-2 w-[30vw] h-full flex flex-col items-start p-3 gap-4">
-                    <h2 className={"font-extrabold text-3xl font-HeadlandOne flex items-start"}>Filter Data</h2>
+                    className="w-[22vw]  flex flex-col items-start p-3">
+                    <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start pb-3"}>Filter Data</h2>
                     <p className={"text-left font-bold"}>Request Type</p>
                     <Dropdown options={requestTypeOptions} placeholder={"Choose Request Type"}
                               name={"requestTypeDropdown"}
@@ -47,7 +41,7 @@ function LogBook() {
                 </form>
 
                 <form
-                    className="border-solid border-deep-blue border-r-2 w-[30vw] h-full flex flex-col items-start p-3 gap-4">
+                    className="w-[22vw]  flex flex-col items-start p-3 gap-4">
                     <p className={"text-left font-bold"}>Request Status</p>
                     <Dropdown options={requestTypeOptions} placeholder={"Choose Status"} name={"requestTypeDropdown"}
                               id={"dropdown1"} value={cleared}
@@ -55,20 +49,18 @@ function LogBook() {
                 </form>
 
                 <form
-                    className="border-solid border-deep-blue border-r-2 w-[30vw] h-full flex flex-col items-start p-3 gap-4">
+                    className="w-[22vw] flex flex-col items-start p-3 gap-4">
                     <p className={"text-left font-bold"}>Assigned Staff</p>
                     <Dropdown options={requestTypeOptions} placeholder={"Assigned Staff"} name={"requestTypeDropdown"}
                               id={"dropdown1"} value={cleared}
                               setInput={handleRequestType} required={true}/>
                 </form>
-            </div>
-
-
+                </div>
             {/*Form to assign requests*/}
-            <div>
+                <div className="rounded-2xl bg-deep-blue bg-opacity-5">
                 <form
-                    className="border-solid border-deep-blue border-r-2 w-[30vw] h-full flex flex-col items-start p-3 gap-4">
-                    <h2 className={"font-extrabold text-3xl font-HeadlandOne flex items-start"}>Assign Staff
+                    className="w-[22vw]  flex flex-col items-start p-3 gap-4">
+                    <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start"}>Assign Staff
                         Request</h2>
                     <p className={"text-left font-bold"}>Request Type</p>
                     <Dropdown options={requestTypeOptions} placeholder={"Choose Request Type"}
@@ -78,7 +70,7 @@ function LogBook() {
                 </form>
 
                 <form
-                    className="border-solid border-deep-blue border-r-2 w-[30vw] h-full flex flex-col items-start p-3 gap-4">
+                    className="w-[22vw] flex flex-col items-start p-3 gap-4">
                     <p className={"text-left font-bold"}>Request Status</p>
                     <Dropdown options={requestTypeOptions} placeholder={"Choose Status"} name={"requestTypeDropdown"}
                               id={"dropdown1"} value={cleared}
@@ -86,16 +78,17 @@ function LogBook() {
                 </form>
 
                 <form
-                    className="border-solid border-deep-blue border-r-2 w-[30vw] h-full flex flex-col items-start p-3 gap-4">
+                    className="w-[22vw]  flex flex-col items-start p-3 gap-4">
                     <p className={"text-left font-bold"}>Assigned Staff</p>
                     <Dropdown options={requestTypeOptions} placeholder={"Assigned Staff"} name={"requestTypeDropdown"}
                               id={"dropdown1"} value={cleared}
                               setInput={handleRequestType} required={true}/>
                 </form>
+                </div>
             </div>
 
             {/*Actual Database Table starts here*/}
-            <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue">
+            <div className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-400 overflow-auto">
                 <Table data={maintenanceReq} headings={["Issue", "Location", "Urgent", "Feedback"]}
                        keys={["issue", "location", "isUrgent", "feedback"]}/>
             </div>
