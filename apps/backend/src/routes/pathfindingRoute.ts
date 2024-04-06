@@ -4,7 +4,7 @@ import Path from "../../../../packages/common/src/pathFinder";
 //import Parser from "../../../../packages/common/src/parser";
 import Node from "../../../../packages/common/src/node";
 import client from "../bin/database-connection";
-import writeNode from "../writeNode";
+// import writeNode from "../writeNode";
 import { filteringNodes } from "../filteringNodes";
 
 const router: Router = express.Router();
@@ -38,32 +38,27 @@ router.post("/", async (req, res) => {
   });
   // Section to return a map of Floors and their respective continuous path fragments
   const floorMap = new Map<string, Node[][]>;
-  let lastNode: Node;
-  for (let Node of path){
-      if (!floorMap.has(Node.floor)){
-            floorMap[Node.floor] = [];
-            floorMap[Node.floor].push(Node[0]);
-      } else if (floorMap.has(Node.floor) && Node.neighbors.includes(lastNode)){
-          for (let i =0; i < floorMap[Node.floor].length; i++){
-              if (floorMap[Node.floor][i].length === 0){
-                  floorMap[Node.floor][i-1].push(Node);
-              }
-          }
-      } else if (floorMap.has(Node.floor) && !Node.neighbors.includes(lastNode)){
-          for (let i =0; i < floorMap[Node.floor].length; i++){
-              if (floorMap[Node.floor][i].length === 0){
-                  floorMap[Node.floor][i].push(Node);
-              }
-          }
-      }
-      lastNode = Node;
-  }
 
+    for (let Node of path) {
+        if (!floorMap.has(Node.floor)) {
+            floorMap.set(Node.floor, [[Node]]);
+        } else {
+            const floorPaths = floorMap.get(Node.floor);
+            const lastPath = floorPaths[floorPaths.length - 1];
+            const lastNodeInPath = lastPath[lastPath.length - 1];
+
+            if (Node.neighbors.includes(lastNodeInPath)) {
+                lastPath.push(Node);
+            } else {
+                floorPaths.push([Node]);
+            }
+        }
+    }
 
 
   res.body = {
     nodeCoords: nodeCoords,
-    nodes: path,
+    // nodes: path,
     nodeMap: finalPath.nodeMap,
     floorMap: floorMap
   };
