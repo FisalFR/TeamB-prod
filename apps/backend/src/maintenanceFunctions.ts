@@ -24,12 +24,12 @@ class maintenanceFunctions {
         status: "Unassigned",
         type: "Maintenance",
         assignee: "",
+        location: request.location,
       },
     });
     await prisma.maintenances.create({
       data: {
         maintenanceRequest: UUID,
-        location: request.location,
         issue: request.issue,
         isUrgent: request.isUrgent,
         feedback: request.feedback,

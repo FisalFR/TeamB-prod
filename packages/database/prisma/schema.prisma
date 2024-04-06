@@ -88,14 +88,12 @@ model forms {
 model languageInterpreterRequests {
   languageRequest   Int    @id
   language          String
-  // location          String
   languageRequestID forms  @relation(name: "languageRequestID", fields: [languageRequest], references: [formID])
 }
 
 model maintenances {
   maintenanceRequest   Int    @id
   issue                String
-  location             String
   isUrgent             String
   feedback             String
   maintenanceRequestID forms  @relation(name: "maintenanceRequestID", fields: [maintenanceRequest], references: [formID])
