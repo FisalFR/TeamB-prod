@@ -7,24 +7,6 @@ const router: Router = express.Router();
 const database: languageInterpreterTypes[] = [];
 
 router.get("/", async (req, res) => {
-  // const allForms = await client.forms.findMany({
-  //   include: {
-  //     languageRequests: {
-  //       select: {
-  //         language: true,
-  //       },
-  //     },
-  //   },
-  // });
-  // // Map over each form and extract the language string from languageRequests
-  // const formsWithLanguageStrings = allForms.map((form) => {
-  //   // If languageRequests exist for this form, concatenate their languages into a string
-  //   const languages = form.languageRequests
-  //     .map((request) => request.language)
-  //     .join(", ");
-  //   // Return the form object with the language string
-  //   return { ...form, language: languages };
-  // });
   const formsWithLanguageStrings = await client.$queryRaw`
     SELECT *
     FROM forms
