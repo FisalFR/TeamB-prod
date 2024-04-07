@@ -9,10 +9,11 @@ import auth0 from "../contexts/auth0-client";
 function LoginPage() {
 
     function handleLogin() {
+        const redirectUri = `${window.location.origin}/map`;
         document.addEventListener('click',async () =>{
             await auth0.loginWithRedirect({
                 authorizationParams:{
-                    redirect_uri: 'http://localhost:3000/map',
+                    redirect_uri: redirectUri,
                 }
             });
             const user = await auth0.getUser();
@@ -21,17 +22,6 @@ function LoginPage() {
 
     }
 
-    function guestLogin() {
-        redirectToMap();
-    }
-
-    function redirectToMap() {
-        const element = document.createElement("a");
-        element.href = "/map";
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
-    }
 
 
 
@@ -58,7 +48,7 @@ function LoginPage() {
 
                         <div className='flex-col flex float-right gap-5 pr-52'>
 
-                            <Button onClick={guestLogin} children="Login as Guest"/>
+
                         </div>
 
 
