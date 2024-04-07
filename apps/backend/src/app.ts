@@ -7,6 +7,7 @@ import pathfindingRoute from "./routes/pathfindingRoute";
 import maintenanceRoute from "./routes/maintenanceRoute";
 import languageInterpreterRoute from "./routes/languageInterpreterRoute";
 import csvManagerRoute from "./routes/csvManagerRoute";
+import medicineRoute from "./routes/medicineRoute";
 
 const app: Express = express(); // Setup the backend
 
@@ -30,6 +31,7 @@ app.use("/api/pathfinding", pathfindingRoute);
 app.use("/api/maintenance", maintenanceRoute);
 app.use("/api/languageInterpreter", languageInterpreterRoute);
 app.use("/api/csvManager", csvManagerRoute);
+app.use("/api/medicine", medicineRoute);
 
 app.use("/healthcheck", (req, res) => {
   res.status(200).send();
