@@ -59,7 +59,7 @@ export function Map(){
     }
 
     useEffect( () => {
-        axios.get("/api/pathfinding/").then((response) => {
+        axios.get("/api/pathfinding/halls").then((response) => {
             const nodeStrings = [];
             const tempNodeData = {};
             for (let i = 0; i < response.data.length; i++) {

@@ -5,17 +5,24 @@ import Path from "../../../../packages/common/src/pathFinder";
 import Node from "../../../../packages/common/src/node";
 import client from "../bin/database-connection";
 import writeNode from "../writeNode";
+import { filteringNodes } from "../filteringNodes";
 
 const router: Router = express.Router();
 
 router.get("/", async (req, res) => {
-  const all = await client.l1Nodes.findMany();
+  const all = await client.nodes.findMany();
   res.status(200).json(all);
 });
+
+router.get("/halls", async (req, res) => {
+  const filtered = await filteringNodes("HALL");
+  res.status(200).json(filtered);
+});
+
 router.post("/", async (req, res) => {
   const finalPath: Path = new Path();
-  finalPath.nodeList = await client.l1Nodes.findMany();
-  finalPath.edgeList = await client.l1Edges.findMany();
+  finalPath.nodeList = await client.nodes.findMany();
+  finalPath.edgeList = await client.edges.findMany();
 
   finalPath.generateNodeMap();
   const pathfinding: startEndNodes = req.body;

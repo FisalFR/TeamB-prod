@@ -4,20 +4,108 @@ const router: Router = express.Router();
 import client from "../bin/database-connection";
 import populateNode from "../populateNode";
 import populateEdge from "../populateEdge";
-import writeNode from "../writeNode.ts";
+import writeNode from "../writeNode";
 import writeEdge from "../writeEdge";
-//import edge from "common/src/edge";
+import NodeType from "common/src/NodeType";
+import EdgeType from "common/src/EdgeType";
+import FormType from "common/src/FormType";
 
 router.use(fileUpload());
 
+router.get("/", async (req, res) => {
+  const formType = await client.forms.findMany();
+  res.status(200).json(formType);
+});
+
 router.get("/nodes", async (req, res) => {
-  const allNodes = await client.l1Nodes.findMany();
+  const allNodes = await client.nodes.findMany();
   res.status(200).json(allNodes);
 });
 
 router.get("/edges", async (req, res) => {
-  const allEdges = await client.l1Edges.findMany();
+  const allEdges = await client.edges.findMany();
   res.status(200).json(allEdges);
+});
+router.post("/filter", async (req, res) => {
+  const formType: FormType = req.body;
+  console.log(formType);
+  if (
+    formType.status !== "" &&
+    formType.type !== "" &&
+    formType.assignee !== ""
+  ) {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        status: { search: formType.status },
+        type: { search: formType.type },
+        assignee: { search: formType.assignee },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.status !== "" && formType.type !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        status: { search: formType.status },
+        type: { search: formType.type },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.type !== "" && formType.assignee !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        type: { search: formType.type },
+        assignee: { search: formType.assignee },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.status !== "" && formType.assignee !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        status: { search: formType.status },
+        assignee: { search: formType.assignee },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.status !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        status: { search: formType.status },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.type !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        type: { search: formType.type },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.assignee !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        assignee: { search: formType.assignee },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else {
+    const filteredForm = await client.forms.findMany({});
+    res.status(200).json(filteredForm);
+  }
+});
+
+router.post("/insert", async (req, res) => {
+  const formType: FormType = req.body;
+  const updateUser = await client.forms.update({
+    where: {
+      formID: formType.formID,
+    },
+    data: {
+      status: formType.status,
+      assignee: formType.assignee,
+    },
+  });
+  console.log(updateUser);
+  res.status(200).json(updateUser);
 });
 
 router.post("/uploadNodes", function (req, res) {
@@ -30,14 +118,54 @@ router.post("/uploadNodes", function (req, res) {
     const nodes = importedNodesFile.data
       .toString()
       .split("\r\n")
-      .map((row: string): string[] => {
-        return row.split(",");
+      .map((row: string) => {
+        const values: string[] = row.split(","); // Split the row into values
+        const nodeTest: NodeType = {
+          nodeID: values[0],
+          xcoord: parseFloat(values[1]),
+          ycoord: parseFloat(values[2]),
+          floor: values[3],
+          building: values[4],
+          nodeType: values[5],
+          longName: values[6],
+          shortName: values[7],
+        };
+        return nodeTest;
       });
-    nodes.shift();
+    if (
+      nodes[0].nodeID != "nodeID" ||
+      !isNaN(nodes[0].xcoord) ||
+      !isNaN(nodes[0].ycoord) ||
+      nodes[0].floor != "floor" ||
+      nodes[0].building != "building" ||
+      nodes[0].nodeType != "nodeType" ||
+      nodes[0].longName != "longName" ||
+      nodes[0].shortName != "shortName"
+    ) {
+      return res.send("Invalid node files here.");
+    }
     try {
-      client.l1Edges.deleteMany().then(() => {
-        client.l1Nodes.deleteMany().then(() => {
-          populateNode.populateNodeDB(nodes).then((isValid) => {
+      const filteredNodes = nodes.filter(
+        (node) =>
+          node.nodeID &&
+          node.floor &&
+          node.building &&
+          node.nodeType &&
+          node.longName &&
+          node.shortName !== "" &&
+          isNaN(nodes.xcoord) &&
+          isNaN(nodes.ycoord),
+      );
+      if (nodes[nodes.length - 1].nodeID == "") {
+        nodes.pop();
+      }
+      if (filteredNodes.length != nodes.length) {
+        return res.send("Invalid node files.");
+      }
+      client.edges.deleteMany().then(() => {
+        client.nodes.deleteMany().then(() => {
+          nodes.shift();
+          populateNode.populateManyNodeDB(nodes).then((isValid) => {
             if (!isValid) {
               return res.send("Invalid node files.");
             } else {
@@ -63,13 +191,35 @@ router.post("/uploadEdges", async (req, res) => {
     const edges = importedEdgesFile.data
       .toString()
       .split("\r\n")
-      .map((row: string): string[] => {
-        return row.split(",");
+      .map((row: string) => {
+        const values: string[] = row.split(","); // Split the row into values
+        const edgeTest: EdgeType = {
+          edgeID: values[0],
+          startNodeID: values[1],
+          endNodeID: values[2],
+        };
+        return edgeTest;
       });
-    edges.shift();
+    if (
+      edges[0].edgeID != "edgeID" ||
+      edges[0].startNodeID != "startNode" ||
+      edges[0].endNodeID != "endNode"
+    ) {
+      return res.send("Invalid edge files. here");
+    }
     try {
-      client.l1Edges.deleteMany().then(() => {
-        populateEdge.populateEdgeDB(edges).then((isValid) => {
+      const filteredEdges = edges.filter(
+        (edge) => edge.edgeID && edge.startNodeID && edge.endNodeID !== "",
+      );
+      if (edges[edges.length - 1].edgeID == "") {
+        edges.pop();
+      }
+      if (filteredEdges.length != edges.length) {
+        return res.send("Invalid edge files.");
+      }
+      client.edges.deleteMany().then(() => {
+        edges.shift();
+        populateEdge.populateManyEdgeDB(edges).then((isValid) => {
           if (!isValid) {
             return res.send("Invalid edge files.");
           } else {

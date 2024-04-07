@@ -1,4 +1,4 @@
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {LanguageInterpreterType} from 'common/src/languageInterpreterTypes.ts';
 import Dropdown from "../components/dropdown.tsx";
 import Button from "../components/Button.tsx";
@@ -47,7 +47,7 @@ function LanguageInterpreter(){
         "Marathi",
         "Sign Language (ASL)"
     ];
-    const locationOptions: string[] = ["Day Surgery Family Waiting", "Pre-Op PACU", "Radiation Oncology TX Suite", "Ultrasound", "Medical Records Conference Room", "Abrams Conference Room", "Outpatient Fluoroscopy (Xray)", "Anesthesia Conference Room", "Helen Hogan Conference Room", "Nuclear Medicine", "Cross-Sectional Interventional Radiology (CSIR) MRI", "Volunteers"];
+    const [locationOptions, setLocationOptions] = useState<string[]>([]);
     function handleSubmitLanguage(e: { preventDefault: () => void; }) {
 
         (formRef.current as HTMLFormElement).requestSubmit();
@@ -65,6 +65,17 @@ function LanguageInterpreter(){
             setSubmittedWindowVisibility({requestScreen: "hidden", submittedScreen: "block"});
         }
     }
+
+    useEffect(() => {
+        axios.get("/api/languageInterpreter/location").then((response) => {
+            const locationOptionsStrings: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                locationOptionsStrings.push(response.data[i].longName);
+            }
+            setLocationOptions(locationOptionsStrings);
+        });
+    }, []);
+
 
     function handleClearLanguage(e: { preventDefault: () => void; }): void {
         e.preventDefault();
@@ -92,7 +103,7 @@ function LanguageInterpreter(){
     }
 
     return (
-        <div className="interpreterContent">
+        <div className="interpreterContent px-20">
             <div className={submittedWindowVisibility.requestScreen}>
 
 
@@ -145,7 +156,7 @@ function LanguageInterpreter(){
                                       setInput={handleLocationInput} required={true}/>
                         </div>
 
-                        <div className={"formButtons pt-32 flex gap-4"}>
+                        <div className={"formButtons pt-32 flex gap-4 space-x-5"}>
 
                             <Button onClick={handleSubmitLanguage} children={"Submit"}/>
                             <Button onClick={handleClearLanguage} children={"Clear"}/>
