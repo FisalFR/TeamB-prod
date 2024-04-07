@@ -43,12 +43,6 @@ model edges {
   endNode     nodes  @relation(name: "endNode", fields: [endNodeID], references: [nodeID])
 }
 
-model languageInterpreterRequests {
-  lid      Int    @id @default(autoincrement())
-  language String
-  location String
-}
-
 model users {
   username  String     @id
   password  String
@@ -80,12 +74,29 @@ model interpreter {
   interpreterUsernameID employee @relation(name: "interpreterUsernameID", fields: [interpreterUsername], references: [employeeUsername])
 }
 
+model forms {
+  formID              String                        @id
+  status              String
+  type                String
+  assignee            String
+  dateCreated         DateTime                      @default(now())
+  location            String
+  languageRequests    languageInterpreterRequests[] @relation(name: "languageRequestID")
+  maintenanceRequests maintenances[]                @relation(name: "maintenanceRequestID")
+}
+
+model languageInterpreterRequests {
+  languageRequest   String @id
+  language          String
+  languageRequestID forms  @relation(name: "languageRequestID", fields: [languageRequest], references: [formID])
+}
+
 model maintenances {
-  mid      Int    @id @default(autoincrement())
-  issue    String
-  location String
-  isUrgent String
-  feedback String
+  maintenanceRequest   String @id
+  issue                String
+  isUrgent             String
+  feedback             String
+  maintenanceRequestID forms  @relation(name: "maintenanceRequestID", fields: [maintenanceRequest], references: [formID])
 }
 
 model medicineRequests {

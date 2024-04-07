@@ -1,6 +1,7 @@
 import { languageInterpreterTypes } from "common/src/languageInterpreterTypes";
 const prisma = client;
 import client from "./bin/database-connection";
+import { generateRandomUUIDInteger } from "./randomUUID";
 
 class languageInterpreterFunctions {
   static async languageInterpreterFinder(loc: string) {
@@ -14,10 +15,20 @@ class languageInterpreterFunctions {
   }
 
   static async languageInterpreterInsert(request: languageInterpreterTypes) {
+    const UUID = generateRandomUUIDInteger();
+    await prisma.forms.create({
+      data: {
+        formID: UUID,
+        status: "Unassigned",
+        type: "Language",
+        assignee: "",
+        location: request.location,
+      },
+    });
     await prisma.languageInterpreterRequests.create({
       data: {
+        languageRequest: UUID,
         language: request.language,
-        location: request.location,
       },
     });
   }

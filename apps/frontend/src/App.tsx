@@ -10,6 +10,7 @@ import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
 import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
 import MedicineRequest from "./routes/MedicineRequest.tsx";
+import Database from "./routes/Database.tsx";
 
 function App() {
     const router = createBrowserRouter([
@@ -51,6 +52,11 @@ function App() {
 
                        },
                         {
+                            path:"/database",
+                            element:<Database/>,
+
+                        },
+                        {
                             path:"medicineRequest",
                             element:<MedicineRequest/>
                         },
@@ -65,7 +71,7 @@ function App() {
 
     function Root() {
         return (
-            <div className="w-full flex flex-col px-20 gap-5">
+            <div className="w-full flex flex-col">
                 <NavigationBar/>
 
 
