@@ -1,11 +1,12 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="db" type="js.build_tools.npm" nameIsGenerated="true">
+  <configuration default="false" name="TeamB-prod &gt; dev" type="js.build_tools.npm" nameIsGenerated="true">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="db" />
+      <script value="dev" />
     </scripts>
     <node-interpreter value="project" />
+    <package-manager value="$PROJECT_DIR$/.yarn/releases/yarn-4.0.2.cjs" />
     <envs />
     <method v="2" />
   </configuration>

@@ -107,3 +107,13 @@ model security {
   securityNeeded String
   reason         String
 }
+
+model medicineRequests {
+  medicineRequestID  Int    @id @default(autoincrement())
+  employeeName       String
+  priority           String
+  location           String
+  medicine           String
+  quantity           Int
+  additionalComments String
+}
