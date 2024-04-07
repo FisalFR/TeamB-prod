@@ -11,6 +11,7 @@ import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
 import MedicineRequest from "./routes/MedicineRequest.tsx";
 import Database from "./routes/Database.tsx";
+import { Auth0Provider} from "@auth0/auth0-react";
 
 
 function App() {
@@ -79,7 +80,7 @@ function App() {
                 cacheLocation="localstorage"
                 domain="dev-k4ad0ftyhamxq164.us.auth0.com"
                 clientId="W2sGPVM38yYzHtAfDSPdccDIf1ztmCC5"
-                onRedirectCallback={(appState:AppState)=>{
+                onRedirectCallback={(appState)=>{
                     navigate(appState?.returnTo || window.location.pathname);
                 }}
                 authorizationParams={{
