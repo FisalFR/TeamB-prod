@@ -30,9 +30,10 @@ function LogBook() {
     const [submitted, setSubmit] = useState<number>(0);
     const [cleared, setCleared] = useState(false);
 
-    const requestTypeOptions = ["Maintenance", "Language"];
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
     const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
+    const requestTypeOptions: string[] = ["Maintenance", "Language", "Sanitation", "Medicine", "Flower", "Security"];
+
 
 
     function handleSubmit(e: { preventDefault: () => void; }) {

@@ -1,4 +1,4 @@
-import React, {useRef, useState, ChangeEvent} from "react";
+import React, {useRef, useState, ChangeEvent, useEffect} from "react";
 import {MedicineRequestType} from "../../../../packages/common/src/MedicineRequestType.ts";
 import Button from "../components/Button.tsx";
 import RadioButton from "../components/RadioButton.tsx";
@@ -23,8 +23,18 @@ export function MedicineRequest(){
     const [cleared, setCleared] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
 
-    const locationOptions: string[] = ["Day Surgery Family Waiting", "Pre-Op PACU", "Radiation Oncology TX Suite", "Ultrasound", "Medical Records Conference Room", "Abrams Conference Room", "Outpatient Fluoroscopy (Xray)", "Anesthesia Conference Room", "Helen Hogan Conference Room", "Nuclear Medicine", "Cross-Sectional Interventional Radiology (CSIR) MRI", "Volunteers"];
+    const [locationOptions, setLocationOptions] = useState<string[]>([]);
     const medicineOptions: string[] = ["Tylenol", "Ibuprofen", "Nyquill"];
+
+    useEffect(() => {
+        axios.get("/api/medicine/location").then((response) => {
+            const locationOptionsStrings: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                locationOptionsStrings.push(response.data[i].longName);
+            }
+            setLocationOptions(locationOptionsStrings);
+        });
+    }, []);
 
     function handleSubmit(e: { preventDefault: () => void; }) {
         (formRef.current as HTMLFormElement).requestSubmit();
