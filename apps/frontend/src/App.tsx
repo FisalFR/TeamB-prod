@@ -12,6 +12,7 @@ import LogBook from "./routes/requests-log-page.tsx";
 import MedicineRequest from "./routes/MedicineRequest.tsx";
 import Database from "./routes/Database.tsx";
 
+
 function App() {
     const router = createBrowserRouter([
         {
@@ -52,9 +53,12 @@ function App() {
 
                        },
                         {
+                            path:"medicineRequest",
+                            element:<MedicineRequest/>
+                        },
+                        {
                             path:"/database",
                             element:<Database/>,
-
                         },
                         {
                             path:"medicineRequest",
