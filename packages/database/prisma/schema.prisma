@@ -84,6 +84,7 @@ model forms {
   languageRequests    languageInterpreterRequests[] @relation(name: "languageRequestID")
   maintenanceRequests maintenances[]                @relation(name: "maintenanceRequestID")
   medicineRequests    medicineRequests[]            @relation(name: "medicineRequestID")
+  sanitationRequests  sanitationRequests[]          @relation(name: "sanitationRequestID")
 }
 
 model languageInterpreterRequests {
@@ -108,4 +109,14 @@ model medicineRequests {
   quantity           Int
   additionalComments String
   medicineRequestID  forms  @relation(name: "medicineRequestID", fields: [medicineRequest], references: [formID])
+}
+
+model sanitationRequests {
+  sanitationRequest  String @id
+  employeeName       String
+  priority           String
+  serviceType        String
+  contaminant        String
+  additionalComments String
+  sanitationRquestID forms  @relation(name: "sanitationRequestID", fields: [sanitationRequest], references: [formID])
 }

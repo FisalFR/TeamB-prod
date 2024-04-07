@@ -10,6 +10,7 @@ import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
 import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
 import MedicineRequest from "./routes/MedicineRequest.tsx";
+import Sanitation from "./routes/sanitation-page.tsx";
 import Database from "./routes/Database.tsx";
 import { Auth0Provider} from "@auth0/auth0-react";
 
@@ -60,6 +61,11 @@ function App() {
                             path:"/database",
                             element:<Database/>,
                         },
+                        {
+                          path: "/sanitation",
+                          element: <Sanitation/>
+                        },
+
             ],
         },
     ]}]);
