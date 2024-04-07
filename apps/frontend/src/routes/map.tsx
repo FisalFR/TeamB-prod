@@ -1,4 +1,8 @@
 import ll1map from "../assets/floors/00_thelowerlevel1.png";
+import ll2map from "../assets/floors/00_thelowerlevel2.png";
+import l1map from "../assets/floors/01_thefirstfloor.png";
+import l2map from "../assets/floors/02_thesecondfloor.png";
+import l3map from "../assets/floors/03_thethirdfloor.png";
 import from from "../assets/from_to_icons/circle_from.svg";
 import dots from "../assets/from_to_icons/circles_from_to.svg";
 import destination from "../assets/from_to_icons/icon_to.svg";
@@ -22,9 +26,9 @@ export function Map(){
     const [nodeData, setNodeData] = useState({});
 
 
-
     const divRef = useRef<HTMLDivElement>(null);
 
+    const [currentMap, setCurrentMap] = useState(ll1map);
     function zoomIn() {
         setZoom(prevZoom => Math.min(prevZoom * 1.2, 2.0)); // Increase zoom level, max 2.0
     }
@@ -84,7 +88,7 @@ export function Map(){
         <div className="centerContent gap-10 w-full h-full">
             <div className="relative"> {/* Add relative positioning here */}
                 <div className="w-full h-full max-w-[1000px] max-h-[calc(100vh-200px)] overflow-scroll" ref={divRef}>
-                    <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={ll1map} width={5000}
+                    <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={currentMap} width={5000}
                                 height={3400}
                                 scale={zoom}
                                 showPath={showPath}/>
@@ -100,6 +104,13 @@ export function Map(){
                         <Select label="" id="nodeEndSelect" options={nodes}
                                 onChange={handleEndChange}/>
                     </div>
+                </div>
+                <div className={"absolute bottom-5 left-5 flex flex-col gap-0.5"}>
+                    <Button onClick={() => setCurrentMap(l3map)} children={"3"}/>
+                    <Button onClick={() => setCurrentMap(l2map)} children={"2"}/>
+                    <Button onClick={() => setCurrentMap(l1map)} children={"1"}/>
+                    <Button onClick={() => setCurrentMap(ll1map)} children={"L1"}/>
+                    <Button onClick={() => setCurrentMap(ll2map)} children={"L2"}/>
                 </div>
                 <div className={"absolute bottom-5 right-5 flex flex-col"}>
                     <Button onClick={zoomIn} children={"+"}/>
