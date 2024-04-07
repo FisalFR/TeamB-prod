@@ -52,8 +52,6 @@ function App() {
                         {
                            path:"/logs",
                            element:<LogBook/>,
-
-
                        },
                         {
                             path:"medicineRequest",
@@ -62,7 +60,6 @@ function App() {
                         {
                             path:"/database",
                             element:<Database/>,
-
                         },
                         {
                           path: "/sanitation",
