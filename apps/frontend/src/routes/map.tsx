@@ -5,6 +5,7 @@ import Button from "../components/Button.tsx";
 import {ChangeEvent, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {startEndNodes} from "common/src/pathfinding.ts";
+//import Node from "../../../../packages/common/src/node";
 
 export function Map(){
 
@@ -18,7 +19,8 @@ export function Map(){
 
     const [nodeData, setNodeData] = useState({});
 
-
+    const [floorMap, setFloorMap] = useState({});
+    const [pathNodes, setPathNodes] = useState({});
 
     const divRef = useRef<HTMLDivElement>(null);
     function zoomSlider(e: ChangeEvent<HTMLInputElement>) {
@@ -40,6 +42,8 @@ export function Map(){
                 }
                 setPathPoints(nodeCoords);
                 setShowPath(true);
+                setFloorMap(response.data.floorMap);
+                setPathNodes(response.data.nodes);
             }
             else {
                 alert("No path on Floor Lower Level 1 with selected nodes");
@@ -80,7 +84,7 @@ export function Map(){
                 <p className="font-HeadlandOne text-3xl py-3">Floor: Lower Level 1</p>
                 <div className="w-fit h-fit max-w-[1000px] max-h-[calc(100vh-200px)] overflow-scroll" ref={divRef}>
                     <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={ll1map} width={5000} height={3400}
-                            scale={zoom} showPath={showPath}/>
+                            scale={zoom} showPath={showPath} floormap={floorMap} nodes={pathNodes}/>
                 </div>
                 <br/><br/>
             </div>
