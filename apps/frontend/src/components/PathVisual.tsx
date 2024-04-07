@@ -1,15 +1,13 @@
 import { motion } from "framer-motion";
 import Node from "../../../../packages/common/src/node";
 
-function PathVisual(props: { path: number[][]; image: string; width: number; height: number; scale:number;
+function PathVisual(props: {width: number; height: number; scale:number;
     showPath: boolean; floormap: Map<string, Node[][]>; nodes: Node[]; images: Map<string, string>}) {
-    //const pathCoords = props.path;
-    let startCoord = [];
-    let endCoord = [];
+    let startCoord: number[] = [];
+    let endCoord: number[] = [];
     if (props.nodes[0] != null) {
         startCoord = [props.nodes[0].xcoord, props.nodes[0].ycoord];
         endCoord = [props.nodes[props.nodes.length - 1].xcoord, props.nodes[props.nodes.length - 1].ycoord];
-        alert ("here");
     }
 
     const draw = {
@@ -35,8 +33,9 @@ function PathVisual(props: { path: number[][]; image: string; width: number; hei
     }
 
     function createFloors() {
-        const floorSVGs = [];
-        for (const key in props.floormap) {
+        const floorSVGs: JSX.Element[] = [];
+        const keys = Object.keys(props.images);
+        for (let x = 0; x < keys.length; x++) {
             floorSVGs.push(
                 <>
                 <motion.svg width={props.width * props.scale}
@@ -45,52 +44,67 @@ function PathVisual(props: { path: number[][]; image: string; width: number; hei
                             initial="hidden"
                             animate="visible"
                             variants={draw}>
-                    {createFloor(key)}
-                    {createStartEnd()}
+                    {createFloor(keys[x])}
                 </motion.svg>
                 </>
             );
-            return floorSVGs;
         }
+        return floorSVGs;
     }
 
     function createFloor(floor: string) {
         const floorImage = props.images[floor];
-        const floorPaths = props.floormap[floor];
         const pathDivs = [];
         pathDivs.push(
             <image xlinkHref={floorImage} width={props.width} height={props.height}></image>
         );
-        for (let i = 0; i < floorPaths.length; i++) {
-            const pathCoords = [];
-            for (let j = 0; j < floorPaths[i]; j++) {
-                pathCoords.push([floorPaths[i].xcoord, floorPaths[i].ycoord]);
+        if (Object.prototype.hasOwnProperty.call(props.floormap, floor)) {
+            const floorPaths: Node[][] | undefined = props.floormap[floor];
+
+            if (floorPaths != null) {
+                for (let i = 0; i < floorPaths.length; i++) {
+                    const pathCoords = [];
+                    for (let j = 0; j < floorPaths[i].length; j++) {
+                        pathCoords.push([floorPaths[i][j].xcoord, floorPaths[i][j].ycoord]);
+                    }
+                    pathDivs.push(
+                        <>
+                            <motion.path d={createPath(pathCoords)} stroke="#009CA6" fill="none" initial="hidden"
+                                         stroke-width={4}
+                                         animate="visible"
+                                         variants={draw}/>
+                            {createStartEnd(floorPaths[i][0], floorPaths[i][floorPaths[i].length-1])}
+                        </>
+                    );
+                }
             }
-            pathDivs.push(
-                <>
-                    <motion.path d={createPath(pathCoords)} stroke="#009CA6" fill="none" initial="hidden"
-                                 stroke-width={4}
-                                 animate="visible"
-                                 variants={draw}/>
-                </>
-            );
         }
         return pathDivs;
 
     }
 
-    function createStartEnd() {
+    function createStartEnd(start: Node, end: Node) {
         //add if statements to display circles or floor name depending on connections
-        return (
-            <>
-                <circle cx={startCoord[0]} cy={startCoord[1]} r={8}
-                        fill="#F6BD38"/>
-                <circle cx={endCoord[0]} cy={endCoord[1]} r={8} fill="#012D5A"/>
-            </>
-        );
+        const returnDivs = [];
+        let nodePos = 0;
+        if (props.nodes[props.nodes.length-1].nodeID == end.nodeID) {
+            returnDivs.push(<circle cx={endCoord[0]} cy={endCoord[1]} r={8} fill="#F6BD38"/>);
+        }
+        else {
+            nodePos = props.nodes.findIndex((node) => node.nodeID == end.nodeID);
+            returnDivs.push(<text x={end.xcoord} y={end.ycoord} className="text-5xl font-bold fill-gold-yellow font-OpenSans">{props.nodes[nodePos + 1].floor}</text>);
+        }
+        if (props.nodes[0].nodeID == start.nodeID) {
+            returnDivs.push(<circle cx={startCoord[0]} cy={startCoord[1]} r={8} fill="#012D5A"/>);
+        }
+        else {
+            nodePos = props.nodes.findIndex((node) => node.nodeID == start.nodeID);
+            returnDivs.push(<text x={start.xcoord} y={start.ycoord} className="text-5xl font-bold fill-deep-blue font-OpenSans">{props.nodes[nodePos - 1].floor}</text>);
+        }
+        return (returnDivs);
     }
 
-    function createBlankFloor(floor) {
+    function createBlankFloor(floor: string) {
         const floorImage = props.images[floor];
         return (
             <image xlinkHref={floorImage} width={props.width} height={props.height}></image>
@@ -101,7 +115,9 @@ function PathVisual(props: { path: number[][]; image: string; width: number; hei
     if (props.nodes[0] != null) {
         return (
             <>
-                {createFloors()}
+                <div className="flex flex-col">
+                    {createFloors()}
+                </div>
             </>
         );
     }
@@ -115,7 +131,7 @@ function PathVisual(props: { path: number[][]; image: string; width: number; hei
                             initial="hidden"
                             animate="visible"
                             variants={draw}>
-                    {createBlankFloor("L1")}
+                    {createBlankFloor("L2")}
                 </motion.svg>
 
             </>

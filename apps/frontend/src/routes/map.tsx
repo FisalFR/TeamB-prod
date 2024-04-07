@@ -60,7 +60,6 @@ export function Map(){
             else {
                 alert("No path on Floor Lower Level 1 with selected nodes");
             }
-            alert("here");
         });
     }
 
@@ -87,6 +86,9 @@ export function Map(){
             setNodeData(tempNodeData);
             setRequest({startNode: tempNodeData[nodeStrings[0]].id, endNode: tempNodeData[nodeStrings[0]].id});
             setPathPoints([tempNodeData[nodeStrings[0]].coords]);
+
+            setPathNodes([response.data[0], response.data[response.data.length-1]]);
+            setShowPath(false);
         });
     }, []);
 
@@ -96,7 +98,7 @@ export function Map(){
             <div className="">
                 <p className="font-HeadlandOne text-3xl py-3">Floor: Lower Level 1</p>
                 <div className="w-fit h-fit max-w-[1000px] max-h-[calc(100vh-200px)] overflow-scroll" ref={divRef}>
-                    <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={ll1map} width={5000} height={3400}
+                    <PathVisual key={JSON.stringify(pathPoints)} width={5000} height={3400}
                             scale={zoom} showPath={showPath} floormap={floorMap} nodes={pathNodes} images={floorImages}/>
                 </div>
                 <br/><br/>

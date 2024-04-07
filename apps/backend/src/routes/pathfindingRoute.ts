@@ -60,14 +60,20 @@ router.post("/", async (req, res) => {
   path.map((node) => {
     node.neighbors = [];
   });
+  const convertMap = {};
+  floorMap.forEach((value: Node[][], key: string) => {
+    convertMap[key] = value;
+  });
 
-  res.body = {
+  const body = {
     nodeCoords: nodeCoords,
     nodes: path,
     nodeMap: finalPath.nodeMap,
-    floorMap: floorMap,
+    floorMap: convertMap,
   };
-  res.status(200).json(res.body);
+
+  console.log(body.floorMap);
+  res.send(body);
 });
 
 export default router;
