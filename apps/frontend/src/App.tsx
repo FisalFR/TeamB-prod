@@ -9,7 +9,9 @@ import LanguageInterpreter from "./routes/language-interpreter-page";
 import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
 import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
+import MedicineRequest from "./routes/MedicineRequest.tsx";
 import Database from "./routes/Database.tsx";
+
 
 function App() {
     const router = createBrowserRouter([
@@ -51,9 +53,16 @@ function App() {
 
                        },
                         {
+                            path:"medicineRequest",
+                            element:<MedicineRequest/>
+                        },
+                        {
                             path:"/database",
                             element:<Database/>,
-
+                        },
+                        {
+                            path:"medicineRequest",
+                            element:<MedicineRequest/>
                         },
 
             ],
