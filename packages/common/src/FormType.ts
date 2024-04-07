@@ -3,7 +3,7 @@ export type FormType = {
     status: string
     type: string
     assignee: string
-    dataCreated: Date
+    dateCreated: Date
     location: string
 }
 export default FormType;

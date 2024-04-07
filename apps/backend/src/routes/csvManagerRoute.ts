@@ -18,15 +18,6 @@ router.get("/", async (req, res) => {
   res.status(200).json(formType);
 });
 
-// router.get("/formID", async (req, res) => {
-//   const formType = await client.forms.findMany({
-//     select: {
-//       formID: true,
-//     },
-//   });
-//   res.status(200).json(formType);
-// });
-
 router.get("/nodes", async (req, res) => {
   const allNodes = await client.nodes.findMany();
   res.status(200).json(allNodes);
@@ -36,33 +27,96 @@ router.get("/edges", async (req, res) => {
   const allEdges = await client.edges.findMany();
   res.status(200).json(allEdges);
 });
-router.post("/type", async (req, res) => {
-  const formType: FormType = req.body;
-  if (formType.type == "") {
-    const all = await client.forms.findMany();
-    res.status(200).json(all);
-  }
-  const filteredForm = await client.forms.findMany({
-    where: {
-      type: { search: formType.type },
-    },
-  });
-  res.status(200).json(filteredForm);
-});
+// router.post("/type", async (req, res) => {
+//   const formType: FormType = req.body;
+//   if (formType.type == "") {
+//     const all = await client.forms.findMany();
+//     res.status(200).json(all);
+//   }
+//   const filteredForm = await client.forms.findMany({
+//     where: {
+//       type: { search: formType.type },
+//     },
+//   });
+//   res.status(200).json(filteredForm);
+// });
+//
+// router.post("/status", async (req, res) => {
+//   const formType: FormType = req.body;
+//   const filteredForm = await client.forms.findMany({
+//     where: {
+//       status: { search: formType.status },
+//     },
+//   });
+//   res.status(200).json(filteredForm);
+// });
 
-router.post("/status", async (req, res) => {
+router.post("/filter", async (req, res) => {
   const formType: FormType = req.body;
-  const filteredForm = await client.forms.findMany({
-    where: {
-      type: { search: formType.status },
-    },
-  });
-  res.status(200).json(filteredForm);
+  console.log(formType);
+  if (
+    formType.status !== "" &&
+    formType.type !== "" &&
+    formType.assignee !== ""
+  ) {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        status: { search: formType.status },
+        type: { search: formType.type },
+        assignee: { search: formType.assignee },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.status !== "" && formType.type !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        status: { search: formType.status },
+        type: { search: formType.type },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.type !== "" && formType.assignee !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        type: { search: formType.type },
+        assignee: { search: formType.assignee },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.status !== "" && formType.assignee !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        status: { search: formType.status },
+        assignee: { search: formType.assignee },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.status !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        status: { search: formType.status },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.type !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        type: { search: formType.type },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.assignee !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        assignee: { search: formType.assignee },
+      },
+    });
+    res.status(200).json(filteredForm);
+  }
 });
 
 router.post("/insert", async (req, res) => {
   const formType: FormType = req.body;
-  console.log(formType);
   const updateUser = await client.forms.update({
     where: {
       formID: formType.formID,

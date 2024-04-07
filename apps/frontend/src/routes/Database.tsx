@@ -4,13 +4,21 @@ import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import LongButton from "../components/LongButton.tsx";
 import {forms} from "database/.prisma/client";
+import FormType from "common/src/FormType.ts";
 function LogBook() {
 
     // const [interpreterReq, setInterpreterReq] = useState([]);
-
     const formRef = useRef<HTMLFormElement>(null);
 
     const emptyDate:Date = new Date();
+    const formSearch: FormType = {
+        formID: "",
+        status: "",
+        type: "",
+        assignee: "",
+        dateCreated: emptyDate,
+        location: ""
+    };
     const [form, setForm] = useState([]);
     const [formIDOptions, setFormID] = useState<string[]>([]);
     const [request, setRequest] = useState<forms>({formID: "", type: "", location: "", status: "", assignee: "", dateCreated: emptyDate});
@@ -58,10 +66,13 @@ function LogBook() {
     // Handler Functions
     function handleRequestType(str: string): void {
         setRequest({...request, type:str});
-        const searchType = {
-            type: str
-        };
-        axios.post("/api/csvManager/type", searchType, {
+        // const search = {
+        //     type: str,
+        //     status: str,
+        //     assignee: str
+        // };
+        formSearch.type = str;
+        axios.post("/api/csvManager/filter", formSearch, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -72,30 +83,35 @@ function LogBook() {
 
     function handleStatusType(str: string): void {
         setRequest({...request, status:str});
-        const searchStatus = {
-            type: str
-        };
-        axios.post("/api/csvManager/status", searchStatus, {
+        // const searchStatus = {
+        //     type: str,
+        //     status: str,
+        //     assignee: str
+        // };
+        formSearch.status = str;
+        axios.post("/api/csvManager/filter", formSearch, {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            //setCleared(false);
             setForm(response.data.reverse());
         });
     }
 
-    function handleRequestType3(str: string): void {
-        setRequest({...request, type:str});
-
-        axios.post("/api/csvManager", request, {
+    function handleAssigneeType(str: string): void {
+        setRequest({...request, assignee:str});
+        // const searchStatus = {
+        //     type: str,
+        //     status: str,
+        //     assignee: str
+        // };
+        formSearch.assignee = str;
+        axios.post("/api/csvManager/filter", formSearch, {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            setCleared(false);
             setForm(response.data.reverse());
-
         });
     }
 
@@ -140,9 +156,9 @@ function LogBook() {
                 <form
                     className="w-[22vw] flex flex-col items-start p-3 gap-4">
                     <p className={"text-left font-bold"}>Assigned Staff</p>
-                    <Dropdown options={requestTypeOptions} placeholder={"Assigned Staff"} name={"requestTypeDropdown3"}
+                    <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"} name={"requestTypeDropdown3"}
                               id={"dropdown3"} value={cleared}
-                              setInput={handleRequestType3} required={true}/>
+                              setInput={handleAssigneeType} required={true}/>
                 </form>
                 </div>
             {/*Form to assign requests*/}
