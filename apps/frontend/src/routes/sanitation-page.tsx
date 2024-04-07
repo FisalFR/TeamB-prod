@@ -77,13 +77,16 @@ function Sanitation() {
                     <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
                         <div>
                             <p className={"text-left font-bold"}>Employee Name:</p>
-                            <Dropdown options={employeeNameOptions} placeholder={"Employee Name"}
-                                      name={"employeeNameDropdown"}
-                                      id={"dropdownEmployeeName"} value={cleared}
-                                      setInput={(str: string) => setRequest({...request, employeeName: str})}
-                                      required={true}/>
+                            <div className="border-solid border-deep-blue border-2 rounded">
+                                <Dropdown options={employeeNameOptions} placeholder={"Employee Name"}
+                                          name={"employeeNameDropdown"}
+                                          id={"dropdownEmployeeName"} value={cleared}
+                                          setInput={(str: string) => setRequest({...request, employeeName: str})}
+                                          required={true}/>
+                            </div>
                             <br/>
                             <p className={"text-left font-bold"}>What kind of service?</p>
+                            <div className="border-solid border-deep-blue border-2 rounded">
                             <RadioButton value={"Bed Cleaning"} name={"serviceType"} id={"serviceType1"}
                                          state={request.serviceType}
                                          onChange={handleInput} required={true}/>
@@ -93,8 +96,10 @@ function Sanitation() {
                             <RadioButton value={"General Sanitation"} name={"serviceType"} id={"serviceType3"}
                                          state={request.serviceType}
                                          onChange={handleInput} required={true}/>
+                            </div>
                             <br/>
                             <p className={"text-left font-bold"}>Priority</p>
+                            <div className="border-solid border-deep-blue border-2 rounded">
                             <RadioButton value={"Low"} name={"priority"} id={"priority1"} state={request.priority}
                                          onChange={handleInput} required={true}/>
                             <RadioButton value={"Medium"} name={"priority"} id={"priority2"} state={request.priority}
@@ -103,19 +108,22 @@ function Sanitation() {
                                          onChange={handleInput} required={true}/>
                             <RadioButton value={"Emergency"} name={"priority"} id={"priority3"} state={request.priority}
                                          onChange={handleInput} required={true}/>
-
+                            </div>
 
                         </div>
 
                         <div>
 
 
-                            <p className={"text-left font-bold"}>What location is this issue in?</p>
+                        <p className={"text-left font-bold"}>What location is this issue in?</p>
+                            <div className="border-solid border-deep-blue border-2 rounded">
                             <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
                                       id={"dropdown1"} value={cleared}
                                       setInput={handleLocationInput} required={true}/>
+                            </div>
                             <br/>
                             <p className={"text-left font-bold"}>Contaminant</p>
+                            <div className="border-solid border-deep-blue border-2 rounded">
                             <RadioButton value={"Biological Fluids"} name={"contaminant"} id={"contaminant1"}
                                          state={request.contaminant}
                                          onChange={handleInput} required={true}/>
@@ -125,15 +133,14 @@ function Sanitation() {
                             <RadioButton value={"Dust and Debris"} name={"contaminant"} id={"contaminant3"}
                                          state={request.contaminant}
                                          onChange={handleInput} required={true}/>
-
+                            </div>
                             <br/>
                             <label htmlFor={"additionalComments"} className={"flex w-full text-left font-bold"}>Additional
                                 Comments</label>
-                            <textarea id={"additionalComments"} className={"w-full max-w-full h-40 max-h-40 p-1"}
+                            <textarea id={"additionalComments"} className={"w-full max-w-full h-40 max-h-40 p-1 border-solid border-deep-blue border-2 rounded"}
                                       onChange={handleAdditionalComments}
                                       value={request.additionalComments} required={false}
                                       placeholder="Enter detailed description here..."/>
-
                         </div>
                     </div>
 
