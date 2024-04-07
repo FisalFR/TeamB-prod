@@ -4,13 +4,14 @@ import dots from "../assets/from_to_icons/circles_from_to.svg";
 import destination from "../assets/from_to_icons/icon_to.svg";
 import Select from "../components/Select.tsx";
 import PathVisual from "../components/PathVisual.tsx";
+import Button from "../components/Button.tsx";
 import {ChangeEvent, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {startEndNodes} from "common/src/pathfinding.ts";
 
 export function Map(){
 
-    // const [zoom, setZoom] = useState(0.2);
+    const [zoom, setZoom] = useState(0.2);
     const [pathPoints, setPathPoints] = useState([0, 0]);
     const [showPath, setShowPath] = useState(false);
 
@@ -23,11 +24,14 @@ export function Map(){
 
 
     const divRef = useRef<HTMLDivElement>(null);
-    // function zoomSlider(e: ChangeEvent<HTMLInputElement>) {
-    //     setZoom(0.2 * parseFloat(e.target.value));
-    //     //const scrollDiv = (divRef.current as HTMLDivElement);
-    //     //scrollDiv.scroll(scrollDiv.scrollLeft + (scrollDiv.scrollWidth-scrollDiv.clientWidth)/2, 0);
-    // }
+
+    function zoomIn() {
+        setZoom(prevZoom => Math.min(prevZoom * 1.2, 2.0)); // Increase zoom level, max 2.0
+    }
+
+    function zoomOut() {
+        setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.1)); // Decrease zoom level, min 0.1
+    }
 
     function findPath() {
         axios.post("/api/pathfinding", request,{
@@ -79,11 +83,10 @@ export function Map(){
     return (
         <div className="centerContent gap-10 w-full h-full">
             <div className="relative"> {/* Add relative positioning here */}
-                <div className="w-full h-full overflow-scroll" ref={divRef}>
+                <div className="w-full h-full max-w-[1000px] max-h-[calc(100vh-200px)] overflow-scroll" ref={divRef}>
                     <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={ll1map} width={5000}
                                 height={3400}
-                        // scale={zoom}
-                                scale={0.2}
+                                scale={zoom}
                                 showPath={showPath}/>
                 </div>
                 <div className="absolute top-5 left-5 flex flex-row p-2 bg-white h-fit rounded-2xl items-end">
@@ -98,33 +101,11 @@ export function Map(){
                                 onChange={handleEndChange}/>
                     </div>
                 </div>
-                {/*<div*/}
-                {/*    className="absolute top-0 left-0 flex flex-row p-4 bg-white h-fit"> /!* Add absolute positioning here *!/*/}
-                {/*    /!*<input type="range" min="1" max="10" step="any" defaultValue="1" onChange={zoomSlider}*!/*/}
-                {/*    /!*       id="myRange"></input><span className="text-3xl"> +</span><br/><br/>*!/*/}
+                <div className={"absolute bottom-5 right-5 flex flex-col"}>
+                    <Button onClick={zoomIn} children={"+"}/>
+                    <Button onClick={zoomOut} children={"-"}/>
+                </div>
 
-                {/*    <div className={"flex flex-col"}>*/}
-                {/*        <div className={"flex flex-row"}>*/}
-                {/*            <img src={from} alt="from icon"/>*/}
-                {/*        </div>*/}
-                {/*        <div className={"flex"}>*/}
-                {/*            <img src={dots} alt="dots"/>*/}
-                {/*        </div>*/}
-                {/*        <div className={"flex flex-row"}>*/}
-                {/*            <img src={destination} alt="destination"/>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*    <div className={"flex flex-col justify-around"}>*/}
-                {/*        <Select label="" id="nodeStartSelect" options={nodes}*/}
-                {/*                onChange={handleStartChange}/>*/}
-                {/*        <Select label="" id="nodeEndSelect" options={nodes}*/}
-                {/*                onChange={handleEndChange}/>*/}
-                {/*    </div>*/}
-
-                {/*    <Button onClick={findPath} children={"Find Path"}/>*/}
-
-
-                {/*</div>*/}
             </div>
         </div>
     );
