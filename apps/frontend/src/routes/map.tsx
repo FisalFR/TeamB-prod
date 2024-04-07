@@ -1,11 +1,15 @@
 import ll1map from "../assets/floors/00_thelowerlevel1.png";
+import ll2map from "../assets/floors/00_thelowerlevel2.png";
+import l1map from "../assets/floors/01_thefirstfloor.png";
+import l2map from "../assets/floors/02_thesecondfloor.png";
+import l3map from "../assets/floors/03_thethirdfloor.png";
 import Select from "../components/Select.tsx";
 import PathVisual from "../components/PathVisual.tsx";
 import Button from "../components/Button.tsx";
 import {ChangeEvent, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {startEndNodes} from "common/src/pathfinding.ts";
-//import Node from "../../../../packages/common/src/node";
+import Node from "../../../../packages/common/src/node";
 
 export function Map(){
 
@@ -20,7 +24,15 @@ export function Map(){
     const [nodeData, setNodeData] = useState({});
 
     const [floorMap, setFloorMap] = useState({});
-    const [pathNodes, setPathNodes] = useState({});
+    const [pathNodes, setPathNodes] = useState<Node[]>([]);
+
+    const floorImages = {
+        "L1": ll1map,
+        "L2": ll2map,
+        "1": l1map,
+        "2": l2map,
+        "3": l3map
+    };
 
     const divRef = useRef<HTMLDivElement>(null);
     function zoomSlider(e: ChangeEvent<HTMLInputElement>) {
@@ -48,6 +60,7 @@ export function Map(){
             else {
                 alert("No path on Floor Lower Level 1 with selected nodes");
             }
+            alert("here");
         });
     }
 
@@ -84,7 +97,7 @@ export function Map(){
                 <p className="font-HeadlandOne text-3xl py-3">Floor: Lower Level 1</p>
                 <div className="w-fit h-fit max-w-[1000px] max-h-[calc(100vh-200px)] overflow-scroll" ref={divRef}>
                     <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={ll1map} width={5000} height={3400}
-                            scale={zoom} showPath={showPath} floormap={floorMap} nodes={pathNodes}/>
+                            scale={zoom} showPath={showPath} floormap={floorMap} nodes={pathNodes} images={floorImages}/>
                 </div>
                 <br/><br/>
             </div>
