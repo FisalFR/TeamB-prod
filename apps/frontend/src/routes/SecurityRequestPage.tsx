@@ -22,7 +22,7 @@ export function SecurityRequestPage() {
     const [securityRequestData, setSecurityRequestData] = useState<SecurityRequestType[]>([]); // collection of requests
     const [cleared, setCleared] = useState(false); // for use with dropdown components
 
-    const[locations, setLocations] = useState<string[]>();
+    const[locations, setLocations] = useState<string[]>([]);
     // const locationOptions: string[] = ["Day Surgery Family Waiting", "Pre-Op PACU", "Radiation Oncology TX Suite", "Ultrasound", "Medical Records Conference Room", "Abrams Conference Room", "Outpatient Fluoroscopy (Xray)", "Anesthesia Conference Room", "Helen Hogan Conference Room", "Nuclear Medicine", "Cross-Sectional Interventional Radiology (CSIR) MRI", "Volunteers"];
     const reasonOptions: string[] = ["Suspicious Person", "Assistance", "Escort"];
 
@@ -58,7 +58,7 @@ export function SecurityRequestPage() {
     }
 
     function handleSubmit(e: { preventDefault: () => void; }) {
-        // TODO add validation and axios+express functionality
+        // TODO add validation and axios+express functionality, remove set function below
         setSecurityRequestData(securityRequestData.concat(request));
 
         (formRef.current as HTMLFormElement).requestSubmit();

@@ -3,7 +3,7 @@ import { PrismaClient } from "../../../packages/database/.prisma/client";
 import client from "./bin/database-connection";
 const prisma = client;
 
-class writeNode {
+export class writeNode {
   //gets data from nodes table, and puts them into a csv file
   static async nodeBackToCSV() {
     //nodes

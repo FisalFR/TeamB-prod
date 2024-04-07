@@ -1,10 +1,10 @@
 import express, { Router } from "express";
-import { languageInterpreterTypes } from "common/src/languageInterpreterTypes";
+import { LanguageInterpreterTypes } from "common/src/languageInterpreterTypes";
 import languageInterpreterFunctions from "../languageInterpreterFunctions";
 import client from "../bin/database-connection";
 const router: Router = express.Router();
 
-const database: languageInterpreterTypes[] = [];
+const database: LanguageInterpreterTypes[] = [];
 
 router.get("/", async (req, res) => {
   const formsWithLanguageStrings = await client.$queryRaw`
@@ -27,7 +27,7 @@ router.get("/:index", (req, res) => {
 });
 
 router.post("/search", async (req, res) => {
-  const languageInterpreter: languageInterpreterTypes = req.body;
+  const languageInterpreter: LanguageInterpreterTypes = req.body;
   res.status(200).json({
     message: await languageInterpreterFunctions.languageInterpreterFinder(
       languageInterpreter.location,
@@ -36,7 +36,7 @@ router.post("/search", async (req, res) => {
 });
 
 router.post("/insert", async (req, res) => {
-  const languageInterpreter: languageInterpreterTypes = req.body;
+  const languageInterpreter: LanguageInterpreterTypes = req.body;
   res.status(200).json({
     message:
       await languageInterpreterFunctions.languageInterpreterInsert(

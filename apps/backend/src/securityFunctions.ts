@@ -2,7 +2,9 @@ const prisma = client;
 import { SecurityRequestType } from "common/src/SecurityRequestType";
 import client from "./bin/database-connection";
 
-class maintenanceFunctions {
+class SecurityFunctions {
+    // Colin said securityFinder was extraneous as of
+
     // static async securityFinder(name: string, prio: string, ) {
     //     const result: object | SecurityRequestType =
     //         await prisma.security?.findMany({
@@ -19,11 +21,11 @@ class maintenanceFunctions {
     // }
 
     static async securityInsert(request: SecurityRequestType) {
-        await prisma.security?.create({
+        await prisma.security.create({
             data: {
                 name: request.name,
                 priority: request.priority,
-                location: request.location,
+                // location: request.location,
                 securityNeeded: request.securityNeeded,
                 reason: request.reason,
                 status: request.status,
@@ -31,4 +33,4 @@ class maintenanceFunctions {
         });
     }
 }
-export default securityFunctions;
+export default SecurityFunctions;

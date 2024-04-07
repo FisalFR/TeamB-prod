@@ -1,10 +1,10 @@
 import express, { Router } from "express";
-import { startEndNodes } from "../../../../packages/common/src/pathfinding";
-import Path from "../../../../packages/common/src/pathFinder";
-//import Parser from "../../../../packages/common/src/parser";
-import Node from "../../../../packages/common/src/node";
+import { startEndNodes } from "common/src/pathfinding";
+import Path from "common/src/pathFinder";
+//import Parser from "common/src/parser";
+import Node from "common/src/node";
 import client from "../bin/database-connection";
-import writeNode from "../writeNode";
+import { writeNode } from "../writeNode";
 import { filteringNodes } from "../filteringNodes";
 
 const router: Router = express.Router();
