@@ -30,7 +30,7 @@ function Sanitation() {
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
         if ((formRef.current as HTMLFormElement).checkValidity()) {
-            axios.post("/api/maintenance/insert",request,{
+            axios.post("/api/sanitation/insert",request,{
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -127,27 +127,16 @@ function Sanitation() {
                                          onChange={handleInput} required={true}/>
 
                             <br/>
+                            <label htmlFor={"additionalComments"} className={"flex w-full text-left font-bold"}>Additional
+                                Comments</label>
+                            <textarea id={"additionalComments"} className={"w-full max-w-full h-40 max-h-40 p-1"}
+                                      onChange={handleAdditionalComments}
+                                      value={request.additionalComments} required={false}
+                                      placeholder="Enter detailed description here..."/>
 
-                            <p className={"text-left font-bold"}>Status</p>
-                            <RadioButton value={"Unassigned"} name={"status"} id={"status1"} state={request.status}
-                                         onChange={handleInput} required={true}/>
-                            <RadioButton value={"Assigned"} name={"status"} id={"status2"} state={request.status}
-                                         onChange={handleInput} required={true}/>
-                            <RadioButton value={"In Progress"} name={"status"} id={"status3"} state={request.status}
-                                         onChange={handleInput} required={true}/>
-                            <RadioButton value={"Closed"} name={"status"} id={"status4"} state={request.status}
-                                         onChange={handleInput} required={true}/>
-
-                            <br/>
                         </div>
                     </div>
 
-                    <label htmlFor={"additionalComments"} className={"flex w-full text-left font-bold"}>Additional
-                        Comments</label>
-                    <textarea id={"additionalComments"} className={"w-full max-w-full h-28 max-h-28 p-1"}
-                              onChange={handleAdditionalComments}
-                              value={request.additionalComments} required={false}
-                              placeholder="Enter detailed description here..."/><br/>
 
                     <div className={"formButtons flex gap-4 my-4"}>
                         <Button onClick={handleSubmit} children={"Submit"}/>
@@ -158,7 +147,7 @@ function Sanitation() {
 
             <div className={submittedWindowVisibility.submittedScreen}>
                 <div className="p-6 bg-white rounded-2xl">
-                    <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+                <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
                     <Button onClick={handleNewSubmission} children="Submit a new request"/>
                 </div>
                 <div className={"text-left"}>
