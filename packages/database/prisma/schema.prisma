@@ -98,3 +98,13 @@ model maintenances {
   feedback             String
   maintenanceRequestID forms  @relation(name: "maintenanceRequestID", fields: [maintenanceRequest], references: [formID])
 }
+
+model medicineRequests {
+  medicineRequestID  Int    @id @default(autoincrement())
+  employeeName       String
+  priority           String
+  location           String
+  medicine           String
+  quantity           Int
+  additionalComments String
+}
