@@ -17,7 +17,6 @@ import Node from "../../../../packages/common/src/node";
 export function Map(){
 
     const [zoom, setZoom] = useState(0.2);
-    const [pathPoints, setPathPoints] = useState([0, 0]);
     const [showPath, setShowPath] = useState(false);
 
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
@@ -39,7 +38,7 @@ export function Map(){
 
     const divRef = useRef<HTMLDivElement>(null);
 
-    const [currentMap, setCurrentMap] = useState(ll1map);
+    const [currentFloor, setCurrentFloor] = useState("2");
     function zoomIn() {
         setZoom(prevZoom => Math.min(prevZoom * 1.2, 2.0)); // Increase zoom level, max 2.0
     }
@@ -55,30 +54,25 @@ export function Map(){
             }
         }).then((response) => {
             if (response.data.nodeCoords.length != 0) {
-                const nodeCoords = [];
-                for (let i = 0; i < response.data.nodeCoords.length; i++) {
-                    nodeCoords.push(response.data.nodeCoords[i]);
-                }
-                setPathPoints(nodeCoords);
                 setShowPath(true);
                 setFloorMap(response.data.floorMap);
                 setPathNodes(response.data.nodes);
+                setCurrentFloor(response.data.nodes[0].floor);
             }
             else {
-                alert("No path on Floor Lower Level 1 with selected nodes");
+                alert("No path with selected nodes");
             }
         });
     }
 
     function handleStartChange(e: ChangeEvent<HTMLInputElement>) {
         setRequest({...request, startNode: nodeData[e.target.value].id});
-        setPathPoints([nodeData[e.target.value].coords, pathPoints[pathPoints.length-1]]);
-        setShowPath(false);
+        setShowPath(true);
+        findPath();
     }
     function handleEndChange(e: ChangeEvent<HTMLInputElement>) {
         setRequest({...request, endNode: nodeData[e.target.value].id});
-        setPathPoints([pathPoints[0], nodeData[e.target.value].coords]);
-        setShowPath(false);
+        setShowPath(true);
         findPath();
     }
 
@@ -92,8 +86,7 @@ export function Map(){
             }
             setNodes(nodeStrings);
             setNodeData(tempNodeData);
-            setRequest({startNode: tempNodeData[nodeStrings[0]].id, endNode: tempNodeData[nodeStrings[0]].id});
-            setPathPoints([tempNodeData[nodeStrings[0]].coords]);
+            setRequest({startNode: response.data[0].id, endNode: response.data[0].id});
 
             setPathNodes([response.data[0], response.data[response.data.length-1]]);
             setShowPath(false);
@@ -102,13 +95,12 @@ export function Map(){
 
 
     return (
+        <>
         <div className="centerContent gap-10 w-full h-full">
             <div className="relative"> {/* Add relative positioning here */}
                 <div className="w-full h-full max-w-[1000px] max-h-[calc(100vh-200px)] overflow-scroll" ref={divRef}>
-                    <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={currentMap} width={5000}
-                                height={3400}
-                                scale={zoom}
-                                showPath={showPath}/>
+                    <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor = {currentFloor}
+                                scale={zoom} showPath={showPath} floormap={floorMap} nodes={pathNodes} images={floorImages}/>
                 </div>
                 <div className="absolute top-5 left-5 flex flex-row p-2 bg-white h-fit rounded-2xl items-end">
                     <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center">
@@ -123,11 +115,11 @@ export function Map(){
                     </div>
                 </div>
                 <div className={"absolute bottom-5 left-5 flex flex-col gap-0.5"}>
-                    <Button onClick={() => setCurrentMap(l3map)} children={"3"}/>
-                    <Button onClick={() => setCurrentMap(l2map)} children={"2"}/>
-                    <Button onClick={() => setCurrentMap(l1map)} children={"1"}/>
-                    <Button onClick={() => setCurrentMap(ll1map)} children={"L1"}/>
-                    <Button onClick={() => setCurrentMap(ll2map)} children={"L2"}/>
+                    <Button onClick={() => setCurrentFloor("3")} children={"3"}/>
+                    <Button onClick={() => setCurrentFloor("2")} children={"2"}/>
+                    <Button onClick={() => setCurrentFloor("1")} children={"1"}/>
+                    <Button onClick={() => setCurrentFloor("L1")} children={"L1"}/>
+                    <Button onClick={() => setCurrentFloor("L2")} children={"L2"}/>
                 </div>
                 <div className={"absolute bottom-5 right-5 flex flex-col"}>
                     <Button onClick={zoomIn} children={"+"}/>
@@ -136,6 +128,7 @@ export function Map(){
 
             </div>
         </div>
+        </>
     );
 }
 

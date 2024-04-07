@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Node from "../../../../packages/common/src/node";
 
 function PathVisual(props: {width: number; height: number; scale:number;
-    showPath: boolean; floormap: Map<string, Node[][]>; nodes: Node[]; images: Map<string, string>}) {
+    showPath: boolean; floormap: Map<string, Node[][]>; nodes: Node[]; images: Map<string, string>; currentFloor: string}) {
     let startCoord: number[] = [];
     let endCoord: number[] = [];
     if (props.nodes[0] != null) {
@@ -36,6 +36,10 @@ function PathVisual(props: {width: number; height: number; scale:number;
         const floorSVGs: JSX.Element[] = [];
         const keys = Object.keys(props.images);
         for (let x = 0; x < keys.length; x++) {
+            let classname = "block";
+            if (keys[x] != props.currentFloor) {
+                classname = "hidden";
+            }
             floorSVGs.push(
                 <>
                 <motion.svg width={props.width * props.scale}
@@ -43,7 +47,8 @@ function PathVisual(props: {width: number; height: number; scale:number;
                             viewBox={viewBox}
                             initial="hidden"
                             animate="visible"
-                            variants={draw}>
+                            variants={draw}
+                            className={classname}>
                     {createFloor(keys[x])}
                 </motion.svg>
                 </>
@@ -61,7 +66,7 @@ function PathVisual(props: {width: number; height: number; scale:number;
         if (Object.prototype.hasOwnProperty.call(props.floormap, floor)) {
             const floorPaths: Node[][] | undefined = props.floormap[floor];
 
-            if (floorPaths != null) {
+            if (floorPaths != null && props.currentFloor == floor) {
                 for (let i = 0; i < floorPaths.length; i++) {
                     const pathCoords = [];
                     for (let j = 0; j < floorPaths[i].length; j++) {
