@@ -54,7 +54,6 @@ function App() {
                             path:"/database",
                             element:<Database/>,
 
-
                         },
 
             ],
