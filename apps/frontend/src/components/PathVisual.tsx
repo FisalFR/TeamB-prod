@@ -9,7 +9,7 @@ function PathVisual(props: { path: number[][]; image: string; width: number; hei
             opacity: 1,
             pathLength: 1,
             transition: {
-                duration: 5,
+                duration: 2,
                 ease: "linear",
             },
         }
