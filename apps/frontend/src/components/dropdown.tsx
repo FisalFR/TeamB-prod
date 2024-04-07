@@ -136,7 +136,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                    aria-activedescendant = {"option" + activeOption} aria-haspopup="listbox">
             </input>
             <div className={dropdownClass}>
-                <div className="max-h-48 overflow-scroll" role="listbox" id = "options-dropdown">
+                <div className="max-h-48 overflow-y-auto" role="listbox" id = "options-dropdown">
                     {createOptions()}
                 </div>
                 <div className={scrollIndicator}>▼</div>
