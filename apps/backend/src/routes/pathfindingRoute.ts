@@ -4,7 +4,7 @@ import Path from "../../../../packages/common/src/pathFinder";
 //import Parser from "../../../../packages/common/src/parser";
 import Node from "../../../../packages/common/src/node";
 import client from "../bin/database-connection";
-import writeNode from "../writeNode";
+// import writeNode from "../writeNode";
 import { filteringNodes } from "../filteringNodes";
 
 const router: Router = express.Router();

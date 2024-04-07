@@ -4,8 +4,6 @@ import maintenanceFunctions from "../maintenanceFunctions";
 const router: Router = express.Router();
 import client from "../bin/database-connection";
 
-const database: MaintenanceRequest[] = [];
-
 router.get("/", async (req, res) => {
   const formsWithMaintenance = await client.$queryRaw`
         SELECT *
@@ -14,17 +12,6 @@ router.get("/", async (req, res) => {
         ON forms."formID" = maintenances."maintenanceRequest"
     `;
   res.status(200).json(formsWithMaintenance);
-});
-
-router.get("/:index", (req, res) => {
-  const index = parseInt(req.params.index);
-  if (index >= 0 && index < database.length) {
-    res.status(200).json(database[index]);
-  } else {
-    res.status(400).json({
-      message: "not a valid index",
-    });
-  }
 });
 
 router.post("/search", async (req, res) => {
@@ -42,6 +29,17 @@ router.post("/insert", async (req, res) => {
   res.status(200).json({
     message: await maintenanceFunctions.maintenanceInsert(maintenanceForm),
   });
+});
+
+router.get("/location", async (req, res) => {
+  const nodeType = await client.nodes.findMany({
+    where: {
+      NOT: {
+        longName: { search: "Hall" },
+      },
+    },
+  });
+  res.status(200).json(nodeType);
 });
 
 export default router;

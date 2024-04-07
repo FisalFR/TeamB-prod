@@ -15,7 +15,7 @@ export function generateRandomUUIDInteger() {
   // Ensure it has at most 6 digits
   const sixDigitInteger = uuidInteger % 1000000;
 
-  return sixDigitInteger;
+  return sixDigitInteger.toString();
 }
 
 export default generateRandomUUIDInteger();
