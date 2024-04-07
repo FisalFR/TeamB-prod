@@ -104,13 +104,13 @@ export function MedicineRequest(){
                 <form ref={formRef} onSubmit={e => {
                     e.preventDefault();
                 }}>
-                    <div className="formTest w-full my-10 grid grid-cols-2 gap-24">
+                    <div className="formTest  my-10 gap-24">
                         <div>
                             <p className={"text-left font-bold"}>Employee Name</p>
                             <input type="text" required
                                    onChange={handleNameInput} value={request.employeeName}
                                    placeholder={"Name"}
-                                   className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2"}/>
+                                   className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-100"}/>
 
                             <br/>
 
@@ -118,15 +118,15 @@ export function MedicineRequest(){
                             <p className={"text-left font-bold "}>What is the priority of this request?</p>
                             <div className={"border-solid border-deep-blue border-2 rounded"}>
                                 <RadioButton value={"Low"} name={"priority"} id={"priority1"} state={request.priority}
-                                             onChange={handlePriorityInput} required={true}/>
+                                             onChange={handlePriorityInput} required={true}  width={"w-100"}/>
                                 <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
                                              state={request.priority}
-                                             onChange={handlePriorityInput} required={true}/>
+                                             onChange={handlePriorityInput} required={true} width={"w-100"}/>
                                 <RadioButton value={"High"} name={"priority"} id={"priority3"} state={request.priority}
-                                             onChange={handlePriorityInput} required={true}/>
+                                             onChange={handlePriorityInput} required={true} width={"w-100"}/>
                                 <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
                                              state={request.priority}
-                                             onChange={handlePriorityInput} required={true}/>
+                                             onChange={handlePriorityInput} required={true} width={"w-100"}/>
                             </div>
 
                             <br/>
@@ -135,29 +135,35 @@ export function MedicineRequest(){
                             <div className={"border-solid border-deep-blue border-2 rounded"}>
                                 <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
                                           id={"dropdown1"} value={cleared}
-                                          setInput={handleLocationInput} required={true}/>
-                            </div>
-
-
-
-                        </div>
-                        <div>
-
-
-                            <p className={"text-left font-bold"}>Medication</p>
-                            <div className={"border-solid border-deep-blue border-2 rounded"}>
-                                <Dropdown options={medicineOptions} placeholder={"Medicine"} name={"medicineDropdown"}
-                                          id={"dropdown2"} value={cleared}
-                                          setInput={handleMedicineInput} required={true}/>
+                                          setInput={handleLocationInput} required={true}
+                                          width= {"w-100"}/>
                             </div>
 
                             <br/>
 
-                            <p className={"text-left font-bold pt-1"}>Quantity</p>
-                            <input
-                                className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2"}
-                                type="number" required
-                                placeholder="0"/>
+                            <div className = "grid grid-cols-2 space-x-3 flex-auto">
+                                <div>
+                                    <p className={"text-left font-bold "}>Medication</p>
+                                    <div className={"border-solid border-deep-blue border-2 rounded w-50"}>
+                                        <Dropdown options={medicineOptions} placeholder={"Medicine"}
+                                                  name={"medicineDropdown"}
+                                                  id={"dropdown2"} value={cleared}
+                                                  setInput={handleMedicineInput} required={true}
+                                                  width={"w-48"}/>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <div>
+                                        <p className={"text-left font-bold"}>Quantity</p>
+                                        <input
+                                            className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-50"}
+                                            type="number" required/>
+                                    </div>
+                                </div>
+
+                            </div>
+
 
                             <br/>
 
