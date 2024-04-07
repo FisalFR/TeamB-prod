@@ -9,7 +9,6 @@ import writeEdge from "../writeEdge";
 import NodeType from "common/src/NodeType";
 import EdgeType from "common/src/EdgeType";
 import FormType from "common/src/FormType";
-//import edge from "common/src/edge";
 
 router.use(fileUpload());
 
@@ -27,30 +26,6 @@ router.get("/edges", async (req, res) => {
   const allEdges = await client.edges.findMany();
   res.status(200).json(allEdges);
 });
-// router.post("/type", async (req, res) => {
-//   const formType: FormType = req.body;
-//   if (formType.type == "") {
-//     const all = await client.forms.findMany();
-//     res.status(200).json(all);
-//   }
-//   const filteredForm = await client.forms.findMany({
-//     where: {
-//       type: { search: formType.type },
-//     },
-//   });
-//   res.status(200).json(filteredForm);
-// });
-//
-// router.post("/status", async (req, res) => {
-//   const formType: FormType = req.body;
-//   const filteredForm = await client.forms.findMany({
-//     where: {
-//       status: { search: formType.status },
-//     },
-//   });
-//   res.status(200).json(filteredForm);
-// });
-
 router.post("/filter", async (req, res) => {
   const formType: FormType = req.body;
   console.log(formType);
@@ -111,6 +86,9 @@ router.post("/filter", async (req, res) => {
         assignee: { search: formType.assignee },
       },
     });
+    res.status(200).json(filteredForm);
+  } else {
+    const filteredForm = await client.forms.findMany({});
     res.status(200).json(filteredForm);
   }
 });
