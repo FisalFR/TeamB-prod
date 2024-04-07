@@ -2,7 +2,7 @@
 import {ChangeEvent, useRef, useState} from 'react';
 import '../App.css';
 
-function Dropdown(props: { options: string[]; placeholder: string; name: string; id: string; setInput:(str: string) => void; value : boolean; required:boolean}) {
+function Dropdown(props: { options: string[]; placeholder: string; name: string; id: string; setInput:(str: string) => void; value : boolean; required:boolean; width:string}) {
 
     const optionList = props.options;
     const listElements = useRef<HTMLDivElement[]>([]);
@@ -126,7 +126,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 
 
     return (
-        <div className="w-72 text-left">
+        <div className={`${props.width} text-left`}>
             <input className="w-full p-[5px]" type="text"
                    placeholder={props.placeholder} name = {props.name} id = {props.id} role = "combobox"
                    onBlur={hideDropdown} onFocus={showDropdown} onKeyDown={keyDown}
@@ -135,14 +135,22 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                    aria-controls="options-dropdown" aria-expanded={dropdownClass === "search-dropdown block"}
                    aria-activedescendant = {"option" + activeOption} aria-haspopup="listbox">
             </input>
-            <div className={dropdownClass}>
-                <div className="max-h-48 overflow-y-auto" role="listbox" id = "options-dropdown">
-                    {createOptions()}
+
+            <div className={`${props.width}`}>
+                <div className={dropdownClass}>
+                    <div className="max-h-48 overflow-scroll" role="listbox" id="options-dropdown">
+                        {createOptions()}
+                    </div>
+                    <div className={scrollIndicator}>▼</div>
                 </div>
-                <div className={scrollIndicator}>▼</div>
             </div>
+
         </div>
     );
 }
+
+Dropdown.defaultProps = {
+    width: "w-72"
+};
 
 export default Dropdown;

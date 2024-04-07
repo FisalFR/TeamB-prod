@@ -44,6 +44,7 @@ function LogBook() {
             }
         }).then();
         setSubmit(submitted + 1); // Spaghetti Code to Update the page
+        setRequest({  formID: "", type: "", location: "", status: "", assignee: "", dateCreated: emptyDate});
         setCleared(true);
     }
 
@@ -73,14 +74,17 @@ function LogBook() {
 
     // Handler Functions
     function handleRequestType(str: string): void {
+        setCleared(false);
         setRequest({...request, type: str});
     }
 
         function handleStatusType(str: string): void {
+            setCleared(false);
             setRequest({...request, status: str});
         }
 
         function handleAssigneeType(str: string): void {
+            setCleared(false);
             setRequest({...request, assignee: str});
         }
 
