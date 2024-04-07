@@ -135,6 +135,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                    aria-controls="options-dropdown" aria-expanded={dropdownClass === "search-dropdown block"}
                    aria-activedescendant = {"option" + activeOption} aria-haspopup="listbox">
             </input>
+
             <div className={`${props.width}`}>
                 <div className={dropdownClass}>
                     <div className="max-h-48 overflow-scroll" role="listbox" id="options-dropdown">
