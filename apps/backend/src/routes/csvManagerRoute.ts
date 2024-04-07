@@ -4,13 +4,28 @@ const router: Router = express.Router();
 import client from "../bin/database-connection";
 import populateNode from "../populateNode";
 import populateEdge from "../populateEdge";
-import writeNode from "../writeNode.ts";
+import writeNode from "../writeNode";
 import writeEdge from "../writeEdge";
 import NodeType from "common/src/NodeType";
 import EdgeType from "common/src/EdgeType";
+import FormType from "common/src/FormType";
 //import edge from "common/src/edge";
 
 router.use(fileUpload());
+
+router.get("/", async (req, res) => {
+  const formType = await client.forms.findMany();
+  res.status(200).json(formType);
+});
+
+// router.get("/formID", async (req, res) => {
+//   const formType = await client.forms.findMany({
+//     select: {
+//       formID: true,
+//     },
+//   });
+//   res.status(200).json(formType);
+// });
 
 router.get("/nodes", async (req, res) => {
   const allNodes = await client.nodes.findMany();
@@ -20,6 +35,45 @@ router.get("/nodes", async (req, res) => {
 router.get("/edges", async (req, res) => {
   const allEdges = await client.edges.findMany();
   res.status(200).json(allEdges);
+});
+router.post("/type", async (req, res) => {
+  const formType: FormType = req.body;
+  if (formType.type == "") {
+    const all = await client.forms.findMany();
+    res.status(200).json(all);
+  }
+  const filteredForm = await client.forms.findMany({
+    where: {
+      type: { search: formType.type },
+    },
+  });
+  res.status(200).json(filteredForm);
+});
+
+router.post("/status", async (req, res) => {
+  const formType: FormType = req.body;
+  const filteredForm = await client.forms.findMany({
+    where: {
+      type: { search: formType.status },
+    },
+  });
+  res.status(200).json(filteredForm);
+});
+
+router.post("/insert", async (req, res) => {
+  const formType: FormType = req.body;
+  console.log(formType);
+  const updateUser = await client.forms.update({
+    where: {
+      formID: formType.formID,
+    },
+    data: {
+      status: formType.status,
+      assignee: formType.assignee,
+    },
+  });
+  console.log(updateUser);
+  res.status(200).json(updateUser);
 });
 
 router.post("/uploadNodes", function (req, res) {

@@ -19,7 +19,7 @@ export default {
         'OpenSans': ['Open Sans', 'sans-serif'],
       },
       spacing: {
-        '400': '44rem',
+        'databasetable': '47.2rem',
       }
     },
   },
