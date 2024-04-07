@@ -75,7 +75,7 @@ model interpreter {
 }
 
 model forms {
-  formID              Int                           @id
+  formID              String                        @id
   status              String
   type                String
   assignee            String
@@ -86,15 +86,25 @@ model forms {
 }
 
 model languageInterpreterRequests {
-  languageRequest   Int    @id
+  languageRequest   String @id
   language          String
   languageRequestID forms  @relation(name: "languageRequestID", fields: [languageRequest], references: [formID])
 }
 
 model maintenances {
-  maintenanceRequest   Int    @id
+  maintenanceRequest   String @id
   issue                String
   isUrgent             String
   feedback             String
   maintenanceRequestID forms  @relation(name: "maintenanceRequestID", fields: [maintenanceRequest], references: [formID])
+}
+
+model medicineRequests {
+  medicineRequestID  Int    @id @default(autoincrement())
+  employeeName       String
+  priority           String
+  location           String
+  medicine           String
+  quantity           Int
+  additionalComments String
 }
