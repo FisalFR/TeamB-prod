@@ -1,4 +1,4 @@
-import {ChangeEvent, useRef, useState} from 'react';
+import {ChangeEvent, useEffect, useRef, useState} from 'react';
 import {SanitationRequest} from "common/src/sanitationRequest.ts";
 import RadioButton from "../components/RadioButton.tsx";
 import Button from "../components/Button.tsx";
@@ -14,8 +14,18 @@ function Sanitation() {
     const [cleared, setCleared] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
 
-    const locationOptions: string[] = ["Day Surgery Family Waiting", "Pre-Op PACU", "Radiation Oncology TX Suite", "Ultrasound", "Medical Records Conference Room", "Abrams Conference Room", "Outpatient Fluoroscopy (Xray)", "Anesthesia Conference Room", "Helen Hogan Conference Room", "Nuclear Medicine", "Cross-Sectional Interventional Radiology (CSIR) MRI", "Volunteers"];
     const employeeNameOptions: string[] = ["Employee 1", "Employee 2", "Employee 3", "Employee 4"];
+    const [locationOptions, setLocationOptions] = useState<string[]>([]);
+
+    useEffect(() => {
+        axios.get("/api/sanitation/location").then((response) => {
+            const locationOptionsStrings: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                locationOptionsStrings.push(response.data[i].longName);
+            }
+            setLocationOptions(locationOptionsStrings);
+        });
+    }, []);
     function handleSubmit(e: { preventDefault: () => void; }) {
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
@@ -32,7 +42,7 @@ function Sanitation() {
 
     function handleClear(e: { preventDefault: () => void; }): void {
         e.preventDefault();
-        setRequest({employeeName: '', priority: '', location: '', serviceType: '', quality: '', additionalComments: '', status: ''});
+        setRequest({employeeName: '', priority: '', location: '', serviceType: '', contaminant: '', additionalComments: '', status: ''});
         setCleared(true);
     }
 
@@ -51,7 +61,7 @@ function Sanitation() {
 
     function handleNewSubmission(): void {
         setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
-        setRequest({employeeName: '', priority: '', location: '', serviceType: '', quality: '', additionalComments: '', status: ''});
+        setRequest({employeeName: '', priority: '', location: '', serviceType: '', contaminant: '', additionalComments: '', status: ''});
         setCleared(false);
     }
 
