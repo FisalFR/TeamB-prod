@@ -33,14 +33,17 @@ function GiftDelivery() {
         const newCart = cart;
         newCart[item]=quantity;
         setCart(newCart);
-        //alert(item);
-        //alert(quantity);
-        alert(itemCosts[item]);
     }
 
     function createCart(){
-       let rowDivs = [];
-
+        const rowDivs = [];
+        const items = Object.keys(cart);
+        for (let i = 0; i < items.length-1; i++) {
+            rowDivs.push(
+              <p>{items[i]} {cart[items[i]]} {itemCosts[items[i]] * cart[items[i]]}</p>
+            );
+        }
+        return rowDivs;
     }
 
 
@@ -155,7 +158,7 @@ function GiftDelivery() {
                 <h2>
                     Cart
                 </h2>
-                {createCart}
+                {createCart()}
             </div>
 
         </>
