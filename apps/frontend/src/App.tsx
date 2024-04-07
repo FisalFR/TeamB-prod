@@ -9,6 +9,7 @@ import LanguageInterpreter from "./routes/language-interpreter-page";
 import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
 import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
+import Sanitation from "./routes/sanitation-page.tsx";
 
 function App() {
     const router = createBrowserRouter([
@@ -46,9 +47,11 @@ function App() {
                         {
                            path:"/logs",
                            element:<LogBook/>,
-
-
                        },
+                        {
+                          path: "/sanitation",
+                          element: <Sanitation/>
+                        },
 
             ],
         },
