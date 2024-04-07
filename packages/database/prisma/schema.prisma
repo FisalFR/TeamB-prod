@@ -85,6 +85,7 @@ model forms {
   maintenanceRequests maintenances[]                @relation(name: "maintenanceRequestID")
   medicineRequests    medicineRequests[]            @relation(name: "medicineRequestID")
   sanitationRequests  sanitationRequests[]          @relation(name: "sanitationRequestID")
+  securityRequests    securityRequests[]            @relation(name: "securityRequestID")
 }
 
 model languageInterpreterRequests {
@@ -119,4 +120,12 @@ model sanitationRequests {
   contaminant        String
   additionalComments String
   sanitationRquestID forms  @relation(name: "sanitationRequestID", fields: [sanitationRequest], references: [formID])
+}
+
+model securityRequests {
+  securityRequest   String @id
+  employeeName      String
+  request           String
+  location          String
+  securityRequestID forms  @relation(name: "securityRequestID", fields: [securityRequest], references: [formID])
 }
