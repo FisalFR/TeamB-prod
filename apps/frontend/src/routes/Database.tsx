@@ -105,7 +105,7 @@ function LogBook() {
                 <div className=" h-full mx-3 space-y-7">
                     <div className="rounded-2xl bg-deep-blue bg-opacity-5">
                         <form
-                            className="w-[22vw]  flex flex-col items-start p-3">
+                            className="w-[22vw]  flex flex-col items-start p-3 pl-5">
                             <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start pb-3"}>Filter
                                 Data</h2>
                             <p className={"text-left font-bold"}>Request Type</p>
@@ -116,7 +116,7 @@ function LogBook() {
                         </form>
 
                         <form
-                            className="w-[22vw]  flex flex-col items-start p-3 gap-4">
+                            className="w-[22vw]  flex flex-col items-start p-3 gap-4 pl-5">
                             <p className={"text-left font-bold"}>Request Status</p>
                             <Dropdown options={statusTypeOptions} placeholder={"Choose Status"} name={"statusDropdown"}
                                       id={"dropdown2"} value={cleared}
@@ -124,7 +124,7 @@ function LogBook() {
                         </form>
 
                         <form
-                            className="w-[22vw] flex flex-col items-start p-3 gap-4">
+                            className="w-[22vw] flex flex-col items-start p-3 gap-4 pl-5">
                             <p className={"text-left font-bold"}>Assigned Staff</p>
                             <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"}
                                       name={"requestTypeDropdown3"}
@@ -159,7 +159,7 @@ function LogBook() {
                                       id={"dropdown6"} value={cleared}
                                       setInput={handleStaffAssignment} required={true}/>
 
-                            <div className={"flex item-start pt-2 pb-4"}>
+                            <div className={"flex items-center pt-2 pb-4"}>
                                 <LongButton onClick={handleSubmit} children={"Submit"}/>
                             </div>
 
