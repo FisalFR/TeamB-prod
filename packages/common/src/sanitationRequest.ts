@@ -3,7 +3,7 @@ export type SanitationRequest = {
     priority: string;
     location: string;
     serviceType: string;
-    quality: string;
+    contaminant: string;
     additionalComments: string;
     status: string;
 }
