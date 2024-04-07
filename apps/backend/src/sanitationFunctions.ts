@@ -1,31 +1,31 @@
 import { generateRandomUUIDInteger } from "./randomUUID";
 
 const prisma = client;
-import { MedicineRequestType } from "common/src/MedicineRequestType";
 import client from "./bin/database-connection";
+import { SanitationRequest } from "common/src/sanitationRequest";
 
-class medicineFunctions {
-  static async medicineInsert(request: MedicineRequestType) {
+class sanitationFunctions {
+  static async sanitationInsert(request: SanitationRequest) {
     const UUID = generateRandomUUIDInteger();
     await prisma.forms.create({
       data: {
         formID: UUID,
         status: "Unassigned",
-        type: "Medicine",
+        type: "Sanitation",
         assignee: "",
         location: request.location,
       },
     });
-    await prisma.medicineRequests.create({
+    await prisma.sanitationRequests.create({
       data: {
-        medicineRequest: UUID,
+        sanitationRequest: UUID,
         employeeName: request.employeeName,
         priority: request.priority,
-        medicine: request.medicine,
-        quantity: request.quantity,
+        serviceType: request.serviceType,
+        contaminant: request.contaminant,
         additionalComments: request.additionalComments,
       },
     });
   }
 }
-export default medicineFunctions;
+export default sanitationFunctions;

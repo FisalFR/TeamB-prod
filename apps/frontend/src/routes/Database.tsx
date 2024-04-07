@@ -30,9 +30,10 @@ function LogBook() {
     const [submitted, setSubmit] = useState<number>(0);
     const [cleared, setCleared] = useState(false);
 
-    const requestTypeOptions = ["Maintenance", "Language"];
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
     const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
+    const requestTypeOptions: string[] = ["Maintenance", "Language", "Sanitation", "Medicine", "Flower", "Security"];
+
 
 
     function handleSubmit(e: { preventDefault: () => void; }) {
@@ -44,6 +45,7 @@ function LogBook() {
             }
         }).then();
         setSubmit(submitted + 1); // Spaghetti Code to Update the page
+        setRequest({  formID: "", type: "", location: "", status: "", assignee: "", dateCreated: emptyDate});
         setCleared(true);
     }
 
@@ -73,14 +75,17 @@ function LogBook() {
 
     // Handler Functions
     function handleRequestType(str: string): void {
+        setCleared(false);
         setRequest({...request, type: str});
     }
 
         function handleStatusType(str: string): void {
+            setCleared(false);
             setRequest({...request, status: str});
         }
 
         function handleAssigneeType(str: string): void {
+            setCleared(false);
             setRequest({...request, assignee: str});
         }
 
