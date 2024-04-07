@@ -64,7 +64,7 @@ function LoginPage() {
 
 
     return (
-                <div>
+                <div className="px-20 py-5 gap-5" >
                     <h1 className="px-6 font-bold text-left font-HeadlandOne text-6xl">Navigate Seamlessly</h1>
                     <div className='centerContent gap-10 w-full h-fit'>
                         <div className="centerContent flex-col">

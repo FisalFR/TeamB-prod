@@ -9,6 +9,7 @@ import LanguageInterpreter from "./routes/language-interpreter-page";
 import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
 import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
+import Database from "./routes/Database.tsx";
 import SecurityRequestPage from "./routes/SecurityRequestPage.tsx";
 
 function App() {
@@ -46,7 +47,11 @@ function App() {
                     {
                         // TODO check path setup so there are not extraneous slashes
                        path: "/logs",
-                       element:<LogBook/>,
+                       element: <LogBook/>,
+                    },
+                    {
+                        path: "/database",
+                        element: <Database/>,
                     },
                     {
                         path: "security",
@@ -63,7 +68,7 @@ function App() {
 
     function Root() {
         return (
-            <div className="w-full flex flex-col px-20 gap-5">
+            <div className="w-full flex flex-col">
                 <NavigationBar/>
 
                 <Outlet/>

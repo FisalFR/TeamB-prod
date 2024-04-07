@@ -91,7 +91,7 @@ function LanguageInterpreter(){
     }
 
     return (
-        <div className="interpreterContent">
+        <div className="interpreterContent px-20">
             <div className={submittedWindowVisibility.requestScreen}>
 
 
@@ -144,7 +144,7 @@ function LanguageInterpreter(){
                                       setInput={handleLocationInput} required={true}/>
                         </div>
 
-                        <div className={"formButtons pt-32 flex gap-4"}>
+                        <div className={"formButtons pt-32 flex gap-4 space-x-5"}>
 
                             <Button onClick={handleSubmitLanguage} children={"Submit"}/>
                             <Button onClick={handleClearLanguage} children={"Clear"}/>
