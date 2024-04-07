@@ -1,11 +1,11 @@
 import {useEffect, useRef, useState} from "react";
-import {LanguageInterpreterType} from 'common/src/languageInterpreterTypes.ts';
+import {LanguageInterpreterTypes} from 'common/src/languageInterpreterTypes.ts';
 import Dropdown from "../components/dropdown.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
 
 function LanguageInterpreter(){
-    const [request, setRequest] = useState<LanguageInterpreterType>({language: "", location: ""});
+    const [request, setRequest] = useState<LanguageInterpreterTypes>({language: "", location: ""});
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         requestScreen: "block",
         submittedScreen: "hidden"
@@ -60,7 +60,7 @@ function LanguageInterpreter(){
                 }
             }).then();
             setCleared(true);
-            setSubmittedWindowVisibility({formScreen: "hidden", submittedScreen: "block"});
+            setSubmittedWindowVisibility({requestScreen: "hidden", submittedScreen: "block"});
             setCleared(true);
             setSubmittedWindowVisibility({requestScreen: "hidden", submittedScreen: "block"});
         }
@@ -103,6 +103,9 @@ function LanguageInterpreter(){
     }
 
     return (
+        <div className="centerContent">
+
+
         <div className="interpreterContent px-20">
             <div className={submittedWindowVisibility.requestScreen}>
 
@@ -135,21 +138,21 @@ function LanguageInterpreter(){
                         to be requested through hospital administration.
                     </p>
                     <br/>
-                    <h2 className=" float-left inline-block">What language do you need an interpreter for?</h2>
-                    <h2 className=" float-right inline-block">What room do you need the interpreter?</h2>
+                    <h2 className=" float-left inline-block font-bold">What language do you need an interpreter for?</h2>
+                    <h2 className=" float-right inline-block font-bold">What room do you need the interpreter?</h2>
                     <br/>
                     <form ref={formRef} onSubmit={e => {
                         e.preventDefault();
                     }}>
 
-                        <div className="pt-3 float-left inline-block">
+                        <div className=" float-left inline-block ">
                             <Dropdown options={languages} placeholder={"Languages"} name={"languagesDropdown"}
                                       id={"dropdown2"} value={cleared}
                                       setInput={handleLanguageInput} required={true}/>
                         </div>
 
 
-                        <div className="pt-3 float-right inline-block">
+                        <div className=" float-right inline-block ">
 
                             <Dropdown options={locationOptions} placeholder={"Location"} name={"locationsDropdown"}
                                       id={"dropdown3"} value={cleared}
@@ -186,6 +189,7 @@ function LanguageInterpreter(){
                 </div>
             </div>
 
+        </div>
         </div>
 
     );
