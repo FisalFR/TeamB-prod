@@ -1,5 +1,3 @@
-
-import {AppState, Auth0Provider} from "@auth0/auth0-react";
 import './App.css';
 import { createBrowserRouter, RouterProvider, Outlet, useNavigate} from "react-router-dom";
 
@@ -11,6 +9,9 @@ import LanguageInterpreter from "./routes/language-interpreter-page";
 import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
 import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
+import MedicineRequest from "./routes/MedicineRequest.tsx";
+import Database from "./routes/Database.tsx";
+
 
 function App() {
 
@@ -52,6 +53,14 @@ function App() {
 
 
                        },
+                        {
+                            path:"medicineRequest",
+                            element:<MedicineRequest/>
+                        },
+                        {
+                            path:"/database",
+                            element:<Database/>,
+                        },
 
             ],
         },
