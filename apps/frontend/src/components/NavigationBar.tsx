@@ -7,10 +7,10 @@ export function NavigationBar() {
         const dropdownList = [
             ["/maintenance", "Maintenance"],
             ["/interpreter", "Interpreter"],
-            ["/logs", "Request Logs"],
             ["/medicineRequest", "Medicine Request"],
+            ["/sanitation", "Sanitation"],
             ["/database", "Database"],
-            ["/sanitation", "Sanitation"]
+            ["/csvManager", "CSV Manager"],
         ];
         return (
 
