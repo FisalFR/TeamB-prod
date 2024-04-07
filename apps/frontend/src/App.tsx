@@ -60,6 +60,10 @@ function App() {
                             path:"/database",
                             element:<Database/>,
                         },
+                        {
+                            path:"medicineRequest",
+                            element:<MedicineRequest/>
+                        },
 
             ],
         },

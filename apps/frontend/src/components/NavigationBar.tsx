@@ -10,6 +10,7 @@ export function NavigationBar() {
             ["/logs", "Request Logs"],
             ["/csvManager", "CSV Manager"],
             ["/medicineRequest", "Medicine Request"],
+            ["/csvManager", "CSV Manager"],
             ["/database", "Database"]
         ];
         return (
