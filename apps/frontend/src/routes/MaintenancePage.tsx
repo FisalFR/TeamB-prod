@@ -24,7 +24,6 @@ export function MaintenancePage() {
                 for (let i = 0; i < response.data.length; i++) {
                     locationOptionsStrings.push(response.data[i].longName);
                 }
-                console.log(locationOptionsStrings);
                 setLocationOptions(locationOptionsStrings);
             });
     }, []);
