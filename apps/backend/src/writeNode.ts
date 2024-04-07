@@ -8,7 +8,7 @@ class writeNode {
   static async nodeBackToCSV() {
     //nodes
     //fetch the data from the table
-    const nodesData = await prisma.l1Nodes.findMany();
+    const nodesData = await prisma.nodes.findMany();
 
     //creates the header row in the csv file
     const headersNodes = [
@@ -46,7 +46,7 @@ class writeNode {
   static async nodeDownload() {
     //nodes
     //fetch the data from the table
-    const nodesData = await prisma.l1Nodes.findMany();
+    const nodesData = await prisma.nodes.findMany();
 
     //creates the header row in the csv file
     const headersNodes = [

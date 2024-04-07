@@ -11,7 +11,8 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_URL")
-  // postgresql://teamb:teamb20@database.cs.wpi.edu:5432/teambdb?schema=teamb
+  // env("POSTGRES_URL")
+  // "postgresql://teamb:teamb20@database.cs.wpi.edu:5432/teambdb?schema=teamb"
 }
 
 // example table used in the express router example
@@ -21,8 +22,8 @@ model HighScore {
   score Int
 }
 
-model l1Nodes {
-  nodeID    String    @id
+model nodes {
+  nodeID    String  @id
   xcoord    Int
   ycoord    Int
   floor     String
@@ -30,23 +31,16 @@ model l1Nodes {
   nodeType  String
   longName  String
   shortName String
-  startEdge l1Edges[] @relation(name: "startNode")
-  endEdge   l1Edges[] @relation(name: "endNode")
+  startEdge edges[] @relation(name: "startNode")
+  endEdge   edges[] @relation(name: "endNode")
 }
 
-model l1Edges {
+model edges {
+  edgeID      String @id
   startNodeID String
   endNodeID   String
-  startNode   l1Nodes @relation(name: "startNode", fields: [startNodeID], references: [nodeID])
-  endNode     l1Nodes @relation(name: "endNode", fields: [endNodeID], references: [nodeID])
-
-  @@id([startNodeID, endNodeID])
-}
-
-model languageInterpreterRequests {
-  lid      Int    @id @default(autoincrement())
-  language String
-  location String
+  startNode   nodes  @relation(name: "startNode", fields: [startNodeID], references: [nodeID])
+  endNode     nodes  @relation(name: "endNode", fields: [endNodeID], references: [nodeID])
 }
 
 model users {
@@ -80,10 +74,49 @@ model interpreter {
   interpreterUsernameID employee @relation(name: "interpreterUsernameID", fields: [interpreterUsername], references: [employeeUsername])
 }
 
+model forms {
+  formID              String                        @id
+  status              String
+  type                String
+  assignee            String
+  dateCreated         DateTime                      @default(now())
+  location            String
+  languageRequests    languageInterpreterRequests[] @relation(name: "languageRequestID")
+  maintenanceRequests maintenances[]                @relation(name: "maintenanceRequestID")
+  medicineRequests    medicineRequests[]            @relation(name: "medicineRequestID")
+  sanitationRequests  sanitationRequests[]          @relation(name: "sanitationRequestID")
+}
+
+model languageInterpreterRequests {
+  languageRequest   String @id
+  language          String
+  languageRequestID forms  @relation(name: "languageRequestID", fields: [languageRequest], references: [formID])
+}
+
 model maintenances {
-  mid      Int    @id @default(autoincrement())
-  issue    String
-  location String
-  isUrgent String
-  feedback String
+  maintenanceRequest   String @id
+  issue                String
+  isUrgent             String
+  feedback             String
+  maintenanceRequestID forms  @relation(name: "maintenanceRequestID", fields: [maintenanceRequest], references: [formID])
+}
+
+model medicineRequests {
+  medicineRequest    String @id
+  employeeName       String
+  priority           String
+  medicine           String
+  quantity           Int
+  additionalComments String
+  medicineRequestID  forms  @relation(name: "medicineRequestID", fields: [medicineRequest], references: [formID])
+}
+
+model sanitationRequests {
+  sanitationRequest  String @id
+  employeeName       String
+  priority           String
+  serviceType        String
+  contaminant        String
+  additionalComments String
+  sanitationRquestID forms  @relation(name: "sanitationRequestID", fields: [sanitationRequest], references: [formID])
 }

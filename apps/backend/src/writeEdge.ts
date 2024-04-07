@@ -6,7 +6,7 @@ const prisma = client;
 class writeEdge {
   static async edgesBackToCSV() {
     //fetch the data from the table
-    const edgesData = await prisma.l1Edges.findMany();
+    const edgesData = await prisma.edges.findMany();
 
     //creates the header row in the csv file
     const headersEdges = ["startNodeID", "endNodeID"];
@@ -24,7 +24,7 @@ class writeEdge {
 
   static async edgeDownload() {
     //fetch the data from the table
-    const edgesData = await prisma.l1Edges.findMany();
+    const edgesData = await prisma.edges.findMany();
 
     //creates the header row in the csv file
     const headersEdges = ["startNodeID", "endNodeID"];
