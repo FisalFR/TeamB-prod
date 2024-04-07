@@ -5,17 +5,6 @@ import { MaintenanceRequest } from "common/src/maintenanceRequest";
 import client from "./bin/database-connection";
 
 class maintenanceFunctions {
-  static async maintenanceFinder(loc: string, iss: string) {
-    const result: object | MaintenanceRequest =
-      await prisma.maintenances.findMany({
-        where: {
-          issue: { search: iss },
-          location: { search: loc },
-        },
-      });
-    return result;
-  }
-
   static async maintenanceInsert(request: MaintenanceRequest) {
     const UUID = generateRandomUUIDInteger();
     await prisma.forms.create({
