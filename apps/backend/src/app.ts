@@ -2,11 +2,12 @@ import createError, { HttpError } from "http-errors";
 import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import exampleRouter from "./routes/example.ts";
+import exampleRouter from "./routes/example";
 import pathfindingRoute from "./routes/pathfindingRoute";
 import maintenanceRoute from "./routes/maintenanceRoute";
 import languageInterpreterRoute from "./routes/languageInterpreterRoute";
 import csvManagerRoute from "./routes/csvManagerRoute";
+import securityRoute from "./routes/securityRoute";
 
 const app: Express = express(); // Setup the backend
 
@@ -30,6 +31,7 @@ app.use("/api/pathfinding", pathfindingRoute);
 app.use("/api/maintenance", maintenanceRoute);
 app.use("/api/languageInterpreter", languageInterpreterRoute);
 app.use("/api/csvManager", csvManagerRoute);
+app.use("/api/security", securityRoute);
 
 app.use("/healthcheck", (req, res) => {
   res.status(200).send();

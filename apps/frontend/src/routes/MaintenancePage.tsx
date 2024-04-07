@@ -5,7 +5,6 @@ import Button from "../components/Button.tsx";
 import Dropdown from "../components/dropdown.tsx";
 import axios from "axios";
 
-
 export function MaintenancePage() {
     const [request, setRequest] = useState<MaintenanceRequest>({issue: "", location: "", isUrgent: "", feedback: ""});
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
@@ -33,11 +32,9 @@ export function MaintenancePage() {
 
     function handleClear(e: { preventDefault: () => void; }): void {
         e.preventDefault();
-        // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
         setRequest({issue: "", location: "", isUrgent: "", feedback: ""});
         // use resetActive from Dropdown?
         setCleared(true);
-
     }
 
     function handleIssueInput(e: ChangeEvent<HTMLInputElement>): void {
@@ -84,7 +81,6 @@ export function MaintenancePage() {
                             <RadioButton value={"Other"} name={"issue"} id={"issue5"} state={request.issue}
                                          onChange={handleIssueInput} required={true}/>
                         </div>
-
                         <div>
                             <p className={"text-left font-bold"}>What location is this issue in?</p>
                             <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}

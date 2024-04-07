@@ -1,11 +1,11 @@
 import {useRef, useState} from "react";
-import {LanguageInterpreterType} from 'common/src/languageInterpreterTypes.ts';
+import {LanguageInterpreterTypes} from 'common/src/languageInterpreterTypes.ts';
 import Dropdown from "../components/dropdown.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
 
 function LanguageInterpreter(){
-    const [request, setRequest] = useState<LanguageInterpreterType>({language: "", location: ""});
+    const [request, setRequest] = useState<LanguageInterpreterTypes>({language: "", location: ""});
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         requestScreen: "block",
         submittedScreen: "hidden"
@@ -71,10 +71,9 @@ function LanguageInterpreter(){
         // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
         setRequest({language: "", location: ""});
         // use resetActive from Dropdown?
-
         setCleared(true);
-
     }
+
     function handleLocationInput(str: string): void {
         setCleared(false);
         setRequest({...request, location: str});

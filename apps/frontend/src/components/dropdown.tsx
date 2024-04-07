@@ -23,7 +23,6 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
         return "scroll-indicator text-center w-full hidden";
     }
 
-
     function handleInput(e: ChangeEvent<HTMLInputElement>) {
         setSearch(e.target.value);
         resetActive();
@@ -44,6 +43,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                 {getBolded(option)}
             </div>);
     }
+
     function getBolded(option: string) {
         const searchInd = option.toLowerCase().indexOf(search.toLowerCase());
         const firstHalf = option.substring(0,searchInd);
@@ -67,6 +67,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
         setDropdownClass("search-dropdown hidden z-10");
         resetActive();
     }
+
     function showDropdown() {
         setDropdownClass("search-dropdown block z-10");
     }
@@ -106,9 +107,11 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                 break;
         }
     }
+
     function resetActive() {
         setActiveOption(-1);
     }
+
     function changeActive(active: number) {
         const element = listElements.current[active];
         if (element != null) {
@@ -136,7 +139,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                    aria-activedescendant = {"option" + activeOption} aria-haspopup="listbox">
             </input>
             <div className={dropdownClass}>
-                <div className="max-h-48 overflow-scroll" role="listbox" id = "options-dropdown">
+                <div className="max-h-48 overflow-scroll" role="listbox" id="options-dropdown">
                     {createOptions()}
                 </div>
                 <div className={scrollIndicator}>▼</div>

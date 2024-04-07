@@ -1,3 +1,4 @@
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -37,10 +38,10 @@ model nodes {
 
 model edges {
   edgeID      String @id
-  startNodeID   String
-  endNodeID     String
-  startNode nodes  @relation(name: "startNode", fields: [startNodeID], references: [nodeID])
-  endNode   nodes  @relation(name: "endNode", fields: [endNodeID], references: [nodeID])
+  startNodeID String
+  endNodeID   String
+  startNode   nodes  @relation(name: "startNode", fields: [startNodeID], references: [nodeID])
+  endNode     nodes  @relation(name: "endNode", fields: [endNodeID], references: [nodeID])
 }
 
 model languageInterpreterRequests {
@@ -87,3 +88,14 @@ model maintenances {
   isUrgent String
   feedback String
 }
+
+model security {
+  securityID     String @id
+  name           String
+  priority       String
+  // location       String
+  securityNeeded String
+  reason         String
+}
+
+Done in 0.38s.

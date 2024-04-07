@@ -21,6 +21,7 @@ input[type="radio"] {
   width: 1.65em;
   z-index: 1;
 }
+
 input[type="radio"]::before {
   content: "";
   display: block;
