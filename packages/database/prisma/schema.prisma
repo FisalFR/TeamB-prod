@@ -83,6 +83,7 @@ model forms {
   location            String
   languageRequests    languageInterpreterRequests[] @relation(name: "languageRequestID")
   maintenanceRequests maintenances[]                @relation(name: "maintenanceRequestID")
+  medicineRequests    medicineRequests[]            @relation(name: "medicineRequestID")
 }
 
 model languageInterpreterRequests {
@@ -100,11 +101,11 @@ model maintenances {
 }
 
 model medicineRequests {
-  medicineRequestID  Int    @id @default(autoincrement())
+  medicineRequest    String @id
   employeeName       String
   priority           String
-  location           String
   medicine           String
   quantity           Int
   additionalComments String
+  medicineRequestID  forms  @relation(name: "medicineRequestID", fields: [medicineRequest], references: [formID])
 }

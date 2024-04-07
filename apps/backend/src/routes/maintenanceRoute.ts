@@ -4,8 +4,6 @@ import maintenanceFunctions from "../maintenanceFunctions";
 const router: Router = express.Router();
 import client from "../bin/database-connection";
 
-const database: MaintenanceRequest[] = [];
-
 router.get("/", async (req, res) => {
   const formsWithMaintenance = await client.$queryRaw`
         SELECT *

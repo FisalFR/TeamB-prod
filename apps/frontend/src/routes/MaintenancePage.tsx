@@ -15,7 +15,6 @@ export function MaintenancePage() {
     const [cleared, setCleared] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
 
-    //const locationOptions: string[] = ["Day Surgery Family Waiting", "Pre-Op PACU", "Radiation Oncology TX Suite", "Ultrasound", "Medical Records Conference Room", "Abrams Conference Room", "Outpatient Fluoroscopy (Xray)", "Anesthesia Conference Room", "Helen Hogan Conference Room", "Nuclear Medicine", "Cross-Sectional Interventional Radiology (CSIR) MRI", "Volunteers"];
     const [locationOptions, setLocationOptions] = useState<string[]>([]);
 
     useEffect(() => {
