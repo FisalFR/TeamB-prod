@@ -156,7 +156,8 @@ export function MedicineRequest(){
                             <p className={"text-left font-bold pt-1"}>Quantity</p>
                             <input
                                 className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2"}
-                                type="number" required/>
+                                type="number" required
+                                placeholder="0"/>
 
                             <br/>
 
