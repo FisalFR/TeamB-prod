@@ -4,7 +4,6 @@ import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import LongButton from "../components/LongButton.tsx";
 import {forms} from "database/.prisma/client";
-//import Button from "../components/Button.tsx";
 import Modal from "../components/Modal.tsx";
 import formType from "common/src/FormType.ts";
 function LogBook() {
@@ -32,7 +31,6 @@ function LogBook() {
     });
     const [submitted, setSubmit] = useState<number>(0);
     const [cleared, setCleared] = useState(false);
-
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
     const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
     const requestTypeOptions: string[] = ["Maintenance", "Language", "Sanitation", "Medicine", "Flower", "Security"];

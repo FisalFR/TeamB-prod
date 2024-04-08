@@ -13,7 +13,11 @@ import FormType from "common/src/FormType";
 router.use(fileUpload());
 
 router.get("/", async (req, res) => {
-  const formType = await client.forms.findMany();
+  const formType = await client.forms.findMany({
+    orderBy: {
+      formID: "desc",
+    },
+  });
   res.status(200).json(formType);
 });
 
@@ -39,6 +43,9 @@ router.post("/filter", async (req, res) => {
         type: { search: formType.type },
         assignee: { search: formType.assignee },
       },
+      orderBy: {
+        formID: "desc",
+      },
     });
     res.status(200).json(filteredForm);
   } else if (formType.status !== "" && formType.type !== "") {
@@ -46,6 +53,9 @@ router.post("/filter", async (req, res) => {
       where: {
         status: { search: formType.status },
         type: { search: formType.type },
+      },
+      orderBy: {
+        formID: "desc",
       },
     });
     res.status(200).json(filteredForm);
@@ -55,6 +65,9 @@ router.post("/filter", async (req, res) => {
         type: { search: formType.type },
         assignee: { search: formType.assignee },
       },
+      orderBy: {
+        formID: "desc",
+      },
     });
     res.status(200).json(filteredForm);
   } else if (formType.status !== "" && formType.assignee !== "") {
@@ -63,12 +76,18 @@ router.post("/filter", async (req, res) => {
         status: { search: formType.status },
         assignee: { search: formType.assignee },
       },
+      orderBy: {
+        formID: "desc",
+      },
     });
     res.status(200).json(filteredForm);
   } else if (formType.status !== "") {
     const filteredForm = await client.forms.findMany({
       where: {
         status: { search: formType.status },
+      },
+      orderBy: {
+        formID: "desc",
       },
     });
     res.status(200).json(filteredForm);
@@ -77,6 +96,9 @@ router.post("/filter", async (req, res) => {
       where: {
         type: { search: formType.type },
       },
+      orderBy: {
+        formID: "desc",
+      },
     });
     res.status(200).json(filteredForm);
   } else if (formType.assignee !== "") {
@@ -84,10 +106,17 @@ router.post("/filter", async (req, res) => {
       where: {
         assignee: { search: formType.assignee },
       },
+      orderBy: {
+        formID: "desc",
+      },
     });
     res.status(200).json(filteredForm);
   } else {
-    const filteredForm = await client.forms.findMany({});
+    const filteredForm = await client.forms.findMany({
+      orderBy: {
+        formID: "desc",
+      },
+    });
     res.status(200).json(filteredForm);
   }
 });
