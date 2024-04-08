@@ -9,12 +9,12 @@ function Select(props: { options: string[]; label: string; id: string; onChange:
     }
 
     return (
-        <>
+        <div>
             <label htmlFor={props.id}>{props.label}</label>
             <select name={props.id} id={props.id} onChange={props.onChange}>
                 {createOptions()}
             </select>
-        </>);
+        </div>);
 }
 
 export default Select;

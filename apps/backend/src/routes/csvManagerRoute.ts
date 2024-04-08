@@ -4,13 +4,18 @@ const router: Router = express.Router();
 import client from "../bin/database-connection";
 import populateNode from "../populateNode";
 import populateEdge from "../populateEdge";
-import writeNode from "../writeNode.ts";
+import writeNode from "../writeNode";
 import writeEdge from "../writeEdge";
 import NodeType from "common/src/NodeType";
 import EdgeType from "common/src/EdgeType";
-//import edge from "common/src/edge";
+import FormType from "common/src/FormType";
 
 router.use(fileUpload());
+
+router.get("/", async (req, res) => {
+  const formType = await client.forms.findMany();
+  res.status(200).json(formType);
+});
 
 router.get("/nodes", async (req, res) => {
   const allNodes = await client.nodes.findMany();
@@ -20,6 +25,87 @@ router.get("/nodes", async (req, res) => {
 router.get("/edges", async (req, res) => {
   const allEdges = await client.edges.findMany();
   res.status(200).json(allEdges);
+});
+router.post("/filter", async (req, res) => {
+  const formType: FormType = req.body;
+  console.log(formType);
+  if (
+    formType.status !== "" &&
+    formType.type !== "" &&
+    formType.assignee !== ""
+  ) {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        status: { search: formType.status },
+        type: { search: formType.type },
+        assignee: { search: formType.assignee },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.status !== "" && formType.type !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        status: { search: formType.status },
+        type: { search: formType.type },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.type !== "" && formType.assignee !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        type: { search: formType.type },
+        assignee: { search: formType.assignee },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.status !== "" && formType.assignee !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        status: { search: formType.status },
+        assignee: { search: formType.assignee },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.status !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        status: { search: formType.status },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.type !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        type: { search: formType.type },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else if (formType.assignee !== "") {
+    const filteredForm = await client.forms.findMany({
+      where: {
+        assignee: { search: formType.assignee },
+      },
+    });
+    res.status(200).json(filteredForm);
+  } else {
+    const filteredForm = await client.forms.findMany({});
+    res.status(200).json(filteredForm);
+  }
+});
+
+router.post("/insert", async (req, res) => {
+  const formType: FormType = req.body;
+  const updateUser = await client.forms.update({
+    where: {
+      formID: formType.formID,
+    },
+    data: {
+      status: formType.status,
+      assignee: formType.assignee,
+    },
+  });
+  console.log(updateUser);
+  res.status(200).json(updateUser);
 });
 
 router.post("/uploadNodes", function (req, res) {

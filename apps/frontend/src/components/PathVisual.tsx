@@ -1,7 +1,14 @@
 import { motion } from "framer-motion";
+import Node from "../../../../packages/common/src/node";
 
-function PathVisual(props: { path: number[][]; image: string; width: number; height: number; scale:number; showPath: boolean} ) {
-    const pathArray = props.path;
+function PathVisual(props: {width: number; height: number; scale:number;
+    showPath: boolean; floormap: Map<string, Node[][]>; nodes: Node[]; images: Map<string, string>; currentFloor: string}) {
+    let startCoord: number[] = [];
+    let endCoord: number[] = [];
+    if (props.nodes[0] != null) {
+        startCoord = [props.nodes[0].xcoord, props.nodes[0].ycoord];
+        endCoord = [props.nodes[props.nodes.length - 1].xcoord, props.nodes[props.nodes.length - 1].ycoord];
+    }
 
     const draw = {
         hidden: { pathLength: 0, opacity: 1 },
@@ -15,7 +22,7 @@ function PathVisual(props: { path: number[][]; image: string; width: number; hei
         }
     };
 
-    function createPath() {
+    function createPath(pathArray) {
         if(props.showPath){
             let path = `M ${pathArray[0][0]} ${pathArray[0][1]}`;
             for (let i = 1; i < pathArray.length; i++) {
@@ -25,24 +32,117 @@ function PathVisual(props: { path: number[][]; image: string; width: number; hei
         }
     }
 
-    const viewBox = "0 0 " + (props.width)  + " " + (props.height);
+    function createFloors() {
+        const floorSVGs: JSX.Element[] = [];
+        const keys = Object.keys(props.images);
+        for (let x = 0; x < keys.length; x++) {
+            let classname = "block";
+            if (keys[x] != props.currentFloor) {
+                classname = "hidden";
+            }
+            floorSVGs.push(
+                <>
+                <motion.svg width={props.width * props.scale}
+                            height={props.height * props.scale}
+                            viewBox={viewBox}
+                            initial="hidden"
+                            animate="visible"
+                            variants={draw}
+                            className={classname}>
+                    {createFloor(keys[x])}
+                </motion.svg>
+                </>
+            );
+        }
+        return floorSVGs;
+    }
 
-    return (
-        <motion.svg width={props.width * props.scale}
-                    height={props.height * props.scale}
-                    viewBox={viewBox}
-                    initial="hidden"
-                    animate="visible"
-                    variants={draw}>
-            <image xlinkHref={props.image} width={props.width} height={props.height}></image>
-            <motion.path d={createPath()} stroke="#009CA6" fill="none" initial="hidden" stroke-width={4}
-                         animate="visible"
-                         variants={draw}/>
-            <circle cx={pathArray[pathArray.length - 1][0]} cy={pathArray[pathArray.length - 1][1]} r={8}
-                    fill="#F6BD38"/>
-            <circle cx={pathArray[0][0]} cy={pathArray[0][1]} r={8} fill="#012D5A"/>
-        </motion.svg>
-    );
+    function createFloor(floor: string) {
+        const floorImage = props.images[floor];
+        const pathDivs = [];
+        pathDivs.push(
+            <image xlinkHref={floorImage} width={props.width} height={props.height}></image>
+        );
+        if (Object.prototype.hasOwnProperty.call(props.floormap, floor)) {
+            const floorPaths: Node[][] | undefined = props.floormap[floor];
+
+            if (floorPaths != null && props.currentFloor == floor) {
+                for (let i = 0; i < floorPaths.length; i++) {
+                    const pathCoords = [];
+                    for (let j = 0; j < floorPaths[i].length; j++) {
+                        pathCoords.push([floorPaths[i][j].xcoord, floorPaths[i][j].ycoord]);
+                    }
+                    pathDivs.push(
+                        <>
+                            <motion.path d={createPath(pathCoords)} stroke="#009CA6" fill="none" initial="hidden"
+                                         stroke-width={4}
+                                         animate="visible"
+                                         variants={draw}/>
+                            {createStartEnd(floorPaths[i][0], floorPaths[i][floorPaths[i].length-1])}
+                        </>
+                    );
+                }
+            }
+        }
+        return pathDivs;
+
+    }
+
+    function createStartEnd(start: Node, end: Node) {
+        //add if statements to display circles or floor name depending on connections
+        const returnDivs = [];
+        let nodePos = 0;
+        if (props.nodes[props.nodes.length-1].nodeID == end.nodeID) {
+            returnDivs.push(<circle cx={endCoord[0]} cy={endCoord[1]} r={8} fill="#F6BD38"/>);
+        }
+        else {
+            nodePos = props.nodes.findIndex((node) => node.nodeID == end.nodeID);
+            returnDivs.push(<text x={end.xcoord} y={end.ycoord} className="text-5xl font-bold fill-gold-yellow font-OpenSans">{props.nodes[nodePos + 1].floor}</text>);
+        }
+        if (props.nodes[0].nodeID == start.nodeID) {
+            returnDivs.push(<circle cx={startCoord[0]} cy={startCoord[1]} r={8} fill="#012D5A"/>);
+        }
+        else {
+            nodePos = props.nodes.findIndex((node) => node.nodeID == start.nodeID);
+            returnDivs.push(<text x={start.xcoord} y={start.ycoord} className="text-5xl font-bold fill-deep-blue font-OpenSans">{props.nodes[nodePos - 1].floor}</text>);
+        }
+        return (returnDivs);
+    }
+
+    function createBlankFloor(floor: string) {
+        const floorImage = props.images[floor];
+        return (
+            <image xlinkHref={floorImage} width={props.width} height={props.height}></image>
+        );
+    }
+
+    const viewBox = "0 0 " + (props.width) + " " + (props.height);
+    if (props.nodes[0] != null) {
+        return (
+            <>
+                <div className="flex flex-col">
+                    {createFloors()}
+                </div>
+            </>
+        );
+    }
+    else {
+        return (
+            <>
+
+                <motion.svg width={props.width * props.scale}
+                            height={props.height * props.scale}
+                            viewBox={viewBox}
+                            initial="hidden"
+                            animate="visible"
+                            variants={draw}>
+                    {createBlankFloor("L2")}
+                </motion.svg>
+
+            </>
+        );
+    }
+
 }
 
 export default PathVisual;

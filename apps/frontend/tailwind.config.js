@@ -18,8 +18,14 @@ export default {
         'HeadlandOne': ['Headland One', 'serif'],
         'OpenSans': ['Open Sans', 'sans-serif'],
       },
+      spacing: {
+        'databasetable': '47.2rem',
+        '100' : '26.15rem',
+        '50': '12.29rem',
+        '9': '2.4rem',
+      }
     },
   },
   plugins: [],
-}
+};
 
