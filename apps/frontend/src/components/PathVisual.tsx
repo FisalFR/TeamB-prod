@@ -135,7 +135,7 @@ function PathVisual(props: {width: number; height: number; scale:number;
         return (
             <>
 
-                <motion.svg width={props.width * props.scale}
+                <motion.svg width="100%"
                             height={props.height * props.scale}
                             viewBox={viewBox}
                             initial="hidden"

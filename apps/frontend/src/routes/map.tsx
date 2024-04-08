@@ -20,7 +20,7 @@ export function Map(){
     const PlusSvg = <img src={plus} alt="Plus" className={"w-5"} />;
     const MinusSvg = <img src={minus} alt="Minus" className={"w-5"} />;
 
-    const [zoom, setZoom] = useState(0.2);
+    const [zoom, setZoom] = useState(0.3);
     const [showPath, setShowPath] = useState(false);
 
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
@@ -44,11 +44,11 @@ export function Map(){
 
     const [currentFloor, setCurrentFloor] = useState("2");
     function zoomIn() {
-        setZoom(prevZoom => Math.min(prevZoom * 1.2, 2.0)); // Increase zoom level, max 2.0
+        setZoom(prevZoom => Math.min(prevZoom * 1.2, 1.0)); // Increase zoom level, max 1.0
     }
 
     function zoomOut() {
-        setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.1)); // Decrease zoom level, min 0.1
+        setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.3)); // Decrease zoom level, min 0.3
     }
 
     function findPath(start: string, end: string) {
@@ -101,9 +101,9 @@ export function Map(){
 
     return (
         <>
-        <div className="centerContent w-screen h-screen">
-            <div className="relative"> {/* Add relative positioning here */}
-               <div className="w-full h-full max-w-[100vh] max-h-[90vh] overflow-scroll" ref={divRef}>
+        <div className="centerContent">
+            <div className="relative w-full h-full"> {/* Add relative positioning here */}
+               <div className="w-screen h-screen fixed overflow-scroll" ref={divRef}>
     <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor = {currentFloor}
                 scale={zoom} showPath={showPath} floormap={floorMap} nodes={pathNodes} images={floorImages}/>
 </div>
@@ -112,21 +112,21 @@ export function Map(){
                         <img src={from} alt="from" className={"px-1"}/>
                         <Select label="" id="nodeStartSelect" options={nodes}
                                 onChange={handleStartChange}/>
-                        <img src={dots} alt="dots" className={"pb-1 px-1"}/>
+                        <img src={dots} alt="dots" className={"h-7 pb-1 px-1"}/>
                         <div></div>
                         <img src={destination} alt="destination" className={"px-1"}/>
                         <Select label="" id="nodeEndSelect" options={nodes}
                                 onChange={handleEndChange}/>
                     </div>
                 </div>
-                <div className={"absolute bottom-7 left-7 flex flex-col gap-0.5"}>
+                <div className={"fixed bottom-7 left-7 flex flex-col gap-0.5"}>
                     <Button onClick={() => setCurrentFloor("3")} children={"3"}/>
                     <Button onClick={() => setCurrentFloor("2")} children={"2"}/>
                     <Button onClick={() => setCurrentFloor("1")} children={"1"}/>
                     <Button onClick={() => setCurrentFloor("L1")} children={"L1"}/>
                     <Button onClick={() => setCurrentFloor("L2")} children={"L2"}/>
                 </div>
-                <div className={"absolute bottom-7 right-7 flex flex-col bg-deep-blue rounded p-1 divide-y gap-1"}>
+                <div className={"fixed bottom-7 right-7 flex flex-col bg-deep-blue rounded p-1 divide-y gap-1"}>
                     <button className={""}
                             onClick={zoomIn}>
                         {PlusSvg}
