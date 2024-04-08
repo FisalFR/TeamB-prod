@@ -51,8 +51,9 @@ export function Map(){
         setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.1)); // Decrease zoom level, min 0.1
     }
 
-    function findPath() {
-        axios.post("/api/pathfinding", request,{
+    function findPath(start: string, end: string) {
+        const startend = {startNode: start, endNode: end};
+        axios.post("/api/pathfinding", startend,{
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -72,12 +73,12 @@ export function Map(){
     function handleStartChange(e: ChangeEvent<HTMLInputElement>) {
         setRequest({...request, startNode: nodeData[e.target.value].id});
         setShowPath(true);
-        findPath();
+        findPath(nodeData[e.target.value].id, request.endNode);
     }
     function handleEndChange(e: ChangeEvent<HTMLInputElement>) {
         setRequest({...request, endNode: nodeData[e.target.value].id});
         setShowPath(true);
-        findPath();
+        findPath(request.startNode, nodeData[e.target.value].id);
     }
 
     useEffect( () => {
@@ -90,7 +91,7 @@ export function Map(){
             }
             setNodes(nodeStrings);
             setNodeData(tempNodeData);
-            setRequest({startNode: response.data[0].id, endNode: response.data[0].id});
+            setRequest({startNode: tempNodeData[nodeStrings[0]].id, endNode: tempNodeData[nodeStrings[0]].id});
 
             setPathNodes([response.data[0], response.data[response.data.length-1]]);
             setShowPath(false);

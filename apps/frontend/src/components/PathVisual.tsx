@@ -48,7 +48,8 @@ function PathVisual(props: {width: number; height: number; scale:number;
                             initial="hidden"
                             animate="visible"
                             variants={draw}
-                            className={classname}>
+                            className={classname}
+                            key = {JSON.stringify(keys[x] + "svg")}>
                     {createFloor(keys[x])}
                 </motion.svg>
                 </>
@@ -61,7 +62,7 @@ function PathVisual(props: {width: number; height: number; scale:number;
         const floorImage = props.images[floor];
         const pathDivs = [];
         pathDivs.push(
-            <image xlinkHref={floorImage} width={props.width} height={props.height}></image>
+            <image xlinkHref={floorImage} width={props.width} height={props.height} key = {JSON.stringify(floorImage)}></image>
         );
         if (Object.prototype.hasOwnProperty.call(props.floormap, floor)) {
             const floorPaths: Node[][] | undefined = props.floormap[floor];
@@ -75,9 +76,10 @@ function PathVisual(props: {width: number; height: number; scale:number;
                     pathDivs.push(
                         <>
                             <motion.path d={createPath(pathCoords)} stroke="#009CA6" fill="none" initial="hidden"
-                                         stroke-width={4}
+                                         strokeWidth={4}
                                          animate="visible"
-                                         variants={draw}/>
+                                         variants={draw}
+                                         key = {JSON.stringify(pathCoords)}/>
                             {createStartEnd(floorPaths[i][0], floorPaths[i][floorPaths[i].length-1])}
                         </>
                     );
@@ -93,18 +95,21 @@ function PathVisual(props: {width: number; height: number; scale:number;
         const returnDivs = [];
         let nodePos = 0;
         if (props.nodes[props.nodes.length-1].nodeID == end.nodeID) {
-            returnDivs.push(<circle cx={endCoord[0]} cy={endCoord[1]} r={8} fill="#F6BD38"/>);
+            returnDivs.push(<circle cx={endCoord[0]} cy={endCoord[1]} r={8} fill="#F6BD38"
+                                    key = {JSON.stringify(endCoord[0] + endCoord[1])}/>);
         }
         else {
             nodePos = props.nodes.findIndex((node) => node.nodeID == end.nodeID);
-            returnDivs.push(<text x={end.xcoord} y={end.ycoord} className="text-5xl font-bold fill-gold-yellow font-OpenSans">{props.nodes[nodePos + 1].floor}</text>);
+            returnDivs.push(<text x={end.xcoord} y={end.ycoord} key = {JSON.stringify(endCoord[0] + endCoord[1] + "text")} className="text-5xl font-bold fill-gold-yellow font-OpenSans">
+                {props.nodes[nodePos + 1].floor}</text>);
         }
         if (props.nodes[0].nodeID == start.nodeID) {
-            returnDivs.push(<circle cx={startCoord[0]} cy={startCoord[1]} r={8} fill="#012D5A"/>);
+            returnDivs.push(<circle cx={startCoord[0]} cy={startCoord[1]} key = {JSON.stringify(startCoord[0] + startCoord[1])} r={8} fill="#012D5A"/>);
         }
         else {
             nodePos = props.nodes.findIndex((node) => node.nodeID == start.nodeID);
-            returnDivs.push(<text x={start.xcoord} y={start.ycoord} className="text-5xl font-bold fill-deep-blue font-OpenSans">{props.nodes[nodePos - 1].floor}</text>);
+            returnDivs.push(<text x={start.xcoord} y={start.ycoord} key = {JSON.stringify(startCoord[0] + startCoord[1] + "text")} className="text-5xl font-bold fill-deep-blue font-OpenSans">
+                {props.nodes[nodePos - 1].floor}</text>);
         }
         return (returnDivs);
     }
@@ -112,7 +117,7 @@ function PathVisual(props: {width: number; height: number; scale:number;
     function createBlankFloor(floor: string) {
         const floorImage = props.images[floor];
         return (
-            <image xlinkHref={floorImage} width={props.width} height={props.height}></image>
+            <image key = {JSON.stringify(floorImage + "placeholder")} xlinkHref={floorImage} width={props.width} height={props.height}></image>
         );
     }
 
@@ -120,7 +125,7 @@ function PathVisual(props: {width: number; height: number; scale:number;
     if (props.nodes[0] != null) {
         return (
             <>
-                <div className="flex flex-col">
+                <div className="flex flex-col" key = {JSON.stringify("floors" + props.nodes)}>
                     {createFloors()}
                 </div>
             </>
@@ -135,7 +140,8 @@ function PathVisual(props: {width: number; height: number; scale:number;
                             viewBox={viewBox}
                             initial="hidden"
                             animate="visible"
-                            variants={draw}>
+                            variants={draw}
+                            key = {JSON.stringify("allfloors")}>
                     {createBlankFloor("L2")}
                 </motion.svg>
 
