@@ -125,8 +125,8 @@ export function MaintenancePage() {
                     </div>
 
                     <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Description of issue</label>
-                    <div className="border-deep-blue border-solid border-2">
-                            <textarea id={"feedback"} className={"w-full max-w-full h-28 max-h-28 p-1"}
+                    <div className="">
+                            <textarea id={"feedback"} className={"w-full max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2"}
                                       onChange={handleFeedbackInput}
                                       value={request.feedback} required={true}
                                       placeholder="Enter detailed description here..."/>
