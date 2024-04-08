@@ -1,10 +1,25 @@
-//import {useRef, useState} from 'react';
-//import {giftInfo} from "../common/giftInfo.ts";
-//import Table from "../components/Table.tsx";
+
 import Button from "../components/Button.tsx";
 import ShopCard from "../components/shopCard.tsx";
 import React, {useState} from "react";
 import {giftItem} from "../common/giftItem.ts";
+import Tulip from "../assets/Gift_Images/Tulip.jpeg";
+import Rose from "../assets/Gift_Images/Rose.jpeg";
+import tulipBouquet from "../assets/Gift_Images/TulipBouquet2.png";
+import roseBouquet from "../assets/Gift_Images/RoseBouquet.png";
+import teddyBear from "../assets/Gift_Images/teddyBear.jpeg";
+import greenDino from "../assets/Gift_Images/greenDino2.jpeg";
+import pinkDino from "../assets/Gift_Images/pinkDino.jpeg";
+import heart from "../assets/Gift_Images/heartStuffie.jpeg";
+import gwsBalloon from "../assets/Gift_Images/gwsBalloon2.jpeg";
+import heartBalloon from "../assets/Gift_Images/heartBalloon.jpeg";
+import rainbow from "../assets/Gift_Images/rainbowBalloon.jpeg";
+import sunshine from "../assets/Gift_Images/sunshineBalloon.jpeg";
+import chocolates from "../assets/Gift_Images/chocolates.jpeg";
+import heartlollipop from "../assets/Gift_Images/heartlollipops.jpeg";
+import sourPatchKids from "../assets/Gift_Images/sourPatchKids.jpeg";
+import caramels from "../assets/Gift_Images/caramels.jpeg";
+
 
 function GiftDelivery() {
 
@@ -23,8 +38,8 @@ function GiftDelivery() {
         "Rainbow Balloon": 3.99,
         "Assorted Chocolate Bundle":5.99,
         "Heart-Shaped Lollipop": 3.99,
-        "Popsicle":1.99,
-        "Caramel": 3.99
+        "Sour Patch Kids":5.99,
+        "Caramel Tray": 9.99
     };
 
 
@@ -68,7 +83,7 @@ function GiftDelivery() {
 
     function createCart() {
         return cart.map((item) =>
-            <p>{item.name} {item.quantity} {item.cost}</p>);
+            <p> {item.quantity} x {item.name}: {item.cost}</p>);
     }
 
 
@@ -99,8 +114,9 @@ function GiftDelivery() {
                 </div>
                 <br/><br/>
 
-                <label htmlFor="message" className="font-HeadlandOne text-md text-Ash-black justify-center">Send a Message: </label>
-                <textarea  id="message" name="message" rows={4} cols={40} ></textarea> <br/> <br/>
+                <label htmlFor="message" className="font-HeadlandOne text-md text-Ash-black justify-center">Send a
+                    Message: </label>
+                <textarea id="message" name="message" rows={4} cols={40}></textarea> <br/> <br/>
 
                 {/*Flowers*/}
                 <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
@@ -108,13 +124,13 @@ function GiftDelivery() {
                 </h1>
                 <br/>
                 <div className="flex flex-row gap-10 w-full overflow-scroll">
-                    <ShopCard image="apps/frontend/src/Images/Tulip.jpg.avif" cost={3.99} name="Tulip" altName="Single Tulip"
+                    <ShopCard image={Tulip} cost={3.99} name="Tulip" altName="Single Tulip"
                               changeCart={changeCart}/>
-                    <ShopCard image="url" cost={5.99} name="Rose" altName="Single Rose"
+                    <ShopCard image={Rose} cost={5.99} name="Rose" altName="Single Rose"
                               changeCart={changeCart}/>
-                    <ShopCard image="url" cost={21.99} name="Bouquet of Tulips" altName="Bouquet of Tulips"
+                    <ShopCard image={tulipBouquet} cost={21.99} name="Bouquet of Tulips" altName="Bouquet of Tulips"
                               changeCart={changeCart}/>
-                    <ShopCard image="url" cost={29.99} name="Bouquet of Roses" altName="Bouquet of Roses"
+                    <ShopCard image={roseBouquet} cost={29.99} name="Bouquet of Roses" altName="Bouquet of Roses"
                               changeCart={changeCart}/>
                 </div>
                 <br/><br/>
@@ -126,13 +142,13 @@ function GiftDelivery() {
                 </h1>
                 <br/>
                 <div className="flex flex-row gap-10 w-full overflow-scroll">
-                    <ShopCard image="url" cost={5.99} name="Teddy Bear" altName="Teddy Bear"
+                    <ShopCard image={teddyBear} cost={5.99} name="Teddy Bear" altName="Teddy Bear"
                               changeCart={changeCart}/>
-                    <ShopCard image="url" cost={10.99} name="Green Dinosaur" altName="Green Dinosaur"
+                    <ShopCard image={greenDino} cost={10.99} name="Green Dinosaur" altName="Green Dinosaur"
                               changeCart={changeCart}/>
-                    <ShopCard image="url" cost={10.99} name="Pink Dinosaur" altName="Pink Dinosaur"
+                    <ShopCard image={pinkDino} cost={10.99} name="Pink Dinosaur" altName="Pink Dinosaur"
                               changeCart={changeCart}/>
-                    <ShopCard image="url" cost={3.99} name="Heart" altName="Heart"
+                    <ShopCard image={heart} cost={3.99} name="Heart" altName="Heart"
                               changeCart={changeCart}/>
                 </div>
                 <br/><br/>
@@ -144,13 +160,15 @@ function GiftDelivery() {
                 </h1>
                 <br/>
                 <div className="flex flex-row gap-10 w-full overflow-scroll">
-                    <ShopCard image="url" cost={3.99} name="Get Well Soon Balloon" altName="Get Well Soon Balloon"
+                    <ShopCard image={gwsBalloon} cost={3.99} name="Get Well Soon Balloon"
+                              altName="Get Well Soon Balloon"
                               changeCart={changeCart}/>
-                    <ShopCard image="url" cost={3.99} name="Red Heart Balloon" altName="Red Heart Balloon"
+                    <ShopCard image={heartBalloon} cost={3.99} name="Red Heart Balloon" altName="Red Heart Balloon"
                               changeCart={changeCart}/>
-                    <ShopCard image="url" cost={3.99} name="Rainbow Balloon" altName="Rainbow Balloon"
+                    <ShopCard image={rainbow} cost={3.99} name="Rainbow Balloon" altName="Rainbow Balloon"
                               changeCart={changeCart}/>
-                    <ShopCard image="url" cost={3.99} name="Happy Sunshine Balloon" altName="Smiling Sunshine Balloon"
+                    <ShopCard image={sunshine} cost={3.99} name="Happy Sunshine Balloon"
+                              altName="Smiling Sunshine Balloon"
                               changeCart={changeCart}/>
                 </div>
                 <br/><br/>
@@ -162,29 +180,35 @@ function GiftDelivery() {
                 </h1>
                 <br/>
                 <div className="flex flex-row gap-10 w-full overflow-x-scroll h-fit">
-                    <ShopCard image="url" cost={5.99} name="Assorted Chocolate Bundle" altName="Assorted Chocolates"
+                    <ShopCard image={chocolates} cost={5.99} name="Assorted Chocolate Bundle"
+                              altName="Assorted Chocolates"
                               changeCart={changeCart}/>
-                    <ShopCard image="url" cost={3.99} name="Heart-Shaped Lollipop" altName="Heart-Shaped Lollipops"
+                    <ShopCard image={heartlollipop} cost={3.99} name="Heart-Shaped Lollipop"
+                              altName="Heart-Shaped Lollipops"
                               changeCart={changeCart}/>
-                    <ShopCard image="url" cost={1.99} name="Popsicle" altName="Popsicle"
+                    <ShopCard image={sourPatchKids} cost={5.99} name="Sour Patch Kids" altName="Sour Patch Kids"
                               changeCart={changeCart}/>
-                    <ShopCard image="url" cost={3.99} name="Caramel" altName="Caramel"
+                    <ShopCard image={caramels} cost={9.99} name="Caramel Tray" altName="Caramel Tray"
                               changeCart={changeCart}/>
                 </div>
                 <br/><br/>
 
                 <Button onClick={handleSubmit} children={"Submit"}/>
                 <br/><br/>
-
-
             </form>
 
-            <div>
-                <h2>
-                    Cart
-                </h2>
+            <div className= "border-2 bg-white border-rounded">
+                <div className= "border-2 bg-deep-blue border-rounded">
+                    <h2 className="text-xl font-HeadlandOne text-center text-bone-white font-bold">
+                        Cart
+                    </h2>
+                </div>
+
+                <div className="text-xl font-HeadlandOne text-center text-Ash-black text-bold">
                 {createCart()}
+                </div>
             </div>
+            <br/><br/>
 
         </>
     );
