@@ -127,7 +127,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 
     return (
         <div className={`${props.width} text-left`}>
-            <input className="w-full p-1" type="text"
+            <input className="w-full p-[5px]" type="text"
                    placeholder={props.placeholder} name = {props.name} id = {props.id} role = "combobox"
                    onBlur={hideDropdown} onFocus={showDropdown} onKeyDown={keyDown}
                    value={setVal()} required={props.required}

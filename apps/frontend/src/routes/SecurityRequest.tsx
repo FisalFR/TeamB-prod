@@ -82,7 +82,7 @@ export function SecurityPage() {
                 }}>
                     <p className={"text-left font-bold"}>Employee Name</p>
                     <div className="border-deep-blue border-solid border-2 w-full">
-                        <input className={"border-solid border-deep-blue overflow-hidden flex items-start p-1 w-full"}
+                        <input className={"border-solid border-deep-blue overflow-hidden flex items-start p-[5px] w-full"}
                                onChange={handleNameInput}
                                value={request.employeeName}
                                 placeholder={"Name"}/>
@@ -111,7 +111,7 @@ export function SecurityPage() {
                     <br/>
                     <p className={"flex w-full text-left font-bold"}>What is the security request?</p>
                     <div className="border-deep-blue border-solid border-2">
-                            <textarea id={"feedback"} className={"w-full w-max-full max-w-full h-40 max-h-40 p-1"}
+                            <textarea id={"feedback"} className={"w-full w-max-full max-w-full h-40 max-h-40 p-[5px]"}
                                       onChange={handleRequestInput}
                                       value={request.request} required={true}
                                       placeholder="Enter detailed description here..."/>
