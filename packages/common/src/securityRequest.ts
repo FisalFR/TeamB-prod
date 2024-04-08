@@ -1,6 +1,8 @@
 export type SecurityRequest = {
     employeeName: string,
-    request: string,
+    securityReason: string,
+    additionalInfo: string,
     location: string,
-    priority: string
+    priority: string,
+    quantity: number
 }

@@ -20,8 +20,11 @@ class securityFunctions {
       data: {
         securityRequest: UUID,
         employeeName: request.employeeName,
-        request: request.request,
+        request: request.securityReason,
+          quantity: request.quantity,
         priority: request.priority,
+          additionalInfo: request.additionalInfo
+
       },
     });
   }

@@ -1,4 +1,4 @@
-import {ChangeEvent, useEffect, useRef, useState} from "react";
+import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import {SecurityRequest} from "common/src/securityRequest.ts";
 import axios from "axios";
 import Dropdown from "../components/dropdown.tsx";
@@ -6,7 +6,14 @@ import RadioButton from "../components/RadioButton.tsx";
 import Button from "../components/Button.tsx";
 
 export function SecurityPage() {
-    const [request, setRequest] = useState<SecurityRequest>({employeeName: "", request: "", location: "", priority: ""});
+    const [request, setRequest] = useState<SecurityRequest>({
+        employeeName: "",
+        securityReason: "",
+        additionalInfo: "",
+        location: "",
+        priority: "",
+        quantity: 0
+    });
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         formScreen: "block",
         submittedScreen: "hidden"
@@ -43,7 +50,7 @@ export function SecurityPage() {
         function handleClear(e: { preventDefault: () => void; }): void {
             e.preventDefault();
             // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-            setRequest({employeeName: "", request: "", location: "", priority: ""});
+            setRequest({additionalInfo: "", quantity: 0, employeeName: "", securityReason: "", location: "", priority: ""});
             // use resetActive from Dropdown?
             setCleared(true);
         }
@@ -52,8 +59,12 @@ export function SecurityPage() {
         setRequest({...request, employeeName: e.target.value});
     }
 
-    function handleRequestInput(e: ChangeEvent<HTMLTextAreaElement>): void {
-        setRequest({...request, request: e.target.value});
+    function handleSecurityReasonInput(e: ChangeEvent<HTMLTextAreaElement>): void {
+        setRequest({...request, securityReason: e.target.value});
+    }
+
+    function handleAdditionalInfoInput(e: ChangeEvent<HTMLTextAreaElement>): void {
+        setRequest({...request, additionalInfo: e.target.value});
     }
 
     function handleLocationInput(str: string): void {
@@ -67,7 +78,7 @@ export function SecurityPage() {
 
     function handleNewSubmission(): void {
         setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
-        setRequest({employeeName: "", request: "", location: "", priority: ""});
+        setRequest({additionalInfo: "", employeeName: "", securityReason: "", location: "", priority: "", quantity:0});
         setCleared(false);
     }
 
@@ -75,51 +86,75 @@ export function SecurityPage() {
         <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
                 <h1 className={"text-4xl font-HeadlandOne py-4"}>Security Service Request</h1>
-                <p className="pb-2 text-center">Fill out the form below to make a security request.</p>
+                <p className="pb-8 text-center">Fill out the form below to make a security request.</p>
 
                 <form ref={formRef} onSubmit={e => {
                     e.preventDefault();
                 }}>
-                    <p className={"text-left font-bold"}>Employee Name</p>
-                    <div className="border-deep-blue border-solid border-2 w-full">
-                        <input className={"border-solid border-deep-blue overflow-hidden flex items-start p-[5px] w-full"}
-                               onChange={handleNameInput}
-                               value={request.employeeName}
+                    <div className="formTest gap-24">
+                        <p className={"text-left font-bold"}>Employee Name</p>
+                        <div className="border-deep-blue border-solid border-2 w-full">
+                            <input
+                                className={"border-solid border-deep-blue overflow-hidden flex items-start p-[5px] w-full"}
+                                onChange={handleNameInput}
+                                value={request.employeeName}
                                 placeholder={"Name"}/>
 
-                    </div>
-                    <br/>
-                    <p className={"text-left font-bold"}>What is the location?</p>
-                    <div className="border-deep-blue border-solid border-2 w-full">
-                        <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
-                                  id={"dropdown1"} value={cleared}
-                                  setInput={handleLocationInput} required={true}
-                                    width={""}/>
-                    </div>
-                    <br/>
-                    <p className={"text-left font-bold"}>What is the priority?</p>
-                    <div className="border-deep-blue border-solid border-2 w-full">
-                        <RadioButton value={"Low"} name={"priority"} id={"priority1"} state={request.priority}
-                                     onChange={handlePriorityInput} required={true} width={"w-full"}/>
-                        <RadioButton value={"Medium"} name={"priority"} id={"priority2"} state={request.priority}
-                                     onChange={handlePriorityInput} required={true} width={"w-full"}/>
-                        <RadioButton value={"High"} name={"priority"} id={"priority3"} state={request.priority}
-                                     onChange={handlePriorityInput} required={true} width={"w-full"}/>
-                        <RadioButton value={"Emergency"} name={"priority"} id={"priority4"} state={request.priority}
-                                     onChange={handlePriorityInput} required={true} width={"w-full"}/>
-                    </div>
-                    <br/>
-                    <p className={"flex w-full text-left font-bold"}>What is the security request?</p>
-                    <div className="border-deep-blue border-solid border-2">
-                            <textarea id={"feedback"} className={"w-full w-max-full max-w-full h-40 max-h-40 p-[5px]"}
-                                      onChange={handleRequestInput}
-                                      value={request.request} required={true}
+                        </div>
+                        <br/>
+                        <p className={"text-left font-bold"}>What is the location?</p>
+                        <div className="border-deep-blue border-solid border-2 w-full">
+                            <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
+                                      id={"dropdown1"} value={cleared}
+                                      setInput={handleLocationInput} required={true}
+                                      width={""}/>
+                        </div>
+                        <br/>
+                        <div className="grid grid-cols-2 space-x-3 flex-auto">
+                            <div>
+                        <p className={"text-left font-bold"}>What is the priority?</p>
+                        <div className="border-deep-blue border-solid border-2 w-full">
+                            <RadioButton value={"Low"} name={"priority"} id={"priority1"} state={request.priority}
+                                         onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                            <RadioButton value={"Medium"} name={"priority"} id={"priority2"} state={request.priority}
+                                         onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                            <RadioButton value={"High"} name={"priority"} id={"priority3"} state={request.priority}
+                                         onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                            <RadioButton value={"Emergency"} name={"priority"} id={"priority4"} state={request.priority}
+                                         onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                        </div>
+                            </div>
+                            <div>
+                                <p className={"text-left font-bold w-full"}>Quantity of Personnel</p>
+                                <input
+                                    className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
+                                    type="number" min='0' required/>
+                            </div>
+                        </div>
+                        <br/>
+                        <p className={"flex w-full text-left font-bold"}>What is the reason for the security
+                            request?</p>
+                        <div className="border-deep-blue border-solid border-2">
+                            <textarea id={"reason"} className={"w-full w-max-full max-w-full h-40 max-h-40 p-[5px]"}
+                                      onChange={handleSecurityReasonInput}
+                                      value={request.securityReason} required={true}
                                       placeholder="Enter detailed description here..."/>
+                        </div>
+                        <br/>
+                        <p className={"flex w-full text-left font-bold"}>Additional Info</p>
+                        <div className="border-deep-blue border-solid border-2">
+                            <textarea id={"additionalInfo"} className={"w-full w-max-full max-w-full h-40 max-h-40 p-[5px]"}
+                                      onChange={handleAdditionalInfoInput}
+                                      value={request.additionalInfo} required={true}
+                                      placeholder="Enter detailed description here..."/>
+                        </div>
+                        <br/>
+                        <div className={"formButtons flex gap-4 my-4"}>
+                            <Button onClick={handleSubmit} children={"Submit"}/>
+                            <Button onClick={handleClear} children={"Clear"}/>
+                        </div>
                     </div>
-                    <div className={"formButtons flex gap-4 my-4"}>
-                        <Button onClick={handleSubmit} children={"Submit"}/>
-                        <Button onClick={handleClear} children={"Clear"}/>
-                    </div>
+
                 </form>
             </div>
             <div className={submittedWindowVisibility.submittedScreen}>
@@ -139,7 +174,7 @@ export function SecurityPage() {
                     <p className={""}>{request.priority}</p>
 
                     <p className={"font-bold"}>What is the security request?</p>
-                    <p className={""}>{request.request}</p>
+                    <p className={""}>{request.securityReason}</p>
                 </div>
             </div>
         </div>
