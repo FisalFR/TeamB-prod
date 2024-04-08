@@ -4,8 +4,9 @@ import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import LongButton from "../components/LongButton.tsx";
 import {forms} from "database/.prisma/client";
-import Button from "../components/Button.tsx";
+//import Button from "../components/Button.tsx";
 import Modal from "../components/Modal.tsx";
+import formType from "common/src/FormType.ts";
 function LogBook() {
 
     const formRef = useRef<HTMLFormElement>(null);
@@ -35,6 +36,7 @@ function LogBook() {
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
     const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
     const requestTypeOptions: string[] = ["Maintenance", "Language", "Sanitation", "Medicine", "Flower", "Security"];
+    const [open, setOpen] = useState<boolean>(false);
 
 
 
@@ -45,10 +47,13 @@ function LogBook() {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then();
-        setSubmit(submitted + 1); // Spaghetti Code to Update the page
-        setRequest({  formID: "", type: "", location: "", status: "", assignee: "", dateCreated: emptyDate});
-        setCleared(true);
+        }).then(() => {
+            setOpen(true);
+            setSubmit(submitted + 1); // Spaghetti Code to Update the page
+            setRequest({  formID: "", type: "", location: "", status: "", assignee: "", dateCreated: emptyDate});
+            setAssignment({  formID: "", type: "", location: "", status: "", assignee: "", dateCreated: emptyDate});
+            setCleared(true);
+        });
     }
 
     // Use Effect that updates the page everytime you submit the Assign Staff Request
@@ -62,7 +67,7 @@ function LogBook() {
             setFormID(formIDStrings);
         });
     }, [submitted]);
-    
+
     // Use Effect that updates the page everytime you input something into the dropdowns in Filter Data
     useEffect(() => {
     axios.post("/api/csvManager/filter", JSON.stringify(request), {
@@ -70,7 +75,10 @@ function LogBook() {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
-        setForm(response.data.reverse());
+        const reversedData = response.data.reverse();
+        setForm(reversedData);
+        const formIDStrings = reversedData.map((item: formType) => item.formID);
+        setFormID(formIDStrings);
     });
     }, [request]);
 
@@ -105,8 +113,6 @@ function LogBook() {
             setCleared(false);
             setAssignment({...assignment, assignee: str});
         }
-
-    const [open, setOpen] = useState<boolean>(false);
 
 
     return (
@@ -173,7 +179,10 @@ function LogBook() {
                                 <LongButton onClick={handleSubmit} children={"Submit"}/>
                                 <Modal open={open} onClose={() => setOpen(false)}>
                                     <div className="flex flex-col gap-4">
-                                        <h1 className="text-2xl">Assigned</h1>
+                                        <h1 className="text-2xl">Success!</h1>
+                                        <p>
+                                        Assigned
+                                        </p>
                                     </div>
                                 </Modal>
                             </div>
@@ -188,23 +197,21 @@ function LogBook() {
                            keys={["formID", "type", "location", "status", "assignee", "dateCreated"]}/>
                 </div>
 
-                <Button onClick={() => setOpen(true)} children={"Open"}/>
-                {<Modal open={open} onClose={() => setOpen(false)}>
-                    <div className="flex flex-col gap-4">
-                        <h1 className="text-2xl">Modal Title</h1>
-                        <p>
-                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
-                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
-                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
-                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
-                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
-                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
-                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
-                        </p>
-                    </div>
-                </Modal>
-                }
-
+                {/*<Button onClick={() => setOpen(true)} children={"Open"}/>*/}
+                {/*<Modal open={open} onClose={() => setOpen(false)}>*/}
+                {/*    <div className="flex flex-col gap-4">*/}
+                {/*        <h1 className="text-2xl">Modal Title</h1>*/}
+                {/*        <p>*/}
+                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
+                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
+                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
+                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
+                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
+                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
+                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
+                {/*        </p>*/}
+                {/*    </div>*/}
+                {/*</Modal>*/}
 </div>
 );
 }
