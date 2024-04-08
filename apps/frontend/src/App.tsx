@@ -65,7 +65,6 @@ function App() {
                           path: "/sanitation",
                           element: <Sanitation/>
                         },
-
             ],
         },
     ]}]);

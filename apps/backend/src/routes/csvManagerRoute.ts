@@ -28,7 +28,6 @@ router.get("/edges", async (req, res) => {
 });
 router.post("/filter", async (req, res) => {
   const formType: FormType = req.body;
-  console.log(formType);
   if (
     formType.status !== "" &&
     formType.type !== "" &&
@@ -104,7 +103,6 @@ router.post("/insert", async (req, res) => {
       assignee: formType.assignee,
     },
   });
-  console.log(updateUser);
   res.status(200).json(updateUser);
 });
 

@@ -4,6 +4,8 @@ import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import LongButton from "../components/LongButton.tsx";
 import {forms} from "database/.prisma/client";
+import Button from "../components/Button.tsx";
+import Modal from "../components/Modal.tsx";
 function LogBook() {
 
     const formRef = useRef<HTMLFormElement>(null);
@@ -104,7 +106,10 @@ function LogBook() {
             setAssignment({...assignment, assignee: str});
         }
 
-        return (
+    const [open, setOpen] = useState<boolean>(false);
+
+
+    return (
             <div className="flex ">
                 {/*Form to filter current requests*/}
                 <div className=" h-full mx-3 space-y-7">
@@ -166,8 +171,12 @@ function LogBook() {
 
                             <div className={"flex items-center pt-2 pb-4"}>
                                 <LongButton onClick={handleSubmit} children={"Submit"}/>
+                                <Modal open={open} onClose={() => setOpen(false)}>
+                                    <div className="flex flex-col gap-4">
+                                        <h1 className="text-2xl">Assigned</h1>
+                                    </div>
+                                </Modal>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -179,9 +188,26 @@ function LogBook() {
                            keys={["formID", "type", "location", "status", "assignee", "dateCreated"]}/>
                 </div>
 
-            </div>
-        );
-    }
+                <Button onClick={() => setOpen(true)} children={"Open"}/>
+                {<Modal open={open} onClose={() => setOpen(false)}>
+                    <div className="flex flex-col gap-4">
+                        <h1 className="text-2xl">Modal Title</h1>
+                        <p>
+                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
+                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
+                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
+                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
+                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
+                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
+                            This will grow larger the more text there is to it, This will grow larger the more text there is to it,
+                        </p>
+                    </div>
+                </Modal>
+                }
+
+</div>
+);
+}
 
 
 export default LogBook;
