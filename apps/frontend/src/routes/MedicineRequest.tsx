@@ -120,7 +120,7 @@ export function MedicineRequest(){
                             <input type="text" required
                                    onChange={handleNameInput} value={request.employeeName}
                                    placeholder={"Name"}
-                                   className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-1 w-100"}/>
+                                   className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-100"}/>
 
                             <br/>
 
