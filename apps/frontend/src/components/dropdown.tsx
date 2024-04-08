@@ -36,7 +36,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
         optionStrings = filteredOptions;
         listElements.current = [];
         return filteredOptions.map( (option, index) =>
-            <div className="dropdown-option p-[5px] bg-white aria-selected:bg-bone-white" onMouseLeave={resetActive}
+            <div className="dropdown-option p-1 bg-white aria-selected:bg-bone-white" onMouseLeave={resetActive}
                  onMouseDown={() => {fillSearch(option); props.setInput(option);}}
                  role="option" onMouseOver={() => setActiveOption(index)}
                  aria-selected={index === activeOption} id = {"option" + index} key = {"option" + index}
@@ -127,7 +127,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 
     return (
         <div className={`${props.width} text-left`}>
-            <input className="w-full p-[5px]" type="text"
+            <input className="w-full p-1" type="text"
                    placeholder={props.placeholder} name = {props.name} id = {props.id} role = "combobox"
                    onBlur={hideDropdown} onFocus={showDropdown} onKeyDown={keyDown}
                    value={setVal()} required={props.required}

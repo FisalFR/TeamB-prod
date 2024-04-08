@@ -81,8 +81,8 @@ export function SecurityPage() {
                     e.preventDefault();
                 }}>
                     <p className={"text-left font-bold"}>Employee Name</p>
-                    <div className="border-deep-blue border-solid border-2 w-fit">
-                        <input className={"border-solid border-deep-blue  overflow-hidden flex items-start p-2 w-100 h-7 "}
+                    <div className="border-deep-blue border-solid border-2 w-full">
+                        <input className={"border-solid border-deep-blue overflow-hidden flex items-start p-1 w-full"}
                                onChange={handleNameInput}
                                value={request.employeeName}
                                 placeholder={"Name"}/>
@@ -90,28 +90,28 @@ export function SecurityPage() {
                     </div>
                     <br/>
                     <p className={"text-left font-bold"}>What is the location?</p>
-                    <div className="border-deep-blue border-solid border-2 w-fit">
+                    <div className="border-deep-blue border-solid border-2 w-full">
                         <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
                                   id={"dropdown1"} value={cleared}
                                   setInput={handleLocationInput} required={true}
-                                    width={"w-100"}/>
+                                    width={""}/>
                     </div>
                     <br/>
                     <p className={"text-left font-bold"}>What is the priority?</p>
-                    <div className="border-deep-blue border-solid border-2 w-fit">
+                    <div className="border-deep-blue border-solid border-2 w-full">
                         <RadioButton value={"Low"} name={"priority"} id={"priority1"} state={request.priority}
-                                     onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                                     onChange={handlePriorityInput} required={true} width={"w-full"}/>
                         <RadioButton value={"Medium"} name={"priority"} id={"priority2"} state={request.priority}
-                                     onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                                     onChange={handlePriorityInput} required={true} width={"w-full"}/>
                         <RadioButton value={"High"} name={"priority"} id={"priority3"} state={request.priority}
-                                     onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                                     onChange={handlePriorityInput} required={true} width={"w-full"}/>
                         <RadioButton value={"Emergency"} name={"priority"} id={"priority4"} state={request.priority}
-                                     onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                                     onChange={handlePriorityInput} required={true} width={"w-full"}/>
                     </div>
                     <br/>
                     <p className={"flex w-full text-left font-bold"}>What is the security request?</p>
                     <div className="border-deep-blue border-solid border-2">
-                            <textarea id={"feedback"} className={"w-full w-max-full  max-w-full h-40 max-h-40 p-1"}
+                            <textarea id={"feedback"} className={"w-full w-max-full max-w-full h-40 max-h-40 p-1"}
                                       onChange={handleRequestInput}
                                       value={request.request} required={true}
                                       placeholder="Enter detailed description here..."/>
@@ -132,14 +132,14 @@ export function SecurityPage() {
                     <p className={"font-bold"}>Employee Name</p>
                     <p className={""}>{request.employeeName}</p>
 
-                    <p className={"font-bold"}>What is the security request?</p>
-                    <p className={""}>{request.request}</p>
-
                     <p className={"font-bold"}>What is the location?</p>
                     <p className={""}>{request.location}</p>
 
                     <p className={"font-bold"}>What is the priority?</p>
                     <p className={""}>{request.priority}</p>
+
+                    <p className={"font-bold"}>What is the security request?</p>
+                    <p className={""}>{request.request}</p>
                 </div>
             </div>
         </div>
