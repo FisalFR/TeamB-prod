@@ -11,15 +11,14 @@ import minus from "../assets/minus.svg";
 import Select from "../components/Select.tsx";
 import PathVisual from "../components/PathVisual.tsx";
 import Button from "../components/Button.tsx";
-import {ChangeEvent, useEffect, useRef, useState} from "react";
+import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {startEndNodes} from "common/src/pathfinding.ts";
 import Node from "../../../../packages/common/src/node";
 
 export function Map(){
-
-    const PlusSvg = <img src={plus} alt="Plus" className ="w-5 h-5"/>;
-    const MinusSvg = <img src={minus} alt="Minus" className ="w-5 h-5"/>;
+    const PlusSvg = <img src={plus} alt="Plus" className={"w-5"} />;
+    const MinusSvg = <img src={minus} alt="Minus" className={"w-5"} />;
 
     const [zoom, setZoom] = useState(0.2);
     const [showPath, setShowPath] = useState(false);
@@ -101,12 +100,12 @@ export function Map(){
 
     return (
         <>
-        <div className="centerContent w-full h-full">
+        <div className="centerContent w-screen h-screen">
             <div className="relative"> {/* Add relative positioning here */}
-                <div className="w-full h-full overflow-scroll" ref={divRef}>
-                    <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor = {currentFloor}
-                                scale={zoom} showPath={showPath} floormap={floorMap} nodes={pathNodes} images={floorImages}/>
-                </div>
+               <div className="w-full h-full max-w-[100vh] max-h-[90vh] overflow-scroll" ref={divRef}>
+    <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor = {currentFloor}
+                scale={zoom} showPath={showPath} floormap={floorMap} nodes={pathNodes} images={floorImages}/>
+</div>
                 <div className="absolute top-5 left-5 flex flex-row p-2 bg-white h-fit rounded-2xl items-end">
                     <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center">
                         <img src={from} alt="from" className={"px-1"}/>
@@ -119,16 +118,22 @@ export function Map(){
                                 onChange={handleEndChange}/>
                     </div>
                 </div>
-                <div className={"absolute bottom-5 left-5 flex flex-col gap-0.5"}>
+                <div className={"absolute bottom-7 left-7 flex flex-col gap-0.5"}>
                     <Button onClick={() => setCurrentFloor("3")} children={"3"}/>
                     <Button onClick={() => setCurrentFloor("2")} children={"2"}/>
                     <Button onClick={() => setCurrentFloor("1")} children={"1"}/>
                     <Button onClick={() => setCurrentFloor("L1")} children={"L1"}/>
                     <Button onClick={() => setCurrentFloor("L2")} children={"L2"}/>
                 </div>
-                <div className={"absolute bottom-5 right-5 flex flex-col bg-deep-blue rounded-2xl"}>
-                    <Button onClick={zoomIn} children={PlusSvg}/>
-                    <Button onClick={zoomOut} children={MinusSvg}/>
+                <div className={"absolute bottom-7 right-7 flex flex-col bg-deep-blue rounded p-1 divide-y gap-1"}>
+                    <button className={""}
+                            onClick={zoomIn}>
+                        {PlusSvg}
+                    </button>
+                    <button className={""}
+                            onClick={zoomOut}>
+                        {MinusSvg}
+                    </button>
                 </div>
 
             </div>
