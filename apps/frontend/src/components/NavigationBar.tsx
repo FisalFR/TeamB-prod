@@ -11,6 +11,7 @@ export function NavigationBar() {
             ["/sanitation", "Sanitation"],
             ["/database", "Database"],
             ["/csvManager", "CSV Manager"],
+            ["/giftDelivery", "Gift Delivery"],
         ];
         return (
 

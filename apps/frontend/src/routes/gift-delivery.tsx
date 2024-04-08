@@ -25,22 +25,27 @@ function GiftDelivery() {
         "Popsicle":1.99,
         "Caramel": 3.99
     };
+
+
+
     function handleSubmit(){
         //alert(request.isAnon);
     }
 
     function changeCart(item: string, quantity: number){
         const newCart = cart;
-        newCart[item]=quantity;
+        newCart[item]= quantity;
         setCart(newCart);
     }
+
+
 
     function createCart(){
         const rowDivs = [];
         const items = Object.keys(cart);
         for (let i = 0; i < items.length-1; i++) {
             rowDivs.push(
-              <p>{items[i]} {cart[items[i]]} {itemCosts[items[i]] * cart[items[i]]}</p>
+                <p>{items[i]} {cart[items[i]]} {itemCosts[items[i]] * cart[items[i]]}</p>
             );
         }
         return rowDivs;
@@ -83,7 +88,7 @@ function GiftDelivery() {
                 </h1>
                 <br/>
                 <div className="flex flex-row gap-10 w-full overflow-scroll">
-                    <ShopCard image="url" cost={3.99} name="Tulip" altName="Single Tulip"
+                    <ShopCard image="apps/frontend/src/Images/Tulip.jpg.avif" cost={3.99} name="Tulip" altName="Single Tulip"
                               changeCart={changeCart}/>
                     <ShopCard image="url" cost={5.99} name="Rose" altName="Single Rose"
                               changeCart={changeCart}/>
