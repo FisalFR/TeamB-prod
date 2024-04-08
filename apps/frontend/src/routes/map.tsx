@@ -1,4 +1,11 @@
 import ll1map from "../assets/floors/00_thelowerlevel1.png";
+import ll2map from "../assets/floors/00_thelowerlevel2.png";
+import l1map from "../assets/floors/01_thefirstfloor.png";
+import l2map from "../assets/floors/02_thesecondfloor.png";
+import l3map from "../assets/floors/03_thethirdfloor.png";
+import from from "../assets/from_to_icons/circle_from.svg";
+import dots from "../assets/from_to_icons/circles_from_to.svg";
+import destination from "../assets/from_to_icons/icon_to.svg";
 import Select from "../components/Select.tsx";
 import PathVisual from "../components/PathVisual.tsx";
 import Button from "../components/Button.tsx";
@@ -19,12 +26,15 @@ export function Map(){
     const [nodeData, setNodeData] = useState({});
 
 
-
     const divRef = useRef<HTMLDivElement>(null);
-    function zoomSlider(e: ChangeEvent<HTMLInputElement>) {
-        setZoom(0.2 * parseFloat(e.target.value));
-        //const scrollDiv = (divRef.current as HTMLDivElement);
-        //scrollDiv.scroll(scrollDiv.scrollLeft + (scrollDiv.scrollWidth-scrollDiv.clientWidth)/2, 0);
+
+    const [currentMap, setCurrentMap] = useState(ll1map);
+    function zoomIn() {
+        setZoom(prevZoom => Math.min(prevZoom * 1.2, 2.0)); // Increase zoom level, max 2.0
+    }
+
+    function zoomOut() {
+        setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.1)); // Decrease zoom level, min 0.1
     }
 
     function findPath() {
@@ -56,6 +66,7 @@ export function Map(){
         setRequest({...request, endNode: nodeData[e.target.value].id});
         setPathPoints([pathPoints[0], nodeData[e.target.value].coords]);
         setShowPath(false);
+        findPath();
     }
 
     useEffect( () => {
@@ -73,26 +84,39 @@ export function Map(){
         });
     }, []);
 
-
     return (
         <div className="centerContent gap-10 w-full h-full">
-            <div className="">
-                <p className="font-HeadlandOne text-3xl py-3">Floor: Lower Level 1</p>
-                <div className="w-fit h-fit max-w-[1000px] max-h-[calc(100vh-200px)] overflow-scroll" ref={divRef}>
-                    <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={ll1map} width={5000} height={3400}
-                            scale={zoom} showPath={showPath}/>
+            <div className="relative"> {/* Add relative positioning here */}
+                <div className="w-full h-full max-w-[1000px] max-h-[calc(100vh-200px)] overflow-scroll" ref={divRef}>
+                    <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={currentMap} width={5000}
+                                height={3400}
+                                scale={zoom}
+                                showPath={showPath}/>
                 </div>
-                <br/><br/>
-            </div>
-            <div className="text-left w-fit">
-                <span className="text-3xl">- </span>
-                <input type="range" min="1" max="10" step="any" defaultValue="1" onChange={zoomSlider}
-                       id="myRange"></input><span className="text-3xl"> +</span><br/><br/>
-                <span style={{color: "#012D5A"}}>● </span>
-                <Select label="Starting Location: " id="nodeStartSelect" options={nodes} onChange={handleStartChange}/><br/><br/>
-                <span style={{color: "#F6BD38"}}>● </span>
-                <Select label="Ending Location: " id="nodeEndSelect" options={nodes} onChange={handleEndChange}/><br/><br/>
-                <Button onClick={findPath} children={"Find Path"}/>
+                <div className="absolute top-5 left-5 flex flex-row p-2 bg-white h-fit rounded-2xl items-end">
+                    <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center">
+                        <img src={from} alt="from" className={"px-1"}/>
+                        <Select label="" id="nodeStartSelect" options={nodes}
+                                onChange={handleStartChange}/>
+                        <img src={dots} alt="dots" className={"pb-1 px-1"}/>
+                        <div></div>
+                        <img src={destination} alt="destination" className={"px-1"}/>
+                        <Select label="" id="nodeEndSelect" options={nodes}
+                                onChange={handleEndChange}/>
+                    </div>
+                </div>
+                <div className={"absolute bottom-5 left-5 flex flex-col gap-0.5"}>
+                    <Button onClick={() => setCurrentMap(l3map)} children={"3"}/>
+                    <Button onClick={() => setCurrentMap(l2map)} children={"2"}/>
+                    <Button onClick={() => setCurrentMap(l1map)} children={"1"}/>
+                    <Button onClick={() => setCurrentMap(ll1map)} children={"L1"}/>
+                    <Button onClick={() => setCurrentMap(ll2map)} children={"L2"}/>
+                </div>
+                <div className={"absolute bottom-5 right-5 flex flex-col"}>
+                    <Button onClick={zoomIn} children={"+"}/>
+                    <Button onClick={zoomOut} children={"-"}/>
+                </div>
+
             </div>
         </div>
     );
