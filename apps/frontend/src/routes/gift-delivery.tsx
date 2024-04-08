@@ -3,11 +3,12 @@
 //import Table from "../components/Table.tsx";
 import Button from "../components/Button.tsx";
 import ShopCard from "../components/shopCard.tsx";
-import {useState} from "react";
+import React, {useState} from "react";
+import {giftItem} from "../common/giftItem.ts";
 
 function GiftDelivery() {
 
-    const [cart, setCart] = useState({});
+    const [cart, setCart] = useState<giftItem[]>([]);
     const itemCosts={
         "Tulip": 3.99,
         "Rose": 5.99,
@@ -33,22 +34,41 @@ function GiftDelivery() {
     }
 
     function changeCart(item: string, quantity: number){
-        const newCart = cart;
-        newCart[item]= quantity;
+        const newCart = [];
+        let foundItem = false;
+        const roundedCost = (Math.round(quantity * itemCosts[item] * 100))/100;
+        let spliceInd = null;
+        for (let i = 0; i < cart.length; i++) {
+            newCart[i] = cart[i];
+            if (newCart[i].name == item) {
+                if (quantity == 0) {
+                    spliceInd = i;
+                }
+                newCart[i].quantity = quantity;
+                newCart[i].cost = roundedCost;
+                foundItem = true;
+            }
+        }
+        if (spliceInd != null) {
+            newCart.splice(spliceInd, 1);
+        }
+        if (!foundItem) {
+            newCart.push(
+                {
+                    name: item,
+                    quantity: quantity,
+                    cost: roundedCost
+                }
+            );
+        }
         setCart(newCart);
     }
 
 
 
-    function createCart(){
-        const rowDivs = [];
-        const items = Object.keys(cart);
-        for (let i = 0; i < items.length-1; i++) {
-            rowDivs.push(
-                <p>{items[i]} {cart[items[i]]} {itemCosts[items[i]] * cart[items[i]]}</p>
-            );
-        }
-        return rowDivs;
+    function createCart() {
+        return cart.map((item) =>
+            <p>{item.name} {item.quantity} {item.cost}</p>);
     }
 
 
