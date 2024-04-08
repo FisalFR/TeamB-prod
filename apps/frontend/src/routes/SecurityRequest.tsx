@@ -74,42 +74,48 @@ export function SecurityPage() {
     return (
         <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
-                <h1 className={"text-3xl font-HeadlandOne py-4"}>Security Service Request</h1>
-                <p>Fill out the form below to make a security request.</p>
+                <h1 className={"text-4xl font-HeadlandOne py-4"}>Security Service Request</h1>
+                <p className="pb-2 text-center">Fill out the form below to make a security request.</p>
 
                 <form ref={formRef} onSubmit={e => {
                     e.preventDefault();
                 }}>
                     <p className={"text-left font-bold"}>Employee Name</p>
-                    <input className={"flex w-full text-left font-bold "} onChange={handleNameInput}/>
+                    <div className="border-deep-blue border-solid border-2 w-fit">
+                        <input className={"border-solid border-deep-blue  overflow-hidden flex items-start p-2 w-100 h-7 "}
+                               onChange={handleNameInput}
+                               value={request.employeeName}
+                                placeholder={"Name"}/>
 
+                    </div>
+                    <br/>
+                    <p className={"text-left font-bold"}>What is the location?</p>
+                    <div className="border-deep-blue border-solid border-2 w-fit">
+                        <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
+                                  id={"dropdown1"} value={cleared}
+                                  setInput={handleLocationInput} required={true}
+                                    width={"w-100"}/>
+                    </div>
+                    <br/>
+                    <p className={"text-left font-bold"}>What is the priority?</p>
+                    <div className="border-deep-blue border-solid border-2 w-fit">
+                        <RadioButton value={"Low"} name={"priority"} id={"priority1"} state={request.priority}
+                                     onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                        <RadioButton value={"Medium"} name={"priority"} id={"priority2"} state={request.priority}
+                                     onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                        <RadioButton value={"High"} name={"priority"} id={"priority3"} state={request.priority}
+                                     onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                        <RadioButton value={"Emergency"} name={"priority"} id={"priority4"} state={request.priority}
+                                     onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                    </div>
+                    <br/>
                     <p className={"flex w-full text-left font-bold"}>What is the security request?</p>
                     <div className="border-deep-blue border-solid border-2">
-                            <textarea id={"feedback"} className={"w-full max-w-full h-28 max-h-28 p-1"}
+                            <textarea id={"feedback"} className={"w-full w-max-full  max-w-full h-40 max-h-40 p-1"}
                                       onChange={handleRequestInput}
                                       value={request.request} required={true}
                                       placeholder="Enter detailed description here..."/>
                     </div>
-
-                    <p className={"text-left font-bold"}>What is the location?</p>
-                    <div className="border-deep-blue border-solid border-2">
-                        <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
-                                  id={"dropdown1"} value={cleared}
-                                  setInput={handleLocationInput} required={true}/>
-                    </div>
-
-                    <p className={"text-left font-bold"}>What is the priority?</p>
-                    <div className="border-deep-blue border-solid border-2">
-                        <RadioButton value={"Low"} name={"priority"} id={"priority1"} state={request.priority}
-                                     onChange={handlePriorityInput} required={true}/>
-                        <RadioButton value={"Medium"} name={"priority"} id={"priority2"} state={request.priority}
-                                     onChange={handlePriorityInput} required={true}/>
-                        <RadioButton value={"High"} name={"priority"} id={"priority3"} state={request.priority}
-                                     onChange={handlePriorityInput} required={true}/>
-                        <RadioButton value={"Emergency"} name={"priority"} id={"priority4"} state={request.priority}
-                                     onChange={handlePriorityInput} required={true}/>
-                    </div>
-
                     <div className={"formButtons flex gap-4 my-4"}>
                         <Button onClick={handleSubmit} children={"Submit"}/>
                         <Button onClick={handleClear} children={"Clear"}/>
