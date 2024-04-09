@@ -17,9 +17,9 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
 
     function createTableRows(){
         return props.data.map((request) =>
-            <motion.tr className="odd:bg-white even:bg-gray-100 border-b dark:border-gray-700 hover:bg-blue-200 "
-                   onClick={()=> handleRowClick()}
-                       whileHover={{scale: 1.01}}
+            <motion.tr className="odd:bg-white even:bg-gray-100 border-b dark:border-gray-700 hover:bg-blue-200 group"
+                   onClick={()=> handleRowClick(request)}
+                       //whileHover={{scale: 1.01}}
                        whileTap={{scale: 0.9}}>
                 {createRow(request)}
             </motion.tr>
@@ -27,7 +27,7 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
         );}
     function createRow(request){
         return props.keys.map((key) =>
-            <td className="border-collapse p-2 border-solid border-[1px] border-t-[0px] border-deep-blue">
+            <td className="border-collapse p-2 border-solid border-[1px] border-t-[0px] border-deep-blue group-hover:border-2 group-hover:border-gold-yellow">
                 {request[key]}
             </td>
 
@@ -35,14 +35,15 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
 
 
     const [open, setOpen] = useState<boolean>(false);
-
-    function handleRowClick(){
+    const [information, setString] = useState<string>("");
+    function handleRowClick(request){
         setOpen(true);
+        setString('Form ID: ' + request.formID + ' Type: ' + request.type  + ' Location: ' + request.location+ ' Status: ' + request.status + ' Assignee: ' + request.assignee );
+        //setString(...string, request.formID);
+        console.log(request.formID);
     }
 
-    // function tableInformation(){
-    //
-    // }
+
 
     return (
         <table
@@ -55,8 +56,8 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
             <Modal open={open} onClose={() => setOpen(false)}>
                 <div className="flex flex-col gap-4">
                     <h1 className="text-2xl">Success!</h1>
-                    <p>
-                        {/*{tableInformation()}*/}
+                    <p className="flex-auto item-start">
+                        {information}
                     </p>
                 </div>
             </Modal>;
