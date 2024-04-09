@@ -1,8 +1,7 @@
-
 import Button from "../components/Button.tsx";
 import ShopCard from "../components/shopCard.tsx";
-import React, {useState} from "react";
-import {giftItem} from "../common/giftItem.ts";
+import React, {ChangeEvent, useEffect, useRef, useState} from "react";
+import {giftItem} from "../../../../packages/common/src/giftItem.ts";
 import Tulip from "../assets/Gift_Images/Tulip.jpeg";
 import Rose from "../assets/Gift_Images/Rose.jpeg";
 import tulipBouquet from "../assets/Gift_Images/TulipBouquet2.png";
@@ -19,11 +18,35 @@ import chocolates from "../assets/Gift_Images/chocolates.jpeg";
 import heartlollipop from "../assets/Gift_Images/heartlollipops.jpeg";
 import sourPatchKids from "../assets/Gift_Images/sourPatchKids.jpeg";
 import caramels from "../assets/Gift_Images/caramels.jpeg";
-
+import {giftRequest} from "common/src/giftRequest.ts";
+import axios from "axios";
+import Dropdown from "../components/dropdown.tsx";
+import {SanitationRequest} from "common/src/sanitationRequest.ts";
+import Table from "../components/Table.tsx";
 
 function GiftDelivery() {
-
+    const formRef = useRef<HTMLFormElement>(null);
     const [cart, setCart] = useState<giftItem[]>([]);
+    const [request, setRequest] = useState<giftRequest>({
+        receiverName:"",
+        senderName: "",
+        location:"",
+        message: "",
+        cart: []
+    });
+
+    const [locationOptions, setLocationOptions] = useState<string[]>([]);
+
+    useEffect(() => {
+        axios.get("/api/sanitation/location").then((response) => {
+            const locationOptionsStrings: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                locationOptionsStrings.push(response.data[i].longName);
+            }
+            setLocationOptions(locationOptionsStrings);
+        });
+    }, []);
+
     const itemCosts={
         "Tulip": 3.99,
         "Rose": 5.99,
@@ -42,10 +65,16 @@ function GiftDelivery() {
         "Caramel Tray": 9.99
     };
 
-
-
-    function handleSubmit(){
-        //alert(request.isAnon);
+    function handleSubmit(e: {preventDefault: () => void}){
+        (formRef.current as HTMLFormElement).requestSubmit();
+        e.preventDefault();
+        if ((formRef.current as HTMLFormElement).checkValidity()) {
+            axios.post("/api/sanitation/insert",request,{
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then();
+        }
     }
 
     function changeCart(item: string, quantity: number){
@@ -77,15 +106,25 @@ function GiftDelivery() {
             );
         }
         setCart(newCart);
+        setRequest({...request, cart: newCart});
     }
-
-
 
     function createCart() {
         return cart.map((item) =>
             <p> {item.quantity} x {item.name}: {item.cost}</p>);
     }
 
+    function handleInput(e: ChangeEvent<HTMLInputElement>){
+        setRequest({...request, [e.target.name]: e.target.value});
+    }
+
+    function handleMessage(e: ChangeEvent<HTMLTextAreaElement>){
+        setRequest({...request, [e.target.name]: e.target.value});
+    }
+
+    function handleLocationInput(str: string){
+        setRequest({...request, location: str});
+    }
 
     return (
         <>
@@ -96,27 +135,41 @@ function GiftDelivery() {
                 e.preventDefault();
             }}>
                 <br/><br/>
-                <div className="flex flex-row gap-10 flex-wrap font-HeadlandOne text-md text-Ash-black justify-center ">
-                    <div>
-                        <label htmlFor="recieverName">To: </label>
-                        <input type="text" id="recieverName" name="recieverName"></input> <br/> <br/>
+                <div className= "flex flex-row justify-center w-full gap-20">
+                    <div className=" centerContent flex-col justify-start items-start">
+                        <label htmlFor="receiverName"
+                               className="font-OpenSans font-bold text-md text-Ash-black">To: </label>
+                        <input type="text" id="receiverName" name="receiverName"
+                               className="w-full ring-2 ring-deep-blue" onChange={handleInput}></input><br/>
+
+
+                        <label htmlFor="senderName"
+                               className="font-OpenSans font-bold text-md text-Ash-black">From: </label>
+                        <input type="text" id="senderName" name="senderName" className="w-full ring-2 ring-deep-blue"
+                               onChange={handleInput}></input><br/>
+
+                        <label htmlFor="location"
+                               className="font-OpenSans font-bold text-md text-Ash-black">Location: </label>
+                        <div className="ring-2 ring-deep-blue">
+                            <Dropdown options={locationOptions} placeholder="Location" name="Location Dropdown"
+                                      id="location" setInput={handleLocationInput} value={false} required={true}/>
+
+                        </div>
+
                     </div>
 
-                    <div>
-                        <label htmlFor="senderName">From: </label>
-                        <input type="text" id="senderName" name="senderName"></input> <br/> <br/>
-                    </div>
-                    <div>
-                        <label htmlFor="location">Location: </label>
-                        <input type="text" id="location" name="location"></input> <br/> <br/>
+                    <div className="flex flex-col items-start">
+
+                        <label htmlFor="message" className="font-OpenSans text-md font-bold text-Ash-black ">
+                            Send a Message: </label>
+                        <textarea id="message" name="message" rows={4} cols={40}
+                                      onChange={handleMessage} className= "ring-2 ring-deep-blue h-full">
+                        </textarea>
                     </div>
 
                 </div>
                 <br/><br/>
 
-                <label htmlFor="message" className="font-HeadlandOne text-md text-Ash-black justify-center">Send a
-                    Message: </label>
-                <textarea id="message" name="message" rows={4} cols={40}></textarea> <br/> <br/>
 
                 {/*Flowers*/}
                 <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
@@ -198,7 +251,7 @@ function GiftDelivery() {
             </form>
 
             <div className= "border-2 bg-white border-rounded">
-                <div className= "border-2 bg-deep-blue border-rounded">
+                <div className= "border-2 bg-deep-blue border-rounded ">
                     <h2 className="text-xl font-HeadlandOne text-center text-bone-white font-bold">
                         Cart
                     </h2>
@@ -209,6 +262,11 @@ function GiftDelivery() {
                 </div>
             </div>
             <br/><br/>
+
+            <Table data={request}
+                   headings={[" Name ", " Priority ", " Location ", " Gift Type ", " Quantity ", " Status ", " isAnon ", " Cost "]}
+                   keys={["name", "priority", "location", "giftType", "quantity", "status", "isAnon", "cost"]}/>
+
 
         </>
     );
