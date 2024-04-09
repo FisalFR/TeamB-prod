@@ -86,6 +86,7 @@ model forms {
   medicineRequests    medicineRequests[]            @relation(name: "medicineRequestID")
   sanitationRequests  sanitationRequests[]          @relation(name: "sanitationRequestID")
   securityRequests    securityRequests[]            @relation(name: "securityRequestID")
+  giftRequests        giftRequests[]                @relation(name: "giftRequestID")
 }
 
 model languageInterpreterRequests {
@@ -131,4 +132,22 @@ model securityRequests {
   quantity          Int
   priority          String
   securityRequestID forms  @relation(name: "securityRequestID", fields: [securityRequest], references: [formID])
+}
+
+model giftRequests {
+  giftRequest   String     @id
+  receiverName  String
+  senderName    String
+  message       String
+  cart          giftItem[] @relation(name: "cartID")
+  giftRequestID forms      @relation(name: "giftRequestID", fields: [giftRequest], references: [formID])
+}
+
+model giftItem {
+  giftItem String       @id
+  name     String
+  cost     Float
+  quantity Int
+  cart     String
+  cartID   giftRequests @relation(name: "cartID", fields: [cart], references: [giftRequest])
 }
