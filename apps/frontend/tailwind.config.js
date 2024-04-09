@@ -12,7 +12,8 @@ export default {
         'gold-yellow': '#F6BD38',
         'Ash-black': '#2F2F2F',
         'green-blue': '#0067B1',
-        'white': '#FFFFFF'
+        'white': '#FFFFFF',
+        'bwh-cyan': '#009CA6',
       },
       fontFamily: {
         'HeadlandOne': ['Headland One', 'serif'],
