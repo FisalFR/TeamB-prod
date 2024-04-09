@@ -7,10 +7,15 @@ export function NavigationBar() {
         const dropdownList = [
             ["/maintenance", "Maintenance"],
             ["/interpreter", "Interpreter"],
-            ["/medicineRequest", "Medicine Request"],
+            ["/medicineRequest", "Medicine"],
             ["/sanitation", "Sanitation"],
+            ["/security", "Security"]
+
+        ];
+        const adminDropdownList = [
             ["/database", "Database"],
             ["/csvManager", "CSV Manager"],
+
         ];
         return (
 
@@ -20,11 +25,13 @@ export function NavigationBar() {
                      alt="Brighams Logo White"></img>
                 <nav className="uppercase divide-x divide-solid centerContent w-fit justify-self-center">
 
-                    <NavDropDown mainLink= {["/maintenance", "Request"]} dropdownLinks={dropdownList}/>
+                    <NavDropDown mainLink= {["", "Request"]} dropdownLinks={dropdownList}/>
 
                     <div className="px-16">
                         <NavLink href="/map">Map</NavLink>
                     </div>
+
+                    <NavDropDown mainLink={["", "Admin"]} dropdownLinks={adminDropdownList}></NavDropDown>
                 </nav>
                 <div className="self-center">
                     <div className="float-end centerContent px-16">
