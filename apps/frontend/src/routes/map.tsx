@@ -63,7 +63,7 @@ export function Map(){
     }
 
     function zoomOut() {
-        setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.4)); // Decrease zoom level, min 0.3
+        setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.4)); // Decrease zoom level, min 0.4
     }
 
     function findPath(start: string, end: string) {

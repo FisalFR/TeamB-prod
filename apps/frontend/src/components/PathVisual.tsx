@@ -77,14 +77,14 @@ function PathVisual(props: {width: number; height: number; scale:number;
                         <>
                             //border
                             <motion.path d={createPath(pathCoords)} stroke="#009CA6" fill="none" initial="hidden"
-                                         strokeWidth={6 * ((5/3)/props.scale)} // Increase the stroke width for the background path
+                                         strokeWidth={6 * ((5/3)/props.scale)}
                                          strokeLinecap={"round"}
-                                         strokeLinejoin={"round"}/> // Add a background path
+                                         strokeLinejoin={"round"}/>
                             //background
                             <motion.path d={createPath(pathCoords)} stroke="#012D5A" fill="none" initial="hidden"
-                                         strokeWidth={3 * ((5/3)/props.scale)} // Increase the stroke width for the background path
+                                         strokeWidth={3 * ((5/3)/props.scale)}
                                          strokeLinecap={"round"}
-                                         strokeLinejoin={"round"}/> // Add a background path
+                                         strokeLinejoin={"round"}/>
                             //strokes
                             <motion.path d={createPath(pathCoords)} stroke="#89D4E3" fill="none" initial="hidden"
                                          strokeWidth={3 * ((4/3)/props.scale)}
@@ -104,7 +104,6 @@ function PathVisual(props: {width: number; height: number; scale:number;
     }
 
     function createStartEnd(start: Node, end: Node) {
-        //add if statements to display circles or floor name depending on connections
         const returnDivs = [];
         let nodePos = 0;
         if (props.nodes[props.nodes.length-1].nodeID == end.nodeID) {
