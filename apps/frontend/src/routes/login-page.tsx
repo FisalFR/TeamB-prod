@@ -31,7 +31,6 @@ export function LoginPage() {
                                 Click here to navigate!</p>
 
 
-
                         </div>
                         <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-4 md:flex">
                             <div className="md:shrink-0 md:w-1/2 md:order-1">
