@@ -14,6 +14,7 @@ export function SecurityPage() {
         priority: "",
         quantity: 0
     });
+    const securityOptions: string[] = ["Theft","Walk to Car"," Trespassing","Intruder","Threat","VIP","Assault"];
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         formScreen: "block",
         submittedScreen: "hidden"
@@ -59,9 +60,6 @@ export function SecurityPage() {
         setRequest({...request, employeeName: e.target.value});
     }
 
-    function handleSecurityReasonInput(e: ChangeEvent<HTMLTextAreaElement>): void {
-        setRequest({...request, securityReason: e.target.value});
-    }
 
     function handleAdditionalInfoInput(e: ChangeEvent<HTMLTextAreaElement>): void {
         setRequest({...request, additionalInfo: e.target.value});
@@ -103,11 +101,11 @@ export function SecurityPage() {
                         </div>
                         <br/>
                         <p className={"text-left font-bold"}>What is the location?</p>
-                        <div className="border-deep-blue border-solid border-2 w-full">
+                        <div className="border-deep-blue border-solid border-2">
                             <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
                                       id={"dropdown1"} value={cleared}
                                       setInput={handleLocationInput} required={true}
-                                      width={""}/>
+                                      width={"w-full"}/>
                         </div>
                         <br/>
                         <div className="grid grid-cols-2 space-x-3 flex-auto">
@@ -128,17 +126,26 @@ export function SecurityPage() {
                                 <p className={"text-left font-bold w-full"}>Quantity of Personnel</p>
                                 <input
                                     className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
-                                    type="number" min='0' required/>
-                            </div>
-                        </div>
+                                    type="number" min='1' required placeholder={'1'}/>
+
+
                         <br/>
+
                         <p className={"flex w-full text-left font-bold"}>What is the reason for the security
                             request?</p>
-                        <div className="border-deep-blue border-solid border-2">
-                            <textarea id={"reason"} className={"w-full w-max-full max-w-full h-40 max-h-40 p-[5px]"}
-                                      onChange={handleSecurityReasonInput}
-                                      value={request.securityReason} required={true}
-                                      placeholder="Enter detailed description here..."/>
+                        <div className="border-deep-blue border-solid border-2 w-full">
+                            <Dropdown
+                                      name = "reason"
+                                      id = "reason"
+                                      placeholder="Select a reason"
+                                      options={securityOptions}
+                                      value={cleared}
+                                      setInput={(str:string)=> setRequest({...request, securityReason:str})}
+                                      required={true}
+                                      width={""}
+                            />
+                        </div>
+                            </div>
                         </div>
                         <br/>
                         <p className={"flex w-full text-left font-bold"}>Additional Info</p>
@@ -175,6 +182,12 @@ export function SecurityPage() {
 
                     <p className={"font-bold"}>What is the security request?</p>
                     <p className={""}>{request.securityReason}</p>
+
+                    <p className={"font-bold"}>How many personnel are required??</p>
+                    <p className={""}>{request.quantity}</p>
+
+                    <p className={"font-bold"}>What is the priority?</p>
+                    <p className={""}>{request.priority}</p>
                 </div>
             </div>
         </div>
