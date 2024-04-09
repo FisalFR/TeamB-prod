@@ -149,12 +149,10 @@ export function SecurityPage() {
                         </div>
                         <br/>
                         <p className={"flex w-full text-left font-bold"}>Additional Info</p>
-                        <div className="border-deep-blue border-solid border-2">
-                            <textarea id={"additionalInfo"} className={"w-full w-max-full max-w-full p-[5px]"}
+                            <textarea id={"additionalInfo"} className={"w-full w-max-full max-w-full p-[5px] border-deep-blue border-solid border-2"}
                                       onChange={handleAdditionalInfoInput}
                                       value={request.additionalInfo} required={true}
                                       placeholder="Enter detailed description here..."/>
-                        </div>
                         <br/>
                         <div className={"formButtons flex gap-4 my-4"}>
                             <Button onClick={handleSubmit} children={"Submit"}/>
