@@ -195,21 +195,6 @@ function LogBook() {
                            keys={["formID", "type", "location", "status", "assignee", "dateCreated"]}/>
                 </div>
 
-                {/*<Button onClick={() => setOpen(true)} children={"Open"}/>*/}
-                {/*<Modal open={open} onClose={() => setOpen(false)}>*/}
-                {/*    <div className="flex flex-col gap-4">*/}
-                {/*        <h1 className="text-2xl">Modal Title</h1>*/}
-                {/*        <p>*/}
-                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
-                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
-                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
-                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
-                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
-                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
-                {/*            This will grow larger the more text there is to it, This will grow larger the more text there is to it,*/}
-                {/*        </p>*/}
-                {/*    </div>*/}
-                {/*</Modal>*/}
 </div>
 );
 }
