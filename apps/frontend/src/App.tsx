@@ -12,7 +12,8 @@ import LogBook from "./routes/requests-log-page.tsx";
 import MedicineRequest from "./routes/MedicineRequest.tsx";
 import Sanitation from "./routes/sanitation-page.tsx";
 import Database from "./routes/Database.tsx";
-import { Auth0Provider} from "@auth0/auth0-react";
+import {Auth0Provider} from "@auth0/auth0-react";
+import SecurityPage from "./routes/SecurityRequest.tsx";
 
 
 function App() {
@@ -64,6 +65,10 @@ function App() {
                         {
                           path: "/sanitation",
                           element: <Sanitation/>
+                        },
+                        {
+                            path: "/security",
+                            element: <SecurityPage/>
                         },
             ],
         },
