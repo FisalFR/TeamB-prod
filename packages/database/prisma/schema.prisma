@@ -123,21 +123,19 @@ model sanitationRequests {
 }
 
 model giftRequests {
-  // languageRequestID forms  @relation(name: "languageRequestID", fields: [languageRequest], references: [formID])
   giftRequest   String     @id
   receiverName  String
   senderName    String
-  location      String
   message       String
-  cart          giftItem[] @relation(name: "giftItemID")
+  cart          giftItem[] @relation(name: "cartID")
   giftRequestID forms      @relation(name: "giftRequestID", fields: [giftRequest], references: [formID])
 }
 
 model giftItem {
-  // TODO Ask Colin about choosing primary key
-  giftItem   String       @id
-  name       String
-  cost       Float
-  quantity   Float
-  giftItemID giftRequests @relation(name: "giftItemID", fields: [giftItem], references: [giftRequest])
+  giftItem String       @id
+  name     String
+  cost     Float
+  quantity Int
+  cart     String
+  cartID   giftRequests @relation(name: "cartID", fields: [cart], references: [giftRequest])
 }

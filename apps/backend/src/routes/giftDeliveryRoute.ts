@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { GiftRequest } from "common/src/giftRequest";
+import { giftRequest } from "common/src/giftRequest";
 const router: Router = express.Router();
 import client from "../bin/database-connection";
 import giftDeliveryFunctions from "../giftDeliveryFunctions";
@@ -16,7 +16,7 @@ router.get("/location", async (req, res) => {
 });
 
 router.post("/insert", async (req, res) => {
-  const giftDeliveryForm: GiftRequest = req.body;
+  const giftDeliveryForm: giftRequest = req.body;
   res.status(200).json({
     message: await giftDeliveryFunctions.giftDeliveryInsert(giftDeliveryForm),
   });

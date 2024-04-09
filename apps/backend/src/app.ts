@@ -9,6 +9,7 @@ import languageInterpreterRoute from "./routes/languageInterpreterRoute";
 import csvManagerRoute from "./routes/csvManagerRoute";
 import medicineRoute from "./routes/medicineRoute";
 import sanitationRoute from "./routes/sanitationRoute";
+import giftDeliveryRoute from "./routes/giftDeliveryRoute";
 
 const app: Express = express(); // Setup the backend
 
@@ -34,6 +35,7 @@ app.use("/api/languageInterpreter", languageInterpreterRoute);
 app.use("/api/csvManager", csvManagerRoute);
 app.use("/api/medicine", medicineRoute);
 app.use("/api/sanitation", sanitationRoute);
+app.use("/api/gift", giftDeliveryRoute);
 
 app.use("/healthcheck", (req, res) => {
   res.status(200).send();

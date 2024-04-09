@@ -21,12 +21,16 @@ import caramels from "../assets/Gift_Images/caramels.jpeg";
 import {giftRequest} from "common/src/giftRequest.ts";
 import axios from "axios";
 import Dropdown from "../components/dropdown.tsx";
-import {SanitationRequest} from "common/src/sanitationRequest.ts";
-import Table from "../components/Table.tsx";
 
 function GiftDelivery() {
     const formRef = useRef<HTMLFormElement>(null);
     const [cart, setCart] = useState<giftItem[]>([]);
+    const [locationOptions, setLocationOptions] = useState<string[]>([]);
+    const [cleared, setCleared] = useState(false);
+    const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
+        formScreen: "block",
+        submittedScreen: "hidden"
+    });
     const [request, setRequest] = useState<giftRequest>({
         receiverName:"",
         senderName: "",
@@ -35,10 +39,9 @@ function GiftDelivery() {
         cart: []
     });
 
-    const [locationOptions, setLocationOptions] = useState<string[]>([]);
 
     useEffect(() => {
-        axios.get("/api/sanitation/location").then((response) => {
+        axios.get("/api/gift/location").then((response) => {
             const locationOptionsStrings: string[] = [];
             for (let i = 0; i < response.data.length; i++) {
                 locationOptionsStrings.push(response.data[i].longName);
@@ -66,14 +69,18 @@ function GiftDelivery() {
     };
 
     function handleSubmit(e: {preventDefault: () => void}){
+        console.log(cart);
+        console.log(request);
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
         if ((formRef.current as HTMLFormElement).checkValidity()) {
-            axios.post("/api/sanitation/insert",request,{
+            axios.post("/api/gift/insert",request,{
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then();
+            setCleared(true);
+            setSubmittedWindowVisibility({formScreen: "hidden", submittedScreen: "block"});
         }
     }
 
@@ -115,27 +122,41 @@ function GiftDelivery() {
     }
 
     function handleInput(e: ChangeEvent<HTMLInputElement>){
+        setCleared(false);
         setRequest({...request, [e.target.name]: e.target.value});
     }
 
     function handleMessage(e: ChangeEvent<HTMLTextAreaElement>){
+        setCleared(false);
         setRequest({...request, [e.target.name]: e.target.value});
     }
 
     function handleLocationInput(str: string){
+        setCleared(false);
         setRequest({...request, location: str});
     }
 
+    function handleNewSubmission(): void {
+        setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
+        setRequest({ receiverName:"",
+            senderName: "",
+            location:"",
+            message: "",
+            cart: []});
+        setCleared(false);
+    }
+
     return (
-        <>
+        <div className="centerContent">
+        <div className={submittedWindowVisibility.formScreen}>
             <h1 className="text-3xl font-HeadlandOne">
                 Gift Delivery Request Form
             </h1>
-            <form onSubmit={e => {
+            <form ref={formRef} onSubmit={e => {
                 e.preventDefault();
             }}>
                 <br/><br/>
-                <div className= "flex flex-row justify-center w-full gap-20">
+                <div className="flex flex-row justify-center w-full gap-20">
                     <div className=" centerContent flex-col justify-start items-start">
                         <label htmlFor="receiverName"
                                className="font-OpenSans font-bold text-md text-Ash-black">To: </label>
@@ -152,7 +173,7 @@ function GiftDelivery() {
                                className="font-OpenSans font-bold text-md text-Ash-black">Location: </label>
                         <div className="ring-2 ring-deep-blue">
                             <Dropdown options={locationOptions} placeholder="Location" name="Location Dropdown"
-                                      id="location" setInput={handleLocationInput} value={false} required={true}/>
+                                      id="location" setInput={handleLocationInput} value={cleared} required={true}/>
 
                         </div>
 
@@ -163,7 +184,7 @@ function GiftDelivery() {
                         <label htmlFor="message" className="font-OpenSans text-md font-bold text-Ash-black ">
                             Send a Message: </label>
                         <textarea id="message" name="message" rows={4} cols={40}
-                                      onChange={handleMessage} className= "ring-2 ring-deep-blue h-full">
+                                  onChange={handleMessage} className="ring-2 ring-deep-blue h-full">
                         </textarea>
                     </div>
 
@@ -250,26 +271,46 @@ function GiftDelivery() {
                 <br/><br/>
             </form>
 
-            <div className= "border-2 bg-white border-rounded">
-                <div className= "border-2 bg-deep-blue border-rounded ">
+            <div className="border-2 bg-white border-rounded">
+                <div className="border-2 bg-deep-blue border-rounded ">
                     <h2 className="text-xl font-HeadlandOne text-center text-bone-white font-bold">
                         Cart
                     </h2>
                 </div>
 
                 <div className="text-xl font-HeadlandOne text-center text-Ash-black text-bold">
-                {createCart()}
+                    {createCart()}
                 </div>
             </div>
-            <br/><br/>
+        </div>
+    <div className={submittedWindowVisibility.submittedScreen}>
+        <div className="p-6 bg-white rounded-2xl">
+            <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+            <Button onClick={handleNewSubmission} children="Submit a new request"/>
+        </div>
+        <div className={"text-left"}>
+            <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
+            <p className={"font-bold"}>Receiver Name:</p>
+            <p className={""}>{request.receiverName}</p>
 
-            <Table data={request}
-                   headings={[" Name ", " Priority ", " Location ", " Gift Type ", " Quantity ", " Status ", " isAnon ", " Cost "]}
-                   keys={["name", "priority", "location", "giftType", "quantity", "status", "isAnon", "cost"]}/>
+            <p className={"font-bold"}>Sender Name:</p>
+            <p className={""}>{request.senderName}</p>
 
+            <p className={"font-bold"}>Where do you want to send this gift?</p>
+            <p className={""}>{request.location}</p>
 
-        </>
-    );
+            <p className={"font-bold"}>Additional Message:</p>
+            <p className={""}>{request.message}</p>
+
+            <p className={"font-bold"}>Cart:</p>
+            <p className={""}>{request.cart.map((item: giftItem) => {
+                return <p>{item.quantity} x {item.name}: {item.cost}</p>;
+            })}</p>
+        </div>
+    </div>
+            </div>
+)
+    ;
 }
 
 export default GiftDelivery;
