@@ -78,6 +78,7 @@ export function MaintenancePage() {
     return (
         <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
+                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
                 <h1 className={"text-3xl font-HeadlandOne py-4"}>Welcome to the Maintenance page!</h1>
                 <p>Fill out the form below to report an issue and make a maintenance request.</p>
 
@@ -140,6 +141,7 @@ export function MaintenancePage() {
                     </div>
                 </form>
             </div>
+        </div>
 
             <div className={submittedWindowVisibility.submittedScreen}>
                 <div className="p-6 bg-white rounded-2xl">

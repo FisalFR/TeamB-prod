@@ -83,6 +83,7 @@ export function SecurityPage() {
     return (
         <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
+                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
                 <h1 className={"text-4xl font-HeadlandOne py-4"}>Security Service Request</h1>
                 <p className="pb-8 text-center">Fill out the form below to make a security request.</p>
 
@@ -162,6 +163,7 @@ export function SecurityPage() {
 
                 </form>
             </div>
+         </div>
             <div className={submittedWindowVisibility.submittedScreen}>
                 <div className="p-6 bg-white rounded-2xl">
                     <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
