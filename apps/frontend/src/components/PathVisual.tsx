@@ -16,7 +16,7 @@ function PathVisual(props: {width: number; height: number; scale:number;
             opacity: 1,
             pathLength: 1,
             transition: {
-                duration: 2,
+                duration: 1,
                 ease: "linear",
             },
         }
@@ -75,10 +75,24 @@ function PathVisual(props: {width: number; height: number; scale:number;
                     }
                     pathDivs.push(
                         <>
+                            //border
                             <motion.path d={createPath(pathCoords)} stroke="#009CA6" fill="none" initial="hidden"
-                                         strokeWidth={4}
-                                         animate="visible"
-                                         variants={draw}
+                                         strokeWidth={6 * ((5/3)/props.scale)} // Increase the stroke width for the background path
+                                         strokeLinecap={"round"}
+                                         strokeLinejoin={"round"}/> // Add a background path
+                            //background
+                            <motion.path d={createPath(pathCoords)} stroke="#012D5A" fill="none" initial="hidden"
+                                         strokeWidth={3 * ((5/3)/props.scale)} // Increase the stroke width for the background path
+                                         strokeLinecap={"round"}
+                                         strokeLinejoin={"round"}/> // Add a background path
+                            //strokes
+                            <motion.path d={createPath(pathCoords)} stroke="#89D4E3" fill="none" initial="hidden"
+                                         strokeWidth={3 * ((4/3)/props.scale)}
+                                         animate={{ strokeDashoffset: [0, -30] }}
+                                         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                         strokeDasharray="10,20"
+                                         strokeLinecap={"round"}
+                                         strokeLinejoin={"round"}
                                          key = {JSON.stringify(pathCoords)}/>
                             {createStartEnd(floorPaths[i][0], floorPaths[i][floorPaths[i].length-1])}
                         </>
@@ -87,7 +101,6 @@ function PathVisual(props: {width: number; height: number; scale:number;
             }
         }
         return pathDivs;
-
     }
 
     function createStartEnd(start: Node, end: Node) {
