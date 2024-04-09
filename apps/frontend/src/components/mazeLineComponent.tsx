@@ -20,7 +20,7 @@ const icon = {
         opacity: 0,
         transition: {
             duration: 2,
-            ease: "linear",
+            ease: "easeInOut",
         },
     },
 };
