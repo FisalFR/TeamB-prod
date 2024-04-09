@@ -83,6 +83,8 @@ model forms {
   location            String
   languageRequests    languageInterpreterRequests[] @relation(name: "languageRequestID")
   maintenanceRequests maintenances[]                @relation(name: "maintenanceRequestID")
+  medicineRequests    medicineRequests[]            @relation(name: "medicineRequestID")
+  sanitationRequests  sanitationRequests[]          @relation(name: "sanitationRequestID")
 }
 
 model languageInterpreterRequests {
@@ -97,4 +99,24 @@ model maintenances {
   isUrgent             String
   feedback             String
   maintenanceRequestID forms  @relation(name: "maintenanceRequestID", fields: [maintenanceRequest], references: [formID])
+}
+
+model medicineRequests {
+  medicineRequest    String @id
+  employeeName       String
+  priority           String
+  medicine           String
+  quantity           Int
+  additionalComments String
+  medicineRequestID  forms  @relation(name: "medicineRequestID", fields: [medicineRequest], references: [formID])
+}
+
+model sanitationRequests {
+  sanitationRequest  String @id
+  employeeName       String
+  priority           String
+  serviceType        String
+  contaminant        String
+  additionalComments String
+  sanitationRquestID forms  @relation(name: "sanitationRequestID", fields: [sanitationRequest], references: [formID])
 }
