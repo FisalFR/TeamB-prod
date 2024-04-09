@@ -10,17 +10,18 @@ import plus from "../assets/plus.svg";
 import minus from "../assets/minus.svg";
 import Select from "../components/Select.tsx";
 import PathVisual from "../components/PathVisual.tsx";
-import Button from "../components/Button.tsx";
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {startEndNodes} from "common/src/pathfinding.ts";
 import Node from "../../../../packages/common/src/node";
+import ZoomButtons from "../components/ZoomButtons.tsx";
+import FloorSelector from "../components/FloorSelector.tsx";
 
 export function Map(){
     const PlusSvg = <img src={plus} alt="Plus" className={"w-5"} />;
     const MinusSvg = <img src={minus} alt="Minus" className={"w-5"} />;
 
-    const [zoom, setZoom] = useState(0.3);
+    const [zoom, setZoom] = useState(0.4);
     const [showPath, setShowPath] = useState(false);
 
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
@@ -48,7 +49,7 @@ export function Map(){
     }
 
     function zoomOut() {
-        setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.3)); // Decrease zoom level, min 0.3
+        setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.4)); // Decrease zoom level, min 0.3
     }
 
     function findPath(start: string, end: string) {
@@ -101,44 +102,36 @@ export function Map(){
 
     return (
         <>
-        <div className="centerContent">
-            <div className="relative w-full h-full"> {/* Add relative positioning here */}
-               <div className="w-screen h-screen fixed overflow-scroll" ref={divRef}>
-    <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor = {currentFloor}
-                scale={zoom} showPath={showPath} floormap={floorMap} nodes={pathNodes} images={floorImages}/>
-</div>
-                <div className="absolute top-5 left-5 flex flex-row p-2 bg-white h-fit rounded-2xl items-end">
-                    <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center">
-                        <img src={from} alt="from" className={"px-1"}/>
-                        <Select label="" id="nodeStartSelect" options={nodes}
-                                onChange={handleStartChange}/>
-                        <img src={dots} alt="dots" className={"h-7 pb-1 px-1"}/>
-                        <div></div>
-                        <img src={destination} alt="destination" className={"px-1"}/>
-                        <Select label="" id="nodeEndSelect" options={nodes}
-                                onChange={handleEndChange}/>
+            <div className="centerContent">
+                <div className="relative w-full h-full"> {/* Add relative positioning here */}
+                    <div className="w-screen h-screen fixed overflow-scroll" ref={divRef}>
+                        <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor={currentFloor}
+                                    scale={zoom} showPath={showPath} floormap={floorMap} nodes={pathNodes}
+                                    images={floorImages}/>
                     </div>
-                </div>
-                <div className={"fixed bottom-7 left-7 flex flex-col gap-0.5"}>
-                    <Button onClick={() => setCurrentFloor("3")} children={"3"}/>
-                    <Button onClick={() => setCurrentFloor("2")} children={"2"}/>
-                    <Button onClick={() => setCurrentFloor("1")} children={"1"}/>
-                    <Button onClick={() => setCurrentFloor("L1")} children={"L1"}/>
-                    <Button onClick={() => setCurrentFloor("L2")} children={"L2"}/>
-                </div>
-                <div className={"fixed bottom-7 right-7 flex flex-col bg-deep-blue rounded p-1 divide-y gap-1"}>
-                    <button className={""}
-                            onClick={zoomIn}>
-                        {PlusSvg}
-                    </button>
-                    <button className={""}
-                            onClick={zoomOut}>
-                        {MinusSvg}
-                    </button>
-                </div>
+                    <div className="absolute top-5 left-5 flex flex-row p-2 bg-white h-fit rounded-2xl items-end">
+                        <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center">
+                            <img src={from} alt="from" className={"px-1"}/>
+                            <Select label="" id="nodeStartSelect" options={nodes}
+                                    onChange={handleStartChange}/>
+                            <img src={dots} alt="dots" className={"h-7 pb-1 px-1"}/>
+                            <div></div>
+                            <img src={destination} alt="destination" className={"px-1"}/>
+                            <Select label="" id="nodeEndSelect" options={nodes}
+                                    onChange={handleEndChange}/>
+                        </div>
+                    </div>
+                    <FloorSelector
+                        onClick1={() => setCurrentFloor("L2")}
+                        onClick2={() => setCurrentFloor("L1")}
+                        onClick3={() => setCurrentFloor("1")}
+                        onClick4={() => setCurrentFloor("2")}
+                        onClick5={() => setCurrentFloor("3")}/>
+                    <ZoomButtons onClick1={zoomIn} plusSvg={PlusSvg}
+                                 onClick2={zoomOut} minusSvg={MinusSvg}/>
 
+                </div>
             </div>
-        </div>
         </>
     );
 }
