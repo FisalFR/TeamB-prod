@@ -190,7 +190,7 @@ function LogBook() {
 
                 {/*Actual Database Table starts here*/}
                 <div
-                    className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable overflow-auto">
+                    className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable overflow-auto mt-3">
                     <Table data={form} headings={["Form ID", "Type", "Location", "Status", "Assignee", "Date Created"]}
                            keys={["formID", "type", "location", "status", "assignee", "dateCreated"]}/>
                 </div>
