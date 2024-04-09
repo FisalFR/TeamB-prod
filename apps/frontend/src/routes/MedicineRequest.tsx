@@ -107,7 +107,8 @@ export function MedicineRequest(){
 
         <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
-                <h1 className={"text-3xl font-HeadlandOne pt-8 pb-4"}>Medicine Delivery Request</h1>
+                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
+                <h1 className={"text-3xl font-HeadlandOne pt-2 pb-4"}>Medicine Delivery Request</h1>
                 <p>Fill out the form below to schedule a medicine delivery</p>
 
 
@@ -190,12 +191,14 @@ export function MedicineRequest(){
                     </div>
 
                     <div className={"formButtons flex-auto object-center space-x-5 pb-16"}>
-                        <Button onClick={handleSubmit} children={"Submit"}/>
+                         <Button onClick={handleSubmit} children={"Submit"} px={"px-8"}/>
                         <Button onClick={handleClear} children={"Clear"}/>
                     </div>
 
                 </form>
             </div>
+        </div>
+
 
             <div className={submittedWindowVisibility.submittedScreen}>
 
