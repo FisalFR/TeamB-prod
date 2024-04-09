@@ -9,14 +9,14 @@ export function NavigationBar() {
             ["/interpreter", "Interpreter"],
             ["/medicineRequest", "Medicine"],
             ["/sanitation", "Sanitation"],
-            ["/security", "Security"]
-
+            ["/security", "Security"],
+            ["/giftDelivery", "Gift Delivery"],
         ];
         const adminDropdownList = [
             ["/database", "Database"],
             ["/csvManager", "CSV Manager"],
-
         ];
+
         return (
 
             <>

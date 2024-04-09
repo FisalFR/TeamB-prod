@@ -178,7 +178,6 @@ function LogBook() {
                     <Table data={form} headings={["Form ID", "Type", "Location", "Status", "Assignee", "Date Created"]}
                            keys={["formID", "type", "location", "status", "assignee", "dateCreated"]}/>
                 </div>
-
             </div>
         );
     }
