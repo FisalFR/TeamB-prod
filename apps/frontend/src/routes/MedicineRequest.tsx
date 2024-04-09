@@ -169,7 +169,7 @@ export function MedicineRequest(){
                                         <p className={"text-left font-bold"}>Quantity</p>
                                         <input
                                             className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-50"}
-                                            type="number" required/>
+                                            type="number" required min={'1'} defaultValue={'1'}/>
                                     </div>
                                 </div>
 

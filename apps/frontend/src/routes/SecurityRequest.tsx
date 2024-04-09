@@ -84,7 +84,7 @@ export function SecurityPage() {
         <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
                 <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                <h1 className={"text-4xl font-HeadlandOne py-4"}>Security Service Request</h1>
+                <h1 className={"text-3xl font-HeadlandOne py-4"}>Security Service Request</h1>
                 <p className="pb-8 text-center">Fill out the form below to make a security request.</p>
 
                 <form ref={formRef} onSubmit={e => {
@@ -109,51 +109,55 @@ export function SecurityPage() {
                                       width={"w-full"}/>
                         </div>
                         <br/>
-                        <div className="grid grid-cols-2 space-x-3 flex-auto">
+                        <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
                             <div>
-                        <p className={"text-left font-bold"}>What is the priority?</p>
-                        <div className="border-deep-blue border-solid border-2 w-full">
-                            <RadioButton value={"Low"} name={"priority"} id={"priority1"} state={request.priority}
-                                         onChange={handlePriorityInput} required={true} width={"w-full"}/>
-                            <RadioButton value={"Medium"} name={"priority"} id={"priority2"} state={request.priority}
-                                         onChange={handlePriorityInput} required={true} width={"w-full"}/>
-                            <RadioButton value={"High"} name={"priority"} id={"priority3"} state={request.priority}
-                                         onChange={handlePriorityInput} required={true} width={"w-full"}/>
-                            <RadioButton value={"Emergency"} name={"priority"} id={"priority4"} state={request.priority}
-                                         onChange={handlePriorityInput} required={true} width={"w-full"}/>
-                        </div>
+                                <p className={"text-left font-bold"}>What is the priority?</p>
+                                <div className="border-deep-blue border-solid border-2 w-full">
+                                    <RadioButton value={"Low"} name={"priority"} id={"priority1"}
+                                                 state={request.priority}
+                                                 onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                                    <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
+                                                 state={request.priority}
+                                                 onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                                    <RadioButton value={"High"} name={"priority"} id={"priority3"}
+                                                 state={request.priority}
+                                                 onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                                    <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
+                                                 state={request.priority}
+                                                 onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                                </div>
                             </div>
                             <div>
                                 <p className={"text-left font-bold w-full"}>Quantity of Personnel</p>
                                 <input
                                     className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
-                                    type="number" min='1' required placeholder={'1'}/>
+                                    type="number" min='1' required defaultValue={'1'}/>
 
 
-                        <br/>
+                                <br/>
 
-                        <p className={"flex w-full text-left font-bold"}>What is the reason for the security
-                            request?</p>
-                        <div className="border-deep-blue border-solid border-2 w-full">
-                            <Dropdown
-                                      name = "reason"
-                                      id = "reason"
-                                      placeholder="Select a reason"
-                                      options={securityOptions}
-                                      value={cleared}
-                                      setInput={(str:string)=> setRequest({...request, securityReason:str})}
-                                      required={true}
-                                      width={""}
-                            />
-                        </div>
+                                <p className={"flex w-full text-left font-bold w-full"}>What is the reason for the security
+                                    request?</p>
+                                <div className="border-deep-blue border-solid border-2 w-full">
+                                    <Dropdown
+                                        name="reason"
+                                        id="reason"
+                                        placeholder="Select a reason"
+                                        options={securityOptions}
+                                        value={cleared}
+                                        setInput={(str: string) => setRequest({...request, securityReason: str})}
+                                        required={true}
+                                        width={"w-full"}/>
+                                </div>
                             </div>
                         </div>
                         <br/>
                         <p className={"flex w-full text-left font-bold"}>Additional Info</p>
-                            <textarea id={"additionalInfo"} className={"w-full w-max-full max-w-full p-[5px] border-deep-blue border-solid border-2"}
-                                      onChange={handleAdditionalInfoInput}
-                                      value={request.additionalInfo} required={true}
-                                      placeholder="Enter detailed description here..."/>
+                        <textarea id={"additionalInfo"}
+                                  className={"w-full w-max-full max-w-full p-[5px] border-deep-blue border-solid border-2"}
+                                  onChange={handleAdditionalInfoInput}
+                                  value={request.additionalInfo} required={true}
+                                  placeholder="Enter detailed description here..."/>
                         <br/>
                         <div className={"formButtons flex gap-4 my-4"}>
                             <Button onClick={handleSubmit} children={"Submit"}/>
