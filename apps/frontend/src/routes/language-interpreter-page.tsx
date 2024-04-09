@@ -106,11 +106,12 @@ function LanguageInterpreter(){
         <div className="centerContent">
 
 
-        <div className="interpreterContent px-20">
+        <div className="interpreterContent px-50">
             <div className={submittedWindowVisibility.requestScreen}>
 
 
                 <div className="">
+                    <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
                     <h1 className={" text-3xl font-HeadlandOne "}>Language Interpreter Request</h1>
                     <br/>
                     <p className="text-left">
@@ -133,7 +134,7 @@ function LanguageInterpreter(){
                         to request an interpreter to your location.
                     </p>
                     <br/>
-                    <p className="font-bold text-left">Please select the languages in the dropdown. Any languages
+                    <p className="font-bold text-left ">Please select the languages in the dropdown. Any languages
                         entered that are not in the dropdown will need
                         to be requested through hospital administration.
                     </p>
@@ -145,21 +146,24 @@ function LanguageInterpreter(){
                         e.preventDefault();
                     }}>
 
-                        <div className=" float-left inline-block ">
+                        <div className=" float-left inline-block border-solid border-deep-blue border-2 rounded my-3">
                             <Dropdown options={languages} placeholder={"Languages"} name={"languagesDropdown"}
                                       id={"dropdown2"} value={cleared}
-                                      setInput={handleLanguageInput} required={true}/>
+                                      setInput={handleLanguageInput} required={true}
+                                      width={"w-96"} />
+
                         </div>
 
 
-                        <div className=" float-right inline-block ">
+                        <div className=" float-right inline-block border-solid border-deep-blue border-2 rounded my-3">
 
                             <Dropdown options={locationOptions} placeholder={"Location"} name={"locationsDropdown"}
                                       id={"dropdown3"} value={cleared}
-                                      setInput={handleLocationInput} required={true}/>
+                                      setInput={handleLocationInput} required={true}
+                                      width={"w-80"}/>
                         </div>
 
-                        <div className={"formButtons pt-32 flex gap-4 space-x-5"}>
+                        <div className={"formButtons pt-32 flex gap-4 space-x-5 "}>
 
                             <Button onClick={handleSubmitLanguage} children={"Submit"}/>
                             <Button onClick={handleClearLanguage} children={"Clear"}/>
@@ -168,6 +172,7 @@ function LanguageInterpreter(){
                     </form>
 
                 </div>
+            </div>
 
 
             </div>

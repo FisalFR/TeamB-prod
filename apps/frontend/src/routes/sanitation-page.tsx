@@ -68,6 +68,8 @@ function Sanitation() {
     return (
         <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
+
+                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
                 <h1 className={"text-3xl font-HeadlandOne py-4"}>Welcome to the Sanitation page!</h1>
                 <p>Fill out the form below to report an issue and make a sanitation request.</p>
 
@@ -151,6 +153,7 @@ function Sanitation() {
                     </div>
                 </form>
             </div>
+        </div>
 
             <div className={submittedWindowVisibility.submittedScreen}>
                 <div className="p-6 bg-white rounded-2xl">
