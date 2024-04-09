@@ -150,7 +150,7 @@ export function SecurityPage() {
                         <br/>
                         <p className={"flex w-full text-left font-bold"}>Additional Info</p>
                         <div className="border-deep-blue border-solid border-2">
-                            <textarea id={"additionalInfo"} className={"w-full w-max-full max-w-full h-40 max-h-40 p-[5px]"}
+                            <textarea id={"additionalInfo"} className={"w-full w-max-full max-w-full p-[5px]"}
                                       onChange={handleAdditionalInfoInput}
                                       value={request.additionalInfo} required={true}
                                       placeholder="Enter detailed description here..."/>
