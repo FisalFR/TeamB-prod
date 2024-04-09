@@ -28,17 +28,18 @@ function LoginPage() {
 
 
     return (
-                <div className="flex flex-row ">
+        <div className="centerContent">
+            <AnimatedSVG/>
 
-                        <AnimatedSVG/>
+                <div className="pl-20 w-1/2">
 
 
 
-                    <div className='w-full pl-28 flex flex-col'>
-                        <h1 className="px-5 font-bold text-left font-HeadlandOne text-5xl ">Navigate Seamlessly</h1>
+                    <div className=' w-full pl-31 flex flex-col'>
+                        <h1 className="px-5 font-bold text-left font-HeadlandOne text-6xl ">Navigate Seamlessly</h1>
                         <div className="flex flex-col w-full">
 
-                            <p className="text-left object-right float-right text-xl p-5">
+                            <p className="text-left object-right float-right text-xl p-5 pb-9">
                                 Find your room in Brigham & Women's with ease. With pathfinding locate your
                                 destination in the smallest steps. Never get lost, no wasted time, get there stress
                                 free.
@@ -68,6 +69,7 @@ function LoginPage() {
 
                     </div>
                 </div>
+        </div>
     );
 
 }
