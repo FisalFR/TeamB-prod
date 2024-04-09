@@ -19,8 +19,8 @@ export function NavigationBar() {
         ];
         return (
 
-            <><div className="h-14 w-full"> </div>
-            <div className="navbar z-50 bg-deep-blue h-14 fixed top-0 left-0 grid w-full">
+            <>
+            <div className="navbar z-50 bg-deep-blue static h-14 top-0 left-0 grid w-full">
                 <img className="h-3/6 self-center px-4" src={bwhLogo}
                      alt="Brighams Logo White"></img>
                 <nav className="uppercase divide-x divide-solid centerContent w-fit justify-self-center">
