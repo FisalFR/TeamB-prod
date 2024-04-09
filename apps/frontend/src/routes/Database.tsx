@@ -114,9 +114,9 @@ function LogBook() {
 
 
     return (
-            <div className="flex ">
+            <div className="flex py-10">
                 {/*Form to filter current requests*/}
-                <div className=" h-full mx-3 space-y-7">
+                <div className=" h-full mx-3 space-y-7 my-3">
                     <div className="rounded-2xl bg-deep-blue bg-opacity-5">
                         <form
                             className="w-[22vw]  flex flex-col items-start p-3 pl-5">
