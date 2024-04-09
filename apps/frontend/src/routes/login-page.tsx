@@ -1,8 +1,8 @@
 import Button from "../components/Button.tsx";
 import AnimatedSVG from "../components/HeroImage.tsx";
 import auth0 from "../contexts/auth0-client";
-import example from "../assets/react.svg";
 
+import example from "../assets/security.jpg";
 
 
 
@@ -29,9 +29,12 @@ function LoginPage() {
 
     return (
                 <div className="flex flex-row ">
-                    <AnimatedSVG/>
 
-                    <div className='w-full pl-4 flex flex-col'>
+                        <AnimatedSVG/>
+
+
+
+                    <div className='w-full pl-28 flex flex-col'>
                         <h1 className="px-5 font-bold text-left font-HeadlandOne text-5xl ">Navigate Seamlessly</h1>
                         <div className="flex flex-col w-full">
 
