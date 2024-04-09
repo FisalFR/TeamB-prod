@@ -15,6 +15,7 @@ import Database from "./routes/Database.tsx";
 import {Auth0Provider} from "@auth0/auth0-react";
 import SecurityPage from "./routes/SecurityRequest.tsx";
 
+import GiftDelivery from "./routes/gift-delivery.tsx";
 
 function App() {
 
@@ -70,6 +71,13 @@ function App() {
                             path: "/security",
                             element: <SecurityPage/>
                         },
+                        {
+                            path:"/giftdelivery",
+                            element:<GiftDelivery/>,
+
+
+                        },
+
             ],
         },
     ]}]);
