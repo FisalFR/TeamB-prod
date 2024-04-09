@@ -85,6 +85,7 @@ model forms {
   maintenanceRequests maintenances[]                @relation(name: "maintenanceRequestID")
   medicineRequests    medicineRequests[]            @relation(name: "medicineRequestID")
   sanitationRequests  sanitationRequests[]          @relation(name: "sanitationRequestID")
+  giftRequests        giftRequests[]                @relation(name: "giftRequestID")
 }
 
 model languageInterpreterRequests {
@@ -119,4 +120,24 @@ model sanitationRequests {
   contaminant        String
   additionalComments String
   sanitationRquestID forms  @relation(name: "sanitationRequestID", fields: [sanitationRequest], references: [formID])
+}
+
+model giftRequests {
+  // languageRequestID forms  @relation(name: "languageRequestID", fields: [languageRequest], references: [formID])
+  giftRequest   String     @id
+  receiverName  String
+  senderName    String
+  location      String
+  message       String
+  cart          giftItem[] @relation(name: "giftItemID")
+  giftRequestID forms      @relation(name: "giftRequestID", fields: [giftRequest], references: [formID])
+}
+
+model giftItem {
+  // TODO Ask Colin about choosing primary key
+  giftItem   String       @id
+  name       String
+  cost       Float
+  quantity   Float
+  giftItemID giftRequests @relation(name: "giftItemID", fields: [giftItem], references: [giftRequest])
 }
