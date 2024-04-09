@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Node from "../../../../packages/common/src/node";
+import Node from "common/src/node.ts";
 
 function PathVisual(props: {width: number; height: number; scale:number;
     showPath: boolean; floormap: Map<string, Node[][]>; nodes: Node[]; images: Map<string, string>; currentFloor: string}) {

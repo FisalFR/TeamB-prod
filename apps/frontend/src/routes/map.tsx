@@ -9,13 +9,13 @@ import destination from "../assets/from_to_icons/icon_to.svg";
 import plus from "../assets/plus.svg";
 import minus from "../assets/minus.svg";
 import Select from "../components/Select.tsx";
-import PathVisual from "../components/PathVisual.tsx";
+import PathVisual from "../components/map/PathVisual.tsx";
 import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {startEndNodes} from "common/src/pathfinding.ts";
 import Node from "../../../../packages/common/src/node";
-import ZoomButtons from "../components/ZoomButtons.tsx";
-import FloorSelector from "../components/FloorSelector.tsx";
+import ZoomButtons from "../components/map/ZoomButtons.tsx";
+import FloorSelector from "../components/map/FloorSelector.tsx";
 
 export function Map(){
     interface NodeData {
@@ -139,7 +139,9 @@ export function Map(){
                         onClick2={() => setCurrentFloor("L1")}
                         onClick3={() => setCurrentFloor("1")}
                         onClick4={() => setCurrentFloor("2")}
-                        onClick5={() => setCurrentFloor("3")}/>
+                        onClick5={() => setCurrentFloor("3")}
+                        currentFloor={currentFloor}
+                    />
                     <ZoomButtons onClick1={zoomIn} plusSvg={PlusSvg}
                                  onClick2={zoomOut} minusSvg={MinusSvg}/>
 
