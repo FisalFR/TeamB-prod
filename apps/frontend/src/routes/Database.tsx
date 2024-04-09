@@ -30,9 +30,10 @@ function LogBook() {
     const [submitted, setSubmit] = useState<number>(0);
     const [cleared, setCleared] = useState(false);
 
-    const requestTypeOptions = ["Maintenance", "Language"];
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
     const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
+    const requestTypeOptions: string[] = ["Maintenance", "Language", "Sanitation", "Medicine", "Flower", "Security"];
+
 
 
     function handleSubmit(e: { preventDefault: () => void; }) {
@@ -104,9 +105,9 @@ function LogBook() {
         }
 
         return (
-            <div className="flex ">
+            <div className="flex py-10">
                 {/*Form to filter current requests*/}
-                <div className=" h-full mx-3 space-y-7">
+                <div className=" h-full mx-3 space-y-7 my-3">
                     <div className="rounded-2xl bg-deep-blue bg-opacity-5">
                         <form
                             className="w-[22vw]  flex flex-col items-start p-3 pl-5">
@@ -173,11 +174,10 @@ function LogBook() {
 
                 {/*Actual Database Table starts here*/}
                 <div
-                    className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable overflow-auto">
+                    className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable overflow-auto mt-3">
                     <Table data={form} headings={["Form ID", "Type", "Location", "Status", "Assignee", "Date Created"]}
                            keys={["formID", "type", "location", "status", "assignee", "dateCreated"]}/>
                 </div>
-
             </div>
         );
     }

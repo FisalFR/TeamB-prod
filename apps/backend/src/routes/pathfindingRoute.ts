@@ -30,16 +30,50 @@ router.post("/", async (req, res) => {
   const node1: Node = finalPath.nodeMap.get(pathfinding.startNode)!;
   const node2: Node = finalPath.nodeMap.get(pathfinding.endNode)!;
 
-  const temp = finalPath.BFS(node1, node2).map((node) => {
+  const path = finalPath.BFS(node1, node2); // Making the path
+  // Making the path into a list of coordinates
+  const nodeCoords = finalPath.BFS(node1, node2).map((node) => {
     //return node.nodeID;
     return [node.xcoord, node.ycoord];
   });
 
-  res.body = {
-    nodes: temp,
+  // Section to return a map of Floors and their respective continuous path fragments
+  const floorMap = new Map<string, Node[][]>();
+  for (const Node of path) {
+    if (!floorMap.has(Node.floor)) {
+      floorMap.set(Node.floor, [[Node]]);
+    } else {
+      const floorPaths = floorMap.get(Node.floor);
+      const lastPath = floorPaths[floorPaths.length - 1];
+      const lastNodeInPath = lastPath[lastPath.length - 1];
+
+      if (Node.neighbors.includes(lastNodeInPath)) {
+        lastPath.push(Node);
+      } else {
+        floorPaths.push([Node]);
+      }
+    }
+  }
+  console.log(floorMap);
+
+  // Nuking the neighbors because JSON doesn't like circular structures
+  path.map((node) => {
+    node.neighbors = [];
+  });
+  const convertMap = {};
+  floorMap.forEach((value: Node[][], key: string) => {
+    convertMap[key] = value;
+  });
+
+  const body = {
+    nodeCoords: nodeCoords,
+    nodes: path,
     nodeMap: finalPath.nodeMap,
+    floorMap: convertMap,
   };
-  res.status(200).json(res.body);
+
+  console.log(body.floorMap);
+  res.send(body);
 });
 
 export default router;

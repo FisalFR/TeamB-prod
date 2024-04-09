@@ -1,4 +1,4 @@
-import React, {useRef, useState, ChangeEvent} from "react";
+import React, {useRef, useState, ChangeEvent, useEffect} from "react";
 import {MedicineRequestType} from "../../../../packages/common/src/MedicineRequestType.ts";
 import Button from "../components/Button.tsx";
 import RadioButton from "../components/RadioButton.tsx";
@@ -23,8 +23,18 @@ export function MedicineRequest(){
     const [cleared, setCleared] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
 
-    const locationOptions: string[] = ["Day Surgery Family Waiting", "Pre-Op PACU", "Radiation Oncology TX Suite", "Ultrasound", "Medical Records Conference Room", "Abrams Conference Room", "Outpatient Fluoroscopy (Xray)", "Anesthesia Conference Room", "Helen Hogan Conference Room", "Nuclear Medicine", "Cross-Sectional Interventional Radiology (CSIR) MRI", "Volunteers"];
+    const [locationOptions, setLocationOptions] = useState<string[]>([]);
     const medicineOptions: string[] = ["Tylenol", "Ibuprofen", "Nyquill"];
+
+    useEffect(() => {
+        axios.get("/api/medicine/location").then((response) => {
+            const locationOptionsStrings: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                locationOptionsStrings.push(response.data[i].longName);
+            }
+            setLocationOptions(locationOptionsStrings);
+        });
+    }, []);
 
     function handleSubmit(e: { preventDefault: () => void; }) {
         (formRef.current as HTMLFormElement).requestSubmit();
@@ -97,7 +107,8 @@ export function MedicineRequest(){
 
         <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
-                <h1 className={"text-3xl font-HeadlandOne pt-8 pb-4"}>Medicine Delivery Request</h1>
+                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
+                <h1 className={"text-3xl font-HeadlandOne pt-2 pb-4"}>Medicine Delivery Request</h1>
                 <p>Fill out the form below to schedule a medicine delivery</p>
 
 
@@ -180,12 +191,14 @@ export function MedicineRequest(){
                     </div>
 
                     <div className={"formButtons flex-auto object-center space-x-5 pb-16"}>
-                        <Button onClick={handleSubmit} children={"Submit"}/>
+                         <Button onClick={handleSubmit} children={"Submit"} px={"px-8"}/>
                         <Button onClick={handleClear} children={"Clear"}/>
                     </div>
 
                 </form>
             </div>
+        </div>
+
 
             <div className={submittedWindowVisibility.submittedScreen}>
 

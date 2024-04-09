@@ -14,7 +14,6 @@ export function MaintenancePage() {
     const [cleared, setCleared] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
 
-    //const locationOptions: string[] = ["Day Surgery Family Waiting", "Pre-Op PACU", "Radiation Oncology TX Suite", "Ultrasound", "Medical Records Conference Room", "Abrams Conference Room", "Outpatient Fluoroscopy (Xray)", "Anesthesia Conference Room", "Helen Hogan Conference Room", "Nuclear Medicine", "Cross-Sectional Interventional Radiology (CSIR) MRI", "Volunteers"];
     const [locationOptions, setLocationOptions] = useState<string[]>([]);
 
     useEffect(() => {
@@ -76,6 +75,7 @@ export function MaintenancePage() {
     return (
         <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
+                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
                 <h1 className={"text-3xl font-HeadlandOne py-4"}>Welcome to the Maintenance page!</h1>
                 <p>Fill out the form below to report an issue and make a maintenance request.</p>
 
@@ -83,40 +83,53 @@ export function MaintenancePage() {
                     <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
                         <div>
                             <p className={"text-left font-bold"}>What kind of issue?</p>
-                            <RadioButton value={"Elevator"} name={"issue"} id={"issue1"} state={request.issue}
-                                         onChange={handleIssueInput} required={true}/>
-                            <RadioButton value={"Power"} name={"issue"} id={"issue2"} state={request.issue}
-                                         onChange={handleIssueInput} required={true}/>
-                            <RadioButton value={"Plumbing"} name={"issue"} id={"issue3"} state={request.issue}
-                                         onChange={handleIssueInput} required={true}/>
-                            <RadioButton value={"Repair"} name={"issue"} id={"issue4"} state={request.issue}
-                                         onChange={handleIssueInput} required={true}/>
-                            <RadioButton value={"Other"} name={"issue"} id={"issue5"} state={request.issue}
-                                         onChange={handleIssueInput} required={true}/>
+                            <div className="border-deep-blue border-solid border-2">
+                                <RadioButton value={"Elevator"} name={"issue"} id={"issue1"} state={request.issue}
+                                             onChange={handleIssueInput} required={true}/>
+                                <RadioButton value={"Power"} name={"issue"} id={"issue2"} state={request.issue}
+                                             onChange={handleIssueInput} required={true}/>
+                                <RadioButton value={"Plumbing"} name={"issue"} id={"issue3"} state={request.issue}
+                                             onChange={handleIssueInput} required={true}/>
+                                <RadioButton value={"Repair"} name={"issue"} id={"issue4"} state={request.issue}
+                                             onChange={handleIssueInput} required={true}/>
+                                <RadioButton value={"Other"} name={"issue"} id={"issue5"} state={request.issue}
+                                             onChange={handleIssueInput} required={true}/>
+                            </div>
+
                         </div>
                         <div>
                             <p className={"text-left font-bold"}>What location is this issue in?</p>
-                            <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
-                                      id={"dropdown1"} value = {cleared}
-                                      setInput={handleLocationInput} required={true}/>
+                            <div className="border-deep-blue border-solid border-2">
+                                <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
+                                          id={"dropdown1"} value = {cleared}
+                                          setInput={handleLocationInput} required={true}/>
+                            </div>
+
 
                             <br/>
 
                             <p className={"text-left font-bold"}>Is this an urgent issue?</p>
-                            <RadioButton value={"Yes"} name={"urgency"} id={"urgency1"} state={request.isUrgent}
-                                         onChange={handleUrgentCheck} required={true}/>
-                            <RadioButton value={"No"} name={"urgency"} id={"urgency2"} state={request.isUrgent}
-                                         onChange={handleUrgentCheck} required={true}/>
+                            <div className="border-deep-blue border-solid border-2">
+                                <RadioButton value={"Yes"} name={"urgency"} id={"urgency1"} state={request.isUrgent}
+                                             onChange={handleUrgentCheck} required={true}/>
+                                <RadioButton value={"No"} name={"urgency"} id={"urgency2"} state={request.isUrgent}
+                                             onChange={handleUrgentCheck} required={true}/>
+                            </div>
+
 
                             <br/>
                         </div>
                     </div>
 
                     <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Description of issue</label>
-                    <textarea id={"feedback"} className={"w-full max-w-full h-28 max-h-28 p-1"}
-                              onChange={handleFeedbackInput}
-                              value={request.feedback} required={true}
-                              placeholder="Enter detailed description here..."/><br/>
+                    <div className="">
+                            <textarea id={"feedback"} className={"w-full max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2"}
+                                      onChange={handleFeedbackInput}
+                                      value={request.feedback} required={true}
+                                      placeholder="Enter detailed description here..."/>
+                    </div>
+
+
 
                     <div className={"formButtons flex gap-4 my-4"}>
                         <Button onClick={handleSubmit} children={"Submit"}/>
@@ -124,6 +137,7 @@ export function MaintenancePage() {
                     </div>
                 </form>
             </div>
+        </div>
 
             <div className={submittedWindowVisibility.submittedScreen}>
                 <div className="p-6 bg-white rounded-2xl">

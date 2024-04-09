@@ -10,63 +10,76 @@ import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
 import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
 import MedicineRequest from "./routes/MedicineRequest.tsx";
+import Sanitation from "./routes/sanitation-page.tsx";
 import Database from "./routes/Database.tsx";
-import { Auth0Provider} from "@auth0/auth0-react";
-import SecurityRequestPage from "./routes/SecurityRequestPage.tsx";
+import {Auth0Provider} from "@auth0/auth0-react";
+import SecurityPage from "./routes/SecurityRequest.tsx";
+import GiftDelivery from "./routes/gift-delivery.tsx";
 
 function App() {
-    const router = createBrowserRouter([{
-        path: "/",
-        children: [
-            {
-                path: "/",
-                element:
-                    <div>
-                        <LoginNavigationBar/>
-                        <LoginPage/>
-                    </div>
-            },
-            {
-                path: "",
-                element: <Root/>,
-                children: [
-                    {
-                        path: "map",
-                        element: <Map/>
-                    },
-                    {
-                        path: "maintenance",
-                        element: <MaintenancePage/>
-                    },
-                    {
-                        path: "interpreter",
-                        element: <LanguageInterpreter/>
-                    },
-                    {
-                        path: "csvManager",
-                        element: <CsvManager/>
-                    },
-                    {
-                        // TODO check path setup so there are not extraneous slashes
-                       path: "/logs",
-                       element: <LogBook/>,
-                    },
-                    {
-                        path:"medicineRequest",
-                        element:<MedicineRequest/>
-                    },
-                    {
-                        path: "/database",
-                        element: <Database/>,
-                    },
-                    {
-                        path: "security",
-                        element: <SecurityRequestPage/>
-                    },
-                ],
-            },
-        ]
-    }]);
+
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            children: [
+                {
+                    path: "/",
+                    element:
+                        <div>
+                            <LoginNavigationBar/>
+                            <LoginPage/>
+                        </div>
+                },
+                {
+             path: "",
+                    element: <Root/>,
+                    children: [
+                        {
+                            path: "map",
+                            element: <Map/>
+                        },
+                        {
+                            path: "maintenance",
+                            element: <MaintenancePage/>
+                        },
+                        {
+                            path:"interpreter",
+                            element: <LanguageInterpreter/>
+                        },
+                        {
+                            path:"csvManager",
+                            element: <CsvManager/>
+                        },
+                        {
+                           path:"/logs",
+                           element:<LogBook/>,
+                       },
+                        {
+                            path:"medicineRequest",
+                            element:<MedicineRequest/>
+                        },
+                        {
+                            path:"/database",
+                            element:<Database/>,
+                        },
+                        {
+                          path: "/sanitation",
+                          element: <Sanitation/>
+                        },
+                        {
+                            path: "/security",
+                            element: <SecurityPage/>
+                        },
+                        {
+                            path:"/giftdelivery",
+                            element:<GiftDelivery/>,
+
+
+                        },
+
+            ],
+        },
+    ]}]);
 
     return (
         <RouterProvider router={router}></RouterProvider>
@@ -91,7 +104,7 @@ function App() {
 
 
             >
-            <div className="w-full flex flex-col px-20 gap-5">
+            <div className="w-full h-full">
                 <NavigationBar/>
 
                 <Outlet/>

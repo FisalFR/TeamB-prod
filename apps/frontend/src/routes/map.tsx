@@ -1,100 +1,153 @@
 import ll1map from "../assets/floors/00_thelowerlevel1.png";
+import ll2map from "../assets/floors/00_thelowerlevel2.png";
+import l1map from "../assets/floors/01_thefirstfloor.png";
+import l2map from "../assets/floors/02_thesecondfloor.png";
+import l3map from "../assets/floors/03_thethirdfloor.png";
+import from from "../assets/from_to_icons/circle_from.svg";
+import dots from "../assets/from_to_icons/circles_from_to.svg";
+import destination from "../assets/from_to_icons/icon_to.svg";
+import plus from "../assets/plus.svg";
+import minus from "../assets/minus.svg";
 import Select from "../components/Select.tsx";
-import PathVisual from "../components/PathVisual.tsx";
-import Button from "../components/Button.tsx";
-import {ChangeEvent, useEffect, useRef, useState} from "react";
+import PathVisual from "../components/map/PathVisual.tsx";
+import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import {startEndNodes} from "common/src/pathfinding.ts";
+import Node from "../../../../packages/common/src/node";
+import ZoomButtons from "../components/map/ZoomButtons.tsx";
+import FloorSelector from "../components/map/FloorSelector.tsx";
 
 export function Map(){
+    interface NodeData {
+        [key: string]: {
+            id: string;
+            coords: number[];
+        };
+    }
 
-    const [zoom, setZoom] = useState(0.2);
-    const [pathPoints, setPathPoints] = useState([0, 0]);
+    interface FloorMap {
+        [key: string]: Node[][];
+    }
+
+    interface FloorImages {
+        [key: string]: string;
+    }
+
+    const PlusSvg = <img src={plus} alt="Plus" className={"w-5"} />;
+    const MinusSvg = <img src={minus} alt="Minus" className={"w-5"} />;
+
+    const [zoom, setZoom] = useState(0.4);
     const [showPath, setShowPath] = useState(false);
 
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
 
     const [nodes, setNodes] = useState(["Error accessing map points"]);
 
-    const [nodeData, setNodeData] = useState({});
+    const [nodeData, setNodeData] = useState<NodeData>({});
+    const [floorMap, setFloorMap] = useState<FloorMap>({});
+    const [pathNodes, setPathNodes] = useState<Node[]>([]);
 
-
+    const floorImages: FloorImages = {
+        "L1": ll1map,
+        "L2": ll2map,
+        "1": l1map,
+        "2": l2map,
+        "3": l3map
+    };
 
     const divRef = useRef<HTMLDivElement>(null);
-    function zoomSlider(e: ChangeEvent<HTMLInputElement>) {
-        setZoom(0.2 * parseFloat(e.target.value));
-        //const scrollDiv = (divRef.current as HTMLDivElement);
-        //scrollDiv.scroll(scrollDiv.scrollLeft + (scrollDiv.scrollWidth-scrollDiv.clientWidth)/2, 0);
+
+    const [currentFloor, setCurrentFloor] = useState("2");
+    function zoomIn() {
+        setZoom(prevZoom => Math.min(prevZoom * 1.2, 1.0)); // Increase zoom level, max 1.0
     }
 
-    function findPath() {
-        axios.post("/api/pathfinding", request,{
+    function zoomOut() {
+        setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.4)); // Decrease zoom level, min 0.4
+    }
+
+    function findPath(start: string, end: string) {
+        const startend = {startNode: start, endNode: end};
+        axios.post("/api/pathfinding", startend,{
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if (response.data.nodes.length != 0) {
-                const nodeCoords = [];
-                for (let i = 0; i < response.data.nodes.length; i++) {
-                    nodeCoords.push(response.data.nodes[i]);
-                }
-                setPathPoints(nodeCoords);
+            if (response.data.nodeCoords.length != 0) {
                 setShowPath(true);
+                setFloorMap(response.data.floorMap);
+                setPathNodes(response.data.nodes);
+                setCurrentFloor(response.data.nodes[0].floor);
             }
             else {
-                alert("No path on Floor Lower Level 1 with selected nodes");
+                alert("No path with selected nodes");
             }
         });
     }
 
-    function handleStartChange(e: ChangeEvent<HTMLInputElement>) {
+    function handleStartChange(e: React.ChangeEvent<HTMLSelectElement>) {
         setRequest({...request, startNode: nodeData[e.target.value].id});
-        setPathPoints([nodeData[e.target.value].coords, pathPoints[pathPoints.length-1]]);
-        setShowPath(false);
+        setShowPath(true);
+        findPath(nodeData[e.target.value].id, request.endNode);
     }
-    function handleEndChange(e: ChangeEvent<HTMLInputElement>) {
+    function handleEndChange(e: React.ChangeEvent<HTMLSelectElement>) {
         setRequest({...request, endNode: nodeData[e.target.value].id});
-        setPathPoints([pathPoints[0], nodeData[e.target.value].coords]);
-        setShowPath(false);
+        setShowPath(true);
+        findPath(request.startNode, nodeData[e.target.value].id);
     }
 
     useEffect( () => {
         axios.get("/api/pathfinding/halls").then((response) => {
             const nodeStrings = [];
-            const tempNodeData = {};
+            const tempNodeData: NodeData = {};
             for (let i = 0; i < response.data.length; i++) {
                 nodeStrings.push(response.data[i].longName);
-                tempNodeData[response.data[i].longName] = {id: response.data[i].nodeID, coords: [response.data[i].xcoord, response.data[i].ycoord]};
+                tempNodeData[response.data[i].longName as keyof NodeData] = {id: response.data[i].nodeID, coords: [response.data[i].xcoord, response.data[i].ycoord]};
             }
             setNodes(nodeStrings);
             setNodeData(tempNodeData);
-            setRequest({startNode: tempNodeData[nodeStrings[0]].id, endNode: tempNodeData[nodeStrings[0]].id});
-            setPathPoints([tempNodeData[nodeStrings[0]].coords]);
+            setRequest({startNode: tempNodeData[nodeStrings[0] as keyof NodeData].id, endNode: tempNodeData[nodeStrings[0] as keyof NodeData].id});
+
+            setPathNodes([response.data[0], response.data[response.data.length-1]]);
+            setShowPath(false);
         });
     }, []);
 
-
     return (
-        <div className="centerContent gap-10 w-full h-full">
-            <div className="">
-                <p className="font-HeadlandOne text-3xl py-3">Floor: Lower Level 1</p>
-                <div className="w-fit h-fit max-w-[1000px] max-h-[calc(100vh-200px)] overflow-scroll" ref={divRef}>
-                    <PathVisual key={JSON.stringify(pathPoints)} path={pathPoints} image={ll1map} width={5000} height={3400}
-                            scale={zoom} showPath={showPath}/>
+        <>
+            <div className="centerContent">
+                <div className="relative w-full h-full"> {/* Add relative positioning here */}
+                    <div className="w-screen h-screen fixed overflow-scroll" ref={divRef}>
+                        <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor={currentFloor}
+                                    scale={zoom} showPath={showPath} floormap={floorMap as Record<string, Node[][]>} nodes={pathNodes}
+                                    images={floorImages as Record<string, string>}/>
+                    </div>
+                    <div className="absolute top-5 left-5 flex flex-row p-2 bg-white h-fit rounded-2xl items-end">
+                        <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center">
+                            <img src={from} alt="from" className={"px-1"}/>
+                            <Select label="" id="nodeStartSelect" options={nodes}
+                                    onChange={handleStartChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}/>
+                            <img src={dots} alt="dots" className={"h-7 pb-1 px-1"}/>
+                            <div></div>
+                            <img src={destination} alt="destination" className={"px-1"}/>
+                            <Select label="" id="nodeEndSelect" options={nodes}
+                                    onChange={handleEndChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}/>
+                        </div>
+                    </div>
+                    <FloorSelector
+                        onClick1={() => setCurrentFloor("L2")}
+                        onClick2={() => setCurrentFloor("L1")}
+                        onClick3={() => setCurrentFloor("1")}
+                        onClick4={() => setCurrentFloor("2")}
+                        onClick5={() => setCurrentFloor("3")}
+                        currentFloor={currentFloor}
+                    />
+                    <ZoomButtons onClick1={zoomIn} plusSvg={PlusSvg}
+                                 onClick2={zoomOut} minusSvg={MinusSvg}/>
+
                 </div>
-                <br/><br/>
             </div>
-            <div className="text-left w-fit">
-                <span className="text-3xl">- </span>
-                <input type="range" min="1" max="10" step="any" defaultValue="1" onChange={zoomSlider}
-                       id="myRange"></input><span className="text-3xl"> +</span><br/><br/>
-                <span style={{color: "#012D5A"}}>● </span>
-                <Select label="Starting Location: " id="nodeStartSelect" options={nodes} onChange={handleStartChange}/><br/><br/>
-                <span style={{color: "#F6BD38"}}>● </span>
-                <Select label="Ending Location: " id="nodeEndSelect" options={nodes} onChange={handleEndChange}/><br/><br/>
-                <Button onClick={findPath} children={"Find Path"}/>
-            </div>
-        </div>
+        </>
     );
 }
 

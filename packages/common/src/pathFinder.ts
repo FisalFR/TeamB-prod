@@ -48,7 +48,12 @@ class Path {
                 }
             }
         }
-        return this.reconstructPath(cameFrom, startNode, endNode);
+        if (cameFrom.has(endNode)) {
+            return this.reconstructPath(cameFrom, startNode, endNode);
+        }
+        else {
+            return [];
+        }
     }
 
 
@@ -72,7 +77,12 @@ class Path {
         }
       }
     }
-    return this.reconstructPath(cameFrom, startNode, endNode);
+      if (cameFrom.has(endNode)) {
+          return this.reconstructPath(cameFrom, startNode, endNode);
+      }
+      else {
+          return [];
+      }
   }
 
   // Function to return the path from startNode to endNode using BFS
