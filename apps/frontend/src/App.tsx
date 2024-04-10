@@ -106,7 +106,7 @@ function App() {
 
 
             >
-            <div className="w-full h-full">
+            <div className="w-full h-full bg-scroll ...">
                 <NavigationBar/>
 
 

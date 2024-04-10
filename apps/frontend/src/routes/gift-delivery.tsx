@@ -68,6 +68,14 @@ function GiftDelivery() {
         "Caramel Tray": 9.99
     };
 
+    function calcCost(){
+        let total = 0;
+        request.cart.map((item: giftItem) => {
+            total+=item.cost;
+        });
+        return total;
+    }
+
     function handleSubmit(e: {preventDefault: () => void}){
         console.log(cart);
         console.log(request);
@@ -117,6 +125,8 @@ function GiftDelivery() {
     }
 
     function createCart() {
+        if (cart.length == 0)
+            return <p>There are no items in your cart</p>;
         return cart.map((item) =>
             <p> {item.quantity} x {item.name}: {item.cost}</p>);
     }
@@ -147,6 +157,7 @@ function GiftDelivery() {
     }
 
     return (
+    <div className="relative w-screen h-screen overflow-auto bg-[url('https://cdn.discordapp.com/attachments/1220847340659802325/1227468676538826872/A7CDE8.png?ex=66288449&is=66160f49&hm=c5db1a25039a517cd7d04b5275176162b87990fe645874c594a2baa79e362a99&')]">
         <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
                 <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
@@ -269,7 +280,7 @@ function GiftDelivery() {
                         </div>
                         <br/><br/>
 
-                        <Button onClick={handleSubmit} children={"Submit"}/>
+
                         <br/><br/>
                     </form>
 
@@ -281,13 +292,18 @@ function GiftDelivery() {
                         </div>
 
                         <div className="text-xl font-HeadlandOne text-center text-Ash-black text-bold">
+                            <br/>
                             {createCart()}
+                            <br/>
+                            <p>Total Cost: {calcCost()}$</p>
                         </div>
                     </div>
+                    <br/><br/>
+                    <Button onClick={handleSubmit} children={"Purchase"}/>
                 </div>
             </div>
             <div className={submittedWindowVisibility.submittedScreen}>
-                <div className="p-6 bg-white rounded-2xl">
+                <div className="p-6 bg-white rounded-2xl mt-20">
                     <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
                     <Button onClick={handleNewSubmission} children="Submit a new request"/>
                 </div>
@@ -312,6 +328,7 @@ function GiftDelivery() {
                 </div>
             </div>
         </div>
+    </div>
     )
         ;
 }

@@ -127,8 +127,7 @@ model securityRequests {
   securityRequest   String @id
   employeeName      String
   request           String
-  additionalInfo     String
-  location          String
+  additionalInfo    String
   quantity          Int
   priority          String
   securityRequestID forms  @relation(name: "securityRequestID", fields: [securityRequest], references: [formID])
