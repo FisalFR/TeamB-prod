@@ -2,7 +2,11 @@ import Button from "../components/Button.tsx";
 import AnimatedSVG from "../components/HeroImage.tsx";
 import auth0 from "../contexts/auth0-client";
 
-import example from "../assets/security.jpg";
+// import example from "../assets/security.jpg";
+import Carousel from "../components/Carousel.tsx";
+import React from "react";
+
+
 
 
 
@@ -20,10 +24,15 @@ function LoginPage() {
             const user = await auth0.getUser();
             console.log(user);
         });
-
     }
-
-
+    const images = [
+        "https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/313782/pexels-photo-313782.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        "https://images.pexels.com/photos/773471/pexels-photo-773471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        "https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        "https://images.pexels.com/photos/632522/pexels-photo-632522.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        "https://images.pexels.com/photos/777059/pexels-photo-777059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    ];
 
 
 
@@ -50,11 +59,13 @@ function LoginPage() {
                             </div>
 
                         </div>
+
                         <div
                             className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-4 md:flex">
                             <div className="md:shrink-0 md:w-1/2 md:order-1">
-                                <img className="h-48 w-full object-cover md:h-full md:w-full rounded-t-xl"
-                                     src={example} alt="Lion Dance at pan asian festival 2023"></img>
+                                <Carousel images={images} />
+                                {/*<img className="h-48 w-full object-cover md:h-full md:w-full rounded-t-xl"*/}
+                                {/*     src={example} alt="Lion Dance at pan asian festival 2023"></img>*/}
                             </div>
                             <div className="p-8 md:w-1/2 md:order-2">
                                 <h4 className="block mt-4 text-lg leading-tight font-medium text-black">New
