@@ -62,19 +62,30 @@ function GiftDelivery() {
         "Get Well Soon Balloon": 3.99,
         "Red Heart Balloon": 3.99,
         "Rainbow Balloon": 3.99,
+        "Happy Sunshine Balloon":3.99,
         "Assorted Chocolate Bundle":5.99,
         "Heart-Shaped Lollipop": 3.99,
         "Sour Patch Kids":5.99,
         "Caramel Tray": 9.99
     };
 
-    function handleSubmit(e: {preventDefault: () => void}){
+    function calcCost(){
+        let total = 0;
+        request.cart.map((item: giftItem) => {
+            total+=item.cost;
+        });
+        return total.toFixed(2);
+    }
+
+    function handleSubmit(e: {preventDefault: () => void}) {
+        if (cart.length == 0){
+        return alert("Please add an item to your cart.");}
         console.log(cart);
         console.log(request);
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
         if ((formRef.current as HTMLFormElement).checkValidity()) {
-            axios.post("/api/gift/insert",request,{
+            axios.post("/api/gift/insert", request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -84,7 +95,7 @@ function GiftDelivery() {
         }
     }
 
-    function changeCart(item: string, quantity: number){
+    function changeCart(item: string, quantity: number) {
         const newCart = [];
         let foundItem = false;
         const roundedCost = (Math.round(quantity * itemCosts[item] * 100))/100;
@@ -117,8 +128,10 @@ function GiftDelivery() {
     }
 
     function createCart() {
+        if (cart.length == 0)
+            return <p>There are no items in your cart</p>;
         return cart.map((item) =>
-            <p> {item.quantity} x {item.name}: {item.cost}</p>);
+            <p> {item.quantity} x {item.name}: {item.cost.toFixed(2)}$</p>);
     }
 
     function handleInput(e: ChangeEvent<HTMLInputElement>){
@@ -137,16 +150,19 @@ function GiftDelivery() {
     }
 
     function handleNewSubmission(): void {
-        setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
+
         setRequest({ receiverName:"",
             senderName: "",
             location:"",
             message: "",
             cart: []});
         setCleared(false);
+        location.reload();
+        // setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
     }
 
     return (
+    <div className="relative w-screen h-screen overflow-auto bg-[url('https://cdn.discordapp.com/attachments/1220847340659802325/1227468676538826872/A7CDE8.png?ex=66288449&is=66160f49&hm=c5db1a25039a517cd7d04b5275176162b87990fe645874c594a2baa79e362a99&')]">
         <div className="centerContent">
             <div className={submittedWindowVisibility.formScreen}>
                 <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
@@ -161,13 +177,16 @@ function GiftDelivery() {
                             <div className=" centerContent flex-col justify-start items-start">
                                 <label htmlFor="receiverName"
                                        className="font-OpenSans font-bold text-md text-Ash-black">To: </label>
-                                <input type="text" id="receiverName" name="receiverName" placeholder={"Recipient's Name"}
-                                       className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1" onChange={handleInput}></input><br/>
+                                <input type="text" id="receiverName" name="receiverName"
+                                       placeholder={"Recipient's Name"}
+                                       className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
+                                       onChange={handleInput}></input><br/>
 
 
                                 <label htmlFor="senderName"
                                        className="font-OpenSans font-bold text-md text-Ash-black">From: </label>
-                                <input type="text" id="senderName" name="senderName" className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
+                                <input type="text" id="senderName" name="senderName"
+                                       className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
                                        placeholder={"Sender's Name"}
                                        onChange={handleInput}></input><br/>
 
@@ -175,7 +194,8 @@ function GiftDelivery() {
                                        className="font-OpenSans font-bold text-md text-Ash-black">Location: </label>
                                 <div className="border-solid border-deep-blue border-2 rounded">
                                     <Dropdown options={locationOptions} placeholder="Location" name="Location Dropdown"
-                                              id="location" setInput={handleLocationInput} value={cleared} required={true}/>
+                                              id="location" setInput={handleLocationInput} value={cleared}
+                                              required={true}/>
 
                                 </div>
 
@@ -185,8 +205,10 @@ function GiftDelivery() {
 
                                 <label htmlFor="message" className="font-OpenSans text-md font-bold text-Ash-black ">
                                     Send a Message: </label>
-                                <textarea id="message" name="message" rows={4} cols={40} placeholder={"Send a nice message!"}
-                                          onChange={handleMessage} className="border-solid border-deep-blue border-2 rounded h-full p-1 px-2">
+                                <textarea id="message" name="message" rows={4} cols={40}
+                                          placeholder={"Send a nice message!"}
+                                          onChange={handleMessage}
+                                          className="border-solid border-deep-blue border-2 rounded h-full p-1 px-2">
                         </textarea>
                             </div>
 
@@ -204,9 +226,11 @@ function GiftDelivery() {
                                       changeCart={changeCart}/>
                             <ShopCard image={Rose} cost={5.99} name="Rose" altName="Single Rose"
                                       changeCart={changeCart}/>
-                            <ShopCard image={tulipBouquet} cost={21.99} name="Bouquet of Tulips" altName="Bouquet of Tulips"
+                            <ShopCard image={tulipBouquet} cost={21.99} name="Bouquet of Tulips"
+                                      altName="Bouquet of Tulips"
                                       changeCart={changeCart}/>
-                            <ShopCard image={roseBouquet} cost={29.99} name="Bouquet of Roses" altName="Bouquet of Roses"
+                            <ShopCard image={roseBouquet} cost={29.99} name="Bouquet of Roses"
+                                      altName="Bouquet of Roses"
                                       changeCart={changeCart}/>
                         </div>
                         <br/><br/>
@@ -239,7 +263,8 @@ function GiftDelivery() {
                             <ShopCard image={gwsBalloon} cost={3.99} name="Get Well Soon Balloon"
                                       altName="Get Well Soon Balloon"
                                       changeCart={changeCart}/>
-                            <ShopCard image={heartBalloon} cost={3.99} name="Red Heart Balloon" altName="Red Heart Balloon"
+                            <ShopCard image={heartBalloon} cost={3.99} name="Red Heart Balloon"
+                                      altName="Red Heart Balloon"
                                       changeCart={changeCart}/>
                             <ShopCard image={rainbow} cost={3.99} name="Rainbow Balloon" altName="Rainbow Balloon"
                                       changeCart={changeCart}/>
@@ -269,7 +294,7 @@ function GiftDelivery() {
                         </div>
                         <br/><br/>
 
-                        <Button onClick={handleSubmit} children={"Submit"}/>
+
                         <br/><br/>
                     </form>
 
@@ -281,37 +306,56 @@ function GiftDelivery() {
                         </div>
 
                         <div className="text-xl font-HeadlandOne text-center text-Ash-black text-bold">
+                            <br/>
                             {createCart()}
+                            <br/>
+                            <p>Total Cost: {calcCost()}$</p>
+                            <br/>
                         </div>
                     </div>
+                    <br/><br/>
+                    <Button onClick={handleSubmit} children={"Purchase"}/>
+                    <br/> <br/>
+                    <p className={"font-HeadlandOne text-deep-blue"}>Created by Jade and Kendall (and prettified by
+                        Ben)</p>
                 </div>
             </div>
             <div className={submittedWindowVisibility.submittedScreen}>
-                <div className="p-6 bg-white rounded-2xl">
-                    <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
-                    <Button onClick={handleNewSubmission} children="Submit a new request"/>
+            <div className="p-6 bg-white rounded-2xl mt-20 max-w-2xl">
+                    <div className={"text-center"}>
+                        <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
+                        <p className={"font-bold"}>Receiver Name:</p>
+                        <p className={""}>{request.receiverName}</p>
+
+                        <p className={"font-bold"}>Sender Name:</p>
+                        <p className={""}>{request.senderName}</p>
+
+                        <p className={"font-bold"}>Where do you want to send this gift?</p>
+                        <p className={""}>{request.location}</p>
+
+                        <p className={"font-bold "}>Additional Message:</p>
+                        <p className={"text-pretty break-words  max-w-2xl"}>{request.message}</p>
+
+                        <p className={"font-bold"}>Total Cost:</p>
+                        <p className={""}>{calcCost()}$</p>
+
+                        <p className="font-HeadlandOne p-3 text-xl center">Thank you for submitting!</p>
+                        <Button onClick={handleNewSubmission} children="Submit a new request"/>
+                        <br/>
+                    </div>
                 </div>
-                <div className={"text-left"}>
-                    <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
-                    <p className={"font-bold"}>Receiver Name:</p>
-                    <p className={""}>{request.receiverName}</p>
+                    <div className="text-center center p-6 bg-white rounded-2xl mt-20">
+                        <p className={"font-bold text-center"}>Cart:</p>
+                        <p className={"text-center center"}>{request.cart.map((item: giftItem) => {
+                            return <p>{item.quantity} x {item.name}: {item.cost}$</p>;
+                        })}</p></div>
 
-                    <p className={"font-bold"}>Sender Name:</p>
-                    <p className={""}>{request.senderName}</p>
+            </div>
+            <div>
 
-                    <p className={"font-bold"}>Where do you want to send this gift?</p>
-                    <p className={""}>{request.location}</p>
-
-                    <p className={"font-bold"}>Additional Message:</p>
-                    <p className={""}>{request.message}</p>
-
-                    <p className={"font-bold"}>Cart:</p>
-                    <p className={""}>{request.cart.map((item: giftItem) => {
-                        return <p>{item.quantity} x {item.name}: {item.cost}</p>;
-                    })}</p>
-                </div>
             </div>
         </div>
+    </div>
     )
         ;
 }

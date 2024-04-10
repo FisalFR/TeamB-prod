@@ -6,4 +6,5 @@ export type FormType = {
     dateCreated: Date
     location: string
 }
+
 export default FormType;

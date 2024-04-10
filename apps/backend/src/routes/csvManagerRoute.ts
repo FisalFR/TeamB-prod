@@ -9,11 +9,16 @@ import writeEdge from "../writeEdge";
 import NodeType from "common/src/NodeType";
 import EdgeType from "common/src/EdgeType";
 import FormType from "common/src/FormType";
+import { formFilter } from "../formFunctions";
 
 router.use(fileUpload());
 
 router.get("/", async (req, res) => {
-  const formType = await client.forms.findMany();
+  const formType = await client.forms.findMany({
+    orderBy: {
+      formID: "desc",
+    },
+  });
   res.status(200).json(formType);
 });
 
@@ -28,7 +33,6 @@ router.get("/edges", async (req, res) => {
 });
 router.post("/filter", async (req, res) => {
   const formType: FormType = req.body;
-  console.log(formType);
   if (
     formType.status !== "" &&
     formType.type !== "" &&
@@ -40,6 +44,9 @@ router.post("/filter", async (req, res) => {
         type: { search: formType.type },
         assignee: { search: formType.assignee },
       },
+      orderBy: {
+        formID: "desc",
+      },
     });
     res.status(200).json(filteredForm);
   } else if (formType.status !== "" && formType.type !== "") {
@@ -47,6 +54,9 @@ router.post("/filter", async (req, res) => {
       where: {
         status: { search: formType.status },
         type: { search: formType.type },
+      },
+      orderBy: {
+        formID: "desc",
       },
     });
     res.status(200).json(filteredForm);
@@ -56,6 +66,9 @@ router.post("/filter", async (req, res) => {
         type: { search: formType.type },
         assignee: { search: formType.assignee },
       },
+      orderBy: {
+        formID: "desc",
+      },
     });
     res.status(200).json(filteredForm);
   } else if (formType.status !== "" && formType.assignee !== "") {
@@ -64,12 +77,18 @@ router.post("/filter", async (req, res) => {
         status: { search: formType.status },
         assignee: { search: formType.assignee },
       },
+      orderBy: {
+        formID: "desc",
+      },
     });
     res.status(200).json(filteredForm);
   } else if (formType.status !== "") {
     const filteredForm = await client.forms.findMany({
       where: {
         status: { search: formType.status },
+      },
+      orderBy: {
+        formID: "desc",
       },
     });
     res.status(200).json(filteredForm);
@@ -78,6 +97,9 @@ router.post("/filter", async (req, res) => {
       where: {
         type: { search: formType.type },
       },
+      orderBy: {
+        formID: "desc",
+      },
     });
     res.status(200).json(filteredForm);
   } else if (formType.assignee !== "") {
@@ -85,10 +107,17 @@ router.post("/filter", async (req, res) => {
       where: {
         assignee: { search: formType.assignee },
       },
+      orderBy: {
+        formID: "desc",
+      },
     });
     res.status(200).json(filteredForm);
   } else {
-    const filteredForm = await client.forms.findMany({});
+    const filteredForm = await client.forms.findMany({
+      orderBy: {
+        formID: "desc",
+      },
+    });
     res.status(200).json(filteredForm);
   }
 });
@@ -104,7 +133,6 @@ router.post("/insert", async (req, res) => {
       assignee: formType.assignee,
     },
   });
-  console.log(updateUser);
   res.status(200).json(updateUser);
 });
 
@@ -246,6 +274,12 @@ router.get("/exportEdges", async (req, res) => {
   res.setHeader("Content-disposition", "attachment; filename=edgeDataFile.csv");
   res.set("Content-Type", "text/csv");
   res.status(200).send(nodeFile);
+});
+
+router.post("/filterForms", async (req, res) => {
+  const formType: FormType = req.body;
+  const filteredForms = await formFilter(formType.formID, formType.type);
+  return res.json(filteredForms);
 });
 
 export default router;

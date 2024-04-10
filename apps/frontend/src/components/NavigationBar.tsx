@@ -15,6 +15,7 @@ export function NavigationBar() {
         const adminDropdownList = [
             ["/database", "Database"],
             ["/csvManager", "CSV Manager"],
+            ["/mapEditor", "Map Editor"],
         ];
 
         return (
