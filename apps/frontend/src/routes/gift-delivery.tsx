@@ -73,7 +73,7 @@ function GiftDelivery() {
         request.cart.map((item: giftItem) => {
             total+=item.cost;
         });
-        return total;
+        return total.toFixed(2);
     }
 
     function handleSubmit(e: {preventDefault: () => void}){
@@ -323,7 +323,7 @@ function GiftDelivery() {
 
                     <p className={"font-bold"}>Cart:</p>
                     <p className={""}>{request.cart.map((item: giftItem) => {
-                        return <p>{item.quantity} x {item.name}: {item.cost}</p>;
+                        return <p>{item.quantity} x {item.name}: {item.cost.toFixed(2)}</p>;
                     })}</p>
                 </div>
             </div>
