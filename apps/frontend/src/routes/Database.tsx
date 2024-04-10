@@ -34,7 +34,7 @@ function LogBook() {
     const [cleared, setCleared] = useState(false);
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
     const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
-    const requestTypeOptions: string[] = ["Maintenance", "Language", "Sanitation", "Medicine", "Gift Delivery", "Security"];
+    const requestTypeOptions: string[] = ["Maintenance", "Language", "Sanitation", "Medicine", "Gift", "Security"];
     const [open, setOpen] = useState<boolean>(false);
 
 
