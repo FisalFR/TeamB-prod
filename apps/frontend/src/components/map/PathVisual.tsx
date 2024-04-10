@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
 import Node from "common/src/node.ts";
+import CircleFrom from '../../assets/from_to_icons/circle_from.svg';
+import IconTo from '../../assets/from_to_icons/icon_to.svg';
+import React from "react";
 
 function PathVisual(props: {width: number; height: number; scale:number;
     showPath: boolean; floormap: Map<string, Node[][]>; nodes: Node[]; images: Map<string, string>; currentFloor: string}) {
@@ -107,21 +110,40 @@ function PathVisual(props: {width: number; height: number; scale:number;
         const returnDivs = [];
         let nodePos = 0;
         if (props.nodes[props.nodes.length-1].nodeID == end.nodeID) {
-            returnDivs.push(<circle cx={endCoord[0]} cy={endCoord[1]} r={8} fill="#F6BD38"
-                                    key = {JSON.stringify(endCoord[0] + endCoord[1])}/>);
-        }
-        else {
+            returnDivs.push(
+                <svg x={endCoord[0] - 17*(1/props.scale)} y={endCoord[1] -45*(1/props.scale)    }>
+                    <image xlinkHref = {IconTo} width={36*(1/props.scale)}></image>
+                </svg>
+            );
+        } else {
             nodePos = props.nodes.findIndex((node) => node.nodeID == end.nodeID);
-            returnDivs.push(<text x={end.xcoord} y={end.ycoord} key = {JSON.stringify(endCoord[0] + endCoord[1] + "text")} className="text-5xl font-bold fill-gold-yellow font-OpenSans">
-                {props.nodes[nodePos + 1].floor}</text>);
+            returnDivs.push(
+                <svg>
+                    <circle cx={end.xcoord + (props.nodes[nodePos + 1].floor.length - 1)*12 + 16} cy={end.ycoord - 16} r={36} fill="#012D5A"
+                            key={JSON.stringify(endCoord[0] + endCoord[1])}/>
+                    <text x={end.xcoord} y={end.ycoord} key={JSON.stringify(endCoord[0] + endCoord[1] + "text")}
+                          className="text-5xl font-bold fill-gold-yellow font-OpenSans ">
+                        {props.nodes[nodePos + 1].floor}</text>
+                </svg>
+            );
         }
         if (props.nodes[0].nodeID == start.nodeID) {
-            returnDivs.push(<circle cx={startCoord[0]} cy={startCoord[1]} key = {JSON.stringify(startCoord[0] + startCoord[1])} r={8} fill="#012D5A"/>);
-        }
-        else {
+            returnDivs.push(
+                <svg x={startCoord[0] - 13 * (1 / props.scale)} y={startCoord[1] - 13 * (1 / props.scale)}>
+                    <image xlinkHref={CircleFrom} width={24 * (1/props.scale)}></image>
+                </svg>
+            );
+        } else {
             nodePos = props.nodes.findIndex((node) => node.nodeID == start.nodeID);
-            returnDivs.push(<text x={start.xcoord} y={start.ycoord} key = {JSON.stringify(startCoord[0] + startCoord[1] + "text")} className="text-5xl font-bold fill-deep-blue font-OpenSans">
-                {props.nodes[nodePos - 1].floor}</text>);
+            returnDivs.push(<svg>
+                    <circle cx={start.xcoord + (props.nodes[0].floor.length-1)*12 + 16} cy={start.ycoord - 16}
+                            r={36} fill="#F6BD38"
+                            key={JSON.stringify(startCoord[0] + startCoord[1])}/>
+                    <text x={start.xcoord} y={start.ycoord} key={JSON.stringify(startCoord[0] + startCoord[1] + "text")}
+                          className="text-5xl font-bold fill-deep-blue font-OpenSans">
+                        {props.nodes[nodePos - 1].floor}</text>
+                </svg>
+            );
         }
         return (returnDivs);
     }
@@ -129,7 +151,8 @@ function PathVisual(props: {width: number; height: number; scale:number;
     function createBlankFloor(floor: string) {
         const floorImage = props.images[floor];
         return (
-            <image key = {JSON.stringify(floorImage + "placeholder")} xlinkHref={floorImage} width={props.width} height={props.height}></image>
+            <image key={JSON.stringify(floorImage + "placeholder")} xlinkHref={floorImage} width={props.width}
+                   height={props.height}></image>
         );
     }
 

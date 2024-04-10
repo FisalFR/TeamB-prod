@@ -1,34 +1,17 @@
-import Button from "../components/Button.tsx";
+//import Button from "../components/Button.tsx";
 import AnimatedSVG from "../components/HeroImage.tsx";
-import auth0 from "../contexts/auth0-client";
 
 import example from "../assets/security.jpg";
+import HandleLogin from "../components/handleLogin.tsx";
 
 
 
-
-function LoginPage() {
-
-    function handleLogin() {
-        const redirectUri = `${window.location.origin}/map`;
-        document.addEventListener('click',async () =>{
-            await auth0.loginWithRedirect({
-                authorizationParams:{
-                    redirect_uri: redirectUri,
-                }
-            });
-            const user = await auth0.getUser();
-            console.log(user);
-        });
-
-    }
-
-
+export function LoginPage() {
 
 
 
     return (
-        <div className="centerContent">
+        <div className="centerContent pt-14">
             <AnimatedSVG/>
 
                 <div className="pl-20 w-1/2">
@@ -39,19 +22,17 @@ function LoginPage() {
                         <h1 className="px-5 font-bold text-left font-HeadlandOne text-6xl ">Navigate Seamlessly</h1>
                         <div className="flex flex-col w-full">
 
-                            <p className="text-left object-right float-right text-xl p-5 pb-9">
+                            <p className=" text-left object-right float-right text-xl p-5 pb-9">
                                 Find your room in Brigham & Women's with ease. With pathfinding locate your
                                 destination in the smallest steps. Never get lost, no wasted time, get there stress
                                 free.
                             </p>
+                            <p onClick={HandleLogin} className=" hover:animate-none text-xl hover:cursor-pointer hover:text-deep-blue hover:font-bold pb-5" >
+                                Click here to navigate!</p>
 
-                            <div className={"flex justify-end pr-5"}>
-                                <Button onClick={handleLogin} children="Login"/>
-                            </div>
 
                         </div>
-                        <div
-                            className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-4 md:flex">
+                        <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-4 md:flex">
                             <div className="md:shrink-0 md:w-1/2 md:order-1">
                                 <img className="h-48 w-full object-cover md:h-full md:w-full rounded-t-xl"
                                      src={example} alt="Lion Dance at pan asian festival 2023"></img>
@@ -75,4 +56,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
