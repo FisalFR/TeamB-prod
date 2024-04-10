@@ -1,11 +1,12 @@
 import Dropdown from "../components/dropdown.tsx";
-import Table from "../components/Table.tsx";
+//import Table from "../components/Table.tsx";
 import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import LongButton from "../components/LongButton.tsx";
 import {forms} from "database/.prisma/client";
 import Modal from "../components/Modal.tsx";
 import formType from "common/src/FormType.ts";
+import HoverTable from "../components/hoverTable.tsx";
 function LogBook() {
 
     const formRef = useRef<HTMLFormElement>(null);
@@ -191,11 +192,12 @@ function LogBook() {
                 {/*Actual Database Table starts here*/}
                 <div
                     className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable overflow-auto mt-3">
-                    <Table data={form} headings={["Form ID", "Type", "Location", "Status", "Assignee", "Date Created"]}
+                    <HoverTable data={form} headings={["Form ID", "Type", "Location", "Status", "Assignee", "Date Created"]}
                            keys={["formID", "type", "location", "status", "assignee", "dateCreated"]}/>
                 </div>
 
 </div>
+
 );
 }
 

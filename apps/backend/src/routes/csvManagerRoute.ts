@@ -9,6 +9,7 @@ import writeEdge from "../writeEdge";
 import NodeType from "common/src/NodeType";
 import EdgeType from "common/src/EdgeType";
 import FormType from "common/src/FormType";
+import { formFilter } from "../formFunctions";
 
 router.use(fileUpload());
 
@@ -273,6 +274,12 @@ router.get("/exportEdges", async (req, res) => {
   res.setHeader("Content-disposition", "attachment; filename=edgeDataFile.csv");
   res.set("Content-Type", "text/csv");
   res.status(200).send(nodeFile);
+});
+
+router.post("/filterForms", async (req, res) => {
+  const formType: FormType = req.body;
+  const filteredForms = await formFilter(formType.formID, formType.type);
+  return res.json(JSON.stringify(filteredForms));
 });
 
 export default router;
