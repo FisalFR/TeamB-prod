@@ -279,7 +279,7 @@ router.get("/exportEdges", async (req, res) => {
 router.post("/filterForms", async (req, res) => {
   const formType: FormType = req.body;
   const filteredForms = await formFilter(formType.formID, formType.type);
-  return res.json(JSON.stringify(filteredForms));
+  return res.json(filteredForms);
 });
 
 export default router;
