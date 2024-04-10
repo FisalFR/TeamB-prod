@@ -35,10 +35,11 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
 
 
     const [open, setOpen] = useState<boolean>(false);
-    const [information, setString] = useState<string>("");
+    const [information, setString] = useState<string[]>("");
     function handleRowClick(request){
         setOpen(true);
-        setString('Form ID: ' + request.formID + ' Type: ' + request.type  + ' Location: ' + request.location+ ' Status: ' + request.status + ' Assignee: ' + request.assignee );
+
+        setString(['Form ID: ' + request.formID, ' Type: ' + request.type , ' Location: ' + request.location, ' Status: ' + request.status , ' Assignee: ' + request.assignee] );
         //setString(...string, request.formID);
         console.log(request.formID);
     }
@@ -54,11 +55,15 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
             <tbody>
                 {createTableRows()}
             <Modal open={open} onClose={() => setOpen(false)}>
-                <div className="flex flex-col gap-4">
-                    <h1 className="text-2xl">Success!</h1>
-                    <p className="flex-auto item-start">
-                        {information}
-                    </p>
+                <div className="flex flex-col gap-4 p-7">
+                    <h1 className="text-2xl">Information</h1>
+                    <ul className="item-start justify-start">
+                        <li>{information[0]}</li>
+                        <li>{information[1]}</li>
+                        <li>{information[2]}</li>
+                        <li>{information[3]}</li>
+                        <li>{information[4]}</li>
+                    </ul>
                 </div>
             </Modal>;
             </tbody>
