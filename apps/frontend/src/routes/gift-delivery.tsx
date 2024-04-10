@@ -128,7 +128,7 @@ function GiftDelivery() {
         if (cart.length == 0)
             return <p>There are no items in your cart</p>;
         return cart.map((item) =>
-            <p> {item.quantity} x {item.name}: {item.cost}</p>);
+            <p> {item.quantity} x {item.name}: {item.cost.toFixed(2)}$</p>);
     }
 
     function handleInput(e: ChangeEvent<HTMLInputElement>){
@@ -323,7 +323,7 @@ function GiftDelivery() {
 
                     <p className={"font-bold"}>Cart:</p>
                     <p className={""}>{request.cart.map((item: giftItem) => {
-                        return <p>{item.quantity} x {item.name}: {item.cost.toFixed(2)}</p>;
+                        return <p>{item.quantity} x {item.name}: {item.cost}.toFixed(2)$</p>;
                     })}</p>
                 </div>
             </div>
