@@ -177,13 +177,16 @@ function GiftDelivery() {
                             <div className=" centerContent flex-col justify-start items-start">
                                 <label htmlFor="receiverName"
                                        className="font-OpenSans font-bold text-md text-Ash-black">To: </label>
-                                <input type="text" id="receiverName" name="receiverName" placeholder={"Recipient's Name"}
-                                       className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1" onChange={handleInput}></input><br/>
+                                <input type="text" id="receiverName" name="receiverName"
+                                       placeholder={"Recipient's Name"}
+                                       className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
+                                       onChange={handleInput}></input><br/>
 
 
                                 <label htmlFor="senderName"
                                        className="font-OpenSans font-bold text-md text-Ash-black">From: </label>
-                                <input type="text" id="senderName" name="senderName" className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
+                                <input type="text" id="senderName" name="senderName"
+                                       className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
                                        placeholder={"Sender's Name"}
                                        onChange={handleInput}></input><br/>
 
@@ -191,7 +194,8 @@ function GiftDelivery() {
                                        className="font-OpenSans font-bold text-md text-Ash-black">Location: </label>
                                 <div className="border-solid border-deep-blue border-2 rounded">
                                     <Dropdown options={locationOptions} placeholder="Location" name="Location Dropdown"
-                                              id="location" setInput={handleLocationInput} value={cleared} required={true}/>
+                                              id="location" setInput={handleLocationInput} value={cleared}
+                                              required={true}/>
 
                                 </div>
 
@@ -201,8 +205,10 @@ function GiftDelivery() {
 
                                 <label htmlFor="message" className="font-OpenSans text-md font-bold text-Ash-black ">
                                     Send a Message: </label>
-                                <textarea id="message" name="message" rows={4} cols={40} placeholder={"Send a nice message!"}
-                                          onChange={handleMessage} className="border-solid border-deep-blue border-2 rounded h-full p-1 px-2">
+                                <textarea id="message" name="message" rows={4} cols={40}
+                                          placeholder={"Send a nice message!"}
+                                          onChange={handleMessage}
+                                          className="border-solid border-deep-blue border-2 rounded h-full p-1 px-2">
                         </textarea>
                             </div>
 
@@ -220,9 +226,11 @@ function GiftDelivery() {
                                       changeCart={changeCart}/>
                             <ShopCard image={Rose} cost={5.99} name="Rose" altName="Single Rose"
                                       changeCart={changeCart}/>
-                            <ShopCard image={tulipBouquet} cost={21.99} name="Bouquet of Tulips" altName="Bouquet of Tulips"
+                            <ShopCard image={tulipBouquet} cost={21.99} name="Bouquet of Tulips"
+                                      altName="Bouquet of Tulips"
                                       changeCart={changeCart}/>
-                            <ShopCard image={roseBouquet} cost={29.99} name="Bouquet of Roses" altName="Bouquet of Roses"
+                            <ShopCard image={roseBouquet} cost={29.99} name="Bouquet of Roses"
+                                      altName="Bouquet of Roses"
                                       changeCart={changeCart}/>
                         </div>
                         <br/><br/>
@@ -255,7 +263,8 @@ function GiftDelivery() {
                             <ShopCard image={gwsBalloon} cost={3.99} name="Get Well Soon Balloon"
                                       altName="Get Well Soon Balloon"
                                       changeCart={changeCart}/>
-                            <ShopCard image={heartBalloon} cost={3.99} name="Red Heart Balloon" altName="Red Heart Balloon"
+                            <ShopCard image={heartBalloon} cost={3.99} name="Red Heart Balloon"
+                                      altName="Red Heart Balloon"
                                       changeCart={changeCart}/>
                             <ShopCard image={rainbow} cost={3.99} name="Rainbow Balloon" altName="Rainbow Balloon"
                                       changeCart={changeCart}/>
@@ -306,10 +315,13 @@ function GiftDelivery() {
                     </div>
                     <br/><br/>
                     <Button onClick={handleSubmit} children={"Purchase"}/>
+                    <br/> <br/>
+                    <p className={"font-HeadlandOne text-deep-blue"}>Created by Jade and Kendall (and prettified by
+                        Ben)</p>
                 </div>
             </div>
             <div className={submittedWindowVisibility.submittedScreen}>
-                <div className="p-6 bg-white rounded-2xl mt-20 max-w-2xl">
+            <div className="p-6 bg-white rounded-2xl mt-20 max-w-2xl">
                     <div className={"text-center"}>
                         <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
                         <p className={"font-bold"}>Receiver Name:</p>
@@ -340,7 +352,7 @@ function GiftDelivery() {
 
             </div>
             <div>
-                <p className={"font-HeadlandOne text-deep-blue"}>Created by Jade and Kendall (and prettified by Ben)</p>
+
             </div>
         </div>
     </div>
