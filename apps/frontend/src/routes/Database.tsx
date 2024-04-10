@@ -4,6 +4,8 @@ import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import LongButton from "../components/LongButton.tsx";
 import {forms} from "database/.prisma/client";
+import Modal from "../components/Modal.tsx";
+import formType from "common/src/FormType.ts";
 function LogBook() {
 
     const formRef = useRef<HTMLFormElement>(null);
@@ -29,10 +31,10 @@ function LogBook() {
     });
     const [submitted, setSubmit] = useState<number>(0);
     const [cleared, setCleared] = useState(false);
-
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
     const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
-    const requestTypeOptions: string[] = ["Maintenance", "Language", "Sanitation", "Medicine", "Flower", "Security"];
+    const requestTypeOptions: string[] = ["Maintenance", "Language", "Sanitation", "Medicine", "Gift Delivery", "Security"];
+    const [open, setOpen] = useState<boolean>(false);
 
 
 
@@ -43,10 +45,13 @@ function LogBook() {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then();
-        setSubmit(submitted + 1); // Spaghetti Code to Update the page
-        setRequest({  formID: "", type: "", location: "", status: "", assignee: "", dateCreated: emptyDate});
-        setCleared(true);
+        }).then(() => {
+            setOpen(true);
+            setSubmit(submitted + 1); // Spaghetti Code to Update the page
+            setRequest({  formID: "", type: "", location: "", status: "", assignee: "", dateCreated: emptyDate});
+            setAssignment({  formID: "", type: "", location: "", status: "", assignee: "", dateCreated: emptyDate});
+            setCleared(true);
+        });
     }
 
     // Use Effect that updates the page everytime you submit the Assign Staff Request
@@ -60,7 +65,7 @@ function LogBook() {
             setFormID(formIDStrings);
         });
     }, [submitted]);
-    
+
     // Use Effect that updates the page everytime you input something into the dropdowns in Filter Data
     useEffect(() => {
     axios.post("/api/csvManager/filter", JSON.stringify(request), {
@@ -68,7 +73,10 @@ function LogBook() {
             'Content-Type': 'application/json'
         }
     }).then((response) => {
-        setForm(response.data.reverse());
+        const reversedData = response.data.reverse();
+        setForm(reversedData);
+        const formIDStrings = reversedData.map((item: formType) => item.formID);
+        setFormID(formIDStrings);
     });
     }, [request]);
 
@@ -104,7 +112,8 @@ function LogBook() {
             setAssignment({...assignment, assignee: str});
         }
 
-        return (
+
+    return (
             <div className="flex py-10">
                 {/*Form to filter current requests*/}
                 <div className=" h-full mx-3 space-y-7 my-3">
@@ -166,8 +175,15 @@ function LogBook() {
 
                             <div className={"flex items-center pt-2 pb-4"}>
                                 <LongButton onClick={handleSubmit} children={"Submit"}/>
+                                <Modal open={open} onClose={() => setOpen(false)}>
+                                    <div className="flex flex-col gap-4">
+                                        <h1 className="text-2xl">Success!</h1>
+                                        <p>
+                                        Assigned
+                                        </p>
+                                    </div>
+                                </Modal>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -178,9 +194,10 @@ function LogBook() {
                     <Table data={form} headings={["Form ID", "Type", "Location", "Status", "Assignee", "Date Created"]}
                            keys={["formID", "type", "location", "status", "assignee", "dateCreated"]}/>
                 </div>
-            </div>
-        );
-    }
+
+</div>
+);
+}
 
 
 export default LogBook;
