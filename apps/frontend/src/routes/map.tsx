@@ -43,6 +43,7 @@ export function Map(){
 
     const [nodes, setNodes] = useState(["Error accessing map points"]);
 
+    // TODO combine useState with useEffect code to create a custom React hook to make code more modular
     const [nodeData, setNodeData] = useState<NodeData>({});
     const [floorMap, setFloorMap] = useState<FloorMap>({});
     const [pathNodes, setPathNodes] = useState<Node[]>([]);
