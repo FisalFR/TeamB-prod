@@ -6,6 +6,7 @@ import Node from "../../../../packages/common/src/node";
 import client from "../bin/database-connection";
 // import writeNode from "../writeNode";
 import { filteringNodes } from "../filteringNodes";
+// import {stringify, parse} from 'flatted';
 
 const router: Router = express.Router();
 
@@ -75,5 +76,27 @@ router.post("/", async (req, res) => {
   console.log(body.floorMap);
   res.send(body);
 });
+
+router.get("/nodemap", async (req, res) => {
+    const nodeListandMap: Path = new Path();
+    nodeListandMap.nodeList = await client.nodes.findMany();
+    nodeListandMap.edgeList = await client.edges.findMany();
+
+    nodeListandMap.generateNodeMap();
+
+    // Nuking the neighbors because JSON doesn't like circular structures
+    nodeListandMap.nodeList.map((node) => {
+        node.neighbors = [];
+    });
+
+    const body = {
+        nodeList: nodeListandMap.nodeList,
+        nodeMap: nodeListandMap.nodeMap,
+    };
+
+    res.json(body);
+});
+
+
 
 export default router;
