@@ -81,7 +81,7 @@ export function SecurityPage() {
     }
 
     return (
-        <div className="centerContent">
+        <div className="centerContent flex flex-col">
             <div className={submittedWindowVisibility.formScreen}>
                 <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
                 <h1 className={"text-3xl font-HeadlandOne py-4"}>Security Service Request</h1>
@@ -195,6 +195,9 @@ export function SecurityPage() {
                     <p className={""}>{request.priority}</p>
                 </div>
             </div>
+            </div>
+            <div>
+                <p className={"font-HeadlandOne text-deep-blue"}>Created by Nick and Henry</p>
             </div>
         </div>
     );
