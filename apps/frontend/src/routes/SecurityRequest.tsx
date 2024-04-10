@@ -169,6 +169,7 @@ export function SecurityPage() {
             </div>
          </div>
             <div className={submittedWindowVisibility.submittedScreen}>
+                <div className="pt-32">
                 <div className="p-6 bg-white rounded-2xl">
                     <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
                     <Button onClick={handleNewSubmission} children="Submit a new request"/>
@@ -193,6 +194,7 @@ export function SecurityPage() {
                     <p className={"font-bold"}>What is the priority?</p>
                     <p className={""}>{request.priority}</p>
                 </div>
+            </div>
             </div>
         </div>
     );
