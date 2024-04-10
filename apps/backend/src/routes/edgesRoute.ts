@@ -5,8 +5,8 @@ import client from "../bin/database-connection";
 const router: Router = express.Router();
 
 router.get("/", async function (req: Request, res: Response) {
-    const edges = await client.edges.findMany({});
-    res.status(200).json(edges);
+  const edges = await client.edges.findMany({});
+  res.status(200).json(edges);
 });
 
 export default router;
