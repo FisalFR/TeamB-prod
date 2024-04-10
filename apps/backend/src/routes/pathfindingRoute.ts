@@ -78,25 +78,23 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/nodemap", async (req, res) => {
-    const nodeListandMap: Path = new Path();
-    nodeListandMap.nodeList = await client.nodes.findMany();
-    nodeListandMap.edgeList = await client.edges.findMany();
+  const nodeListandMap: Path = new Path();
+  nodeListandMap.nodeList = await client.nodes.findMany();
+  nodeListandMap.edgeList = await client.edges.findMany();
 
-    nodeListandMap.generateNodeMap();
+  nodeListandMap.generateNodeMap();
 
-    // Nuking the neighbors because JSON doesn't like circular structures
-    nodeListandMap.nodeList.map((node) => {
-        node.neighbors = [];
-    });
+  // Nuking the neighbors because JSON doesn't like circular structures
+  nodeListandMap.nodeList.map((node) => {
+    node.neighbors = [];
+  });
 
-    const body = {
-        nodeList: nodeListandMap.nodeList,
-        nodeMap: nodeListandMap.nodeMap,
-    };
+  const body = {
+    nodeList: nodeListandMap.nodeList,
+    nodeMap: nodeListandMap.nodeMap,
+  };
 
-    res.json(body);
+  res.json(body);
 });
-
-
 
 export default router;

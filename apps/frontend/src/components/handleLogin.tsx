@@ -1,4 +1,4 @@
-import auth0 from "../contexts/auth0-client";
+import auth0 from "../contexts/auth0-client.ts";
 
 export function HandleLogin() {
     const redirectUri = `${window.location.origin}/map`;

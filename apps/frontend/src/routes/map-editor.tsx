@@ -86,7 +86,7 @@ export function MapEditor(){
                                                                      x2={endNode.xcoord }
                                                                      y2={endNode.ycoord }
                                                                      stroke={"#012D5A"}
-                                                                     strokeWidth={2}
+                                                                     strokeWidth={5}
                                                         ></line>;
                                                     }
                                                 }
