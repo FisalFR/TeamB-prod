@@ -29,7 +29,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
         );}
     function createRow(request){
         return props.keys.map((key) =>
-            <td className="border-collapse p-2 border-solid border-[1px] border-t-[0px] border-deep-blue group-hover:border-2 group-hover:border-gold-yellow">
+            <td className="border-collapse p-2 border-solid border-[1px] border-t-[0px] border-deep-blue">
                 {request[key]}
             </td>
 
@@ -37,24 +37,8 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
 
 
     const [open, setOpen] = useState<boolean>(false);
-    //const [information, setString] = useState<string[]>([]);
-    // const [test, setTest] = useState<string>();
     const[information, setInformation] = useState<string[]>([]);
     const emptyDate: Date = new Date();
-    // const [assignment, setAssignment] = useState<fullServiceFormType>({
-    //     formID: "",
-    //     type: "",
-    //     location: "",
-    //     status: "",
-    //     assignee: "",
-    //     dateCreated: emptyDate,
-    //     maintenances: [],
-    //     language: [],
-    //     sanitation: [],
-    //     securityRequests: [],
-    //     giftRequests: [],
-    //     medicine: []
-    // });
 
 
     async function handleRowClick(request){
