@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { startEndNodes } from "common/src/pathfinding";
+import { startEndNodes } from "../../../../packages/common/src/pathfinding";
 import Path from "../../../../packages/common/src/pathFinder";
 //import Parser from "../../../../packages/common/src/parser";
 import Node from "../../../../packages/common/src/node";
