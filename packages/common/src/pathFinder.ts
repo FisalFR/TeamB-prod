@@ -178,7 +178,7 @@ class Path {
   }
 
   private reconstructPath(
-    cameFrom: Map<any, any>,
+    cameFrom: Map<Node, Node>,
     startNode: Node,
     endNode: Node,
   ) {
