@@ -287,6 +287,7 @@ function GiftDelivery() {
                 </div>
             </div>
             <div className={submittedWindowVisibility.submittedScreen}>
+                <div className="pt-32">
                 <div className="p-6 bg-white rounded-2xl">
                     <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
                     <Button onClick={handleNewSubmission} children="Submit a new request"/>
@@ -310,6 +311,7 @@ function GiftDelivery() {
                         return <p>{item.quantity} x {item.name}: {item.cost}</p>;
                     })}</p>
                 </div>
+            </div>
             </div>
         </div>
     )

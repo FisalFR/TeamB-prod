@@ -144,25 +144,28 @@ export function MaintenancePage() {
         </div>
 
             <div className={submittedWindowVisibility.submittedScreen}>
-                <div className="p-6 bg-white rounded-2xl">
-                    <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
-                    <Button onClick={handleNewSubmission} children="Submit a new request"/>
-                </div>
-                <div className={"text-left"}>
-                    <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
-                    <p className={"font-bold"}>What kind of issue would you like to report?</p>
-                    <p className={""}>{request.issue}</p>
+                <div className="pt-32">
+                    <div className="p-6 bg-white rounded-2xl">
+                        <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+                        <Button onClick={handleNewSubmission} children="Submit a new request"/>
+                    </div>
+                    <div className={"text-left"}>
+                        <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
+                        <p className={"font-bold"}>What kind of issue would you like to report?</p>
+                        <p className={""}>{request.issue}</p>
 
-                    <p className={"font-bold"}>What location is this issue in?</p>
-                    <p className={""}>{request.location}</p>
+                        <p className={"font-bold"}>What location is this issue in?</p>
+                        <p className={""}>{request.location}</p>
 
-                    <p className={"font-bold"}>Is this an urgent issue?</p>
-                    <p className={""}>{request.isUrgent}</p>
+                        <p className={"font-bold"}>Is this an urgent issue?</p>
+                        <p className={""}>{request.isUrgent}</p>
 
-                    <p className={"font-bold"}>Additional Feedback</p>
-                    <p className={""}>{request.feedback}</p>
+                        <p className={"font-bold"}>Additional Feedback</p>
+                        <p className={""}>{request.feedback}</p>
+                    </div>
                 </div>
             </div>
+
         </div>
     );
 }
