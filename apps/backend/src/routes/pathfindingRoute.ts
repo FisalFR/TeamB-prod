@@ -30,9 +30,9 @@ router.post("/", async (req, res) => {
   const node1: Node = finalPath.nodeMap.get(pathfinding.startNode)!;
   const node2: Node = finalPath.nodeMap.get(pathfinding.endNode)!;
 
-  const path = finalPath.BFS(node1, node2); // Making the path
+  const path = finalPath.AStar(node1, node2); // Making the path
   // Making the path into a list of coordinates
-  const nodeCoords = finalPath.BFS(node1, node2).map((node) => {
+  const nodeCoords = finalPath.AStar(node1, node2).map((node) => {
     //return node.nodeID;
     return [node.xcoord, node.ycoord];
   });
