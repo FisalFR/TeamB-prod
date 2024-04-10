@@ -150,13 +150,15 @@ function GiftDelivery() {
     }
 
     function handleNewSubmission(): void {
-        setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
+
         setRequest({ receiverName:"",
             senderName: "",
             location:"",
             message: "",
             cart: []});
         setCleared(false);
+        location.reload();
+        // setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
     }
 
     return (
