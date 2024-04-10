@@ -6,7 +6,7 @@ export async function formFilter(id: string, reqType: string) {
   let includeLanguage = false;
   let includeSanitation = false;
   let includeMedicine = false;
-  let includeGift = false;
+  let includeGift: { include: { cart: boolean } } | boolean = false;
   let includeSecurity = false;
 
   switch (reqType) {
@@ -33,7 +33,11 @@ export async function formFilter(id: string, reqType: string) {
     }
     case "Gift Delivery": {
       reqType = "giftRequests";
-      includeGift = true;
+      includeGift = {
+        include: {
+          cart: true,
+        },
+      };
       break;
     }
     case "Security": {
@@ -58,4 +62,13 @@ export async function formFilter(id: string, reqType: string) {
   });
   console.log(users);
   return users;
+}
+
+export function objToString<T extends object>(obj: T): string[] {
+  return Object.values(obj).map((value) => {
+    if (typeof value == "object") {
+      return objToString(value);
+    }
+    return value.toString();
+  });
 }

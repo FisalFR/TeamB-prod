@@ -1,8 +1,8 @@
-import Modal from "./Modal.tsx";
-import React, {useState} from "react";
-import { motion } from "framer-motion";
-import axios from "axios";
-import {fullServiceFormType} from "common/src/fullServiceForm.ts";
+//import Modal from "./Modal.tsx";
+//import React, {useState} from "react";
+//import { motion } from "framer-motion";
+//import axios from "axios";
+//import {fullServiceFormType} from "common/src/fullServiceForm.ts";
 
 
 
@@ -19,89 +19,26 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
 
     function createTableRows(){
         return props.data.map((request) =>
-            <motion.tr className="odd:bg-white even:bg-gray-100 border-b dark:border-gray-700 hover:bg-blue-200 group"
-                   onClick={()=> handleRowClick(request)}
-                       //whileHover={{scale: 1.01}}
-                       whileTap={{scale: 0.9}}>
+            <tr className="odd:bg-white even:bg-gray-100 border-b dark:border-gray-700">
                 {createRow(request)}
-            </motion.tr>
+            </tr>
 
         );}
     function createRow(request){
         return props.keys.map((key) =>
-            <td className="border-collapse p-2 border-solid border-[1px] border-t-[0px] border-deep-blue group-hover:border-2 group-hover:border-gold-yellow">
+            <td className="border-collapse p-2 border-solid border-[1px] border-t-[0px] border-deep-blue">
                 {request[key]}
             </td>
 
         );}
 
-
-    const [open, setOpen] = useState<boolean>(false);
-    const [information, setString] = useState<string[]>([]);
-    const emptyDate: Date = new Date();
-    const [assignment, setAssignment] = useState<fullServiceFormType>({
-        formID: "",
-        type: "",
-        location: "",
-        status: "",
-        assignee: "",
-        dateCreated: emptyDate,
-        maintenances: [],
-        language: [],
-        sanitation: [],
-        securityRequests: [],
-        giftRequests: [],
-        medicine: []
-    });
-    function handleRowClick(request){
-        setOpen(true);
-         setString(['Form ID: ' + request.formID, ' Type: ' + request.type , ' Location: ' + request.location, ' Status: ' + request.status , ' Assignee: ' + request.assignee] );
-        const test: fullServiceFormType ={
-            formID: request.formID,
-            type: request.type,
-            location: "",
-            status: "",
-            assignee: "",
-            dateCreated: emptyDate,
-            maintenances: [],
-            language: [],
-            sanitation: [],
-            securityRequests: [],
-            giftRequests: [],
-            medicine: []
-        };
-        axios.post("/api/csvManager/filterForms", test,{
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            setAssignment(response.data);
-            console.log(assignment);
-        });
-    }
-
-
-
-    return (
-        <table
-            className="overflow-scroll border-collapse p-6 border-solid border-[1px] border-t-[0px] border-deep-blue w-full bg-white">
+    return(
+        <table className="overflow-scroll border-collapse p-6 border-solid border-[1px] border-t-[0px] border-deep-blue w-full bg-white">
             <thead className="sticky top-0">
             {createTableHeader()}
             </thead>
             <tbody>
-                {createTableRows()}
-            <Modal open={open} onClose={() => setOpen(false)}>
-                <div className="flex flex-col gap-4 p-7">
-                    <h1 className="text-2xl">Information</h1>
-                    <ul className="item-start justify-start">
-                        <li>{information[0]}</li>
-                        <li>{information[1]}</li>
-                        <li>{information[2]}</li>
-                        <li>{information[3]}</li>
-                        <li>{information[4]}</li>
-                    </ul>
-                </div>
-            </Modal>;
+            {createTableRows()}
             </tbody>
         </table>
     );
