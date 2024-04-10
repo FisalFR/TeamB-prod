@@ -1,32 +1,61 @@
 import client from "./bin/database-connection";
+import { fullServiceFormType } from "common/src/fullServiceForm";
 
-export function formFilter(id: string, type: string) {
-  switch (type) {
-    case "Maintenance": {
-      type = "maintenances";
+export async function formFilter(id: string, reqType: string) {
+  let includeMaintenance = false;
+  let includeLanguage = false;
+  let includeSanitation = false;
+  let includeMedicine = false;
+  let includeGift = false;
+  let includeSecurity = false;
+
+  switch (reqType) {
+    case "Maintenance":
+      {
+        reqType = "maintenances";
+        includeMaintenance = true;
+      }
       break;
-    }
     case "Language": {
-      type = "languageInterpreterRequests";
+      reqType = "languageInterpreterRequests";
+      includeLanguage = true;
       break;
     }
     case "Sanitation": {
-      type = "sanitationRequests";
+      reqType = "sanitationRequests";
+      includeSanitation = true;
       break;
     }
     case "Medicine": {
-      type = "medicineRequests";
+      reqType = "medicineRequests";
+      includeMedicine = true;
       break;
     }
     case "Gift Delivery": {
-      type = "giftRequests";
+      reqType = "giftRequests";
+      includeGift = true;
       break;
     }
     case "Security": {
-      type = "securityRequests";
+      reqType = "securityRequests";
+      includeSecurity = true;
       break;
     }
   }
 
-  const filteredForms = await client.forms.findMany({});
+  const users: fullServiceFormType = await client.forms.findUnique({
+    where: {
+      formID: id,
+    },
+    include: {
+      maintenanceRequests: includeMaintenance,
+      languageRequests: includeLanguage,
+      sanitationRequests: includeSanitation,
+      medicineRequests: includeMedicine,
+      giftRequests: includeGift,
+      securityRequests: includeSecurity,
+    },
+  });
+  console.log(users);
+  return users;
 }

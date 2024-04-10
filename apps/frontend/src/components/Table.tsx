@@ -1,6 +1,8 @@
 import Modal from "./Modal.tsx";
 import React, {useState} from "react";
 import { motion } from "framer-motion";
+import axios from "axios";
+import {fullServiceFormType} from "common/src/fullServiceForm.ts";
 
 
 
@@ -35,13 +37,47 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
 
 
     const [open, setOpen] = useState<boolean>(false);
-    const [information, setString] = useState<string[]>("");
+    const [information, setString] = useState<string[]>([]);
+    const emptyDate: Date = new Date();
+    const [assignment, setAssignment] = useState<fullServiceFormType>({
+        formID: "",
+        type: "",
+        location: "",
+        status: "",
+        assignee: "",
+        dateCreated: emptyDate,
+        maintenances: [],
+        language: [],
+        sanitation: [],
+        securityRequests: [],
+        giftRequests: [],
+        medicine: []
+    });
     function handleRowClick(request){
         setOpen(true);
-
-        setString(['Form ID: ' + request.formID, ' Type: ' + request.type , ' Location: ' + request.location, ' Status: ' + request.status , ' Assignee: ' + request.assignee] );
-        //setString(...string, request.formID);
-        console.log(request.formID);
+         setString(['Form ID: ' + request.formID, ' Type: ' + request.type , ' Location: ' + request.location, ' Status: ' + request.status , ' Assignee: ' + request.assignee] );
+        const test: fullServiceFormType ={
+            formID: request.formID,
+            type: request.type,
+            location: "",
+            status: "",
+            assignee: "",
+            dateCreated: emptyDate,
+            maintenances: [],
+            language: [],
+            sanitation: [],
+            securityRequests: [],
+            giftRequests: [],
+            medicine: []
+        };
+        axios.post("/api/csvManager/filterForms", test,{
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            setAssignment(response.data);
+            console.log(assignment);
+        });
     }
 
 
