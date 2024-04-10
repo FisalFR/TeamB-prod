@@ -126,8 +126,9 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 
 
     return (
-        <div className={`${props.width} text-left`}>
+        <div className={`${props.width} text-left` }>
             <input className="w-full p-[5px]" type="text"
+
                    placeholder={props.placeholder} name = {props.name} id = {props.id} role = "combobox"
                    onBlur={hideDropdown} onFocus={showDropdown} onKeyDown={keyDown}
                    value={setVal()} required={props.required}
@@ -136,7 +137,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                    aria-activedescendant = {"option" + activeOption} aria-haspopup="listbox">
             </input>
 
-            <div className={`${props.width}`}>
+            <div className={`${props.width} relative`} >
                 <div className={dropdownClass}>
                     <div className="max-h-48 overflow-scroll" role="listbox" id="options-dropdown">
                         {createOptions()}

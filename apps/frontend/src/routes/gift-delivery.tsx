@@ -62,6 +62,7 @@ function GiftDelivery() {
         "Get Well Soon Balloon": 3.99,
         "Red Heart Balloon": 3.99,
         "Rainbow Balloon": 3.99,
+        "Happy Sunshine Balloon":3.99,
         "Assorted Chocolate Bundle":5.99,
         "Heart-Shaped Lollipop": 3.99,
         "Sour Patch Kids":5.99,
@@ -76,13 +77,15 @@ function GiftDelivery() {
         return total.toFixed(2);
     }
 
-    function handleSubmit(e: {preventDefault: () => void}){
+    function handleSubmit(e: {preventDefault: () => void}) {
+        if (cart.length == 0){
+        return alert("Please add an item to your cart.");}
         console.log(cart);
         console.log(request);
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
         if ((formRef.current as HTMLFormElement).checkValidity()) {
-            axios.post("/api/gift/insert",request,{
+            axios.post("/api/gift/insert", request, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -92,7 +95,7 @@ function GiftDelivery() {
         }
     }
 
-    function changeCart(item: string, quantity: number){
+    function changeCart(item: string, quantity: number) {
         const newCart = [];
         let foundItem = false;
         const roundedCost = (Math.round(quantity * itemCosts[item] * 100))/100;
@@ -296,6 +299,7 @@ function GiftDelivery() {
                             {createCart()}
                             <br/>
                             <p>Total Cost: {calcCost()}$</p>
+                            <br/>
                         </div>
                     </div>
                     <br/><br/>
@@ -303,29 +307,35 @@ function GiftDelivery() {
                 </div>
             </div>
             <div className={submittedWindowVisibility.submittedScreen}>
-                <div className="p-6 bg-white rounded-2xl mt-20">
-                    <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
-                    <Button onClick={handleNewSubmission} children="Submit a new request"/>
+                <div className="p-6 bg-white rounded-2xl mt-20 max-w-2xl">
+                    <div className={"text-center"}>
+                        <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
+                        <p className={"font-bold"}>Receiver Name:</p>
+                        <p className={""}>{request.receiverName}</p>
+
+                        <p className={"font-bold"}>Sender Name:</p>
+                        <p className={""}>{request.senderName}</p>
+
+                        <p className={"font-bold"}>Where do you want to send this gift?</p>
+                        <p className={""}>{request.location}</p>
+
+                        <p className={"font-bold "}>Additional Message:</p>
+                        <p className={"text-pretty break-words  max-w-2xl"}>{request.message}</p>
+
+                        <p className={"font-bold"}>Total Cost:</p>
+                        <p className={""}>{calcCost()}$</p>
+
+                        <p className="font-HeadlandOne p-3 text-xl center">Thank you for submitting!</p>
+                        <Button onClick={handleNewSubmission} children="Submit a new request"/>
+                        <br/>
+                    </div>
                 </div>
-                <div className={"text-left"}>
-                    <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
-                    <p className={"font-bold"}>Receiver Name:</p>
-                    <p className={""}>{request.receiverName}</p>
+                    <div className="text-center center p-6 bg-white rounded-2xl mt-20">
+                        <p className={"font-bold text-center"}>Cart:</p>
+                        <p className={"text-center center"}>{request.cart.map((item: giftItem) => {
+                            return <p>{item.quantity} x {item.name}: {item.cost}$</p>;
+                        })}</p></div>
 
-                    <p className={"font-bold"}>Sender Name:</p>
-                    <p className={""}>{request.senderName}</p>
-
-                    <p className={"font-bold"}>Where do you want to send this gift?</p>
-                    <p className={""}>{request.location}</p>
-
-                    <p className={"font-bold"}>Additional Message:</p>
-                    <p className={""}>{request.message}</p>
-
-                    <p className={"font-bold"}>Cart:</p>
-                    <p className={""}>{request.cart.map((item: giftItem) => {
-                        return <p>{item.quantity} x {item.name}: {item.cost}.toFixed(2)$</p>;
-                    })}</p>
-                </div>
             </div>
         </div>
     </div>

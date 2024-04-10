@@ -6,7 +6,7 @@
 }
 
 .search-dropdown {
-  position: relative;
+  position: absolute;
   width: inherit;
   background-color: #FFFFFF;
   height: fit-content;
