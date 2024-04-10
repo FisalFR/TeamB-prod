@@ -17,9 +17,54 @@ class Path {
     this.nodeMap = new Map<string, Node>();
   }
 
+  static convertFloor(floor: string): number {
+      let result: number = 0;
+
+      switch (floor){
+          case "3":
+              result = 5;
+              break;
+          case "2":
+              result = 4;
+              break;
+          case "1":
+              result = 3;
+              break;
+          case "L1":
+              result = 2;
+              break;
+          case "L2":
+              result = 1;
+              break;
+      }
+      return result;
+
+  }
+
+
   // Heuristics
     heuristic(a: Node, b: Node): number {
-      return Math.sqrt((a.xcoord - b.xcoord) ** 2 + (a.ycoord - b.ycoord) ** 2);
+      const endFloor: number  = Path.convertFloor(a.floor);
+      const nextFloor: number = Path.convertFloor(b.floor);
+
+      const EuclideanDistance = Math.sqrt((a.ycoord - b.ycoord) ** 2 + (a.xcoord - b.xcoord) ** 2);
+
+
+      if((b.nodeType=== "ELEV" || b.nodeType === "STAI")){
+          if(nextFloor !== endFloor){
+              return 0;
+          } else if (nextFloor === endFloor){
+              return 1000000;
+          }
+      }
+
+      if (endFloor === nextFloor){
+          return EuclideanDistance/1000000;
+      } else if (endFloor !== nextFloor){
+          return EuclideanDistance *1000000;
+      }
+
+        return EuclideanDistance;
     }
 
 
@@ -133,7 +178,7 @@ class Path {
   }
 
   private reconstructPath(
-    cameFrom: Map<any, any>,
+    cameFrom: Map<Node, Node>,
     startNode: Node,
     endNode: Node,
   ) {

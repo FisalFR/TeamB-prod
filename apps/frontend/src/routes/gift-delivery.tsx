@@ -339,6 +339,9 @@ function GiftDelivery() {
                         })}</p></div>
 
             </div>
+            <div>
+                <p className={"font-HeadlandOne text-deep-blue"}>Created by Jade and Kendall (and prettified by Ben)</p>
+            </div>
         </div>
     </div>
     )
