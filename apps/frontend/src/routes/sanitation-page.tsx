@@ -190,7 +190,6 @@ function Sanitation() {
                     <p className={""}>{request.additionalComments}</p>
                 </div>
             </div>
-            <p className={"absolute bottom-2 left-2 text-deep-blue font-HeadlandOne"}>Created by Jeremy</p>
         </div>
     );
 }
