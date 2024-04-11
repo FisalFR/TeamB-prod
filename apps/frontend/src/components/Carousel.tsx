@@ -9,26 +9,29 @@ const Carousel = ({ images }) => {
     useEffect(() => {
         const interval = setInterval(() => {
             setDirection(1); // Move to the next image
-            setCurrentIndex(currentIndex => (currentIndex + 1) % images.length);
-        }, 3000);
+            setCurrentIndex((currentIndex) => (currentIndex + 1) % images.length);
+        }, 3000); // Change every 3 seconds
 
         return () => clearInterval(interval);
     }, [images.length]);
 
     const slideVariants = {
         enter: (direction) => ({
-            x: direction > 0 ? 1000 : -1000,
-            opacity: 1,
+            x: direction > 0 ? '100%' : '-100%', // Slide from right or left
+            opacity: 0,
+            transition: { duration: 1.5, ease: 'easeInOut' } // Slower transition for smoothness
         }),
         center: {
             zIndex: 1,
             x: 0,
             opacity: 1,
+            transition: { duration: 1.5, ease: 'easeInOut' }
         },
         exit: (direction) => ({
             zIndex: 0,
-            x: direction < 0 ? 1000 : -1000,
-            opacity: 1,
+            x: direction < 0 ? '100%' : '-100%', // Exit to right or left
+            opacity: 0, // Ensures that the image fades out smoothly
+            transition: { duration: 1.5, ease: 'easeInOut' }
         }),
     };
 
@@ -43,10 +46,6 @@ const Carousel = ({ images }) => {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    transition={{
-                        x: { type: 'spring', stiffness: 300, damping: 30 },
-                        opacity: { duration: 0.2 }
-                    }}
                     className="w-full h-full absolute object-cover"
                 />
             </AnimatePresence>
