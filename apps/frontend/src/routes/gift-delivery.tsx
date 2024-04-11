@@ -325,7 +325,7 @@ function GiftDelivery() {
                     </div>
                 </div>
                 <div className={submittedWindowVisibility.submittedScreen}>
-                    <div className="p-6 bg-white rounded-2xl mt-20 max-w-2xl">
+                    <div className="p-6 bg-white rounded-2xl mt-20 max-w-2x items-center">
                         <div className={"text-center"}>
                             <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
                                 Submission:</h3>
@@ -339,13 +339,13 @@ function GiftDelivery() {
                             <p className={""}>{request.location}</p>
 
                             <p className={"font-bold "}>Additional Message:</p>
-                            <p className={"text-pretty break-words  max-w-2xl"}>{request.message}</p>
+                            <p className={"text-pretty break-words text-center"}>{request.message}</p>
 
                             <p className={"font-bold"}>Total Cost:</p>
                             <p className={""}>${calcCost()}</p>
 
                             <p className="font-HeadlandOne p-3 text-xl center">Thank you for submitting!</p>
-                            <Button onClick={handleNewSubmission} children="Submit a new request" px="text-7xl"/>
+                            <Button onClick={handleNewSubmission} children="Submit a new request" px="text-xl p-2"/>
                             <br/>
                         </div>
                     </div>
