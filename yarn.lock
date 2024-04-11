@@ -3941,7 +3941,7 @@ __metadata:
     react-router-bootstrap: "npm:^0.26.2"
     react-router-dom: "npm:^6.11.2"
     react-spring: "npm:^9.7.3"
-    react-zoom-pan-pinch: "npm:^3.1.0"
+    react-zoom-pan-pinch: "npm:^3.4.4"
     sass: "npm:^1.62.1"
     serve: "npm:^14.2.0"
     sort-by: "npm:^1.2.0"
@@ -6212,7 +6212,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-zoom-pan-pinch@npm:^3.1.0":
+"react-zoom-pan-pinch@npm:^3.4.4":
   version: 3.4.4
   resolution: "react-zoom-pan-pinch@npm:3.4.4"
   peerDependencies:
@@ -6774,6 +6774,8 @@ __metadata:
     eslint: "npm:^8.56.0"
     eslint-config-custom: "workspace:*"
     express-fileupload: "npm:^1.5.0"
+    flatted: "npm:^3.3.1"
+    framer-motion: "npm:^11.0.25"
     fs: "npm:^0.0.1-security"
     happy-dom: "npm:^10.6.3"
     husky: "npm:^8.0.0"

@@ -12,8 +12,9 @@ const CarouselPage: React.FC = () => {
         "https://images.pexels.com/photos/777059/pexels-photo-777059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     ];
 
+    // In your CarouselPage.tsx
     return (
-        <div className="carousel-page">
+        <div className="carousel-page" style={{ minHeight: '100vh' }}> {/* Ensures the container takes at least the full height of the viewport */}
             <Carousel images={images} />
         </div>
     );
@@ -21,5 +22,3 @@ const CarouselPage: React.FC = () => {
 };
 
 export default CarouselPage;
-
-
