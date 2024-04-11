@@ -234,7 +234,7 @@ export function MedicineRequest(){
 
             </div>
             <div>
-                <p className={"font-HeadlandOne text-deep-blue"}>Created by Mo</p>
+                <p className={"font-HeadlandOne text-deep-blue"}>Created by Mo and Colin</p>
             </div>
         </div>
     );

@@ -11,7 +11,7 @@ class giftDeliveryFunctions {
       data: {
         formID: UUID,
         status: "Unassigned",
-        type: "Gift Delivery",
+        type: "Gift",
         assignee: "",
         location: request.location,
       },

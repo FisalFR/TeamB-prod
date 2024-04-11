@@ -11,6 +11,8 @@ import medicineRoute from "./routes/medicineRoute";
 import sanitationRoute from "./routes/sanitationRoute";
 import securityRoute from "./routes/securityRoute";
 import giftDeliveryRoute from "./routes/giftDeliveryRoute";
+import nodesRouter from "./routes/nodesRoute";
+import edgesRouter from "./routes/edgesRoute";
 
 const app: Express = express(); // Setup the backend
 
@@ -30,6 +32,10 @@ app.use(cookieParser()); // Cookie parser
 // Setup routers. ALL ROUTERS MUST use /api as a start point, or they
 // won't be reached by the default proxy and prod setup
 app.use("/api/high-score", exampleRouter);
+// app.use("/api/nodes", nodesRouter);
+app.use("/api/edges", edgesRouter);
+//TODO: Add "/api/nodes" so that it would just handle with nodes
+//TODO: Add "/api/edges" so that it would just handle with just edges
 app.use("/api/pathfinding", pathfindingRoute);
 app.use("/api/maintenance", maintenanceRoute);
 app.use("/api/languageInterpreter", languageInterpreterRoute);
