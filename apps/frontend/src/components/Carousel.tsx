@@ -8,7 +8,7 @@ const Carousel = ({ images }) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setDirection(1); // Always move to the next image
+            setDirection(1); // Move to the next image
             setCurrentIndex(currentIndex => (currentIndex + 1) % images.length);
         }, 3000);
 
@@ -33,7 +33,7 @@ const Carousel = ({ images }) => {
     };
 
     return (
-        <div className="carousel-container relative overflow-hidden" style={{ width: '100%', height: '500px' }}>
+        <div className="carousel-container relative overflow-hidden" style={{ width: '100%', height: '100%' }}>
             <AnimatePresence initial={false} custom={direction}>
                 <motion.img
                     key={currentIndex}
