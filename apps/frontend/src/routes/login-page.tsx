@@ -1,6 +1,6 @@
 //import Button from "../components/Button.tsx";
 import AnimatedSVG from "../components/HeroImage.tsx";
-
+import DarkLightSwitcher from "../components/darkLightSwitcher.tsx";
 import example from "../assets/security.jpg";
 import HandleLogin from "../components/handleLogin.tsx";
 
@@ -12,6 +12,7 @@ export function LoginPage() {
 
     return (
         <div className="centerContent pt-14">
+            <DarkLightSwitcher/>
             <AnimatedSVG/>
 
                 <div className="pl-20 w-1/2">
