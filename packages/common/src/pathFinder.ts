@@ -52,14 +52,14 @@ class Path {
 
       if((b.nodeType=== "ELEV" || b.nodeType === "STAI")){
           if(nextFloor !== endFloor){
-              return EuclideanDistance+10;
+              return EuclideanDistance/100;
           } else if (nextFloor === endFloor){
-              return EuclideanDistance + 1000000;
+              return EuclideanDistance + 100000;
           }
       }
 
       if (endFloor === nextFloor){
-          return EuclideanDistance/10;
+          return EuclideanDistance;
       } else if (endFloor !== nextFloor){
           return EuclideanDistance + 10;
       }
