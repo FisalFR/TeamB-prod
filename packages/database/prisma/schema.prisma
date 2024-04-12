@@ -98,6 +98,7 @@ model languageInterpreterRequests {
 
 model maintenances {
   maintenanceRequest   String @id
+  employeeName         String
   issue                String
   feedback             String
   maintenanceRequestID forms  @relation(name: "maintenanceRequestID", fields: [maintenanceRequest], references: [formID])
