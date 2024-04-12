@@ -9,7 +9,7 @@ import roseBouquet from "../assets/Gift_Images/RoseBouquet.png";
 import teddyBear from "../assets/Gift_Images/teddyBear.jpeg";
 import greenDino from "../assets/Gift_Images/greenDino2.jpeg";
 import pinkDino from "../assets/Gift_Images/pinkDino.jpeg";
-import heart from "../assets/Gift_Images/heartStuffie.jpeg";
+import heart from "../assets/Gift_Images/heartStuffie.png";
 import gwsBalloon from "../assets/Gift_Images/gwsBalloon2.jpeg";
 import heartBalloon from "../assets/Gift_Images/heartBalloon.jpeg";
 import rainbow from "../assets/Gift_Images/rainbowBalloon.jpeg";
@@ -131,7 +131,7 @@ function GiftDelivery() {
         if (cart.length == 0)
             return <p>There are no items in your cart</p>;
         return cart.map((item) =>
-            <p> {item.quantity} x {item.name}: {item.cost.toFixed(2)}$</p>);
+            <p> {item.quantity} x {item.name}: ${item.cost.toFixed(2)}</p>);
     }
 
     function handleInput(e: ChangeEvent<HTMLInputElement>){
@@ -162,200 +162,207 @@ function GiftDelivery() {
     }
 
     return (
-    <div className="relative w-screen h-screen overflow-auto bg-[url('https://cdn.discordapp.com/attachments/1220847340659802325/1227468676538826872/A7CDE8.png?ex=66288449&is=66160f49&hm=c5db1a25039a517cd7d04b5275176162b87990fe645874c594a2baa79e362a99&')]">
         <div className="centerContent">
-            <div className={submittedWindowVisibility.formScreen}>
-                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                    <h1 className="text-3xl font-HeadlandOne">
-                        Gift Delivery Request Form
-                    </h1>
-                    <form ref={formRef} onSubmit={e => {
-                        e.preventDefault();
-                    }}>
-                        <br/><br/>
-                        <div className="flex flex-row justify-center w-full gap-20">
-                            <div className=" centerContent flex-col justify-start items-start">
-                                <label htmlFor="receiverName"
-                                       className="font-OpenSans font-bold text-md text-Ash-black">To: </label>
-                                <input type="text" id="receiverName" name="receiverName"
-                                       placeholder={"Recipient's Name"}
-                                       className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
-                                       onChange={handleInput}></input><br/>
+            <div className="w-5/6">
+                <div className={submittedWindowVisibility.formScreen}>
+                    <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
+                        <h1 className="text-3xl font-HeadlandOne">
+                            Gift Delivery Request Form
+                        </h1>
+                        <form ref={formRef} onSubmit={e => {
+                            e.preventDefault();
+                        }}>
+                            <br/><br/>
+                            <div className="flex flex-row justify-center w-full gap-20">
+                                <div className=" centerContent flex-col justify-start items-start">
+                                    <label htmlFor="receiverName"
+                                           className="font-OpenSans font-bold text-md text-Ash-black">To: </label>
+                                    <input type="text" id="receiverName" name="receiverName"
+                                           placeholder={"Recipient's Name"}
+                                           className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
+                                           onChange={handleInput}></input><br/>
 
 
-                                <label htmlFor="senderName"
-                                       className="font-OpenSans font-bold text-md text-Ash-black">From: </label>
-                                <input type="text" id="senderName" name="senderName"
-                                       className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
-                                       placeholder={"Sender's Name"}
-                                       onChange={handleInput}></input><br/>
+                                    <label htmlFor="senderName"
+                                           className="font-OpenSans font-bold text-md text-Ash-black">From: </label>
+                                    <input type="text" id="senderName" name="senderName"
+                                           className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
+                                           placeholder={"Sender's Name"}
+                                           onChange={handleInput}></input><br/>
 
-                                <label htmlFor="location"
-                                       className="font-OpenSans font-bold text-md text-Ash-black">Location: </label>
-                                <div className="border-solid border-deep-blue border-2 rounded">
-                                    <Dropdown options={locationOptions} placeholder="Location" name="Location Dropdown"
-                                              id="location" setInput={handleLocationInput} value={cleared}
-                                              required={true}/>
+                                    <label htmlFor="location"
+                                           className="font-OpenSans font-bold text-md text-Ash-black">Location: </label>
+                                    <div className="border-solid border-deep-blue border-2 rounded">
+                                        <Dropdown options={locationOptions} placeholder="Location"
+                                                  name="Location Dropdown"
+                                                  id="location" setInput={handleLocationInput} value={cleared}
+                                                  required={true}/>
+
+                                    </div>
 
                                 </div>
 
-                            </div>
+                                <div className="flex flex-col items-start">
 
-                            <div className="flex flex-col items-start">
-
-                                <label htmlFor="message" className="font-OpenSans text-md font-bold text-Ash-black ">
-                                    Send a Message: </label>
-                                <textarea id="message" name="message" rows={4} cols={40}
-                                          placeholder={"Send a nice message!"}
-                                          onChange={handleMessage}
-                                          className="border-solid border-deep-blue border-2 rounded h-full p-1 px-2">
+                                    <label htmlFor="message"
+                                           className="font-OpenSans text-md font-bold text-Ash-black ">
+                                        Send a Message: </label>
+                                    <textarea id="message" name="message" rows={4} cols={40}
+                                              placeholder={"Send a nice message!"}
+                                              onChange={handleMessage}
+                                              className="border-solid border-deep-blue border-2 rounded h-full p-1 px-2">
                         </textarea>
+                                </div>
+
                             </div>
-
-                        </div>
-                        <br/><br/>
+                            <br/><br/>
 
 
-                        {/*Flowers*/}
-                        <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
-                            Flowers:
-                        </h1>
-                        <br/>
-                        <div className="flex flex-row gap-10 w-full overflow-scroll">
-                            <ShopCard image={Tulip} cost={3.99} name="Tulip" altName="Single Tulip"
-                                      changeCart={changeCart}/>
-                            <ShopCard image={Rose} cost={5.99} name="Rose" altName="Single Rose"
-                                      changeCart={changeCart}/>
-                            <ShopCard image={tulipBouquet} cost={21.99} name="Bouquet of Tulips"
-                                      altName="Bouquet of Tulips"
-                                      changeCart={changeCart}/>
-                            <ShopCard image={roseBouquet} cost={29.99} name="Bouquet of Roses"
-                                      altName="Bouquet of Roses"
-                                      changeCart={changeCart}/>
-                        </div>
-                        <br/><br/>
-
-                        {/*Stuffed Animals*/}
-                        <br/><br/>
-                        <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
-                            Stuffed Animals:
-                        </h1>
-                        <br/>
-                        <div className="flex flex-row gap-10 w-full overflow-scroll">
-                            <ShopCard image={teddyBear} cost={5.99} name="Teddy Bear" altName="Teddy Bear"
-                                      changeCart={changeCart}/>
-                            <ShopCard image={greenDino} cost={10.99} name="Green Dinosaur" altName="Green Dinosaur"
-                                      changeCart={changeCart}/>
-                            <ShopCard image={pinkDino} cost={10.99} name="Pink Dinosaur" altName="Pink Dinosaur"
-                                      changeCart={changeCart}/>
-                            <ShopCard image={heart} cost={3.99} name="Heart" altName="Heart"
-                                      changeCart={changeCart}/>
-                        </div>
-                        <br/><br/>
-
-                        {/*Balloons*/}
-                        <br/><br/>
-                        <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
-                            Balloons:
-                        </h1>
-                        <br/>
-                        <div className="flex flex-row gap-10 w-full overflow-scroll">
-                            <ShopCard image={gwsBalloon} cost={3.99} name="Get Well Soon Balloon"
-                                      altName="Get Well Soon Balloon"
-                                      changeCart={changeCart}/>
-                            <ShopCard image={heartBalloon} cost={3.99} name="Red Heart Balloon"
-                                      altName="Red Heart Balloon"
-                                      changeCart={changeCart}/>
-                            <ShopCard image={rainbow} cost={3.99} name="Rainbow Balloon" altName="Rainbow Balloon"
-                                      changeCart={changeCart}/>
-                            <ShopCard image={sunshine} cost={3.99} name="Happy Sunshine Balloon"
-                                      altName="Smiling Sunshine Balloon"
-                                      changeCart={changeCart}/>
-                        </div>
-                        <br/><br/>
-
-                        {/*Candy*/}
-                        <br/><br/>
-                        <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
-                            Candy:
-                        </h1>
-                        <br/>
-                        <div className="flex flex-row gap-10 w-full overflow-x-scroll h-fit">
-                            <ShopCard image={chocolates} cost={5.99} name="Assorted Chocolate Bundle"
-                                      altName="Assorted Chocolates"
-                                      changeCart={changeCart}/>
-                            <ShopCard image={heartlollipop} cost={3.99} name="Heart-Shaped Lollipop"
-                                      altName="Heart-Shaped Lollipops"
-                                      changeCart={changeCart}/>
-                            <ShopCard image={sourPatchKids} cost={5.99} name="Sour Patch Kids" altName="Sour Patch Kids"
-                                      changeCart={changeCart}/>
-                            <ShopCard image={caramels} cost={9.99} name="Caramel Tray" altName="Caramel Tray"
-                                      changeCart={changeCart}/>
-                        </div>
-                        <br/><br/>
-
-
-                        <br/><br/>
-                    </form>
-
-                    <div className="border-2 bg-white border-rounded">
-                        <div className="border-2 bg-deep-blue border-rounded ">
-                            <h2 className="text-xl font-HeadlandOne text-center text-bone-white font-bold">
-                                Cart
-                            </h2>
-                        </div>
-
-                        <div className="text-xl font-HeadlandOne text-center text-Ash-black text-bold">
+                            {/*Flowers*/}
+                            <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
+                                Flowers:
+                            </h1>
                             <br/>
-                            {createCart()}
+                            <div className="flex flex-row gap-10 w-full overflow-scroll">
+                                <ShopCard image={Tulip} cost={3.99} name="Tulip" altName="Single Tulip"
+                                          changeCart={changeCart}/>
+                                <ShopCard image={Rose} cost={5.99} name="Rose" altName="Single Rose"
+                                          changeCart={changeCart}/>
+                                <ShopCard image={tulipBouquet} cost={21.99} name="Bouquet of Tulips"
+                                          altName="Bouquet of Tulips"
+                                          changeCart={changeCart}/>
+                                <ShopCard image={roseBouquet} cost={29.99} name="Bouquet of Roses"
+                                          altName="Bouquet of Roses"
+                                          changeCart={changeCart}/>
+                            </div>
+                            <br/><br/>
+
+                            {/*Stuffed Animals*/}
+                            <br/><br/>
+                            <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
+                                Stuffed Animals:
+                            </h1>
                             <br/>
-                            <p>Total Cost: {calcCost()}$</p>
+                            <div className="flex flex-row gap-10 w-full overflow-scroll">
+                                <ShopCard image={teddyBear} cost={5.99} name="Teddy Bear" altName="Teddy Bear"
+                                          changeCart={changeCart}/>
+                                <ShopCard image={greenDino} cost={10.99} name="Green Dinosaur" altName="Green Dinosaur"
+                                          changeCart={changeCart}/>
+                                <ShopCard image={pinkDino} cost={10.99} name="Pink Dinosaur" altName="Pink Dinosaur"
+                                          changeCart={changeCart}/>
+                                <ShopCard image={heart} cost={3.99} name="Heart" altName="Heart"
+                                          changeCart={changeCart}/>
+                            </div>
+                            <br/><br/>
+
+                            {/*Balloons*/}
+                            <br/><br/>
+                            <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
+                                Balloons:
+                            </h1>
+                            <br/>
+                            <div className="flex flex-row gap-10 w-full overflow-scroll">
+                                <ShopCard image={gwsBalloon} cost={3.99} name="Get Well Soon Balloon"
+                                          altName="Get Well Soon Balloon"
+                                          changeCart={changeCart}/>
+                                <ShopCard image={heartBalloon} cost={3.99} name="Red Heart Balloon"
+                                          altName="Red Heart Balloon"
+                                          changeCart={changeCart}/>
+                                <ShopCard image={rainbow} cost={3.99} name="Rainbow Balloon" altName="Rainbow Balloon"
+                                          changeCart={changeCart}/>
+                                <ShopCard image={sunshine} cost={3.99} name="Happy Sunshine Balloon"
+                                          altName="Smiling Sunshine Balloon"
+                                          changeCart={changeCart}/>
+                            </div>
+                            <br/><br/>
+
+                            {/*Candy*/}
+                            <br/><br/>
+                            <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
+                                Candy:
+                            </h1>
+                            <br/>
+                            <div className="flex flex-row gap-10 w-full overflow-x-scroll h-fit">
+                                <ShopCard image={chocolates} cost={5.99} name="Assorted Chocolate Bundle"
+                                          altName="Assorted Chocolates"
+                                          changeCart={changeCart}/>
+                                <ShopCard image={heartlollipop} cost={3.99} name="Heart-Shaped Lollipop"
+                                          altName="Heart-Shaped Lollipops"
+                                          changeCart={changeCart}/>
+                                <ShopCard image={sourPatchKids} cost={5.99} name="Sour Patch Kids"
+                                          altName="Sour Patch Kids"
+                                          changeCart={changeCart}/>
+                                <ShopCard image={caramels} cost={9.99} name="Caramel Tray" altName="Caramel Tray"
+                                          changeCart={changeCart}/>
+                            </div>
+                            <br/><br/>
+
+
+                            <br/><br/>
+                        </form>
+
+                        <div className="centerContent">
+                            <div className="border-2 bg-white border-rounded w-fit">
+                                <div className="border-2 bg-deep-blue border-rounded ">
+                                    <h2 className="text-xl font-HeadlandOne text-center text-bone-white font-bold">
+                                        Cart
+                                    </h2>
+                                </div>
+
+                                <div
+                                    className="text-xl font-HeadlandOne text-center text-Ash-black text-bold px-10 py-4">
+                                    <br/>
+                                    {createCart()}
+                                    <br/>
+                                    <p>Total Cost: ${calcCost()}</p>
+                                    <br/>
+                                </div>
+                            </div>
+                        </div>
+                        <br/><br/>
+                        <Button onClick={handleSubmit} children={"Purchase"}/>
+                        <br/> <br/>
+                    </div>
+                </div>
+                <div className={submittedWindowVisibility.submittedScreen}>
+                    <div className="p-6 bg-white rounded-2xl mt-20 max-w-2x items-center">
+                        <div className={"text-center"}>
+                            <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
+                                Submission:</h3>
+                            <p className={"font-bold"}>Receiver Name:</p>
+                            <p className={""}>{request.receiverName}</p>
+
+                            <p className={"font-bold"}>Sender Name:</p>
+                            <p className={""}>{request.senderName}</p>
+
+                            <p className={"font-bold"}>Where do you want to send this gift?</p>
+                            <p className={""}>{request.location}</p>
+
+                            <p className={"font-bold "}>Additional Message:</p>
+                            <p className={"text-pretty break-words text-center"}>{request.message}</p>
+
+                            <p className={"font-bold"}>Total Cost:</p>
+                            <p className={""}>${calcCost()}</p>
+
+                            <p className="font-HeadlandOne p-3 text-xl center">Thank you for submitting!</p>
+                            <Button onClick={handleNewSubmission} children="Submit a new request" px="text-xl p-2"/>
                             <br/>
                         </div>
                     </div>
-                    <br/><br/>
-                    <Button onClick={handleSubmit} children={"Purchase"}/>
-                    <br/> <br/>
-                    <p className={"font-HeadlandOne text-deep-blue"}>Created by Jade and Kendall (and prettified by
-                        Ben)</p>
-                </div>
-            </div>
-            <div className={submittedWindowVisibility.submittedScreen}>
-            <div className="p-6 bg-white rounded-2xl mt-20 max-w-2xl">
-                    <div className={"text-center"}>
-                        <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
-                        <p className={"font-bold"}>Receiver Name:</p>
-                        <p className={""}>{request.receiverName}</p>
-
-                        <p className={"font-bold"}>Sender Name:</p>
-                        <p className={""}>{request.senderName}</p>
-
-                        <p className={"font-bold"}>Where do you want to send this gift?</p>
-                        <p className={""}>{request.location}</p>
-
-                        <p className={"font-bold "}>Additional Message:</p>
-                        <p className={"text-pretty break-words  max-w-2xl"}>{request.message}</p>
-
-                        <p className={"font-bold"}>Total Cost:</p>
-                        <p className={""}>{calcCost()}$</p>
-
-                        <p className="font-HeadlandOne p-3 text-xl center">Thank you for submitting!</p>
-                        <Button onClick={handleNewSubmission} children="Submit a new request"/>
-                        <br/>
-                    </div>
-                </div>
                     <div className="text-center center p-6 bg-white rounded-2xl mt-20">
                         <p className={"font-bold text-center"}>Cart:</p>
                         <p className={"text-center center"}>{request.cart.map((item: giftItem) => {
-                            return <p>{item.quantity} x {item.name}: {item.cost}$</p>;
+                            return <p>{item.quantity} x {item.name}: ${item.cost}</p>;
                         })}</p></div>
 
+                </div>
+                <div className="mb-12">
+                    <p className={"font-HeadlandOne text-deep-blue"}>Created by Kendall and Jade, styled by Ben and
+                        Theresa</p>
+                </div>
             </div>
-            <div>
 
-            </div>
         </div>
-    </div>
     )
         ;
 }
