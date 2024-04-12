@@ -62,7 +62,6 @@ function LogBook() {
     }).then((response) => {
         const reversedData = response.data.reverse();
         setForm(reversedData);
-        console.log(reversedData);
     });
     }, [request]);
 

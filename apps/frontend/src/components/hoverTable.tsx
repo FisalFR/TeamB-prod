@@ -179,7 +179,8 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                 'Content-Type': 'application/json'
             }
         }).then(() => {
-            setOpen2(true);
+            setOpen2(open);
+            setOpen(close);
             setCleared(true);
             setSubmit(submitted + 1); // Spaghetti Code to Update the page
         });
@@ -202,6 +203,8 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
     function firstDelete(){
         setOpenDelete(open);
     }
+
+
 
 
 

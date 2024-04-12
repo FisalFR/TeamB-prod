@@ -54,9 +54,7 @@ router.post("/filter", async (req, res) => {
     whereCondition.assignee = { search: formType.assignee };
   }
   if (formType.priority !== "") {
-    console.log(formType.priority);
-    whereCondition.priority = { search: formType.priority };
-    console.log(whereCondition.priority);
+    whereCondition.priority = formType.priority;
   }
 
   try {
@@ -65,7 +63,6 @@ router.post("/filter", async (req, res) => {
       where: whereCondition,
       orderBy: { formID: "desc" },
     });
-    console.log(filteredForm);
     res.status(200).json(filteredForm);
   } catch (error) {
     console.error("Error filtering forms:", error);

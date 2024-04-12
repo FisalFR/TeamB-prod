@@ -6,7 +6,7 @@ import axios from "axios";
 import RadioButton from "../components/RadioButton.tsx";
 
 function LanguageInterpreter(){
-    const [request, setRequest] = useState<LanguageInterpreterTypes>({language: "", location: ""});
+    const [request, setRequest] = useState<LanguageInterpreterTypes>({language: "", location: "", priority: ""});
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         requestScreen: "block",
         submittedScreen: "hidden"
@@ -81,7 +81,7 @@ function LanguageInterpreter(){
     function handleClearLanguage(e: { preventDefault: () => void; }): void {
         e.preventDefault();
         // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-        setRequest({language: "", location: ""});
+        setRequest({language: "", location: "", priority: ""});
         // use resetActive from Dropdown?
 
         setCleared(true);
@@ -98,7 +98,7 @@ function LanguageInterpreter(){
     function handleNewSubmissionLanguage(): void {
         setSubmittedWindowVisibility({requestScreen: "block", submittedScreen: "hidden"});
         // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-        setRequest({language: "", location: ""});
+        setRequest({language: "", location: "", priority: ""});
         // use resetActive from Dropdown?
         setCleared(false);
     }
