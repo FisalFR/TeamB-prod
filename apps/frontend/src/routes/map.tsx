@@ -10,7 +10,7 @@ import plus from "../assets/plus.svg";
 import minus from "../assets/minus.svg";
 import Select from "../components/Select.tsx";
 import PathVisual from "../components/map/PathVisual.tsx";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState, useCallback} from "react";
 import axios from "axios";
 import {startEndNodes} from "common/src/pathfinding.ts";
 import Node from "../../../../packages/common/src/node";
@@ -70,9 +70,9 @@ export function Map(){
     }
 
 
-    function findPath(start: string, end: string) {
+    const findPath = useCallback((start: string, end: string) => {
         const startend = {startNode: start, endNode: end, algorithm: algo};
-        axios.post(`/api/pathfinding/`, startend,{
+        axios.post(`/api/pathfinding/`, startend, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -82,11 +82,11 @@ export function Map(){
                 setFloorMap(response.data.floorMap);
                 setPathNodes(response.data.nodes);
                 setCurrentFloor(response.data.nodes[0].floor);
-            }
-            else {
+            } else {
                 alert("No path with selected nodes");
             }
         });
+    }, [algo]); // algo is a dependency here
 
     function handleStartChange(e: React.ChangeEvent<HTMLSelectElement>) {
         setRequest({...request, startNode: nodeData[e.target.value].id});
@@ -115,6 +115,12 @@ export function Map(){
             setShowPath(false);
         });
     }, []);
+
+    useEffect(() => {
+        if(request.startNode && request.endNode) {
+            findPath(request.startNode, request.endNode);
+        }
+    }, [algo, findPath, request.endNode, request.startNode]);
 
     return (
         <>
