@@ -33,13 +33,13 @@ export function LoginPage() {
 
 
                         </div>
-                        <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-4 md:flex">
+                        <div className="dark:bg-black max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-4 md:flex">
                             <div className="md:shrink-0 md:w-1/2 md:order-1">
                                 <img className="h-48 w-full object-cover md:h-full md:w-full rounded-t-xl"
                                      src={example} alt="Lion Dance at pan asian festival 2023"></img>
                             </div>
                             <div className="p-8 md:w-1/2 md:order-2">
-                                <h4 className="block mt-4 text-lg leading-tight font-medium text-black">New
+                                <h4 className="dark:text-white block mt-4 text-lg leading-tight font-medium text-black">New
                                     Feature:</h4>
                                 <h4 className="text-lg leading-tight font-medium text-black">Security Services</h4>
                                 <p className="mt-2 text-slate-500">Need help getting to your car?

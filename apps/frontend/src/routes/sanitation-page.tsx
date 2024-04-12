@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
-import {SanitationRequest} from "common/src/sanitationRequest.ts";
+import {SanitationRequest} from "../components/sanitationRequest.ts";
 import RadioButton from "../components/RadioButton.tsx";
 import Button from "../components/Button.tsx";
 import Dropdown from "../components/dropdown.tsx";
@@ -80,7 +80,7 @@ function Sanitation() {
                             <div>
                                 <p className={"text-left font-bold"}>Employee Name:</p>
                                 <div className="border-solid border-deep-blue border-2 rounded">
-                                    <Dropdown options={employeeNameOptions} placeholder={"Employee Name"}
+                                    <Dropdown options={employeeNameOptions} placeholder={"Employee Name"} //Get rid of drop down and change to input
                                               name={"employeeNameDropdown"}
                                               id={"dropdownEmployeeName"} value={cleared}
                                               setInput={(str: string) => setRequest({...request, employeeName: str})}
