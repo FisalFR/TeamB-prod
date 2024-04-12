@@ -12,8 +12,8 @@ export function AlgorithmButtons(props: {href?: string, onClick?:(e: React.Mouse
     const inactiveClass = "w-0 h-1 bg-white transition-all group-hover:w-[calc(50%+16px)]";
 
     return <div className={`${props.px}`}>
-        <p className="py-1 relative group font-OpenSans items-center font-bold text-bone-white">
-            <a href={props.href || '#'} onClick={handleClick} className="">{props.children}</a>
+        <p className="py-1 relative group font-OpenSans items-center font-bold text-bone-white ">
+            <a href={props.href || '#'} onClick={handleClick} className="flex flex-row">{props.children}</a>
             <span className={`absolute bottom-0 left-1/2 ${props.isActive ? activeClass : inactiveClass}`}></span>
             <span className={`absolute bottom-0 right-1/2 ${props.isActive ? activeClass : inactiveClass}`}></span>
         </p>
