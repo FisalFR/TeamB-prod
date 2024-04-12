@@ -1,6 +1,6 @@
 export type MaintenanceRequest = {
     issue: string
     location: string
-    isUrgent: string
+    priority: string
     feedback: string
 }
