@@ -81,6 +81,7 @@ model forms {
   assignee            String
   dateCreated         DateTime                      @default(now())
   location            String
+  priority            String
   languageRequests    languageInterpreterRequests[] @relation(name: "languageRequestID")
   maintenanceRequests maintenances[]                @relation(name: "maintenanceRequestID")
   medicineRequests    medicineRequests[]            @relation(name: "medicineRequestID")
@@ -98,7 +99,6 @@ model languageInterpreterRequests {
 model maintenances {
   maintenanceRequest   String @id
   issue                String
-  isUrgent             String
   feedback             String
   maintenanceRequestID forms  @relation(name: "maintenanceRequestID", fields: [maintenanceRequest], references: [formID])
 }
@@ -106,7 +106,6 @@ model maintenances {
 model medicineRequests {
   medicineRequest    String @id
   employeeName       String
-  priority           String
   medicine           String
   quantity           Int
   additionalComments String
@@ -116,7 +115,6 @@ model medicineRequests {
 model sanitationRequests {
   sanitationRequest  String @id
   employeeName       String
-  priority           String
   serviceType        String
   contaminant        String
   additionalComments String
@@ -129,7 +127,6 @@ model securityRequests {
   request           String
   additionalInfo    String
   quantity          Int
-  priority          String
   securityRequestID forms  @relation(name: "securityRequestID", fields: [securityRequest], references: [formID])
 }
 

@@ -7,7 +7,7 @@ import axios from "axios";
 
 
 export function MaintenancePage() {
-    const [request, setRequest] = useState<MaintenanceRequest>({issue: "", location: "", isUrgent: "", feedback: ""});
+    const [request, setRequest] = useState<MaintenanceRequest>({issue: "", location: "", priority: "", feedback: ""});
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         formScreen: "block",
         submittedScreen: "hidden"
@@ -46,7 +46,7 @@ export function MaintenancePage() {
     function handleClear(e: { preventDefault: () => void; }): void {
         e.preventDefault();
         // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-        setRequest({issue: "", location: "", isUrgent: "", feedback: ""});
+        setRequest({issue: "", location: "", priority: "", feedback: ""});
         // use resetActive from Dropdown?
         setCleared(true);
 
@@ -62,7 +62,7 @@ export function MaintenancePage() {
     }
 
     function handleUrgentCheck(e: ChangeEvent<HTMLInputElement>): void {
-        setRequest({...request, isUrgent: e.target.value});
+        setRequest({...request, priority: e.target.value});
     }
 
     function handleFeedbackInput(e: ChangeEvent<HTMLTextAreaElement>): void {
@@ -71,7 +71,7 @@ export function MaintenancePage() {
 
     function handleNewSubmission(): void {
         setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
-        setRequest({issue: "", location: "", isUrgent: "", feedback: ""});
+        setRequest({issue: "", location: "", priority: "", feedback: ""});
         setCleared(false);
     }
 
@@ -117,9 +117,9 @@ export function MaintenancePage() {
 
                                 <p className={"text-left font-bold"}>Is this an urgent issue?</p>
                                 <div className="border-deep-blue border-solid border-2">
-                                    <RadioButton value={"Yes"} name={"urgency"} id={"urgency1"} state={request.isUrgent}
+                                    <RadioButton value={"Yes"} name={"urgency"} id={"urgency1"} state={request.priority}
                                                  onChange={handleUrgentCheck} required={true}/>
-                                    <RadioButton value={"No"} name={"urgency"} id={"urgency2"} state={request.isUrgent}
+                                    <RadioButton value={"No"} name={"urgency"} id={"urgency2"} state={request.priority}
                                                  onChange={handleUrgentCheck} required={true}/>
                                 </div>
 
@@ -162,7 +162,7 @@ export function MaintenancePage() {
                         <p className={""}>{request.location}</p>
 
                         <p className={"font-bold"}>Is this an urgent issue?</p>
-                        <p className={""}>{request.isUrgent}</p>
+                        <p className={""}>{request.priority}</p>
 
                         <p className={"font-bold"}>Additional Feedback</p>
                         <p className={""}>{request.feedback}</p>
