@@ -75,13 +75,11 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                     "Location: " + response.data.location,
                     "Status: " + response.data.status,
                     "Assignee: " + response.data.assignee,
-                    "Date Created: " + new Date(response.data.dateCreated).toISOString(),
+                    "Priority: " + response.data.priority,
                 ];
                 switch (response.data.type) {
                     case "Maintenance": {
-                        newInformation.push("Maintenance Request: " + response.data.maintenanceRequests[0].maintenanceRequest);
                         newInformation.push("Issue: " + response.data.maintenanceRequests[0].issue);
-                        newInformation.push("Urgency: " + response.data.maintenanceRequests[0].isUrgent);
                         newInformation.push("Feedback: " + response.data.maintenanceRequests[0].feedback);
                         break;
                     }
@@ -90,21 +88,18 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                         break;
                     } case "Sanitation": {
                         newInformation.push("Employee Name: " + response.data.sanitationRequests[0].employeeName);
-                        newInformation.push("Priority: " + response.data.sanitationRequests[0].priority);
                         newInformation.push("Issue: " + response.data.sanitationRequests[0].contaminant);
                         newInformation.push("Service Type: " + response.data.sanitationRequests[0].serviceType);
                         newInformation.push("Additional Comments: " + response.data.sanitationRequests[0].additionalComments);
                         break;
                     } case "Security": {
                         newInformation.push("Employee Name: " + response.data.securityRequests[0].employeeName);
-                        newInformation.push("Priority: " + response.data.securityRequests[0].priority);
                         newInformation.push("Request: " + response.data.securityRequests[0].request);
                         newInformation.push("Number of Personnel Required: " + response.data.securityRequests[0].quantity);
                         newInformation.push("Additional Comments: " + response.data.securityRequests[0].additionalInfo);
                         break;
                     } case "Medicine": {
                         newInformation.push("Employee Name: " + response.data.medicineRequests[0].employeeName);
-                        newInformation.push("Priority: " + response.data.medicineRequests[0].priority);
                         newInformation.push("Medicine: " + response.data.medicineRequests[0].medicine);
                         newInformation.push("Quantity: " + response.data.medicineRequests[0].quantity.toString());
                         newInformation.push("Additional Comments: " + response.data.medicineRequests[0].additionalComments);
@@ -126,7 +121,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                 }
                 setInformation(newInformation);
                 setAssignment({...assignment, assignee: response.data.assignee, type: response.data.type, location: response.data.location,
-                    formID: response.data.formID, status: response.data.status, dateCreated: response.data.dateCreated});
+                    formID: response.data.formID, priority: response.data.priority, status: response.data.status, dateCreated: response.data.dateCreated});
             }
         } catch (error) {
             console.error("Error fetching data: ", error);
@@ -185,7 +180,6 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             }
         }).then(() => {
             setOpen2(true);
-            //setAssignment({  formID: "", type: "", location: "", status: "", assignee: "", dateCreated: emptyDate});
             setCleared(true);
             setSubmit(submitted + 1); // Spaghetti Code to Update the page
             console.log(form);
@@ -205,19 +199,20 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                 <div className="flex flex-row gap-8 p-12 w-fit ">
                     <div>
                     <h1 className="text-3xl">Information</h1>
-                    <ul className="item-start justify-start leading-8 max-w-100">
-                        <li>FormID: {assignment.formID}</li>
-                        <li>Date Created: {assignment.dateCreated.toString()}</li>
-                        <li>Type: {assignment.type}</li>
-                        <li>Status: {assignment.status}</li>
-                        <li>Assignee: {assignment.assignee}</li>
-                        <li>Location: {assignment.location}</li>
-                        <li>{information[6]}</li>
-                        <li>{information[7]}</li>
-                        <li>{information[8]}</li>
-                        <li>{information[9]}</li>
-                        <li>{information[10]}</li>
-                    </ul>
+                        <ul className="item-start justify-start leading-8 max-w-100">
+                            <li>FormID: {assignment.formID}</li>
+                            <li>Type: {assignment.type}</li>
+                            <li>Status: {assignment.status}</li>
+                            <li>Priority: {assignment.priority}</li>
+                            <li>Assignee: {assignment.assignee}</li>
+                            <li>{information[6]}</li>
+                            <li>{information[7]}</li>
+                            <li>{information[8]}</li>
+                            <li>{information[9]}</li>
+                            <li>{information[10]}</li>
+                            <li>Location: {assignment.location}</li>
+                            <li>Date Created: {assignment.dateCreated.toString()}</li>
+                        </ul>
                     </div>
                     <div className="rounded-2xl bg-deep-blue bg-opacity-5">
                         <form ref={formRef} onSubmit={e => {

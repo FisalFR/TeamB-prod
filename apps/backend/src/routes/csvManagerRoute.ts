@@ -31,107 +31,12 @@ router.get("/edges", async (req, res) => {
   const allEdges = await client.edges.findMany();
   res.status(200).json(allEdges);
 });
-router.post("/filter", async (req, res) => {
-  const formType: FormType = req.body;
-  if (
-    formType.status !== "" &&
-    formType.type !== "" &&
-    formType.assignee !== ""
-  ) {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        status: { search: formType.status },
-        type: { search: formType.type },
-        assignee: { search: formType.assignee },
-      },
-      orderBy: {
-        formID: "desc",
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else if (formType.status !== "" && formType.type !== "") {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        status: { search: formType.status },
-        type: { search: formType.type },
-      },
-      orderBy: {
-        formID: "desc",
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else if (formType.type !== "" && formType.assignee !== "") {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        type: { search: formType.type },
-        assignee: { search: formType.assignee },
-      },
-      orderBy: {
-        formID: "desc",
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else if (formType.status !== "" && formType.assignee !== "") {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        status: { search: formType.status },
-        assignee: { search: formType.assignee },
-      },
-      orderBy: {
-        formID: "desc",
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else if (formType.status !== "") {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        status: { search: formType.status },
-      },
-      orderBy: {
-        formID: "desc",
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else if (formType.type !== "") {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        type: { search: formType.type },
-      },
-      orderBy: {
-        formID: "desc",
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else if (formType.assignee !== "") {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        assignee: { search: formType.assignee },
-      },
-      orderBy: {
-        formID: "desc",
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else {
-    const filteredForm = await client.forms.findMany({
-      orderBy: {
-        formID: "desc",
-      },
-    });
-    res.status(200).json(filteredForm);
-  }
-});
-
 // router.post("/filter", async (req, res) => {
 //   const formType: FormType = req.body;
 //   if (
 //     formType.status !== "" &&
 //     formType.type !== "" &&
-//     formType.assignee !== "" &&
-//     formType.formID !== "" &&
-//     formType.location !== "" &&
-//     formType.dateCreated !== "" &&
-//       formType.priority !== ""
+//     formType.assignee !== ""
 //   ) {
 //     const filteredForm = await client.forms.findMany({
 //       where: {
@@ -144,8 +49,115 @@ router.post("/filter", async (req, res) => {
 //       },
 //     });
 //     res.status(200).json(filteredForm);
+//   } else if (formType.status !== "" && formType.type !== "") {
+//     const filteredForm = await client.forms.findMany({
+//       where: {
+//         status: { search: formType.status },
+//         type: { search: formType.type },
+//       },
+//       orderBy: {
+//         formID: "desc",
+//       },
+//     });
+//     res.status(200).json(filteredForm);
+//   } else if (formType.type !== "" && formType.assignee !== "") {
+//     const filteredForm = await client.forms.findMany({
+//       where: {
+//         type: { search: formType.type },
+//         assignee: { search: formType.assignee },
+//       },
+//       orderBy: {
+//         formID: "desc",
+//       },
+//     });
+//     res.status(200).json(filteredForm);
+//   } else if (formType.status !== "" && formType.assignee !== "") {
+//     const filteredForm = await client.forms.findMany({
+//       where: {
+//         status: { search: formType.status },
+//         assignee: { search: formType.assignee },
+//       },
+//       orderBy: {
+//         formID: "desc",
+//       },
+//     });
+//     res.status(200).json(filteredForm);
+//   } else if (formType.status !== "") {
+//     const filteredForm = await client.forms.findMany({
+//       where: {
+//         status: { search: formType.status },
+//       },
+//       orderBy: {
+//         formID: "desc",
+//       },
+//     });
+//     res.status(200).json(filteredForm);
+//   } else if (formType.type !== "") {
+//     const filteredForm = await client.forms.findMany({
+//       where: {
+//         type: { search: formType.type },
+//       },
+//       orderBy: {
+//         formID: "desc",
+//       },
+//     });
+//     res.status(200).json(filteredForm);
+//   } else if (formType.assignee !== "") {
+//     const filteredForm = await client.forms.findMany({
+//       where: {
+//         assignee: { search: formType.assignee },
+//       },
+//       orderBy: {
+//         formID: "desc",
+//       },
+//     });
+//     res.status(200).json(filteredForm);
+//   } else {
+//     const filteredForm = await client.forms.findMany({
+//       orderBy: {
+//         formID: "desc",
+//       },
+//     });
+//     res.status(200).json(filteredForm);
 //   }
 // });
+
+router.post("/filter", async (req, res) => {
+  const formType: FormType = req.body;
+  const whereCondition: FormType = {};
+
+  // Build the where condition dynamically based on the provided filters
+  if (formType.formID !== "") {
+    whereCondition.formID = { search: formType.formID };
+  }
+  if (formType.type !== "") {
+    whereCondition.type = { search: formType.type };
+  }
+  if (formType.location !== "") {
+    const escapedLocation = formType.location.replace(/\s/g, "\\ ");
+    whereCondition.location = { search: `"${escapedLocation}"` };
+  }
+  if (formType.status !== "") {
+    whereCondition.status = { search: formType.status };
+  }
+  if (formType.assignee !== "") {
+    whereCondition.assignee = { search: formType.assignee };
+  }
+  if (formType.priority !== "") {
+    whereCondition.priority = { search: formType.priority };
+  }
+
+  try {
+    const filteredForm = await client.forms.findMany({
+      where: whereCondition,
+      orderBy: { formID: "desc" },
+    });
+    res.status(200).json(filteredForm);
+  } catch (error) {
+    console.error("Error filtering forms:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 router.post("/insert", async (req, res) => {
   const formType: FormType = req.body;
