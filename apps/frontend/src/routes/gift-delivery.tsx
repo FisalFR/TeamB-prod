@@ -9,7 +9,7 @@ import roseBouquet from "../assets/Gift_Images/RoseBouquet.png";
 import teddyBear from "../assets/Gift_Images/teddyBear.jpeg";
 import greenDino from "../assets/Gift_Images/greenDino2.jpeg";
 import pinkDino from "../assets/Gift_Images/pinkDino.jpeg";
-import heart from "../assets/Gift_Images/heartStuffie.jpeg";
+import heart from "../assets/Gift_Images/heartStuffie.png";
 import gwsBalloon from "../assets/Gift_Images/gwsBalloon2.jpeg";
 import heartBalloon from "../assets/Gift_Images/heartBalloon.jpeg";
 import rainbow from "../assets/Gift_Images/rainbowBalloon.jpeg";
