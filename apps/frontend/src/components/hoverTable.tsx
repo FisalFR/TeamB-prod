@@ -1,8 +1,12 @@
 import Modal from "./Modal.tsx";
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import {fullServiceFormType} from "common/src/fullServiceForm.ts";
+import {FormType} from "common/src/FormType.ts";
+import Dropdown from "./dropdown.tsx";
+import LongButton from "./LongButton.tsx";
+
 
 
 
@@ -64,7 +68,6 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                 }
             });
             if (response.data) {
-                console.log(response.data);
                 const newInformation: string[] = [
                     "Form ID: " + response.data.formID,
                     "Type: " + response.data.type,
@@ -73,7 +76,6 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                     "Assignee: " + response.data.assignee,
                     "Date Created: " + new Date(response.data.dateCreated).toISOString(),
                 ];
-
                 switch (response.data.type) {
                     case "Maintenance": {
                         newInformation.push("Maintenance Request: " + response.data.maintenanceRequests[0].maintenanceRequest);
@@ -106,30 +108,89 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                         newInformation.push("Quantity: " + response.data.medicineRequests[0].quantity.toString());
                         newInformation.push("Additional Comments: " + response.data.medicineRequests[0].additionalComments);
                         break;
-                    } case "Gift Delivery": {
+                    } case "Gift": {
                         const cart: string[] = [];
                         let totalCost: number = 0;
                         for (let i = 0; i <  response.data.giftRequests[0].cart.length; i++){
                             cart.push(response.data.giftRequests[0].cart[i].name + " (" + response.data.giftRequests[0].cart[i].quantity + ")");
                             totalCost += response.data.giftRequests[0].cart[i].cost;
-
                         }
                         newInformation.push("Cart: " + cart.toString());
                         newInformation.push("Total Cost: $" + Math.round(totalCost).toString());
                         newInformation.push("Message: " + response.data.giftRequests[0].message);
                         newInformation.push("Recipient: " + response.data.giftRequests[0].receiverName);
                         newInformation.push("Sender: " + response.data.giftRequests[0].senderName);
-
                         break;
                     }
                 }
-
                 setInformation(newInformation);
+                setAssignment({...assignment, assignee: response.data.assignee, type: response.data.type, location: response.data.location,
+                    formID: response.data.formID, status: response.data.status, dateCreated: response.data.dateCreated});
             }
         } catch (error) {
             console.error("Error fetching data: ", error);
         }
     }
+
+    const formRef = useRef<HTMLFormElement>(null);
+    const [form, setForm] = useState([]);
+    const [formIDOptions, setFormID] = useState<string[]>([]);
+    const [submitted, setSubmit] = useState<number>(0);
+    const [cleared, setCleared] = useState(false);
+    const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
+    const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
+    const [assignment, setAssignment] = useState<FormType>({
+        formID: "",
+        type: "",
+        location: "",
+        status: "",
+        assignee: "",
+        dateCreated: emptyDate
+    });
+    const [open2, setOpen2] = useState<boolean>(false);
+
+    function handleFormIDAssignment(str: string): void {
+        setCleared(false);
+        setAssignment({...assignment, formID: str});
+    }
+
+    function handleStatusAssignment(str: string): void {
+        setCleared(false);
+        setAssignment({...assignment, status: str});
+    }
+
+    function handleStaffAssignment(str: string): void {
+        setCleared(false);
+        setAssignment({...assignment, assignee: str});
+    }
+
+    useEffect(() => {
+        axios.get("/api/csvManager").then((response) => {
+            setForm(response.data.reverse());
+            const formIDStrings = [];
+            for (let i = 0; i < response.data.length; i++) {
+                formIDStrings.push(response.data[i].formID);
+            }
+            setFormID(formIDStrings);
+        });
+    }, [submitted]);
+
+    function handleSubmit(e: { preventDefault: () => void; }) {
+        (formRef.current as HTMLFormElement).requestSubmit();
+        e.preventDefault();
+        axios.post("/api/csvManager/insert", assignment, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(() => {
+            setOpen2(true);
+            //setAssignment({  formID: "", type: "", location: "", status: "", assignee: "", dateCreated: emptyDate});
+            setCleared(true);
+            setSubmit(submitted + 1); // Spaghetti Code to Update the page
+            console.log(form);
+        });
+    }
+
 
     return (
         <table
@@ -139,22 +200,63 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             </thead>
             <tbody>
             {createTableRows()}
-            <Modal open={open} onClose={() => setOpen(false)}>
-                <div className="flex flex-col gap-4 p-7 w-full ">
-                    <h1 className="text-2xl">Information</h1>
-                    <ul className="item-start justify-start">
-                        <li>{information[0]}</li>
-                        <li>{information[1]}</li>
-                        <li>{information[2]}</li>
-                        <li>{information[3]}</li>
-                        <li>{information[4]}</li>
-                        <li>{information[5]}</li>
+            <Modal open={open} onClose={() => setOpen(false) }>
+                <div className="flex flex-row gap-8 p-12 w-fit ">
+                    <div>
+                    <h1 className="text-3xl">Information</h1>
+                    <ul className="item-start justify-start leading-8 max-w-100">
+                        <li>FormID: {assignment.formID}</li>
+                        <li>Date Created: {assignment.dateCreated.toString()}</li>
+                        <li>Type: {assignment.type}</li>
+                        <li>Status: {assignment.status}</li>
+                        <li>Assignee: {assignment.assignee}</li>
+                        <li>Location: {assignment.location}</li>
                         <li>{information[6]}</li>
                         <li>{information[7]}</li>
                         <li>{information[8]}</li>
                         <li>{information[9]}</li>
                         <li>{information[10]}</li>
                     </ul>
+                    </div>
+                    <div className="rounded-2xl bg-deep-blue bg-opacity-5">
+                        <form ref={formRef} onSubmit={e => {
+                            e.preventDefault();
+                        }}
+                              className="w-[22vw]  flex flex-col items-start p-3 gap-4 pl-5">
+                            <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start"}>Assign Staff
+                                Request</h2>
+                            <p className={"text-left font-bold"}>Form ID</p>
+                            <Dropdown options={formIDOptions} placeholder={"Choose Form ID"}
+                                      name={"formIDAssignment"}
+                                      id={"dropdown4"} value={cleared}
+                                      setInput={handleFormIDAssignment} required={true}/>
+
+
+                            <p className={"text-left font-bold"}>Request Status</p>
+                            <Dropdown options={statusTypeOptions} placeholder={"Choose Status"}
+                                      name={"statusAssignment"}
+                                      id={"dropdown5"} value={cleared}
+                                      setInput={handleStatusAssignment} required={true}/>
+
+
+                            <p className={"text-left font-bold"}>Assigned Staff</p>
+                            <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"} name={"staffAssignment"}
+                                      id={"dropdown6"} value={cleared}
+                                      setInput={handleStaffAssignment} required={true}/>
+
+                            <div className={"flex items-center pt-2 pb-4"}>
+                                <LongButton onClick={handleSubmit} children={"Submit"}/>
+                                <Modal open={open2} onClose={() => setOpen2(false)}>
+                                    <div className="flex flex-col gap-4">
+                                        <h1 className="text-2xl">Success!</h1>
+                                        <p>
+                                            Assigned
+                                        </p>
+                                    </div>
+                                </Modal>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </Modal>
             </tbody>
