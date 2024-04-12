@@ -49,11 +49,11 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
         if (option.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
             const searchInd = option.toLowerCase().indexOf(search.toLowerCase());
             const firstHalf = option.substring(0,searchInd);
-            const bolded: string = option.substring(searchInd, searchInd + search.length);
+            const bolded = option.substring(searchInd, searchInd + search.length);
             const lastHalf = option.substring(searchInd + search.length, option.length);
             return <span>{firstHalf}<b>{bolded}</b>{lastHalf}</span>;
         } else {
-            return <span><i>{option}</i></span>;
+            return <span><u>{option}</u></span>;
         }
     }
 
@@ -64,7 +64,23 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     function fuzzySearch(option: string, search: string) {
         if(option.toLowerCase().indexOf(search.toLowerCase()) !== -1) return true;
 
-        //const alphabet: string[] = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        function testAndReset(pos?: number) {
+            if (!pos) {
+                if (option.toLowerCase().indexOf(searchArray.join('').toLowerCase()) !== -1) return true;
+                searchArray = search.split('');
+            }
+            else {
+                for (let letnum = 0; letnum < chars.length; letnum++) {
+                    searchArray.splice(pos, 1, chars[letnum]);
+                    if (option.toLowerCase().indexOf(searchArray.join('').toLowerCase()) !== -1) {
+                        return true;
+                    }
+                }
+                searchArray = search.split('');
+            }
+        }
+
+        const chars: string[] = 'abcdefghijklmnopqrstuvwxyz1234567890&- '.split('');
         let searchArray: string[] = search.split('');
 
         //transposition
@@ -72,27 +88,35 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
             for (let pos = 0; pos < searchArray.length - 1; pos++) {
                 searchArray.splice(pos, 0, searchArray[pos + 1]);
                 searchArray.splice(pos + 2, 1);
-                if (option.toLowerCase().indexOf(searchArray.join('').toLowerCase()) !== -1) {
+                if (testAndReset()) {
                     return true;
                 }
-                searchArray = search.split('');
             }
         }
 
         //deletion
         if (searchArray.length > 1) {
             for (let pos = 0; pos < searchArray.length; pos++) {
-                const deleted: string[] = searchArray.splice(pos, 1);
-                if(option.toLowerCase().indexOf(searchArray.join('').toLowerCase()) !== -1) {
+                if (testAndReset()) {
                     return true;
                 }
-                searchArray.splice(pos, 0, deleted.join(''));
             }
         }
 
         //substitution
+        for (let pos = 0; pos < searchArray.length; pos++) {
+            if (testAndReset(pos)) {
+                return true;
+            }
+        }
 
         //insertion
+        for (let pos = 1; pos < searchArray.length; pos++) {
+            searchArray.splice(pos, 0, ' ');
+            if (testAndReset(pos)) {
+                return true;
+            }
+        }
     }
 
     function fillSearch(option: string) {
