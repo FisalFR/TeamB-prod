@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-export function AlgorithmButtons(props: {href?: string, onClick?:(e: React.MouseEvent) => void, px: string, children: ReactNode, isActive: boolean}) {
+export function AlgorithmButtons(props: {href?: string, onClick?:(e: React.MouseEvent) => void, px: string, children?: ReactNode, isActive: boolean}) {
     const handleClick = (e: React.MouseEvent) => {
         if (props.onClick) {
             e.preventDefault();
