@@ -31,7 +31,7 @@ export async function formFilter(id: string, reqType: string) {
       includeMedicine = true;
       break;
     }
-    case "Gift Delivery": {
+    case "Gift": {
       reqType = "giftRequests";
       includeGift = {
         include: {

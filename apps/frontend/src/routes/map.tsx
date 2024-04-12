@@ -10,12 +10,14 @@ import plus from "../assets/plus.svg";
 import minus from "../assets/minus.svg";
 import Select from "../components/Select.tsx";
 import PathVisual from "../components/map/PathVisual.tsx";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState, useCallback} from "react";
 import axios from "axios";
 import {startEndNodes} from "common/src/pathfinding.ts";
 import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
+import {AlgorithmButtons} from "../components/map/AlgorithmButtons.tsx";
+
 
 export function Map(){
     interface NodeData {
@@ -40,6 +42,9 @@ export function Map(){
     const [showPath, setShowPath] = useState(false);
 
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
+    const [algo, setAlgo] = useState<string>("Astar");
+    const [selectedAlgo, setSelectedAlgo] = useState<string | null>("Astar");
+
 
     const [nodes, setNodes] = useState(["Error accessing map points"]);
 
@@ -66,9 +71,10 @@ export function Map(){
         setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.4)); // Decrease zoom level, min 0.4
     }
 
-    function findPath(start: string, end: string) {
-        const startend = {startNode: start, endNode: end};
-        axios.post("/api/pathfinding", startend,{
+
+    const findPath = useCallback((start: string, end: string) => {
+        const startend = {startNode: start, endNode: end, algorithm: algo};
+        axios.post(`/api/pathfinding/`, startend, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -78,12 +84,11 @@ export function Map(){
                 setFloorMap(response.data.floorMap);
                 setPathNodes(response.data.nodes);
                 setCurrentFloor(response.data.nodes[0].floor);
-            }
-            else {
+            } else {
                 alert("No path with selected nodes");
             }
         });
-    }
+    }, [algo]); // algo is a dependency here
 
     function handleStartChange(e: React.ChangeEvent<HTMLSelectElement>) {
         setRequest({...request, startNode: nodeData[e.target.value].id});
@@ -113,6 +118,13 @@ export function Map(){
         });
     }, []);
 
+    useEffect(() => {
+        if(request.startNode && request.endNode) {
+            findPath(request.startNode, request.endNode);
+        }
+    }, [algo, findPath, request.endNode, request.startNode]);
+
+
     return (
         <>
             <div className="centerContent">
@@ -122,8 +134,9 @@ export function Map(){
                                     scale={zoom} showPath={showPath} floormap={floorMap as Record<string, Node[][]>} nodes={pathNodes}
                                     images={floorImages as Record<string, string>}/>
                     </div>
-                    <div className="absolute top-5 left-5 flex flex-row p-2 bg-white h-fit rounded-2xl items-end">
-                        <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center">
+                    <div
+                        className="absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end">
+                        <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center pt-2 pr-2 pl-2">
                             <img src={from} alt="from" className={"px-1"}/>
                             <Select label="" id="nodeStartSelect" options={nodes}
                                     onChange={handleStartChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}/>
@@ -133,6 +146,17 @@ export function Map(){
                             <Select label="" id="nodeEndSelect" options={nodes}
                                     onChange={handleEndChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}/>
                         </div>
+                        <div className="flex flex-row justify-center mt-2 w-full bg-deep-blue rounded-br-xl rounded-bl-xl font-OpenSans items-center font-bold text-bone-white">
+                            <div className="divide-x divide-solid py-2 flex flex-row">
+                                <AlgorithmButtons px="px-8" onClick={() => {setAlgo("Astar"); setSelectedAlgo("Astar");}} isActive={selectedAlgo === "Astar"}> A* </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={() => {setAlgo("BFS"); setSelectedAlgo("BFS");}} isActive={selectedAlgo === "BFS"}> BFS </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={() => {setAlgo("DFS"); setSelectedAlgo("DFS");}} isActive={selectedAlgo === "DFS"}> DFS </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={() => {setAlgo("DIJKSTRA"); setSelectedAlgo("DIJKSTRA");}} isActive={selectedAlgo === "DIJKSTRA"}> DIJKSTRA </AlgorithmButtons>
+                            </div>
+
+                        </div>
+
+
                     </div>
                     <FloorSelector
                         onClick1={() => setCurrentFloor("L2")}
