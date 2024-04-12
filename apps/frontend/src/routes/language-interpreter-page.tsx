@@ -1,8 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import {LanguageInterpreterTypes} from 'common/src/languageInterpreterTypes.ts';
 import Dropdown from "../components/dropdown.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
+import RadioButton from "../components/RadioButton.tsx";
 
 function LanguageInterpreter(){
     const [request, setRequest] = useState<LanguageInterpreterTypes>({language: "", location: ""});
@@ -101,14 +102,23 @@ function LanguageInterpreter(){
         // use resetActive from Dropdown?
         setCleared(false);
     }
+    function handlePriorityInput(e: ChangeEvent<HTMLInputElement>): void {
+        setRequest({...request, priority: e.target.value});
+    }
+    function handleNameInput(e: ChangeEvent<HTMLInputElement>): void{
+        setRequest({...request, employeeName: e.target.value});
+    }
+    function handleFeedbackInput(e: ChangeEvent<HTMLTextAreaElement>): void {
+        setRequest({...request, additionalComments: e.target.value});
+    }
 
     return (
-        <div className="centerContent flex flex-col">
+        <>
 
+            <div className="centerContent flex flex-col">
 
             <div className="interpreterContent px-50">
                 <div className={submittedWindowVisibility.requestScreen}>
-
 
                     <div className="">
                         <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
@@ -171,9 +181,35 @@ function LanguageInterpreter(){
                                               setInput={handleLocationInput} required={true}
                                               width={"w-80"}/>
                                 </div>
+                                <p className={"text-left font-bold "}>What is the priority of this request?</p>
+                                <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                    <RadioButton value={"Low"} name={"priority"} id={"priority1"}
+                                                 state={request.priority}
+                                                 onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                                    <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
+                                                 state={request.priority}
+                                                 onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                                    <RadioButton value={"High"} name={"priority"} id={"priority3"}
+                                                 state={request.priority}
+                                                 onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                                    <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
+                                                 state={request.priority}
+                                                 onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                                </div>
+                                <p className={"text-left font-bold"}>Employee Name</p>
+                                <input type="text" required
+                                       onChange={handleNameInput} value={request.employeeName}
+                                       placeholder={"Name"}
+                                       className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-100"}/>
+                                <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Additional
+                                    Comments</label>
+                                <textarea id={"feedback"}
+                                          className={"w-full max-w-full h-40 max-h-40   p-1 border-solid border-deep-blue border-2 rounded"}
+                                          onChange={handleFeedbackInput}
+                                          value={request.additionalComments} required={true}
+                                          placeholder="Enter detailed description here..."/>
 
                                 <div className={"formButtons pt-32 flex gap-4 space-x-5 "}>
-
                                     <Button onClick={handleSubmitLanguage} children={"Submit"}/>
                                     <Button onClick={handleClearLanguage} children={"Clear"}/>
                                 </div>
@@ -193,7 +229,7 @@ function LanguageInterpreter(){
                             <Button onClick={handleNewSubmissionLanguage} children="Submit a new request"/>
                         </div>
                         <div className={"text-left"}>
-                            <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
+                        <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
                                 Submission:</h3>
                             <p className={"font-bold"}>What language do you need an interpreter for?</p>
                             <p className={""}>{request.language}</p>
@@ -207,11 +243,11 @@ function LanguageInterpreter(){
 
                 </div>
             </div>
-            <div>
-                <p className={"font-HeadlandOne text-deep-blue"}>Created by Theresa</p>
+                <div>
+                    <p className={"font-HeadlandOne text-deep-blue"}>Created by Theresa</p>
+                </div>
             </div>
-        </div>
-
+        </>
     );
 
 }
