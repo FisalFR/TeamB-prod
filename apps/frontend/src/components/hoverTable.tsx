@@ -41,6 +41,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
 
 
     const [open, setOpen] = useState<boolean>(false);
+    const [openDelete, setOpenDelete] = useState<boolean>(false);
     const[information, setInformation] = useState<string[]>([]);
     const emptyDate: Date = new Date();
 
@@ -129,8 +130,8 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
     }
 
     const formRef = useRef<HTMLFormElement>(null);
-    const [form, setForm] = useState([]);
-    const [formIDOptions, setFormID] = useState<string[]>([]);
+    // const [form, setForm] = useState([]);
+    // const [formIDOptions, setFormID] = useState<string[]>([]);
     const [submitted, setSubmit] = useState<number>(0);
     const [cleared, setCleared] = useState(false);
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
@@ -145,10 +146,10 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
     });
     const [open2, setOpen2] = useState<boolean>(false);
 
-    function handleFormIDAssignment(str: string): void {
-        setCleared(false);
-        setAssignment({...assignment, formID: str});
-    }
+    // function handleFormIDAssignment(str: string): void {
+    //     setCleared(false);
+    //     setAssignment({...assignment, formID: str});
+    // }
 
     function handleStatusAssignment(str: string): void {
         setCleared(false);
@@ -162,12 +163,11 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
 
     useEffect(() => {
         axios.get("/api/csvManager").then((response) => {
-            setForm(response.data.reverse());
+            // setForm(response.data.reverse());
             const formIDStrings = [];
             for (let i = 0; i < response.data.length; i++) {
                 formIDStrings.push(response.data[i].formID);
             }
-            setFormID(formIDStrings);
         });
     }, [submitted]);
 
@@ -182,9 +182,27 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             setOpen2(true);
             setCleared(true);
             setSubmit(submitted + 1); // Spaghetti Code to Update the page
-            console.log(form);
         });
     }
+
+    function handleDelete() {
+        // (formRef.current as HTMLFormElement).requestSubmit();
+        axios.post("/api/csvManager/delete", assignment, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(() => {
+            setOpenDelete(close);
+            setOpen(close);
+            setCleared(true);
+            setSubmit(submitted + 1); // Spaghetti Code to Update the page
+        });
+    }
+
+    function firstDelete(){
+        setOpenDelete(open);
+    }
+
 
 
     return (
@@ -198,7 +216,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             <Modal open={open} onClose={() => setOpen(false) }>
                 <div className="flex flex-row gap-8 p-12 w-fit ">
                     <div>
-                    <h1 className="text-3xl">Information</h1>
+                        <h1 className="text-3xl">Information</h1>
                         <ul className="item-start justify-start leading-8 max-w-100">
                             <li>FormID: {assignment.formID}</li>
                             <li>Type: {assignment.type}</li>
@@ -221,11 +239,6 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                               className="w-[22vw]  flex flex-col items-start p-3 gap-4 pl-5">
                             <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start"}>Assign Staff
                                 Request</h2>
-                            <p className={"text-left font-bold"}>Form ID</p>
-                            <Dropdown options={formIDOptions} placeholder={"Choose Form ID"}
-                                      name={"formIDAssignment"}
-                                      id={"dropdown4"} value={cleared}
-                                      setInput={handleFormIDAssignment} required={true}/>
 
 
                             <p className={"text-left font-bold"}>Request Status</p>
@@ -239,19 +252,27 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                             <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"} name={"staffAssignment"}
                                       id={"dropdown6"} value={cleared}
                                       setInput={handleStaffAssignment} required={true}/>
-
-                            <div className={"flex items-center pt-2 pb-4"}>
+                            <div className={"flex flex-col pt-8 pb-4 pr-4 w-full"}>
                                 <LongButton onClick={handleSubmit} children={"Submit"}/>
-                                <Modal open={open2} onClose={() => setOpen2(false)}>
-                                    <div className="flex flex-col gap-4">
-                                        <h1 className="text-2xl">Success!</h1>
-                                        <p>
-                                            Assigned
-                                        </p>
-                                    </div>
-                                </Modal>
                             </div>
                         </form>
+                        <div className={"flex flex-col p-3 gap-4 pl-5 pb-4 pr-7 w-full "}>
+                            <LongButton onClick={firstDelete} children={"Delete Request"}/>
+                        </div>
+                        <Modal open={open2} onClose={() => setOpen2(false)}>
+                            <div className="flex flex-col gap-4">
+                                <h1 className="text-2xl">Success!</h1>
+                                <p>
+                                    Assigned
+                                </p>
+                            </div>
+                        </Modal>
+                        <Modal open={openDelete} onClose={() => setOpenDelete(false)}>
+                            <div className="flex flex-col gap-4">
+                                <h1 className="text-2xl">Are you sure?</h1>
+                                <LongButton onClick={handleDelete} children={"Delete Request"}/>
+                            </div>
+                        </Modal>
                     </div>
                 </div>
             </Modal>

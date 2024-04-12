@@ -21,7 +21,7 @@ export default {
         'OpenSans': ['Open Sans', 'sans-serif'],
       },
       spacing: {
-        'databasetable': '47.2rem',
+        'databasetable': '38rem',
         '100' : '26.15rem',
         '50': '12.29rem',
         '9': '2.4rem',

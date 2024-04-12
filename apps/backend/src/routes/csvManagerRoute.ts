@@ -54,14 +54,18 @@ router.post("/filter", async (req, res) => {
     whereCondition.assignee = { search: formType.assignee };
   }
   if (formType.priority !== "") {
+    console.log(formType.priority);
     whereCondition.priority = { search: formType.priority };
+    console.log(whereCondition.priority);
   }
 
   try {
+    console.log(whereCondition);
     const filteredForm = await client.forms.findMany({
       where: whereCondition,
       orderBy: { formID: "desc" },
     });
+    console.log(filteredForm);
     res.status(200).json(filteredForm);
   } catch (error) {
     console.error("Error filtering forms:", error);
@@ -83,6 +87,57 @@ router.post("/insert", async (req, res) => {
   res.status(200).json(updateUser);
 });
 
+router.post("/delete", async (req, res) => {
+  const formType: FormType = req.body;
+  switch (formType.type) {
+    case "Maintenance":
+      await client.maintenances.delete({
+        where: {
+          maintenanceRequest: formType.formID,
+        },
+      });
+      break;
+    case "Language":
+      await client.languageInterpreterRequests.delete({
+        where: {
+          languageRequest: formType.formID,
+        },
+      });
+      break;
+    case "Medicine":
+      await client.medicineRequests.delete({
+        where: {
+          medicineRequest: formType.formID,
+        },
+      });
+      break;
+    case "Sanitation":
+      await client.sanitationRequests.delete({
+        where: {
+          sanitationRequest: formType.formID,
+        },
+      });
+      break;
+    case "Gift":
+      await client.giftItem.deleteMany({
+        where: {
+          cart: formType.formID,
+        },
+      });
+      await client.giftRequests.delete({
+        where: {
+          giftRequest: formType.formID,
+        },
+      });
+      break;
+  }
+  const updateUser = await client.forms.delete({
+    where: {
+      formID: formType.formID,
+    },
+  });
+  res.status(200).json(updateUser);
+});
 router.post("/uploadNodes", function (req, res) {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.send("No files were uploaded.");

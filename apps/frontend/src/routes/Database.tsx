@@ -62,6 +62,7 @@ function LogBook() {
     }).then((response) => {
         const reversedData = response.data.reverse();
         setForm(reversedData);
+        console.log(reversedData);
     });
     }, [request]);
 
@@ -98,7 +99,7 @@ function LogBook() {
     }
 
     return (
-            <div className="flex py-10">
+            <div className="flex pt-8">
                 {/*Form to filter current requests*/}
                 <div className=" h-full mx-3 space-y-7 my-3">
                     <div className="rounded-2xl bg-deep-blue bg-opacity-5">
