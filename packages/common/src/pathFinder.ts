@@ -43,19 +43,37 @@ class Path {
 
 
   // Heuristics
-    heuristic(a: Node, b: Node): number {
-      const endFloor: number  = Path.convertFloor(a.floor);
-      const nextFloor: number = Path.convertFloor(b.floor);
+    heuristic(endNode: Node, nextNode: Node, currentNode:Node): number {
+      const endFloor: number  = Path.convertFloor(endNode.floor);
+      const nextFloor: number = Path.convertFloor(nextNode.floor);
 
-      const EuclideanDistance = Math.sqrt((a.ycoord - b.ycoord) ** 2 + (a.xcoord - b.xcoord) ** 2);
+      const EuclideanDistance = Math.sqrt((endNode.ycoord - nextNode.ycoord) ** 2 + (endNode.xcoord - nextNode.xcoord) ** 2);
+        if(currentNode.nodeType === "ELEV"){
+            console.log("I'm on an elevator");
+        }
+        if(currentNode.nodeType === "STAI"){
+            console.log("I'm on a staircase");
+        }
+
+        const floorDifference = Math.abs(endFloor - nextFloor);
 
 
-      if((b.nodeType=== "ELEV" || b.nodeType === "STAI")){
+    // If we approach an elevator and we're not on the right floor, prioritize taking that elevator
+    // If we are on an elevator alreayd continue as normal
+      if((nextNode.nodeType === "ELEV" && currentNode.nodeType !== "ELEV")){
           if(nextFloor !== endFloor){
-              return EuclideanDistance/100;
+                return EuclideanDistance + (floorDifference * 100);
           } else if (nextFloor === endFloor){
               return EuclideanDistance + 100000;
           }
+      }
+
+      if((nextNode.nodeType === "STAI" && currentNode.nodeType !== "STAI")){
+            if(nextFloor !== endFloor){
+                return EuclideanDistance + (floorDifference * 100);
+            } else if (nextFloor === endFloor){
+                return EuclideanDistance + 100000;
+            }
       }
 
       if (endFloor === nextFloor){
@@ -70,7 +88,6 @@ class Path {
 
   // Function to return the path from startNode to endNode using A* algorithm
     AStar(startNode: Node, endNode: Node): Node[] {
-        console.log("I MADE IT TO A STAR");
         const frontier: PriorityQueue<Node> = new PriorityQueue<Node>();
         frontier.insert(startNode, 0);
         const cameFrom = new Map();
@@ -87,7 +104,7 @@ class Path {
                 const newCost = costSoFar.get(current)! + 1;
                 if (!costSoFar.has(next) || newCost < costSoFar.get(next)!) {
                     costSoFar.set(next, newCost);
-                    const priority = newCost + this.heuristic(endNode, next);
+                    const priority = newCost + this.heuristic(endNode, next, current);
                     frontier.insert(next, priority);
                     cameFrom.set(next, current);
                 }
@@ -104,7 +121,6 @@ class Path {
 
   // Function to return the path from startNode to endNode using DFS
   DFS(startNode: Node, endNode: Node): Node[] {
-    console.log("I MADE IT TO DFS");
     const frontier: Stack<Node> = new Stack<Node>();
     frontier.push(startNode);
     const cameFrom = new Map();
@@ -132,7 +148,6 @@ class Path {
 
   // Function to return the path from startNode to endNode using BFS
   BFS(startNode: Node, endNode: Node): Node[] {
-    console.log("I MADE IT TO BFS");
     const frontier: Queue<Node> = new Queue<Node>();
     frontier.enqueue(startNode);
     const cameFrom = new Map();
