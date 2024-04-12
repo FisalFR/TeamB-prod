@@ -43,7 +43,7 @@ export function Map(){
 
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
     const [algo, setAlgo] = useState<string>("Astar");
-    const [selectedAlgo, setSelectedAlgo] = useState<string | null>(null);
+    const [selectedAlgo, setSelectedAlgo] = useState<string | null>("Astar");
 
 
     const [nodes, setNodes] = useState(["Error accessing map points"]);
