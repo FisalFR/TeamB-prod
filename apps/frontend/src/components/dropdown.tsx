@@ -46,11 +46,15 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
             </div>);
     }
     function getBolded(option: string) {
-        const searchInd = option.toLowerCase().indexOf(search.toLowerCase());
-        const firstHalf = option.substring(0,searchInd);
-        const bolded: string = option.substring(searchInd, searchInd + search.length);
-        const lastHalf = option.substring(searchInd + search.length, option.length);
-        return <span>{firstHalf}<b>{bolded}</b>{lastHalf}</span>;
+        if (option.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+            const searchInd = option.toLowerCase().indexOf(search.toLowerCase());
+            const firstHalf = option.substring(0,searchInd);
+            const bolded: string = option.substring(searchInd, searchInd + search.length);
+            const lastHalf = option.substring(searchInd + search.length, option.length);
+            return <span>{firstHalf}<b>{bolded}</b>{lastHalf}</span>;
+        } else {
+            return <span><i>{option}</i></span>;
+        }
     }
 
     function filterList(options : string[], search : string) {
@@ -64,7 +68,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
         let searchArray: string[] = search.split('');
 
         //transposition
-        if(searchArray.length > 1) {
+        if (searchArray.length > 1) {
             for (let pos = 0; pos < searchArray.length - 1; pos++) {
                 searchArray.splice(pos, 0, searchArray[pos + 1]);
                 searchArray.splice(pos + 2, 1);
@@ -76,6 +80,15 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
         }
 
         //deletion
+        if (searchArray.length > 1) {
+            for (let pos = 0; pos < searchArray.length; pos++) {
+                const deleted: string[] = searchArray.splice(pos, 1);
+                if(option.toLowerCase().indexOf(searchArray.join('').toLowerCase()) !== -1) {
+                    return true;
+                }
+                searchArray.splice(pos, 0, deleted.join(''));
+            }
+        }
 
         //substitution
 
