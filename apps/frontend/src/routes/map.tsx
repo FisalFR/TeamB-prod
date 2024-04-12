@@ -16,6 +16,8 @@ import {startEndNodes} from "common/src/pathfinding.ts";
 import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
+import {NavLink} from "../components/NavLink.tsx";
+
 
 export function Map(){
     interface NodeData {
@@ -40,6 +42,7 @@ export function Map(){
     const [showPath, setShowPath] = useState(false);
 
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
+    const [algo, setAlgo] = useState<string>("Astar");
 
     const [nodes, setNodes] = useState(["Error accessing map points"]);
 
@@ -66,9 +69,10 @@ export function Map(){
         setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.4)); // Decrease zoom level, min 0.4
     }
 
+
     function findPath(start: string, end: string) {
-        const startend = {startNode: start, endNode: end};
-        axios.post("/api/pathfinding", startend,{
+        const startend = {startNode: start, endNode: end, algorithm: algo};
+        axios.post(`/api/pathfinding/`, startend,{
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -83,7 +87,6 @@ export function Map(){
                 alert("No path with selected nodes");
             }
         });
-    }
 
     function handleStartChange(e: React.ChangeEvent<HTMLSelectElement>) {
         setRequest({...request, startNode: nodeData[e.target.value].id});
@@ -122,8 +125,9 @@ export function Map(){
                                     scale={zoom} showPath={showPath} floormap={floorMap as Record<string, Node[][]>} nodes={pathNodes}
                                     images={floorImages as Record<string, string>}/>
                     </div>
-                    <div className="absolute top-5 left-5 flex flex-row p-2 bg-white h-fit rounded-2xl items-end">
-                        <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center">
+                    <div
+                        className="absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end">
+                        <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center pt-2 pr-2 pl-2">
                             <img src={from} alt="from" className={"px-1"}/>
                             <Select label="" id="nodeStartSelect" options={nodes}
                                     onChange={handleStartChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}/>
@@ -133,6 +137,17 @@ export function Map(){
                             <Select label="" id="nodeEndSelect" options={nodes}
                                     onChange={handleEndChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}/>
                         </div>
+                        <div className="flex flex-row justify-center mt-2 w-full bg-deep-blue rounded-br-xl rounded-bl-xl font-OpenSans items-center font-bold text-bone-white">
+                            <div className="divide-x divide-solid py-2 flex flex-row">
+                                <NavLink px="px-8" onClick={() => setAlgo("Astar")} > A* </NavLink>
+                                <NavLink px="px-8" onClick={() => setAlgo("BFS")}> BFS </NavLink>
+                                <NavLink px="px-8" onClick={() => setAlgo("DFS")}> DFS </NavLink>
+                                <NavLink px="px-8"> DIJKSTRA </NavLink>
+                            </div>
+
+                        </div>
+
+
                     </div>
                     <FloorSelector
                         onClick1={() => setCurrentFloor("L2")}
