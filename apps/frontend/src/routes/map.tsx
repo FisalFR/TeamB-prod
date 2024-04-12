@@ -107,7 +107,6 @@ export function Map(){
             }
             setNodes(nodeStrings);
             setNodeData(tempNodeData);
-            setRequest({startNode: tempNodeData[nodeStrings[0] as keyof NodeData].id, endNode: tempNodeData[nodeStrings[0] as keyof NodeData].id});
 
             setPathNodes([response.data[0], response.data[response.data.length-1]]);
             setShowPath(false);
