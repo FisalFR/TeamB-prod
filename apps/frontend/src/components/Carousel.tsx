@@ -1,54 +1,29 @@
-// Carousel.tsx
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 
-const Carousel = ({ images }) => {
+const Carousel = ({ content, autoPlay, interval }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [direction, setDirection] = useState(0);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setDirection(1); // Move to the next image
-            setCurrentIndex((currentIndex) => (currentIndex + 1) % images.length);
-        }, 3000); // Change every 3 seconds
-
-        return () => clearInterval(interval);
-    }, [images.length]);
-
-    const slideVariants = {
-        enter: (direction) => ({
-            x: direction > 0 ? '100%' : '-100%', // Slide from right or left
-            opacity: 0,
-            transition: { duration: 1.5, ease: 'easeInOut' } // Slower transition for smoothness
-        }),
-        center: {
-            zIndex: 1,
-            x: 0,
-            opacity: 1,
-            transition: { duration: 1.5, ease: 'easeInOut' }
-        },
-        exit: (direction) => ({
-            zIndex: 0,
-            x: direction < 0 ? '100%' : '-100%', // Exit to right or left
-            opacity: 0, // Ensures that the image fades out smoothly
-            transition: { duration: 1.5, ease: 'easeInOut' }
-        }),
-    };
+        if (autoPlay) {
+            const timeout = setInterval(() => {
+                setCurrentIndex((current) => (current + 1) % content.length);
+            }, interval);
+            return () => clearInterval(timeout);
+        }
+    }, [autoPlay, interval, content.length]);
 
     return (
-        <div className="carousel-container relative overflow-hidden" style={{ width: '100%', height: '100%' }}>
-            <AnimatePresence initial={false} custom={direction}>
-                <motion.img
-                    key={currentIndex}
-                    src={images[currentIndex]}
-                    custom={direction}
-                    variants={slideVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    className="w-full h-full absolute object-cover"
-                />
-            </AnimatePresence>
+        <div className="relative w-full select-none">
+            {content.map((item, index) => (
+                <div key={index} className={`flex items-center space-x-4 ${currentIndex === index ? 'flex' : 'hidden'}`} style={{ height: '100%' }}>
+                    <img src={item.image.src} alt={item.image.alt} className="w-1/2 h-1/2 object-cover" />
+                    <div className="w-1/2 h-1/2 p-lg">
+                        <h4 className="text-xl font-bold">{item.text.title}</h4>
+                        <p>{item.text.description}</p>
+                        <button className="mt-4 text-blue-500">{item.text.callToAction}</button>
+                    </div>
+                </div>
+            ))}
         </div>
     );
 };

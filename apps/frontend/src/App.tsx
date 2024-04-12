@@ -82,7 +82,7 @@ function App() {
 
 
                         {
-                            path:"/Corousel",
+                            path:"/Carousel",
                             element:<CarouselPage/>,
 
 
