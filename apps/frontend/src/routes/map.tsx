@@ -16,7 +16,7 @@ import {startEndNodes} from "common/src/pathfinding.ts";
 import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
-import {NavLink} from "../components/NavLink.tsx";
+import {AlgorithmButtons} from "../components/map/AlgorithmButtons.tsx";
 
 
 export function Map(){
@@ -43,6 +43,8 @@ export function Map(){
 
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
     const [algo, setAlgo] = useState<string>("Astar");
+    const [selectedAlgo, setSelectedAlgo] = useState<string | null>(null);
+
 
     const [nodes, setNodes] = useState(["Error accessing map points"]);
 
@@ -122,6 +124,7 @@ export function Map(){
         }
     }, [algo, findPath, request.endNode, request.startNode]);
 
+
     return (
         <>
             <div className="centerContent">
@@ -145,10 +148,10 @@ export function Map(){
                         </div>
                         <div className="flex flex-row justify-center mt-2 w-full bg-deep-blue rounded-br-xl rounded-bl-xl font-OpenSans items-center font-bold text-bone-white">
                             <div className="divide-x divide-solid py-2 flex flex-row">
-                                <NavLink px="px-8" onClick={() => setAlgo("Astar")} > A* </NavLink>
-                                <NavLink px="px-8" onClick={() => setAlgo("BFS")}> BFS </NavLink>
-                                <NavLink px="px-8" onClick={() => setAlgo("DFS")}> DFS </NavLink>
-                                <NavLink px="px-8"> DIJKSTRA </NavLink>
+                                <AlgorithmButtons px="px-8" onClick={() => {setAlgo("Astar"); setSelectedAlgo("Astar");}} isActive={selectedAlgo === "Astar"}> A* </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={() => {setAlgo("BFS"); setSelectedAlgo("BFS");}} isActive={selectedAlgo === "BFS"}> BFS </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={() => {setAlgo("DFS"); setSelectedAlgo("DFS");}} isActive={selectedAlgo === "DFS"}> DFS </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={() => {setAlgo("DIJKSTRA"); setSelectedAlgo("DIJKSTRA");}} isActive={selectedAlgo === "DIJKSTRA"}> DIJKSTRA </AlgorithmButtons>
                             </div>
 
                         </div>
