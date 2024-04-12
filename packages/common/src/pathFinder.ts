@@ -46,20 +46,11 @@ class Path {
     heuristic(endNode: Node, nextNode: Node, currentNode:Node): number {
       const endFloor: number  = Path.convertFloor(endNode.floor);
       const nextFloor: number = Path.convertFloor(nextNode.floor);
-
       const EuclideanDistance = Math.sqrt((endNode.ycoord - nextNode.ycoord) ** 2 + (endNode.xcoord - nextNode.xcoord) ** 2);
-        if(currentNode.nodeType === "ELEV"){
-            console.log("I'm on an elevator");
-        }
-        if(currentNode.nodeType === "STAI"){
-            console.log("I'm on a staircase");
-        }
+      const floorDifference = Math.abs(endFloor - nextFloor);
 
-        const floorDifference = Math.abs(endFloor - nextFloor);
-
-
-    // If we approach an elevator and we're not on the right floor, prioritize taking that elevator
-    // If we are on an elevator alreayd continue as normal
+      // If we approach an ELEVATOR, prioritize if we're on the wrong floor
+      // Otherwise,  DON'T TAKE THE ELEVATOR
       if((nextNode.nodeType === "ELEV" && currentNode.nodeType !== "ELEV")){
           if(nextFloor !== endFloor){
                 return EuclideanDistance + (floorDifference * 100);
@@ -68,6 +59,8 @@ class Path {
           }
       }
 
+        // If we approach a STAIR, prioritize if we're on the wrong floor
+        // Otherwise,  DON'T TAKE THE STAIRS
       if((nextNode.nodeType === "STAI" && currentNode.nodeType !== "STAI")){
             if(nextFloor !== endFloor){
                 return EuclideanDistance + (floorDifference * 100);
