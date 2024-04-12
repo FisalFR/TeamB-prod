@@ -21,12 +21,19 @@ import caramels from "../assets/Gift_Images/caramels.jpeg";
 import {giftRequest} from "common/src/giftRequest.ts";
 import axios from "axios";
 import Dropdown from "../components/dropdown.tsx";
+import Calendar from 'react-calendar';
+import '../Calendar.css';
+
+
+type ValuePiece = Date | null;
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 function GiftDelivery() {
     const formRef = useRef<HTMLFormElement>(null);
     const [cart, setCart] = useState<giftItem[]>([]);
     const [locationOptions, setLocationOptions] = useState<string[]>([]);
     const [cleared, setCleared] = useState(false);
+    const [value, onChange] = useState<Value>(new Date());
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         formScreen: "block",
         submittedScreen: "hidden"
@@ -184,8 +191,8 @@ function GiftDelivery() {
                                 e.preventDefault();
                             }}>
                                 <br/><br/>
-                                <div className="flex flex-wrap mb-4 px-20 gap-20 h-64">
-                                    <div className="flex-col items-start flex-grow-1 w-1/3 h-64">
+                                <div className="flex flex-wrap mb-4 px-20 gap-20 h-fit">
+                                    <div className="flex-grid items-start flex-grow-1 w-1/3 h-full">
 
                                         <label htmlFor="message"
                                                className="font-OpenSans text-md font-bold text-Ash-black ">
@@ -195,9 +202,12 @@ function GiftDelivery() {
                                                   onChange={handleMessage}
                                                   className="border-solid border-deep-blue border-2 rounded p-1 px-2 w-full h-56">
                         </textarea>
+                                        <div>
+                                            <Calendar onChange={onChange} value={value}/>
+                                        </div>
                                     </div>
                                     <div className="w-1/5 centerContent flex-col justify-start items-start h-3/4 gap-2">
-                                        <label htmlFor="receiverName"
+                                    <label htmlFor="receiverName"
                                                className="font-OpenSans font-bold text-md text-Ash-black">To: </label>
                                         <input type="text" id="receiverName" name="receiverName"
                                                placeholder={"Recipient's Name"}
@@ -224,27 +234,29 @@ function GiftDelivery() {
                                         </div>
 
                                     </div>
-                                    <div className="centerContent w-1/3 h-full">
+                                    <div className="centerContent w-1/3">
 
-                                        <div className=" bg-white rounded-3xl h-full w-full object-cover overflow-hidden">
-                                            <div className=" bg-deep-blue border-rounded w-full">
+                                    <div
+                                            className=" bg-white rounded-3xl w-full object-cover overflow-hidden h-full">
+                                            <div className=" bg-deep-blue border-rounded w-full ">
                                                 <h2 className="text-2xl text-bone-white font-bold w-full py-2">
                                                     Cart
                                                 </h2>
                                             </div>
 
                                             <div
-                                                className="text-xl h-3/5 text-Ash-black text-bold">
+                                                className="text-xl  text-Ash-black text-bold">
 
-                                                <div className="w-full h-4/5 overflow-y-scroll">
+                                                <div className="top-5 w-full h-4/5 overflow-y-scroll py-3">
                                                     {createCart()}
                                                 </div>
                                             </div>
 
-                                                <div className="bottom-5 h-full relative text-xl text-Ash-black text-bold flex-end">
+                                            <div
+                                                className=" align-bottom bottom-5 text-xl text-Ash-black text-bold">
                                                 <p>Total Cost: ${calcCost()}</p>
-                                            <Button onClick={handleSubmit} children={"Purchase"}/>
-                                                </div>
+                                                <Button onClick={handleSubmit} children={"Purchase"}/>
+                                            </div>
                                         </div>
 
                                     </div>
