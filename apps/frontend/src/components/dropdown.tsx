@@ -1,6 +1,7 @@
 
 import {ChangeEvent, useRef, useState} from 'react';
 import '../App.css';
+import {HTMLInputElement} from "happy-dom";
 
 function Dropdown(props: { options: string[]; placeholder: string; name: string; id: string; setInput:(str: string) => void; value : boolean; required:boolean; width:string}) {
 
@@ -53,9 +54,32 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     }
 
     function filterList(options : string[], search : string) {
-        return options.filter( (option) =>
-            option.toLowerCase().indexOf(search.toLowerCase()) > -1
-        );
+        return options.filter((option) => fuzzySearch(option, search));
+    }
+
+    function fuzzySearch(option: string, search: string) {
+        if(option.toLowerCase().indexOf(search.toLowerCase()) !== -1) return true;
+
+        //const alphabet: string[] = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        let searchArray: string[] = search.split('');
+
+        //transposition
+        if(searchArray.length > 1) {
+            for (let pos = 0; pos < searchArray.length - 1; pos++) {
+                searchArray.splice(pos, 0, searchArray[pos + 1]);
+                searchArray.splice(pos + 2, 1);
+                if (option.toLowerCase().indexOf(searchArray.join('').toLowerCase()) !== -1) {
+                    return true;
+                }
+                searchArray = search.split('');
+            }
+        }
+
+        //deletion
+
+        //substitution
+
+        //insertion
     }
 
     function fillSearch(option: string) {
