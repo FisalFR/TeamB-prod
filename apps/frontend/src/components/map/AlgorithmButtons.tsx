@@ -9,7 +9,7 @@ export function AlgorithmButtons(props: {href?: string, onClick?:(e: React.Mouse
     };
 
     const activeClass = "w-[calc(50%+16px)] h-1 bg-gold-yellow transition-all";
-    const inactiveClass = "w-0 h-1 bg-gold-yellow transition-all";
+    const inactiveClass = "w-0 h-1 bg-white transition-all group-hover:w-[calc(50%+16px)]";
 
     return <div className={`${props.px}`}>
         <p className="py-1 relative group font-OpenSans items-center font-bold text-bone-white">
