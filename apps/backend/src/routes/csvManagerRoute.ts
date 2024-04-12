@@ -122,6 +122,31 @@ router.post("/filter", async (req, res) => {
   }
 });
 
+// router.post("/filter", async (req, res) => {
+//   const formType: FormType = req.body;
+//   if (
+//     formType.status !== "" &&
+//     formType.type !== "" &&
+//     formType.assignee !== "" &&
+//     formType.formID !== "" &&
+//     formType.location !== "" &&
+//     formType.dateCreated !== "" &&
+//       formType.priority !== ""
+//   ) {
+//     const filteredForm = await client.forms.findMany({
+//       where: {
+//         status: { search: formType.status },
+//         type: { search: formType.type },
+//         assignee: { search: formType.assignee },
+//       },
+//       orderBy: {
+//         formID: "desc",
+//       },
+//     });
+//     res.status(200).json(filteredForm);
+//   }
+// });
+
 router.post("/insert", async (req, res) => {
   const formType: FormType = req.body;
   const updateUser = await client.forms.update({

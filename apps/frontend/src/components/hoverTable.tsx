@@ -54,6 +54,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             status: "",
             assignee: "",
             dateCreated: emptyDate,
+            priority: "",
             maintenances: [],
             language: [],
             sanitation: [],

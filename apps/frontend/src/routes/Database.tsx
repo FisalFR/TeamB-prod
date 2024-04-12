@@ -14,7 +14,8 @@ function LogBook() {
         location: "",
         status: "",
         assignee: "",
-        dateCreated: emptyDate
+        dateCreated: emptyDate,
+        priority: ""
     });
     const [cleared, setCleared] = useState(false);
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
@@ -89,8 +90,8 @@ function LogBook() {
                 {/*Actual Database Table starts here*/}
                 <div
                     className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable overflow-auto mt-3">
-                    <HoverTable data={form} headings={["Form ID", "Type", "Location", "Status", "Assignee", "Date Created"]}
-                           keys={["formID", "type", "location", "status", "assignee", "dateCreated"]}/>
+                    <HoverTable data={form} headings={["Form ID", "Type", "Location", "Status", "Assignee", "Date Created", "priority"]}
+                           keys={["formID", "type", "location", "status", "assignee", "dateCreated", "priority"]}/>
                 </div>
 
 </div>
