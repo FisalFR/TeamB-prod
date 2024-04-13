@@ -178,6 +178,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
         }).then(() => {
             setCleared(true);
             setSubmit(submitted + 1); // Spaghetti Code to Update the page
+            setOpen(close);
             props.setDataUpdated(true);
         });
     }
