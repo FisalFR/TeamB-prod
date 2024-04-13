@@ -24,6 +24,8 @@ router.post("/", async (req, res) => {
   const finalPath: Path = new Path();
   finalPath.nodeList = await client.nodes.findMany();
   finalPath.edgeList = await client.edges.findMany();
+  const algorithm = req.body.algorithm;
+  console.log(algorithm);
 
   finalPath.generateNodeMap();
   const pathfinding: startEndNodes = req.body;
@@ -31,12 +33,30 @@ router.post("/", async (req, res) => {
   const node1: Node = finalPath.nodeMap.get(pathfinding.startNode)!;
   const node2: Node = finalPath.nodeMap.get(pathfinding.endNode)!;
 
-  const path = finalPath.AStar(node1, node2); // Making the path
-  // Making the path into a list of coordinates
-  const nodeCoords = finalPath.AStar(node1, node2).map((node) => {
-    //return node.nodeID;
-    return [node.xcoord, node.ycoord];
-  });
+  let path: Node[] = [];
+  let nodeCoords: number[][] = [];
+  switch (algorithm) {
+    case "Astar":
+      path = finalPath.AStar(node1, node2);
+      nodeCoords = finalPath.AStar(node1, node2).map((node) => {
+        return [node.xcoord, node.ycoord];
+      });
+      break;
+    case "BFS":
+      path = finalPath.BFS(node1, node2);
+      nodeCoords = finalPath.BFS(node1, node2).map((node) => {
+        return [node.xcoord, node.ycoord];
+      });
+      break;
+    case "DFS":
+      path = finalPath.DFS(node1, node2);
+      nodeCoords = finalPath.DFS(node1, node2).map((node) => {
+        return [node.xcoord, node.ycoord];
+      });
+      break;
+    default:
+      return res.status(400).send({ error: "Invalid algorithm" });
+  }
 
   // Section to return a map of Floors and their respective continuous path fragments
   const floorMap = new Map<string, Node[][]>();

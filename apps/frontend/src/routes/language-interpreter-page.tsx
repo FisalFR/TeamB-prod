@@ -1,8 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import {LanguageInterpreterTypes} from 'common/src/languageInterpreterTypes.ts';
 import Dropdown from "../components/dropdown.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
+import RadioButton from "../components/RadioButton.tsx";
 
 function LanguageInterpreter(){
     const [request, setRequest] = useState<LanguageInterpreterTypes>({language: "", location: ""});
@@ -101,14 +102,23 @@ function LanguageInterpreter(){
         // use resetActive from Dropdown?
         setCleared(false);
     }
+    function handlePriorityInput(e: ChangeEvent<HTMLInputElement>): void {
+        setRequest({...request, priority: e.target.value});
+    }
+    function handleNameInput(e: ChangeEvent<HTMLInputElement>): void{
+        setRequest({...request, employeeName: e.target.value});
+    }
+    function handleFeedbackInput(e: ChangeEvent<HTMLTextAreaElement>): void {
+        setRequest({...request, additionalComments: e.target.value});
+    }
 
     return (
-        <div className="centerContent flex flex-col">
+        <>
 
+            <div className="centerContent flex flex-col">
 
             <div className="interpreterContent px-50">
                 <div className={submittedWindowVisibility.requestScreen}>
-
 
                     <div className="">
                         <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
@@ -143,43 +153,83 @@ function LanguageInterpreter(){
                                 to be requested through hospital administration.
                             </p>
                             <br/>
-                            <h2 className=" float-left inline-block font-bold">What language do you need an interpreter
-                                for?</h2>
-                            <h2 className=" float-right inline-block font-bold">What room do you need the
-                                interpreter?</h2>
-                            <br/>
+
                             <form ref={formRef} onSubmit={e => {
                                 e.preventDefault();
-                            }}>
-
-                                <div
-                                    className=" float-left inline-block border-solid border-deep-blue border-2 rounded my-3">
-                                    <Dropdown options={languages} placeholder={"Languages"} name={"languagesDropdown"}
-                                              id={"dropdown2"} value={cleared}
-                                              setInput={handleLanguageInput} required={true}
-                                              width={"w-96"}/>
-
+                            }} className="flex flex-col">
+                                <div>
+                                    <p className={"text-left font-bold"}>Employee Name</p>
+                                    <input type="text" required
+                                           onChange={handleNameInput} value={request.employeeName}
+                                           placeholder={"Name"}
+                                           className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-100"}/>
                                 </div>
+                                <br/>
+                                <div className="flex justify-between">
+                                    <div className="">
+                                        <label className="float-left font-bold"> What language do you need an
+                                            interpreter for?</label>
+                                        <div
+                                            className=" float-left border-solid border-deep-blue border-2 rounded">
+                                            <Dropdown options={languages} placeholder={"Languages"}
+                                                      name={"languagesDropdown"}
+                                                      id={"dropdown2"} value={cleared}
+                                                      setInput={handleLanguageInput} required={true}
+                                                      width={"w-100"}/>
 
-
-                                <div
-                                    className=" float-right inline-block border-solid border-deep-blue border-2 rounded my-3">
-
-                                    <Dropdown options={locationOptions} placeholder={"Location"}
-                                              name={"locationsDropdown"}
-                                              id={"dropdown3"} value={cleared}
-                                              setInput={handleLocationInput} required={true}
-                                              width={"w-80"}/>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col justify-items-start">
+                                        <label className="flex justify-start font-bold">What room do you need the
+                                            interpreter?</label>
+                                        <div
+                                            className=" float-start inline-block border-solid border-deep-blue border-2 rounded">
+                                            <Dropdown options={locationOptions} placeholder={"Location"}
+                                                      name={"locationsDropdown"}
+                                                      id={"dropdown3"} value={cleared}
+                                                      setInput={handleLocationInput} required={true}
+                                                      width={"w-100"}/>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div className={"formButtons pt-32 flex gap-4 space-x-5 "}>
-
+                                <br/>
+                                <div className="flex justify-between">
+                                    <div className="w-fit">
+                                        <p className={"text-left font-bold "}>What is the priority of this request?</p>
+                                        <div className={"border-solid border-deep-blue border-2 rounded "}>
+                                            <RadioButton value={"Low"} name={"priority"} id={"priority1"}
+                                                         state={request.priority}
+                                                         onChange={handlePriorityInput} required={true}
+                                                         width={"w-100"}/>
+                                            <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
+                                                         state={request.priority}
+                                                         onChange={handlePriorityInput} required={true}
+                                                         width={"w-100"}/>
+                                            <RadioButton value={"High"} name={"priority"} id={"priority3"}
+                                                         state={request.priority}
+                                                         onChange={handlePriorityInput} required={true}
+                                                         width={"w-100"}/>
+                                            <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
+                                                         state={request.priority}
+                                                         onChange={handlePriorityInput} required={true}
+                                                         width={"w-100"}/>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Additional
+                                            Comments</label>
+                                        <textarea id={"feedback"}
+                                                  className={"w-100 max-w-full h-40 max-h-40 p-1 border-solid border-deep-blue border-2 rounded"}
+                                                  onChange={handleFeedbackInput}
+                                                  value={request.additionalComments} required={true}
+                                                  placeholder="Enter detailed description here..."/>
+                                    </div>
+                                </div>
+                                <div className="formButtons pt-10 flex gap-4 space-x-5">
                                     <Button onClick={handleSubmitLanguage} children={"Submit"}/>
                                     <Button onClick={handleClearLanguage} children={"Clear"}/>
                                 </div>
-
                             </form>
-
                         </div>
                     </div>
 
@@ -207,11 +257,11 @@ function LanguageInterpreter(){
 
                 </div>
             </div>
-            <div>
-                <p className={"font-HeadlandOne text-deep-blue"}>Created by Theresa</p>
+                <div>
+                    <p className={"font-HeadlandOne text-deep-blue"}>Created by Theresa</p>
+                </div>
             </div>
-        </div>
-
+        </>
     );
 
 }
