@@ -43,17 +43,17 @@ export function MapEditor(){
     const {nodes,nodeMap} = useNodes();
     const {edges} = useEdges();
     return (
-        <div className="w-screen h-screen self-center"> {/* Add relative positioning here */}
+        <div className="w-screen h-screen self-center overflow-hidden"> {/* Add relative positioning here */}
             <TransformWrapper
-                initialScale = {1.05}
-                minScale={1.05}
+                initialScale = {1.45}
+                minScale={1.45}
                 maxScale={4.5}
                 centerOnInit={true}
                 disablePadding={true}>
                 <TransformComponent>
-                        <svg className="w-screen h-full " viewBox={"0 0 5000 3400"}>
+                        <svg className="w-screen h-screen" viewBox={"0 0 5000 3400"}>
                             <image xlinkHref={floorImages[currentFloor]} width={"100%"} height={"100%"}
-                                   key={JSON.stringify(floorImages[currentFloor])} preserveAspectRatio="none"></image>
+                                   key={JSON.stringify(floorImages[currentFloor])} ></image>
 
                             {edges.map((edge) => {
                                 const startNode = nodeMap.get(edge.startNodeID);
