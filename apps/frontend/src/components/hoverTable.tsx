@@ -143,8 +143,6 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
         assignee: "",
         dateCreated: emptyDate
     });
-    const [open2, setOpen2] = useState<boolean>(false);
-
     // function handleFormIDAssignment(str: string): void {
     //     setCleared(false);
     //     setAssignment({...assignment, formID: str});
@@ -178,10 +176,9 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                 'Content-Type': 'application/json'
             }
         }).then(() => {
-            setOpen2(open);
             setCleared(true);
             setSubmit(submitted + 1); // Spaghetti Code to Update the page
-            setDataUpdated(true);
+            props.setDataUpdated(true);
         });
     }
 
@@ -256,14 +253,6 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                         <div className={"flex flex-col p-3 gap-4 pl-5 pb-4 pr-7 w-full "}>
                             <LongButton onClick={firstDelete} children={"Delete Request"}/>
                         </div>
-                        <Modal open={open2} onClose={() => setOpen2(false)}>
-                            <div className="flex flex-col gap-4">
-                                <h1 className="text-2xl">Success!</h1>
-                                <p>
-                                    Assigned
-                                </p>
-                            </div>
-                        </Modal>
                         <Modal open={openDelete} onClose={() => setOpenDelete(false)}>
                             <div className="flex flex-col gap-4">
                                 <h1 className="text-2xl">Are you sure?</h1>

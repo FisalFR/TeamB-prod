@@ -3,9 +3,6 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {forms} from "database/.prisma/client";
 import HoverTable from "../components/hoverTable.tsx";
-import {set} from "husky";
-export const DataUpdatedContext = React.createContext(null);
-
 function LogBook() {
 
 
@@ -53,8 +50,9 @@ function LogBook() {
             setRequestOptions(removeDups(requestStrings));
             setLocation(removeDups(locationStrings));
             setPriority(removeDups(priorityStrings));
+            setDataUpdated(false);
         });
-    }, []);
+    }, [dataUpdated]);
 
 
     // Use Effect that updates the page everytime you input something into the dropdowns in Filter Data
