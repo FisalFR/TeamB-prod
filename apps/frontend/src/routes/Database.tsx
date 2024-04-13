@@ -104,11 +104,11 @@ function LogBook() {
                     <div className="rounded-2xl bg-deep-blue bg-opacity-5">
                         <form
                             className="w-[22vw]  flex flex-col items-start p-3 pl-5">
-                            <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start pb-3"}>Filter
+                            <h2 className={"dark:text-light-white font-extrabold text-2xl font-HeadlandOne flex items-start pb-3"}>Filter
                                 Data</h2>
 
 
-                            <p className={"text-left font-bold"}>Form ID</p>
+                            <p className={"dark:text-light-white text-left font-bold"}>Form ID</p>
                             <Dropdown options={formIDOptions} placeholder={"Choose FormID"}
                                       name={"formIDDropdown"}
                                       id={"dropdown1"} value={cleared}
@@ -117,7 +117,7 @@ function LogBook() {
 
                         <form
                             className="w-[22vw] flex flex-col items-start p-3 gap-4 pl-5">
-                            <p className={"text-left font-bold"}>Request Type</p>
+                            <p className={"dark:text-light-white text-left font-bold"}>Request Type</p>
                             <Dropdown options={requestTypeOptions} placeholder={"Choose Request Type"}
                                       name={"requestTypeDropdown"}
                                       id={"dropdown2"} value={cleared}
@@ -126,7 +126,7 @@ function LogBook() {
 
                         <form
                             className="w-[22vw] flex flex-col items-start p-3 gap-4 pl-5">
-                            <p className={"text-left font-bold"}>Location</p>
+                            <p className={"dark:text-light-white text-left font-bold"}>Location</p>
                             <Dropdown options={locationOptions} placeholder={"Choose Location"}
                                       name={"locationDropdown"}
                                       id={"dropdown3"} value={cleared}
@@ -135,7 +135,7 @@ function LogBook() {
 
                         <form
                             className="w-[22vw]  flex flex-col items-start p-3 gap-4 pl-5">
-                            <p className={"text-left font-bold"}>Request Status</p>
+                            <p className={"dark:text-light-white text-left font-bold"}>Request Status</p>
                             <Dropdown options={statusTypeOptions} placeholder={"Choose Status"} name={"statusDropdown"}
                                       id={"statusDropdown"} value={cleared}
                                       setInput={handleStatusType} required={true}/>
@@ -143,7 +143,7 @@ function LogBook() {
 
                         <form
                             className="w-[22vw] flex flex-col items-start p-3 gap-4 pl-5">
-                            <p className={"text-left font-bold"}>Assigned Staff</p>
+                            <p className={"dark:text-light-white text-left font-bold"}>Assigned Staff</p>
                             <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"}
                                       name={"staffDropdown"}
                                       id={"dropdown5"} value={cleared}
@@ -152,7 +152,7 @@ function LogBook() {
 
                         <form
                             className="w-[22vw] flex flex-col items-start p-3 gap-4 pl-5">
-                            <p className={"text-left font-bold"}>Priority</p>
+                            <p className={"dark:text-light-white text-left font-bold"}>Priority</p>
                             <Dropdown options={priorityOptions} placeholder={"Choose Priority"}
                                       name={"priorityDropdown"}
                                       id={"dropdown6"} value={cleared}

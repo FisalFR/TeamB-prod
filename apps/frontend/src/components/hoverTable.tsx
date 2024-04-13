@@ -23,7 +23,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
 
     function createTableRows(){
         return props.data.map((request) =>
-            <motion.tr className="odd:bg-white even:bg-gray-100 border-b dark:border-gray-700 hover:bg-blue-200 group"
+            <motion.tr className="dark:odd:bg-black dark:text-white dark:even:bg-Ash-black dark:hover:bg-blue-900 odd:bg-white even:bg-gray-100 border-b dark:border-gray-700 hover:bg-blue-200 group"
                        onClick={()=> handleRowClick(request)}
                 //whileHover={{scale: 1.01}}
                        whileTap={{scale: 0.9}}>
@@ -196,10 +196,10 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             <tbody>
             {createTableRows()}
             <Modal open={open} onClose={() => setOpen(false) }>
-                <div className="flex flex-row gap-8 p-12 w-fit ">
+                <div className="dark:bg-Ash-black flex flex-row gap-8 p-12 w-fit ">
                     <div>
-                    <h1 className="text-3xl">Information</h1>
-                        <ul className="item-start justify-start leading-8 max-w-100">
+                    <h1 className="dark:text-light-white text-3xl">Information</h1>
+                        <ul className="dark:bg-Ash-black dark:text-light-white item-start justify-start leading-8 max-w-100">
                             <li>FormID: {assignment.formID}</li>
                             <li>Type: {assignment.type}</li>
                             <li>Status: {assignment.status}</li>
@@ -214,28 +214,28 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                             <li>Date Created: {assignment.dateCreated.toString()}</li>
                         </ul>
                     </div>
-                    <div className="rounded-2xl bg-deep-blue bg-opacity-5">
+                    <div className="dark:bg-Ash-black rounded-2xl bg-deep-blue bg-opacity-5">
                         <form ref={formRef} onSubmit={e => {
                             e.preventDefault();
                         }}
                               className="w-[22vw]  flex flex-col items-start p-3 gap-4 pl-5">
-                            <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start"}>Assign Staff
+                            <h2 className={"dark:text-light-white font-extrabold text-2xl font-HeadlandOne flex items-start"}>Assign Staff
                                 Request</h2>
-                            <p className={"text-left font-bold"}>Form ID</p>
+                            <p className={"dark:text-light-white text-left font-bold"}>Form ID</p>
                             <Dropdown options={formIDOptions} placeholder={"Choose Form ID"}
                                       name={"formIDAssignment"}
                                       id={"dropdown4"} value={cleared}
                                       setInput={handleFormIDAssignment} required={true}/>
 
 
-                            <p className={"text-left font-bold"}>Request Status</p>
+                            <p className={"dark:text-light-white text-left font-bold"}>Request Status</p>
                             <Dropdown options={statusTypeOptions} placeholder={"Choose Status"}
                                       name={"statusAssignment"}
                                       id={"dropdown5"} value={cleared}
                                       setInput={handleStatusAssignment} required={true}/>
 
 
-                            <p className={"text-left font-bold"}>Assigned Staff</p>
+                            <p className={"dark:text-light-white text-left font-bold"}>Assigned Staff</p>
                             <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"} name={"staffAssignment"}
                                       id={"dropdown6"} value={cleared}
                                       setInput={handleStaffAssignment} required={true}/>
