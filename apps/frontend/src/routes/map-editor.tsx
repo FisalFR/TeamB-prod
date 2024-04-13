@@ -5,21 +5,22 @@ import l2map from "../assets/floors/02_thesecondfloor.png";
 import l3map from "../assets/floors/03_thethirdfloor.png";
 import plus from "../assets/plus.svg";
 import minus from "../assets/minus.svg";
-import React, { useState} from "react";
+import React, {useRef, useState} from "react";
 // import axios from "axios";
 // import {startEndNodes} from "common/src/pathfinding.ts";
-// import Node from "../../../../packages/common/src/node";
+import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import useNodes from "../hooks/useNodes.ts";
 import useEdges from "../hooks/useEdges.ts";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
+//import {Simulate} from "react-dom/test-utils";
 // import {node} from "prop-types";
 
 export function MapEditor(){
 
 
-
+    const [dragging, setDragging] = useState(false);
 
 
     const PlusSvg = <img src={plus} alt="Plus" className={"w-5"} />;
@@ -62,18 +63,66 @@ export function MapEditor(){
     //     setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.56)); // Decrease zoom level, min 0.4
     // }
 
+    let dragNode: Node;
+    function startDrag(e: MouseEvent, node) {
+        dragNode = node;
+        setDragging(true);
+    }
+    function handleDrag(e: MouseEvent, node) {
+        if (dragNode != null) {
+            if (node.nodeID == dragNode.nodeID) {
+                alert("here");
+                setDragNodeCoords(getSVGCoords(e));
+            }
+        }
+
+        //alert("here");
+    }
+    function endDrag() {
+        setDragging(false);
+    }
+
+    const imgRef = useRef(null);
+
+    function getSVGCoords(e: MouseEvent) {
+
+        const offsetLeft = imgRef.current.getBoundingClientRect().left;
+        const offsetTop = imgRef.current.getBoundingClientRect().top;
+
+        const initialZoomX = 5000/imgRef.current.getBoundingClientRect().width;
+        const initialZoomY = 3400/imgRef.current.getBoundingClientRect().height;
+
+        const x = (e.clientX - offsetLeft) * initialZoomX;
+        const y= (e.clientY - offsetTop) * initialZoomY;
+
+        return ([x, y]);
+    }
 
     const {nodes,nodeMap} = useNodes();
     const {edges} = useEdges();
+
+    const [dragNodeCoords, setDragNodeCoords] = useState([0,0]);
+
+    function setXCoords(node) {
+        if (dragNode != null) {
+            if (node.nodeID == dragNode.nodeID) {
+                return dragNodeCoords[0];
+            }
+        }
+        return node.xcoord;
+
+    }
+
     return (
-                <div className="w-screen h-screen self-center"> {/* Add relative positioning here */}
-                    <TransformWrapper
-                    >
-                                <TransformComponent>
-                                    <div className={"w-screen h-screen"}>
-                                        <svg className={"w-screen h-screen"} viewBox={"0 0 5000 3400"}>
+                <div className="fixed self-center w-screen centerContent"> {/* Add relative positioning here */}
+                    <TransformWrapper disabled={dragging} disablePadding={true} limitToBounds={true}>
+                                <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)"}} >
+                                    <div>
+                                        <svg viewBox={"0 0 5000 3400"} width={"100vw"}
+                                             onClick={getSVGCoords}>
                                             <image xlinkHref={floorImages[currentFloor]} width={5000} height={3400}
-                                                   key={JSON.stringify(floorImages[currentFloor])}></image>
+                                                   key={JSON.stringify(floorImages[currentFloor])}
+                                                   ref = {imgRef}></image>
 
                                             {edges.map((edge) => {
                                                 const startNode = nodeMap.get(edge.startNodeID);
@@ -95,8 +144,10 @@ export function MapEditor(){
                                             {nodes.filter(node => {
                                                 return node.floor === currentFloor;
                                             }).map((node) => {
-                                                return <circle cx={node.xcoord } cy={node.ycoord } r={8 }
-                                                               fill="#F6BD38"/>;
+                                                return <circle cx={setXCoords(node)} cy={node.ycoord } key = {dragNodeCoords[0]}
+                                                                      r={8 } fill="#F6BD38"
+                                                               onMouseMove={(e) => handleDrag(e, node)}
+                                                                      onMouseDown={(e) => startDrag(e, node)} onMouseUp={endDrag}/>;
                                             })}
                                         </svg>
                                     </div>
