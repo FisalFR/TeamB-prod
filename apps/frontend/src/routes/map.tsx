@@ -19,7 +19,6 @@ import FloorSelector from "../components/map/FloorSelector.tsx";
 import {AlgorithmButtons} from "../components/map/AlgorithmButtons.tsx";
 
 
-
 export function Map(){
     interface NodeData {
         [key: string]: {
@@ -128,19 +127,16 @@ export function Map(){
 
     return (
         <>
-            <div className="dark:bg-black centerContent">
-
-                <div className="dark:bg-black relative w-full h-full"> {/* Add relative positioning here */}
-                    <div className="dark:bg-black w-screen h-screen fixed overflow-scroll" ref={divRef}>
+            <div className="centerContent">
+                <div className="relative w-full h-full"> {/* Add relative positioning here */}
+                    <div className="w-screen h-screen fixed overflow-scroll" ref={divRef}>
                         <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor={currentFloor}
-                                    scale={zoom} showPath={showPath} floormap={floorMap as Record<string, Node[][]>}
-                                    nodes={pathNodes}
+                                    scale={zoom} showPath={showPath} floormap={floorMap as Record<string, Node[][]>} nodes={pathNodes}
                                     images={floorImages as Record<string, string>}/>
                     </div>
                     <div
-                        className="dark:bg-black absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end">
-                        <div
-                            className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center pt-2 pr-2 pl-2">
+                        className="absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end">
+                        <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center pt-2 pr-2 pl-2">
                             <img src={from} alt="from" className={"px-1"}/>
                             <Select label="" id="nodeStartSelect" options={nodes}
                                     onChange={handleStartChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}/>
@@ -150,25 +146,12 @@ export function Map(){
                             <Select label="" id="nodeEndSelect" options={nodes}
                                     onChange={handleEndChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}/>
                         </div>
-                        <div
-                            className="flex flex-row justify-center mt-2 w-full bg-deep-blue rounded-br-xl rounded-bl-xl font-OpenSans items-center font-bold text-bone-white">
+                        <div className="flex flex-row justify-center mt-2 w-full bg-deep-blue rounded-br-xl rounded-bl-xl font-OpenSans items-center font-bold text-bone-white">
                             <div className="divide-x divide-solid py-2 flex flex-row">
-                                <AlgorithmButtons px="px-8" onClick={() => {
-                                    setAlgo("Astar");
-                                    setSelectedAlgo("Astar");
-                                }} isActive={selectedAlgo === "Astar"}> A* </AlgorithmButtons>
-                                <AlgorithmButtons px="px-8" onClick={() => {
-                                    setAlgo("BFS");
-                                    setSelectedAlgo("BFS");
-                                }} isActive={selectedAlgo === "BFS"}> BFS </AlgorithmButtons>
-                                <AlgorithmButtons px="px-8" onClick={() => {
-                                    setAlgo("DFS");
-                                    setSelectedAlgo("DFS");
-                                }} isActive={selectedAlgo === "DFS"}> DFS </AlgorithmButtons>
-                                <AlgorithmButtons px="px-8" onClick={() => {
-                                    setAlgo("DIJKSTRA");
-                                    setSelectedAlgo("DIJKSTRA");
-                                }} isActive={selectedAlgo === "DIJKSTRA"}> DIJKSTRA </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={() => {setAlgo("Astar"); setSelectedAlgo("Astar");}} isActive={selectedAlgo === "Astar"}> A* </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={() => {setAlgo("BFS"); setSelectedAlgo("BFS");}} isActive={selectedAlgo === "BFS"}> BFS </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={() => {setAlgo("DFS"); setSelectedAlgo("DFS");}} isActive={selectedAlgo === "DFS"}> DFS </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={() => {setAlgo("DIJKSTRA"); setSelectedAlgo("DIJKSTRA");}} isActive={selectedAlgo === "DIJKSTRA"}> DIJKSTRA </AlgorithmButtons>
                             </div>
 
                         </div>
