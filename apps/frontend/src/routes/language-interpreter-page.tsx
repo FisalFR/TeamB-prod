@@ -170,7 +170,7 @@ function LanguageInterpreter(){
                                         <label className="float-left font-bold"> What language do you need an
                                             interpreter for?</label>
                                         <div
-                                            className=" float-left border-solid border-deep-blue border-2 rounded my-3">
+                                            className=" float-left border-solid border-deep-blue border-2 rounded">
                                             <Dropdown options={languages} placeholder={"Languages"}
                                                       name={"languagesDropdown"}
                                                       id={"dropdown2"} value={cleared}
@@ -180,10 +180,10 @@ function LanguageInterpreter(){
                                         </div>
                                     </div>
                                     <div className="flex flex-col justify-items-start">
-                                        <label className="flex justify-start  font-bold">What room do you need the
+                                        <label className="flex justify-start font-bold">What room do you need the
                                             interpreter?</label>
                                         <div
-                                            className=" float-start inline-block border-solid border-deep-blue border-2 rounded my-3">
+                                            className=" float-start inline-block border-solid border-deep-blue border-2 rounded">
                                             <Dropdown options={locationOptions} placeholder={"Location"}
                                                       name={"locationsDropdown"}
                                                       id={"dropdown3"} value={cleared}
