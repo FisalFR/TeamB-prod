@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {forms} from "database/.prisma/client";
 import HoverTable from "../components/hoverTable.tsx";
+import formType from "common/src/FormType.ts";
 function LogBook() {
 
 
@@ -18,10 +19,10 @@ function LogBook() {
         priority: ""
     });
     const [cleared, setCleared] = useState(false);
-    const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
     const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
     const [formIDOptions, setFormID] = useState<string[]>([]);
     const [requestTypeOptions, setRequestOptions] = useState<string[]>([]);
+    const [statusTypeOptions, setTypeOptions] = useState<string[]>([]);
     const [locationOptions, setLocation] = useState<string[]>([]);
     const [priorityOptions, setPriority] = useState<string[]>([]);
     const [dataUpdated, setDataUpdated] = useState<boolean>(false);
@@ -40,15 +41,18 @@ function LogBook() {
             const requestStrings = [];
             const locationStrings = [];
             const priorityStrings = [];
+            const statusStrings = [];
             for (let i = 0; i < response.data.length; i++) {
                 formIDStrings.push(response.data[i].formID);
                 requestStrings.push(response.data[i].type);
                 locationStrings.push(response.data[i].location);
+                statusStrings.push(response.data[i].status);
                 priorityStrings.push(response.data[i].priority);
             }
             setFormID(formIDStrings);
             setRequestOptions(removeDups(requestStrings));
             setLocation(removeDups(locationStrings));
+            setTypeOptions(removeDups(statusStrings));
             setPriority(removeDups(priorityStrings));
             setDataUpdated(false);
         });
@@ -64,6 +68,17 @@ function LogBook() {
     }).then((response) => {
         const reversedData = response.data.reverse();
         setForm(reversedData);
+        const formIDStrings = reversedData.map((item: formType) => item.formID);
+        const typeStrings = reversedData.map((item: formType) => item.type);
+        const locationStrings = reversedData.map((item: formType) => item.location);
+        const statusStrings = reversedData.map((item: formType) => item.status);
+        const priorityStrings = reversedData.map((item: formType) => item.priority);
+
+        setFormID(formIDStrings);
+        setRequestOptions(removeDups(typeStrings));
+        setLocation(removeDups(locationStrings));
+        setTypeOptions(removeDups(statusStrings));
+        setPriority(removeDups(priorityStrings));
     });
     }, [request]);
 
