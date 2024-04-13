@@ -114,11 +114,9 @@ export function MapEditor(){
     }
 
     return (
-                <div className="fixed self-center w-screen centerContent"> {/* Add relative positioning here */}
-                    <TransformWrapper disabled={dragging} disablePadding={true} limitToBounds={true}>
-                                <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)"}} >
-                                    <div>
-                                        <svg viewBox={"0 0 5000 3400"} width={"100vw"}
+        <TransformWrapper disabled={dragging} disablePadding={true} limitToBounds={true}>
+            <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)"}} >
+                <svg viewBox={"0 0 5000 3400"} width={"100vw"}
                                              onClick={getSVGCoords}>
                                             <image xlinkHref={floorImages[currentFloor]} width={5000} height={3400}
                                                    key={JSON.stringify(floorImages[currentFloor])}
@@ -150,7 +148,6 @@ export function MapEditor(){
                                                                       onMouseDown={(e) => startDrag(e, node)} onMouseUp={endDrag}/>;
                                             })}
                                         </svg>
-                                    </div>
                                 </TransformComponent>
                         <FloorSelector
                             onClick1={() => setCurrentFloor("L2")}
@@ -162,8 +159,6 @@ export function MapEditor(){
                         />
                         <ZoomControls></ZoomControls>
                     </TransformWrapper>
-
-                </div>
 
 )
     ;
