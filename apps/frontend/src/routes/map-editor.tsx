@@ -43,13 +43,15 @@ export function MapEditor(){
     const {nodes,nodeMap} = useNodes();
     const {edges} = useEdges();
     return (
-        <div className="w-screen h-screen relative overflow-hidden"> {/* Add relative positioning here */}
+        <div className="w-screen h-screen self-center"> {/* Add relative positioning here */}
             <TransformWrapper
-                defaultScale={2} // Set initial zoom level
-                defaultPositionX={200}
-                defaultPositionY={200}>
+                initialScale = {1.05}
+                minScale={1.05}
+                maxScale={4.5}
+                centerOnInit={true}
+                disablePadding={true}>
                 <TransformComponent>
-                        <svg className="w-screen h-fit " viewBox={"0 0 5000 3400"}>
+                        <svg className="w-screen h-full " viewBox={"0 0 5000 3400"}>
                             <image xlinkHref={floorImages[currentFloor]} width={"100%"} height={"100%"}
                                    key={JSON.stringify(floorImages[currentFloor])} preserveAspectRatio="none"></image>
 
