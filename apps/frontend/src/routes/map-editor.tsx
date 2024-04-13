@@ -43,30 +43,25 @@ export function MapEditor(){
     const {nodes,nodeMap} = useNodes();
     const {edges} = useEdges();
     return (
-        <div className="w-screen h-screen self-center overflow-hidden"> {/* Add relative positioning here */}
-            <TransformWrapper
-                initialScale = {1.45}
-                minScale={1.45}
-                maxScale={4.5}
-                centerOnInit={true}
-                disablePadding={true}>
-                <TransformComponent>
-                        <svg className="w-screen h-screen" viewBox={"0 0 5000 3400"}>
-                            <image xlinkHref={floorImages[currentFloor]} width={"100%"} height={"100%"}
+        <div className="fixed">
+        <TransformWrapper limitToBounds={true} disablePadding={true}>
+            <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)"}}>
+                <svg viewBox={"0 0 5000 3400"} width={"100vw"}>
+                    <image xlinkHref={floorImages[currentFloor]} width={5000} height={3400}
                                    key={JSON.stringify(floorImages[currentFloor])} ></image>
 
-                            {edges.map((edge) => {
-                                const startNode = nodeMap.get(edge.startNodeID);
-                                const endNode = nodeMap.get(edge.endNodeID);
-                                const sameFloor = startNode?.floor === endNode?.floor;
-                                if (startNode !== undefined && endNode !== undefined) {
-                                    if (startNode.floor === currentFloor && sameFloor) {
-                                        return <line x1={startNode.xcoord }
-                                                     y1={startNode.ycoord}
-                                                     x2={endNode.xcoord }
-                                                     y2={endNode.ycoord }
-                                                     stroke={"#012D5A"}
-                                                     strokeWidth={5}
+                    {edges.map((edge) => {
+                        const startNode = nodeMap.get(edge.startNodeID);
+                        const endNode = nodeMap.get(edge.endNodeID);
+                        const sameFloor = startNode?.floor === endNode?.floor;
+                        if (startNode !== undefined && endNode !== undefined) {
+                            if (startNode.floor === currentFloor && sameFloor) {
+                                return <line x1={startNode.xcoord }
+                                             y1={startNode.ycoord}
+                                             x2={endNode.xcoord }
+                                             y2={endNode.ycoord }
+                                             stroke={"#012D5A"}
+                                             strokeWidth={5}
                                         ></line>;
                                     }
                                 }
