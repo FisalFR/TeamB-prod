@@ -55,10 +55,10 @@ router.post("/", async (req, res) => {
       });
       break;
     case "Dijkstra":
-        path = finalPath.Dijkstra(node1, node2);
-        nodeCoords = finalPath.Dijkstra(node1, node2).map((node) => {
-          return [node.xcoord, node.ycoord];
-        });
+      path = finalPath.Dijkstra(node1, node2);
+      nodeCoords = finalPath.Dijkstra(node1, node2).map((node) => {
+        return [node.xcoord, node.ycoord];
+      });
       break;
     default:
       return res.status(400).send({ error: "Invalid algorithm" });

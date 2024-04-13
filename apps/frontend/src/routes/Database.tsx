@@ -114,11 +114,24 @@ function LogBook() {
         setRequest({...request, priority: str});
     }
 
+    function clearAll(){
+            setRequest({ formID: "",
+                type: "",
+                location: "",
+                status: "",
+                assignee: "",
+                dateCreated: emptyDate,
+                priority: ""});
+            setCleared(true);
+        setDataUpdated(true);
+    }
+
     return (
             <div className="flex pt-8">
                 {/*Form to filter current requests*/}
                 <div className=" h-full mx-3 space-y-7 my-3">
                     <div className="rounded-2xl bg-deep-blue bg-opacity-5">
+                        <a onClick={clearAll} className="font-medium text-blue-600 dark:text-blue-500 hover:underline absolute top-[120px] left-60">Clear Filter</a>
                         <form
                             className="w-[22vw]  flex flex-col items-start p-3 pl-5">
                             <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start pb-3"}>Filter
@@ -175,7 +188,6 @@ function LogBook() {
                                       id={"dropdown6"} value={cleared}
                                       setInput={handlePriority} required={true}/>
                         </form>
-
                     </div>
                 </div>
 
