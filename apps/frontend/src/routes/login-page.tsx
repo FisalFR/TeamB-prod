@@ -24,7 +24,7 @@ export function LoginPage() {
                 <div className=' dark:bg-black w-full pl-31 flex flex-col'>
                     <h1 className="dark:text-white px-5 font-bold text-left font-HeadlandOne text-6xl ">Navigate
                         Seamlessly</h1>
-                    <div className="dark:bg-black flex flex-col w-full">
+                    <div className="flex flex-col w-full">
 
                         <p className="dark:text-white text-left object-right float-right text-xl p-5 pb-9">
                             Find your room in Brigham & Women's with ease. With pathfinding locate your
