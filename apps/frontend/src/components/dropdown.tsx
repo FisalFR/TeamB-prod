@@ -2,6 +2,7 @@
 import {ChangeEvent, useRef, useState} from 'react';
 import '../App.css';
 import {HTMLInputElement} from "happy-dom";
+import {optionWithSearch} from "common/src/optionWithSearch.ts";
 
 function Dropdown(props: { options: string[]; placeholder: string; name: string; id: string; setInput:(str: string) => void; value : boolean; required:boolean; width:string}) {
 
@@ -14,7 +15,15 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     const [activeOption, setActiveOption] = useState(-1);
 
     //strings of the options showing with the current search
-    let optionStrings: string[];
+    let optionStrings: optionWithSearch[] = [];
+
+    //strings of the options showing with the corresponding search of a specific search type
+    //n-normal t-transposition d-deletion s-substitution i-insertion
+    let nOptions: optionWithSearch[] = [];
+    let tOptions: optionWithSearch[] = [];
+    let dOptions: optionWithSearch[] = [];
+    let sOptions: optionWithSearch[] = [];
+    let iOptions: optionWithSearch[] = [];
 
     //check if the list of options showing is long enough for the scroll indicator to show
     function checkScrollIndicator(listLength: number) {
@@ -33,54 +42,87 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     }
 
     function createOptions() {
-        const filteredOptions = filterList(optionList, search);
+        const filteredOptions: optionWithSearch[] = filterList(optionList, search);
         optionStrings = filteredOptions;
         listElements.current = [];
         return filteredOptions.map( (option, index) =>
             <div className="dropdown-option p-1 bg-white aria-selected:bg-bone-white" onMouseLeave={resetActive}
-                 onMouseDown={() => {fillSearch(option); props.setInput(option);}}
+                 onMouseDown={() => {fillSearch(option.option); props.setInput(option.option);}}
                  role="option" onMouseOver={() => setActiveOption(index)}
                  aria-selected={index === activeOption} id = {"option" + index} key = {"option" + index}
                  ref = {(element) => {if (element != null) listElements.current.push(element);}}>
                 {getBolded(option)}
             </div>);
     }
-    function getBolded(option: string) {
-        if (option.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
-            const searchInd = option.toLowerCase().indexOf(search.toLowerCase());
-            const firstHalf = option.substring(0,searchInd);
-            const bolded = option.substring(searchInd, searchInd + search.length);
-            const lastHalf = option.substring(searchInd + search.length, option.length);
+
+    function getBolded(option: optionWithSearch) { //RETURN TO REFACTOR <----------------------------------------------
+        if (option.option.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+            const searchInd = option.option.toLowerCase().indexOf(search.toLowerCase());
+            const firstHalf = option.option.substring(0,searchInd);
+            const bolded = option.option.substring(searchInd, searchInd + search.length);
+            const lastHalf = option.option.substring(searchInd + search.length, option.length);
             return <span>{firstHalf}<b>{bolded}</b>{lastHalf}</span>;
         } else {
-            return <span><u>{option}</u></span>;
+            const searchInd = option.option.toLowerCase().indexOf(option.search.toLowerCase());
+            const firstHalf = option.option.substring(0,searchInd);
+            const bolded = option.option.substring(searchInd, searchInd + option.search.length);
+            const lastHalf = option.option.substring(searchInd + option.search.length, option.option.length);
+            return <span><i>{firstHalf}<b>{bolded}</b>{lastHalf}</i></span>;
         }
     }
 
-    function filterList(options : string[], search : string) {
-        return options.filter((option) => fuzzySearch(option, search));
+    function filterList(options : string[], search : string): optionWithSearch[] {
+        nOptions = [];
+        tOptions = [];
+        dOptions = [];
+        sOptions = [];
+        iOptions = [];
+        options.filter((option) => fuzzySearch(option, search));
+        return nOptions.concat(tOptions, dOptions, sOptions, iOptions);
     }
 
     function fuzzySearch(option: string, search: string) {
-        if(option.toLowerCase().indexOf(search.toLowerCase()) !== -1) return true;
-
-        function testAndReset(pos?: number) {
-            if (!pos) {
-                if (option.toLowerCase().indexOf(searchArray.join('').toLowerCase()) !== -1) return true;
-                searchArray = search.split('');
-            }
-            else {
-                for (let letnum = 0; letnum < chars.length; letnum++) {
-                    searchArray.splice(pos, 1, chars[letnum]);
-                    if (option.toLowerCase().indexOf(searchArray.join('').toLowerCase()) !== -1) {
-                        return true;
-                    }
-                }
-                searchArray = search.split('');
-            }
+        if(option.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
+            nOptions.push({option: option, search: search});
+            return true;
         }
 
-        const chars: string[] = 'abcdefghijklmnopqrstuvwxyz1234567890&- '.split('');
+        function testSearch(searchType: string, pos?: number) {
+            let valid = false;
+            if (!pos) {
+                if (option.toLowerCase().indexOf(searchArray.join('').toLowerCase()) !== -1) {
+                    valid = true;
+                }
+            }
+            else {
+                for (let char = 0; char < chars.length; char++) {
+                    searchArray.splice(pos, 1, chars[char]);
+                    if (option.toLowerCase().indexOf(searchArray.join('').toLowerCase()) !== -1) {
+                        valid = true;
+                        break;
+                    }
+                }
+            }
+            if (valid) {
+                switch (searchType) {
+                    case 'transposition':
+                        tOptions.push({option: option, search: searchArray.join('')});
+                        break;
+                    case 'deletion':
+                        dOptions.push({option: option, search: searchArray.join('')});
+                        break;
+                    case 'substitution':
+                        sOptions.push({option: option, search: searchArray.join('')});
+                        break;
+                    case 'insertion':
+                        iOptions.push({option: option, search: searchArray.join('')});
+                        break;
+                }
+            }
+            searchArray = search.split('');
+        }
+
+        const chars: string[] = 'abcdefghijklmnopqrstuvwxyz1234567890&?- '.split('');
         let searchArray: string[] = search.split('');
 
         //transposition
@@ -88,34 +130,25 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
             for (let pos = 0; pos < searchArray.length - 1; pos++) {
                 searchArray.splice(pos, 0, searchArray[pos + 1]);
                 searchArray.splice(pos + 2, 1);
-                if (testAndReset()) {
-                    return true;
-                }
+                testSearch('transposition');
             }
         }
 
         //deletion
-        if (searchArray.length > 1) {
-            for (let pos = 0; pos < searchArray.length; pos++) {
-                if (testAndReset()) {
-                    return true;
-                }
-            }
+        for (let pos = 0; pos < searchArray.length; pos++) {
+            searchArray.splice(pos, 1);
+            testSearch('deletion');
         }
 
         //substitution
         for (let pos = 0; pos < searchArray.length; pos++) {
-            if (testAndReset(pos)) {
-                return true;
-            }
+            testSearch('substitution', pos);
         }
 
         //insertion
         for (let pos = 1; pos < searchArray.length; pos++) {
             searchArray.splice(pos, 0, ' ');
-            if (testAndReset(pos)) {
-                return true;
-            }
+            testSearch('insertion', pos);
         }
     }
 
@@ -146,7 +179,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                 break;
             case "Enter":
                 if (activeOption >= 0) {
-                    fillSearch(optionStrings[activeOption]);
+                    fillSearch(optionStrings[activeOption].option);
                     resetActive();
                     setScrollIndicator("scroll-indicator text-center hidden");
                 }
