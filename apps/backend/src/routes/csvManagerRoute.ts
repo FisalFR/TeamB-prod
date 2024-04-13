@@ -114,6 +114,13 @@ router.post("/delete", async (req, res) => {
         },
       });
       break;
+    case "Security":
+      await client.securityRequests.delete({
+        where: {
+          securityRequest: formType.formID,
+        },
+      });
+      break;
     case "Gift":
       await client.giftItem.deleteMany({
         where: {

@@ -3,6 +3,9 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {forms} from "database/.prisma/client";
 import HoverTable from "../components/hoverTable.tsx";
+import {set} from "husky";
+export const DataUpdatedContext = React.createContext(null);
+
 function LogBook() {
 
 
@@ -24,6 +27,7 @@ function LogBook() {
     const [requestTypeOptions, setRequestOptions] = useState<string[]>([]);
     const [locationOptions, setLocation] = useState<string[]>([]);
     const [priorityOptions, setPriority] = useState<string[]>([]);
+    const [dataUpdated, setDataUpdated] = useState<boolean>(false);
 
 
     const removeDups = (arr: string[]): string[] => {
@@ -50,7 +54,7 @@ function LogBook() {
             setLocation(removeDups(locationStrings));
             setPriority(removeDups(priorityStrings));
         });
-    }, [form]);
+    }, []);
 
 
     // Use Effect that updates the page everytime you input something into the dropdowns in Filter Data
@@ -167,7 +171,8 @@ function LogBook() {
                     className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable overflow-auto mt-3">
                     <HoverTable data={form}
                                 headings={["Form ID", "Type", "Location", "Status", "Assignee", "priority", "Date Created"]}
-                                keys={["formID", "type", "location", "status", "assignee", "priority", "dateCreated"]}/>
+                                keys={["formID", "type", "location", "status", "assignee", "priority", "dateCreated"]}
+                                dataUpdated={dataUpdated} setDataUpdated={setDataUpdated}/>
                 </div>
 
             </div>

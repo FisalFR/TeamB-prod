@@ -9,8 +9,7 @@ import LongButton from "./LongButton.tsx";
 
 
 
-
-function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], keys: string[]}) {
+function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], keys: string[], dataUpdated:boolean, setDataUpdated: React.Dispatch<React.SetStateAction<boolean>>}) {
 
 
     function createTableHeader(){
@@ -180,9 +179,9 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             }
         }).then(() => {
             setOpen2(open);
-            setOpen(close);
             setCleared(true);
             setSubmit(submitted + 1); // Spaghetti Code to Update the page
+            setDataUpdated(true);
         });
     }
 
@@ -241,15 +240,11 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                               className="w-[22vw]  flex flex-col items-start p-3 gap-4 pl-5">
                             <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start"}>Assign Staff
                                 Request</h2>
-
-
                             <p className={"text-left font-bold"}>Request Status</p>
                             <Dropdown options={statusTypeOptions} placeholder={"Choose Status"}
                                       name={"statusAssignment"}
                                       id={"dropdown5"} value={cleared}
                                       setInput={handleStatusAssignment} required={true}/>
-
-
                             <p className={"text-left font-bold"}>Assigned Staff</p>
                             <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"} name={"staffAssignment"}
                                       id={"dropdown6"} value={cleared}
