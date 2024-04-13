@@ -89,7 +89,7 @@ export function MaintenancePage() {
                     <form ref={formRef} onSubmit={e => {
                         e.preventDefault();
                     }}>
-                        <div className="formTest w-full my-10 grid grid-cols-2 gap-8 ">
+                        <div className="formTest w-full my-10 grid grid-cols-2 gap-12 ">
                             <div className="flex flex-col w-fit">
                                 <p className={"text-left font-bold"}>Employee Name</p>
                                 <input type="text" required
