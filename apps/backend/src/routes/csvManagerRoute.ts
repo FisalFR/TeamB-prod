@@ -56,7 +56,10 @@ router.post("/filter", async (req, res) => {
   if (formType.priority !== "") {
     whereCondition.priority = formType.priority;
   }
-
+  if (formType.employeeName && formType.employeeName !== "") {
+    const escapedName = formType.employeeName.replace(/\s/g, "\\ ");
+    whereCondition.employeeName = { search: `"${escapedName}"` };
+  }
   try {
     const filteredForm = await client.forms.findMany({
       where: whereCondition,

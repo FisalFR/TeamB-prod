@@ -55,6 +55,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             assignee: "",
             dateCreated: emptyDate,
             priority: "",
+            employeeName: request.employeeName,
             maintenances: [],
             language: [],
             sanitation: [],
@@ -76,6 +77,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                     "Status: " + response.data.status,
                     "Assignee: " + response.data.assignee,
                     "Priority: " + response.data.priority,
+                    "Employee Name: " + response.data.employeeName,
                 ];
                 switch (response.data.type) {
                     case "Maintenance": {
@@ -87,19 +89,16 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                         newInformation.push("Language: " + response.data.languageRequests[0].language);
                         break;
                     } case "Sanitation": {
-                        newInformation.push("Employee Name: " + response.data.sanitationRequests[0].employeeName);
                         newInformation.push("Issue: " + response.data.sanitationRequests[0].contaminant);
                         newInformation.push("Service Type: " + response.data.sanitationRequests[0].serviceType);
                         newInformation.push("Additional Comments: " + response.data.sanitationRequests[0].additionalComments);
                         break;
                     } case "Security": {
-                        newInformation.push("Employee Name: " + response.data.securityRequests[0].employeeName);
                         newInformation.push("Request: " + response.data.securityRequests[0].request);
                         newInformation.push("Number of Personnel Required: " + response.data.securityRequests[0].quantity);
                         newInformation.push("Additional Comments: " + response.data.securityRequests[0].additionalInfo);
                         break;
                     } case "Medicine": {
-                        newInformation.push("Employee Name: " + response.data.medicineRequests[0].employeeName);
                         newInformation.push("Medicine: " + response.data.medicineRequests[0].medicine);
                         newInformation.push("Quantity: " + response.data.medicineRequests[0].quantity.toString());
                         newInformation.push("Additional Comments: " + response.data.medicineRequests[0].additionalComments);
@@ -121,7 +120,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                 }
                 setInformation(newInformation);
                 setAssignment({...assignment, assignee: response.data.assignee, type: response.data.type, location: response.data.location,
-                    formID: response.data.formID, priority: response.data.priority, status: response.data.status, dateCreated: response.data.dateCreated});
+                    formID: response.data.formID, priority: response.data.priority, status: response.data.status, dateCreated: response.data.dateCreated, employeeName: response.data.employeeName});
             }
         } catch (error) {
             console.error("Error fetching data: ", error);
@@ -141,12 +140,10 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
         location: "",
         status: "",
         assignee: "",
-        dateCreated: emptyDate
+        dateCreated: emptyDate,
+        employeeName: "",
     });
-    // function handleFormIDAssignment(str: string): void {
-    //     setCleared(false);
-    //     setAssignment({...assignment, formID: str});
-    // }
+
 
     function handleStatusAssignment(str: string): void {
         setCleared(false);
@@ -223,6 +220,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                             <li>Status: {assignment.status}</li>
                             <li>Priority: {assignment.priority}</li>
                             <li>Assignee: {assignment.assignee}</li>
+                            <li>Created By: {assignment.employeeName}</li>
                             <li>{information[6]}</li>
                             <li>{information[7]}</li>
                             <li>{information[8]}</li>
