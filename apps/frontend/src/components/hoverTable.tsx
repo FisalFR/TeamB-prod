@@ -174,7 +174,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
     function handleSubmit(e: { preventDefault: () => void; }) {
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
-        axios.post("/api/csvManager/insert", assignment, {
+        axios.post("/api/csvManager/update", assignment, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -187,7 +187,6 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
     }
 
     function handleDelete() {
-        // (formRef.current as HTMLFormElement).requestSubmit();
         axios.post("/api/csvManager/delete", assignment, {
             headers: {
                 'Content-Type': 'application/json'

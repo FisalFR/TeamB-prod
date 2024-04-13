@@ -50,7 +50,7 @@ function LogBook() {
             setLocation(removeDups(locationStrings));
             setPriority(removeDups(priorityStrings));
         });
-    }, []);
+    }, [form]);
 
 
     // Use Effect that updates the page everytime you input something into the dropdowns in Filter Data
@@ -144,7 +144,7 @@ function LogBook() {
                         <form
                             className="w-[22vw] flex flex-col items-start p-3 gap-4 pl-5">
                             <p className={"text-left font-bold"}>Assigned Staff</p>
-                            <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"}
+                            <Dropdown options={staffTypeOptions} placeholder={"Choose Assignee"}
                                       name={"staffDropdown"}
                                       id={"dropdown5"} value={cleared}
                                       setInput={handleAssigneeType} required={true}/>

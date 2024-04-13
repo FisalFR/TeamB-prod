@@ -58,7 +58,6 @@ router.post("/filter", async (req, res) => {
   }
 
   try {
-    console.log(whereCondition);
     const filteredForm = await client.forms.findMany({
       where: whereCondition,
       orderBy: { formID: "desc" },
@@ -70,7 +69,7 @@ router.post("/filter", async (req, res) => {
   }
 });
 
-router.post("/insert", async (req, res) => {
+router.post("/update", async (req, res) => {
   const formType: FormType = req.body;
   const updateUser = await client.forms.update({
     where: {
@@ -262,14 +261,12 @@ router.post("/uploadEdges", async (req, res) => {
 
 router.get("/exportNodes", async (req, res) => {
   const nodeFile = await writeNode.nodeDownload();
-  //console.log(nodeFile);
   res.setHeader("Content-disposition", "attachment; filename=nodeDataFile.csv");
   res.set("Content-Type", "text/csv");
   res.status(200).send(nodeFile);
 });
 router.get("/exportEdges", async (req, res) => {
   const nodeFile = await writeEdge.edgeDownload();
-  //console.log(nodeFile);
   res.setHeader("Content-disposition", "attachment; filename=edgeDataFile.csv");
   res.set("Content-Type", "text/csv");
   res.status(200).send(nodeFile);
