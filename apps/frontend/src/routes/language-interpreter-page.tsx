@@ -111,10 +111,10 @@ function LanguageInterpreter(){
 
 
                     <div className="">
-                        <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                            <h1 className={" text-3xl font-HeadlandOne "}>Language Interpreter Request</h1>
+                        <div className="dark:bg-Ash-black bg-light-white my-10 p-10 px-20 rounded-3xl">
+                            <h1 className={"dark:text-white text-3xl font-HeadlandOne "}>Language Interpreter Request</h1>
                             <br/>
-                            <p className="text-left">
+                            <p className="dark:text-light-white text-left">
                                 Brigham and Women's Hospital is committed to clearly and thoroughly communicating with
                                 all
                                 patients
@@ -126,7 +126,7 @@ function LanguageInterpreter(){
                                 Please let your doctor know in advance about your language or hearing needs.
                             </p>
                             <br/>
-                            <p className="text-left">
+                            <p className="dark:text-light-white text-left">
                                 Spanish interpreters are available 24 hours a day by appointment only; interpreters for
                                 29 other
                                 languages are available as needed.
@@ -137,15 +137,15 @@ function LanguageInterpreter(){
                                 to request an interpreter to your location.
                             </p>
                             <br/>
-                            <p className="font-bold text-left ">Please select the languages in the dropdown. Any
+                            <p className="dark:text-white font-bold text-left ">Please select the languages in the dropdown. Any
                                 languages
                                 entered that are not in the dropdown will need
                                 to be requested through hospital administration.
                             </p>
                             <br/>
-                            <h2 className=" float-left inline-block font-bold">What language do you need an interpreter
+                            <h2 className="dark:text-white float-left inline-block font-bold">What language do you need an interpreter
                                 for?</h2>
-                            <h2 className=" float-right inline-block font-bold">What room do you need the
+                            <h2 className="dark:text-white float-right inline-block font-bold">What room do you need the
                                 interpreter?</h2>
                             <br/>
                             <form ref={formRef} onSubmit={e => {
@@ -188,11 +188,11 @@ function LanguageInterpreter(){
 
                 <div className={submittedWindowVisibility.submittedScreen}>
                     <div className="pt-32">
-                        <div className="p-6 bg-white rounded-2xl">
-                            <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+                        <div className="dark:bg-Ash-black p-6 bg-white rounded-2xl">
+                            <p className="dark:text-light-white font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
                             <Button onClick={handleNewSubmissionLanguage} children="Submit a new request"/>
                         </div>
-                        <div className={"text-left"}>
+                        <div className={"dark:text-white text-left"}>
                             <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
                                 Submission:</h3>
                             <p className={"font-bold"}>What language do you need an interpreter for?</p>
@@ -208,7 +208,7 @@ function LanguageInterpreter(){
                 </div>
             </div>
             <div>
-                <p className={"font-HeadlandOne text-deep-blue"}>Created by Theresa</p>
+                <p className={"dark:text-light-white font-HeadlandOne text-deep-blue"}>Created by Theresa</p>
             </div>
         </div>
 

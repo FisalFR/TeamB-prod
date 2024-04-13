@@ -134,7 +134,7 @@ export function MaintenancePage() {
                             issue</label>
                         <div className="">
                             <textarea id={"feedback"}
-                                      className={"dark:bg-black w-full max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2"}
+                                      className={"dark:bg-black dark:text-light-white w-full max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2"}
                                       onChange={handleFeedbackInput}
                                       value={request.feedback} required={true}
                                       placeholder="Enter detailed description here..."/>
@@ -151,11 +151,11 @@ export function MaintenancePage() {
 
             <div className={submittedWindowVisibility.submittedScreen}>
                 <div className="pt-32">
-                    <div className="p-6 bg-white rounded-2xl">
-                        <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+                    <div className="dark:bg-Ash-black p-6 bg-white rounded-2xl">
+                        <p className="dark:text-light-white font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
                         <Button onClick={handleNewSubmission} children="Submit a new request"/>
                     </div>
-                    <div className={"text-left"}>
+                    <div className={"dark:text-light-white text-left"}>
                         <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
                         <p className={"font-bold"}>What kind of issue would you like to report?</p>
                         <p className={""}>{request.issue}</p>
@@ -163,10 +163,10 @@ export function MaintenancePage() {
                         <p className={"font-bold"}>What location is this issue in?</p>
                         <p className={""}>{request.location}</p>
 
-                        <p className={"font-bold"}>Is this an urgent issue?</p>
+                        <p className={" font-bold"}>Is this an urgent issue?</p>
                         <p className={""}>{request.priority}</p>
 
-                        <p className={"font-bold"}>Additional Feedback</p>
+                        <p className={" font-bold"}>Additional Feedback</p>
                         <p className={""}>{request.feedback}</p>
                     </div>
                 </div>

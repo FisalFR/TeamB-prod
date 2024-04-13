@@ -22,6 +22,7 @@ import {giftRequest} from "common/src/giftRequest.ts";
 import axios from "axios";
 import Dropdown from "../components/dropdown.tsx";
 
+
 function GiftDelivery() {
     const formRef = useRef<HTMLFormElement>(null);
     const [cart, setCart] = useState<giftItem[]>([]);
@@ -162,11 +163,12 @@ function GiftDelivery() {
     }
 
     return (
-        <div className="centerContent">
+        <div className="dark:bg-black centerContent">
+
             <div className="w-5/6">
                 <div className={submittedWindowVisibility.formScreen}>
-                    <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                        <h1 className="text-3xl font-HeadlandOne">
+                    <div className="dark:bg-Ash-black bg-light-white my-10 p-10 px-20 rounded-3xl">
+                        <h1 className="dark:text-white text-3xl font-HeadlandOne">
                             Gift Delivery Request Form
                         </h1>
                         <form ref={formRef} onSubmit={e => {
@@ -176,22 +178,22 @@ function GiftDelivery() {
                             <div className="flex flex-row justify-center w-full gap-20">
                                 <div className=" centerContent flex-col justify-start items-start">
                                     <label htmlFor="receiverName"
-                                           className="font-OpenSans font-bold text-md text-Ash-black">To: </label>
+                                           className="dark:text-light-white font-OpenSans font-bold text-md text-Ash-black">To: </label>
                                     <input type="text" id="receiverName" name="receiverName"
                                            placeholder={"Recipient's Name"}
-                                           className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
+                                           className="dark:bg-black dark:text-light-white w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
                                            onChange={handleInput}></input><br/>
 
 
                                     <label htmlFor="senderName"
-                                           className="font-OpenSans font-bold text-md text-Ash-black">From: </label>
+                                           className="dark:text-light-white font-OpenSans font-bold text-md text-Ash-black">From: </label>
                                     <input type="text" id="senderName" name="senderName"
-                                           className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
+                                           className="dark:bg-black dark:text-light-white w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
                                            placeholder={"Sender's Name"}
                                            onChange={handleInput}></input><br/>
 
                                     <label htmlFor="location"
-                                           className="font-OpenSans font-bold text-md text-Ash-black">Location: </label>
+                                           className="dark:text-light-white font-OpenSans font-bold text-md text-Ash-black">Location: </label>
                                     <div className="border-solid border-deep-blue border-2 rounded">
                                         <Dropdown options={locationOptions} placeholder="Location"
                                                   name="Location Dropdown"
@@ -205,12 +207,12 @@ function GiftDelivery() {
                                 <div className="flex flex-col items-start">
 
                                     <label htmlFor="message"
-                                           className="font-OpenSans text-md font-bold text-Ash-black ">
+                                           className="dark:text-light-white font-OpenSans text-md font-bold text-Ash-black ">
                                         Send a Message: </label>
                                     <textarea id="message" name="message" rows={4} cols={40}
                                               placeholder={"Send a nice message!"}
                                               onChange={handleMessage}
-                                              className="border-solid border-deep-blue border-2 rounded h-full p-1 px-2">
+                                              className="dark:bg-black dark:text-white border-solid border-deep-blue border-2 rounded h-full p-1 px-2">
                         </textarea>
                                 </div>
 
@@ -219,7 +221,7 @@ function GiftDelivery() {
 
 
                             {/*Flowers*/}
-                            <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
+                            <h1 className="dark:text-light-white text-xl font-HeadlandOne text-left text-Ash-black">
                                 Flowers:
                             </h1>
                             <br/>
@@ -239,7 +241,7 @@ function GiftDelivery() {
 
                             {/*Stuffed Animals*/}
                             <br/><br/>
-                            <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
+                            <h1 className="dark:text-light-white text-xl font-HeadlandOne text-left text-Ash-black">
                                 Stuffed Animals:
                             </h1>
                             <br/>
@@ -257,7 +259,7 @@ function GiftDelivery() {
 
                             {/*Balloons*/}
                             <br/><br/>
-                            <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
+                            <h1 className="dark:text-light-white text-xl font-HeadlandOne text-left text-Ash-black">
                                 Balloons:
                             </h1>
                             <br/>
@@ -278,7 +280,7 @@ function GiftDelivery() {
 
                             {/*Candy*/}
                             <br/><br/>
-                            <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
+                            <h1 className="dark:text-light-white text-xl font-HeadlandOne text-left text-Ash-black">
                                 Candy:
                             </h1>
                             <br/>
@@ -302,15 +304,15 @@ function GiftDelivery() {
                         </form>
 
                         <div className="centerContent">
-                            <div className="border-2 bg-white border-rounded w-fit">
+                            <div className="dark:bg-black border-2 bg-white border-rounded w-fit">
                                 <div className="border-2 bg-deep-blue border-rounded ">
-                                    <h2 className="text-xl font-HeadlandOne text-center text-bone-white font-bold">
+                                    <h2 className="dark:text-white text-xl font-HeadlandOne text-center text-bone-white font-bold">
                                         Cart
                                     </h2>
                                 </div>
 
                                 <div
-                                    className="text-xl font-HeadlandOne text-center text-Ash-black text-bold px-10 py-4">
+                                    className="dark:text-light-white text-xl font-HeadlandOne text-center text-Ash-black text-bold px-10 py-4">
                                     <br/>
                                     {createCart()}
                                     <br/>
@@ -325,8 +327,8 @@ function GiftDelivery() {
                     </div>
                 </div>
                 <div className={submittedWindowVisibility.submittedScreen}>
-                    <div className="p-6 bg-white rounded-2xl mt-20 max-w-2x items-center">
-                        <div className={"text-center"}>
+                    <div className="dark:bg-Ash-black p-6 bg-white rounded-2xl mt-20 max-w-2x items-center">
+                        <div className={"dark:text-light-white text-center"}>
                             <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
                                 Submission:</h3>
                             <p className={"font-bold"}>Receiver Name:</p>
@@ -349,15 +351,15 @@ function GiftDelivery() {
                             <br/>
                         </div>
                     </div>
-                    <div className="text-center center p-6 bg-white rounded-2xl mt-20">
-                        <p className={"font-bold text-center"}>Cart:</p>
-                        <p className={"text-center center"}>{request.cart.map((item: giftItem) => {
+                    <div className="dark:bg-Ash-black text-center center p-6 bg-white rounded-2xl mt-20">
+                        <p className={"dark:text-light-white font-bold text-center"}>Cart:</p>
+                        <p className={"dark:text-light-white text-center center"}>{request.cart.map((item: giftItem) => {
                             return <p>{item.quantity} x {item.name}: ${item.cost}</p>;
                         })}</p></div>
 
                 </div>
                 <div className="mb-12">
-                    <p className={"font-HeadlandOne text-deep-blue"}>Created by Kendall and Jade, styled by Ben and
+                    <p className={"dark:text-light-white font-HeadlandOne text-deep-blue"}>Created by Kendall and Jade, styled by Ben and
                         Theresa</p>
                 </div>
             </div>

@@ -81,27 +81,27 @@ export function SecurityPage() {
     }
 
     return (
-        <div className="centerContent flex flex-col">
+        <div className="dark:bg-black centerContent flex flex-col">
             <div className={submittedWindowVisibility.formScreen}>
-                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                <h1 className={"text-3xl font-HeadlandOne py-4"}>Security Service Request</h1>
-                <p className="pb-8 text-center">Fill out the form below to make a security request.</p>
+                <div className="dark:bg-Ash-black bg-light-white my-10 p-10 px-20 rounded-3xl">
+                <h1 className={"dark:text-light-white text-3xl font-HeadlandOne py-4"}>Security Service Request</h1>
+                <p className="dark:text-white pb-8 text-center">Fill out the form below to make a security request.</p>
 
                 <form ref={formRef} onSubmit={e => {
                     e.preventDefault();
                 }}>
                     <div className="formTest gap-24">
-                        <p className={"text-left font-bold"}>Employee Name</p>
+                        <p className={"dark:text-light-white text-left font-bold"}>Employee Name</p>
                         <div className="border-deep-blue border-solid border-2 w-full">
                             <input
-                                className={"border-solid border-deep-blue overflow-hidden flex items-start p-[5px] w-full"}
+                                className={"dark:bg-black dark:text-white border-solid border-deep-blue overflow-hidden flex items-start p-[5px] w-full"}
                                 onChange={handleNameInput}
                                 value={request.employeeName}
                                 placeholder={"Name"}/>
 
                         </div>
                         <br/>
-                        <p className={"text-left font-bold"}>What is the location?</p>
+                        <p className={"dark:text-light-white text-left font-bold"}>What is the location?</p>
                         <div className="border-deep-blue border-solid border-2">
                             <Dropdown options={locationOptions} placeholder={"Location"} name={"locationDropdown"}
                                       id={"dropdown1"} value={cleared}
@@ -111,7 +111,7 @@ export function SecurityPage() {
                         <br/>
                         <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
                             <div>
-                                <p className={"text-left font-bold"}>What is the priority?</p>
+                                <p className={"dark:text-light-white text-left font-bold"}>What is the priority?</p>
                                 <div className="border-deep-blue border-solid border-2 w-full">
                                     <RadioButton value={"Low"} name={"priority"} id={"priority1"}
                                                  state={request.priority}
@@ -128,15 +128,15 @@ export function SecurityPage() {
                                 </div>
                             </div>
                             <div>
-                                <p className={"text-left font-bold w-full"}>Quantity of Personnel</p>
+                                <p className={"dark:text-light-white text-left font-bold w-full"}>Quantity of Personnel</p>
                                 <input
-                                    className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
+                                    className={"dark:bg-black dark:text-light-white border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
                                     type="number" min='1' required defaultValue={'1'}/>
 
 
                                 <br/>
 
-                                <p className={"flex text-left font-bold w-full"}>What is the reason for the security
+                                <p className={"dark:text-light-white flex text-left font-bold w-full"}>What is the reason for the security
                                     request?</p>
                                 <div className="border-deep-blue border-solid border-2 w-full">
                                     <Dropdown
@@ -152,9 +152,9 @@ export function SecurityPage() {
                             </div>
                         </div>
                         <br/>
-                        <p className={"flex w-full text-left font-bold"}>Additional Info</p>
+                        <p className={"dark:text-light-white flex w-full text-left font-bold"}>Additional Info</p>
                         <textarea id={"additionalInfo"}
-                                  className={"w-full w-max-full max-w-full p-[5px] border-deep-blue border-solid border-2"}
+                                  className={"dark:bg-black dark:text-light-white w-full w-max-full max-w-full p-[5px] border-deep-blue border-solid border-2"}
                                   onChange={handleAdditionalInfoInput}
                                   value={request.additionalInfo} required={true}
                                   placeholder="Enter detailed description here..."/>
@@ -170,11 +170,11 @@ export function SecurityPage() {
          </div>
             <div className={submittedWindowVisibility.submittedScreen}>
                 <div className="pt-32">
-                <div className="p-6 bg-white rounded-2xl">
-                    <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+                <div className="dark:bg-Ash-black p-6 bg-white rounded-2xl">
+                    <p className="dark:text-white font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
                     <Button onClick={handleNewSubmission} children="Submit a new request"/>
                 </div>
-                <div className={"text-left"}>
+                <div className={"dark:text-light-white text-left"}>
                     <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
                     <p className={"font-bold"}>Employee Name</p>
                     <p className={""}>{request.employeeName}</p>
@@ -197,7 +197,7 @@ export function SecurityPage() {
             </div>
             </div>
             <div>
-                <p className={"font-HeadlandOne text-deep-blue"}>Created by Nick and Henry</p>
+                <p className={"dark:text-light-white font-HeadlandOne text-deep-blue"}>Created by Nick and Henry</p>
             </div>
         </div>
     );

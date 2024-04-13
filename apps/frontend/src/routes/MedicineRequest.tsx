@@ -105,11 +105,11 @@ export function MedicineRequest(){
 
     return(
 
-        <div className="centerContent flex flex-col">
+        <div className="dark:bg-black centerContent flex flex-col">
             <div className={submittedWindowVisibility.formScreen}>
-                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                    <h1 className={"text-3xl font-HeadlandOne pt-2 pb-4"}>Medicine Delivery Request</h1>
-                    <p>Fill out the form below to schedule a medicine delivery</p>
+                <div className="dark:bg-Ash-black bg-light-white my-10 p-10 px-20 rounded-3xl">
+                    <h1 className={"dark:text-light-white text-3xl font-HeadlandOne pt-2 pb-4"}>Medicine Delivery Request</h1>
+                    <p className="dark:text-white">Fill out the form below to schedule a medicine delivery</p>
 
 
                     <form ref={formRef} onSubmit={e => {
@@ -117,16 +117,16 @@ export function MedicineRequest(){
                     }}>
                         <div className="formTest  my-10 gap-24">
                             <div>
-                                <p className={"text-left font-bold"}>Employee Name</p>
+                                <p className={"dark:text-white text-left font-bold"}>Employee Name</p>
                                 <input type="text" required
                                        onChange={handleNameInput} value={request.employeeName}
                                        placeholder={"Name"}
-                                       className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-100"}/>
+                                       className={"dark:bg-black dark:text-light-white border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-100"}/>
 
                                 <br/>
 
 
-                                <p className={"text-left font-bold "}>What is the priority of this request?</p>
+                                <p className={"dark:text-white text-left font-bold "}>What is the priority of this request?</p>
                                 <div className={"border-solid border-deep-blue border-2 rounded"}>
                                     <RadioButton value={"Low"} name={"priority"} id={"priority1"}
                                                  state={request.priority}
@@ -144,7 +144,7 @@ export function MedicineRequest(){
 
                                 <br/>
 
-                                <p className={"text-left font-bold"}>Destination of Delivery?</p>
+                                <p className={"dark:text-light-white text-left font-bold"}>Destination of Delivery?</p>
                                 <div className={"border-solid border-deep-blue border-2 rounded"}>
                                     <Dropdown options={locationOptions} placeholder={"Location"}
                                               name={"locationDropdown"}
@@ -157,7 +157,7 @@ export function MedicineRequest(){
 
                                 <div className="grid grid-cols-2 space-x-3 flex-auto">
                                     <div>
-                                        <p className={"text-left font-bold "}>Medication</p>
+                                        <p className={"dark:text-white text-left font-bold "}>Medication</p>
                                         <div className={"border-solid border-deep-blue border-2 rounded w-50"}>
                                             <Dropdown options={medicineOptions} placeholder={"Medicine"}
                                                       name={"medicineDropdown"}
@@ -169,9 +169,9 @@ export function MedicineRequest(){
                                     </div>
                                     <div>
                                         <div>
-                                            <p className={"text-left font-bold"}>Quantity</p>
+                                            <p className={"dark:text-light-white text-left font-bold"}>Quantity</p>
                                             <input
-                                                className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-50"}
+                                                className={"dark:bg-black dark:text-light-white border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-50"}
                                                 type="number" required min={'1'} defaultValue={'1'}/>
                                         </div>
                                     </div>
@@ -181,10 +181,10 @@ export function MedicineRequest(){
 
                                 <br/>
 
-                                <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Additional
+                                <label htmlFor={"feedback"} className={"dark:text-light-white flex w-full text-left font-bold"}>Additional
                                     Comments</label>
                                 <textarea id={"feedback"}
-                                          className={"w-full max-w-full h-40 max-h-40   p-1 border-solid border-deep-blue border-2 rounded"}
+                                          className={"dark:bg-black dark:text-light-white w-full max-w-full h-40 max-h-40   p-1 border-solid border-deep-blue border-2 rounded"}
                                           onChange={handleFeedbackInput}
                                           value={request.additionalComments} required={true}
                                           placeholder="Enter detailed description here..."/><br/>
@@ -205,12 +205,12 @@ export function MedicineRequest(){
 
             <div className={submittedWindowVisibility.submittedScreen}>
                 <div className="pt-32">
-                    <div className="p-6 bg-white rounded-2xl">
-                        <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+                    <div className="dark:bg-Ash-black p-6 bg-white rounded-2xl">
+                        <p className="dark:text-white font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
                         <Button onClick={handleNewSubmission} children="Submit a new request"/>
                     </div>
 
-                    <div className={"text-left"}>
+                    <div className={"dark:text-light-white text-left"}>
                         <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
                         <p className={"font-bold"}>Employee Name:</p>
                         <p className={""}>{request.employeeName}</p>
@@ -234,7 +234,7 @@ export function MedicineRequest(){
 
             </div>
             <div>
-                <p className={"font-HeadlandOne text-deep-blue"}>Created by Mo and Colin</p>
+                <p className={"dark:text-white font-HeadlandOne text-deep-blue"}>Created by Mo and Colin</p>
             </div>
         </div>
     );
