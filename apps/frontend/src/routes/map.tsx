@@ -141,8 +141,8 @@ export function Map(){
                         setAlgo("DFS");
                         setSelectedAlgo("DFS");
                     }} onClick3={() => {
-                        setAlgo("DIJKSTRA");
-                        setSelectedAlgo("DIJKSTRA");
+                        setAlgo("Dijkstra");
+                        setSelectedAlgo("Dijkstra");
                     }}/>
                     <FloorSelector
                         onClick1={() => setCurrentFloor("L2")}

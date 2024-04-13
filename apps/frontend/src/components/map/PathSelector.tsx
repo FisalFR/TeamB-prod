@@ -40,7 +40,7 @@ export function PathSelector(props: {
                 <AlgorithmButtons px="px-8" onClick={props.onClick2}
                                   isActive={props.selectedAlgo === "DFS"}> DFS </AlgorithmButtons>
                 <AlgorithmButtons px="px-8" onClick={props.onClick3}
-                                  isActive={props.selectedAlgo === "DIJKSTRA"}> DIJKSTRA </AlgorithmButtons>
+                                  isActive={props.selectedAlgo === "Dijkstra"}> DIJKSTRA </AlgorithmButtons>
             </div>
         </div>
     </div>;
