@@ -127,7 +127,7 @@ export function Map(){
 
     return (
         <>
-            <div className="centerContent">
+            <div className="dark:bg-black centerContent">
                 <div className="relative w-full h-full"> {/* Add relative positioning here */}
                     <div className="w-screen h-screen fixed overflow-scroll" ref={divRef}>
                         <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor={currentFloor}
@@ -135,7 +135,7 @@ export function Map(){
                                     images={floorImages as Record<string, string>}/>
                     </div>
                     <div
-                        className="absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end">
+                        className="dark:bg-Ash-black absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end">
                         <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center pt-2 pr-2 pl-2">
                             <img src={from} alt="from" className={"px-1"}/>
                             <Select label="" id="nodeStartSelect" options={nodes}

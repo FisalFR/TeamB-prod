@@ -18,10 +18,10 @@ export function LoginPage() {
             </div>
             <AnimatedSVG/>
 
-            <div className="dark:bg-black pl-20 w-1/2">
+            <div className=" pl-20 w-1/2">
 
 
-                <div className=' dark:bg-black w-full pl-31 flex flex-col'>
+                <div className=' w-full pl-31 flex flex-col'>
                     <h1 className="dark:text-white px-5 font-bold text-left font-HeadlandOne text-6xl ">Navigate
                         Seamlessly</h1>
                     <div className="flex flex-col w-full">
