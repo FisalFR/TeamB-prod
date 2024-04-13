@@ -78,16 +78,16 @@ export function MaintenancePage() {
     return (
         <div className="centerContent flex flex-col">
             <div className={submittedWindowVisibility.formScreen}>
-                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                    <h1 className={"text-3xl font-HeadlandOne py-4"}>Welcome to the Maintenance page!</h1>
-                    <p>Fill out the form below to report an issue and make a maintenance request.</p>
+                <div className="dark:bg-Ash-black bg-light-white my-10 p-10 px-20 rounded-3xl">
+                    <h1 className={"dark:text-white text-3xl font-HeadlandOne py-4"}>Welcome to the Maintenance page!</h1>
+                    <p className="dark:text-light-white">Fill out the form below to report an issue and make a maintenance request.</p>
 
                     <form ref={formRef} onSubmit={e => {
                         e.preventDefault();
                     }}>
                         <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
                             <div>
-                                <p className={"text-left font-bold"}>What kind of issue?</p>
+                                <p className={"dark:text-white text-left font-bold"}>What kind of issue?</p>
                                 <div className="border-deep-blue border-solid border-2">
                                     <RadioButton value={"Elevator"} name={"issue"} id={"issue1"} state={request.issue}
                                                  onChange={handleIssueInput} required={true}/>
@@ -104,7 +104,7 @@ export function MaintenancePage() {
                             </div>
 
                             <div>
-                                <p className={"text-left font-bold"}>What location is this issue in?</p>
+                                <p className={"dark:text-light-white text-left font-bold"}>What location is this issue in?</p>
                                 <div className="border-deep-blue border-solid border-2">
                                     <Dropdown options={locationOptions} placeholder={"Location"}
                                               name={"locationDropdown"}
@@ -115,7 +115,7 @@ export function MaintenancePage() {
 
                                 <br/>
 
-                                <p className={"text-left font-bold"}>Is this an urgent issue?</p>
+                                <p className={"dark:text-white text-left font-bold"}>Is this an urgent issue?</p>
                                 <div className="border-deep-blue border-solid border-2">
                                     <RadioButton value={"Yes"} name={"urgency"} id={"urgency1"} state={request.priority}
                                                  onChange={handleUrgentCheck} required={true}/>
@@ -128,11 +128,11 @@ export function MaintenancePage() {
                             </div>
                         </div>
 
-                        <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Description of
+                        <label htmlFor={"feedback"} className={"dark:text-light-white flex w-full text-left font-bold"}>Description of
                             issue</label>
                         <div className="">
                             <textarea id={"feedback"}
-                                      className={"w-full max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2"}
+                                      className={"dark:bg-black dark:text-white w-full max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2"}
                                       onChange={handleFeedbackInput}
                                       value={request.feedback} required={true}
                                       placeholder="Enter detailed description here..."/>
@@ -149,11 +149,11 @@ export function MaintenancePage() {
 
             <div className={submittedWindowVisibility.submittedScreen}>
                 <div className="pt-32">
-                    <div className="p-6 bg-white rounded-2xl">
-                        <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+                    <div className="dark:bg-Ash-black p-6 bg-white rounded-2xl">
+                        <p className="dark:text-light-white font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
                         <Button onClick={handleNewSubmission} children="Submit a new request"/>
                     </div>
-                    <div className={"text-left"}>
+                    <div className={"dark:text-white text-left"}>
                         <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
                         <p className={"font-bold"}>What kind of issue would you like to report?</p>
                         <p className={""}>{request.issue}</p>
@@ -170,7 +170,7 @@ export function MaintenancePage() {
                 </div>
             </div>
             <div>
-                <p className={"font-HeadlandOne text-deep-blue"}>Created by Nick</p>
+                <p className={"dark:text-light-white font-HeadlandOne text-deep-blue"}>Created by Nick</p>
             </div>
         </div>
     );
