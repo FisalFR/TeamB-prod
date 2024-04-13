@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {forms} from "database/.prisma/client";
 import HoverTable from "../components/hoverTable.tsx";
+import formType from "common/src/FormType.ts";
 function LogBook() {
 
 
@@ -18,12 +19,13 @@ function LogBook() {
         priority: ""
     });
     const [cleared, setCleared] = useState(false);
-    const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
     const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
     const [formIDOptions, setFormID] = useState<string[]>([]);
     const [requestTypeOptions, setRequestOptions] = useState<string[]>([]);
+    const [statusTypeOptions, setTypeOptions] = useState<string[]>([]);
     const [locationOptions, setLocation] = useState<string[]>([]);
     const [priorityOptions, setPriority] = useState<string[]>([]);
+    const [dataUpdated, setDataUpdated] = useState<boolean>(false);
 
 
     const removeDups = (arr: string[]): string[] => {
@@ -39,18 +41,22 @@ function LogBook() {
             const requestStrings = [];
             const locationStrings = [];
             const priorityStrings = [];
+            const statusStrings = [];
             for (let i = 0; i < response.data.length; i++) {
                 formIDStrings.push(response.data[i].formID);
                 requestStrings.push(response.data[i].type);
                 locationStrings.push(response.data[i].location);
+                statusStrings.push(response.data[i].status);
                 priorityStrings.push(response.data[i].priority);
             }
             setFormID(formIDStrings);
             setRequestOptions(removeDups(requestStrings));
             setLocation(removeDups(locationStrings));
+            setTypeOptions(removeDups(statusStrings));
             setPriority(removeDups(priorityStrings));
+            setDataUpdated(false);
         });
-    }, []);
+    }, [dataUpdated]);
 
 
     // Use Effect that updates the page everytime you input something into the dropdowns in Filter Data
@@ -62,6 +68,17 @@ function LogBook() {
     }).then((response) => {
         const reversedData = response.data.reverse();
         setForm(reversedData);
+        const formIDStrings = reversedData.map((item: formType) => item.formID);
+        const typeStrings = reversedData.map((item: formType) => item.type);
+        const locationStrings = reversedData.map((item: formType) => item.location);
+        const statusStrings = reversedData.map((item: formType) => item.status);
+        const priorityStrings = reversedData.map((item: formType) => item.priority);
+
+        setFormID(formIDStrings);
+        setRequestOptions(removeDups(typeStrings));
+        setLocation(removeDups(locationStrings));
+        setTypeOptions(removeDups(statusStrings));
+        setPriority(removeDups(priorityStrings));
     });
     }, [request]);
 
@@ -98,7 +115,7 @@ function LogBook() {
     }
 
     return (
-            <div className="flex py-10">
+            <div className="flex pt-8">
                 {/*Form to filter current requests*/}
                 <div className=" h-full mx-3 space-y-7 my-3">
                     <div className="rounded-2xl bg-deep-blue bg-opacity-5">
@@ -144,7 +161,7 @@ function LogBook() {
                         <form
                             className="w-[22vw] flex flex-col items-start p-3 gap-4 pl-5">
                             <p className={"text-left font-bold"}>Assigned Staff</p>
-                            <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"}
+                            <Dropdown options={staffTypeOptions} placeholder={"Choose Assignee"}
                                       name={"staffDropdown"}
                                       id={"dropdown5"} value={cleared}
                                       setInput={handleAssigneeType} required={true}/>
@@ -167,7 +184,8 @@ function LogBook() {
                     className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable overflow-auto mt-3">
                     <HoverTable data={form}
                                 headings={["Form ID", "Type", "Location", "Status", "Assignee", "priority", "Date Created"]}
-                                keys={["formID", "type", "location", "status", "assignee", "priority", "dateCreated"]}/>
+                                keys={["formID", "type", "location", "status", "assignee", "priority", "dateCreated"]}
+                                dataUpdated={dataUpdated} setDataUpdated={setDataUpdated}/>
                 </div>
 
             </div>

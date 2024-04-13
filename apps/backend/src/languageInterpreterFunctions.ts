@@ -23,7 +23,7 @@ class languageInterpreterFunctions {
         type: "Language",
         assignee: "",
         location: request.location,
-        priority: "",
+        priority: request.priority,
       },
     });
     await prisma.languageInterpreterRequests.create({
