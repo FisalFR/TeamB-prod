@@ -14,7 +14,8 @@ class giftDeliveryFunctions {
         type: "Gift",
         assignee: "",
         location: request.location,
-        priority: "",
+        priority: "N/A",
+        employeeName: "N/A",
       },
     });
 

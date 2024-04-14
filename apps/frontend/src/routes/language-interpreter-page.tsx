@@ -6,7 +6,7 @@ import axios from "axios";
 import RadioButton from "../components/RadioButton.tsx";
 
 function LanguageInterpreter(){
-    const [request, setRequest] = useState<LanguageInterpreterTypes>({language: "", location: ""});
+    const [request, setRequest] = useState<LanguageInterpreterTypes>({language: "", location: "", priority: ""});
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         requestScreen: "block",
         submittedScreen: "hidden"
@@ -81,7 +81,7 @@ function LanguageInterpreter(){
     function handleClearLanguage(e: { preventDefault: () => void; }): void {
         e.preventDefault();
         // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-        setRequest({language: "", location: ""});
+        setRequest({language: "", location: "", priority: ""});
         // use resetActive from Dropdown?
 
         setCleared(true);
@@ -98,7 +98,7 @@ function LanguageInterpreter(){
     function handleNewSubmissionLanguage(): void {
         setSubmittedWindowVisibility({requestScreen: "block", submittedScreen: "hidden"});
         // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-        setRequest({language: "", location: ""});
+        setRequest({language: "", location: "", priority: ""});
         // use resetActive from Dropdown?
         setCleared(false);
     }
@@ -170,7 +170,7 @@ function LanguageInterpreter(){
                                         <label className="float-left font-bold"> What language do you need an
                                             interpreter for?</label>
                                         <div
-                                            className=" float-left border-solid border-deep-blue border-2 rounded my-3">
+                                            className=" float-left border-solid border-deep-blue border-2 rounded">
                                             <Dropdown options={languages} placeholder={"Languages"}
                                                       name={"languagesDropdown"}
                                                       id={"dropdown2"} value={cleared}
@@ -180,10 +180,10 @@ function LanguageInterpreter(){
                                         </div>
                                     </div>
                                     <div className="flex flex-col justify-items-start">
-                                        <label className="flex justify-start  font-bold">What room do you need the
+                                        <label className="flex justify-start font-bold">What room do you need the
                                             interpreter?</label>
                                         <div
-                                            className=" float-start inline-block border-solid border-deep-blue border-2 rounded my-3">
+                                            className=" float-start inline-block border-solid border-deep-blue border-2 rounded">
                                             <Dropdown options={locationOptions} placeholder={"Location"}
                                                       name={"locationsDropdown"}
                                                       id={"dropdown3"} value={cleared}
