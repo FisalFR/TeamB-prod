@@ -1,3 +1,5 @@
+import {ReactNode} from "react";
+
 export function NavLink(props: {href?: string, onClick?:(e: React.MouseEvent) => void, px: string, children: ReactNode}) {
     const handleClick = (e: React.MouseEvent) => {
         if (props.onClick) {
