@@ -12,7 +12,7 @@ export function SecurityPage() {
         additionalInfo: "",
         location: "",
         priority: "",
-        quantity: 0
+        quantity: 1
     });
     const securityOptions: string[] = ["Theft","Walk to Car"," Trespassing","Intruder","Threat","VIP","Assault"];
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
@@ -74,6 +74,10 @@ export function SecurityPage() {
         setRequest({...request, priority: e.target.value});
     }
 
+    function handleQuantityInput(e: ChangeEvent<HTMLInputElement>): void {
+        setRequest({...request, quantity: e.target.value});
+    }
+
     function handleNewSubmission(): void {
         setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
         setRequest({additionalInfo: "", employeeName: "", securityReason: "", location: "", priority: "", quantity:0});
@@ -131,7 +135,7 @@ export function SecurityPage() {
                                 <p className={"text-left font-bold w-full"}>Quantity of Personnel</p>
                                 <input
                                     className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
-                                    type="number" min='1' required defaultValue={'1'}/>
+                                    type="number" min='1' required defaultValue={1} onChange={e => handleQuantityInput(e)}/>
 
 
                                 <br/>
