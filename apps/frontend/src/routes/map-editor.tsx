@@ -22,6 +22,8 @@ export function MapEditor(){
 
     const [dragging, setDragging] = useState(false);
 
+    const [currentNode, setCurrentNode]: Node | string = useState("Select a node");
+
 
     const PlusSvg = <img src={plus} alt="Plus" className={"w-5"} />;
     const MinusSvg = <img src={minus} alt="Minus" className={"w-5"} />;
@@ -74,6 +76,7 @@ export function MapEditor(){
         dragNodeCoordsY.current = coords[1];
         dragNodeID.current = node;
         setDragging(true);
+        setCurrentNode(nodeMap.get(node));
     }
     function handleDrag(e: MouseEvent, nodeID: string) {
         e.preventDefault();
@@ -142,59 +145,80 @@ export function MapEditor(){
     }
 
     return (
-        <div className = "fixed">
+        <div className="relative">
         <TransformWrapper disabled={dragging} disablePadding={true} limitToBounds={true}>
-            <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)"}} >
+            <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)", position: "fixed"}} >
                 <svg viewBox={"0 0 5000 3400"} width={"100vw"} onMouseMove={(e) => handleDrag(e, dragNodeID.current)}>
-                                            <image xlinkHref={floorImages[currentFloor]} width={5000} height={3400}
-                                                   key={JSON.stringify(floorImages[currentFloor])}
-                                                   ref = {imgRef}></image>
+                    <image xlinkHref={floorImages[currentFloor]} width={5000} height={3400}
+                           key={JSON.stringify(floorImages[currentFloor])}
+                           ref = {imgRef}></image>
+                    {edges.map((edge) => {
+                        const startNode = nodeMap.get(edge.startNodeID);
+                        const endNode = nodeMap.get(edge.endNodeID);
+                        const sameFloor = startNode?.floor === endNode?.floor;
+                        if (startNode !== undefined && endNode !== undefined) {
+                            if (startNode.floor === currentFloor && sameFloor) {
+                                return <line x1={startNode.xcoord }
+                                             y1={startNode.ycoord}
+                                             x2={endNode.xcoord }
+                                             y2={endNode.ycoord }
+                                             stroke={"#012D5A"}
+                                             strokeWidth={5}></line>;
+                            }
+                        }
+                    })}
+                    {editNodes.filter(node => {
+                        return node.floor === currentFloor;
+                    }).map((node) => {
+                        return <>
+                            <circle cx={setXCoords(node)} cy={setYCoords(node)} r={8}
+                                    fill="#F6BD38"
+                                    onMouseMove={(e) => handleDrag(e, node.nodeID)}
+                                    onMouseDown={(e) => startDrag(e, node.nodeID)}
+                                    onMouseUp={(e) => endDrag(e, node.nodeID)}/>
 
-                                            {edges.map((edge) => {
-                                                const startNode = nodeMap.get(edge.startNodeID);
-                                                const endNode = nodeMap.get(edge.endNodeID);
-                                                const sameFloor = startNode?.floor === endNode?.floor;
-                                                if (startNode !== undefined && endNode !== undefined) {
-                                                    if (startNode.floor === currentFloor && sameFloor) {
-                                                        return <line x1={startNode.xcoord }
-                                                                     y1={startNode.ycoord}
-                                                                     x2={endNode.xcoord }
-                                                                     y2={endNode.ycoord }
-                                                                     stroke={"#012D5A"}
-                                                                     strokeWidth={5}
-                                                        ></line>;
-                                                    }
-                                                }
-
-                                            })}
-                                            {editNodes.filter(node => {
-                                                return node.floor === currentFloor;
-                                            }).map((node) => {
-                                                return <>
-                                                    <circle cx={setXCoords(node)} cy={setYCoords(node)} r={8}
-                                                            fill="#F6BD38"
-                                                            onMouseMove={(e) => handleDrag(e, node.nodeID)}
-                                                            onMouseDown={(e) => startDrag(e, node.nodeID)}
-                                                            onMouseUp={(e) => endDrag(e, node.nodeID)}/>
-
-                                                </>;
-                                            })}
+                        </>;
+                    })}
                 </svg>
             </TransformComponent>
+            <div className="p-6 absolute gap-1 top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-start">
+                <h2 className="font-HeadlandOne text-[24px]">Edit Nodes</h2>
+                <p>Node ID: {currentNode.nodeID}</p>
+                <div>
+                    <label htmlFor="longname">Long Name: </label>
+                    <input value={currentNode.longName} id="longname"></input>
+                </div>
+                <div>
+                    <label htmlFor="shortname">Short Name: </label>
+                    <input value={currentNode.shortName} id="shortname"></input>
+                </div>
+                <p>Building: {currentNode.building}</p>
+                <p>Floor: {currentNode.floor}</p>
+                <p>Type: {currentNode.nodeType}</p>
+                <div>
+                    <label htmlFor="xcoord">X Coordinate: </label>
+                    <input value={currentNode.xcoord} id="longname"></input>
+                </div>
+                <div>
+                    <label htmlFor="ycoord">Y Coordinate: </label>
+                    <input value={currentNode.ycoord} id="longname"></input>
+                </div>
+                <p>Neighbors: {currentNode.neighbors}</p>
+            </div>
             <FloorSelector
                 onClick1={() => setCurrentFloor("L2")}
                 onClick2={() => setCurrentFloor("L1")}
                 onClick3={() => setCurrentFloor("1")}
                 onClick4={() => setCurrentFloor("2")}
-                            onClick5={() => setCurrentFloor("3")}
-                            currentFloor={currentFloor}
-                        />
-                        <ZoomControls></ZoomControls>
-                    </TransformWrapper>
+                onClick5={() => setCurrentFloor("3")}
+                currentFloor={currentFloor}
+            />
+            <ZoomControls></ZoomControls>
+        </TransformWrapper>
         </div>
 
-)
-    ;
+    )
+        ;
 }
 
 export default MapEditor;
