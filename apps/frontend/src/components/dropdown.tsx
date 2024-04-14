@@ -18,11 +18,11 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 
     //strings of the options showing with the corresponding search of a specific search type
     //n-normal t-transposition d-deletion s-substitution i-insertion
-    let nOptions: optionWithSearch[] = [];
-    let tOptions: optionWithSearch[] = [];
-    let dOptions: optionWithSearch[] = [];
-    let sOptions: optionWithSearch[] = [];
-    let iOptions: optionWithSearch[] = [];
+    const nOptions: optionWithSearch[] = [];
+    const tOptions: optionWithSearch[] = [];
+    const dOptions: optionWithSearch[] = [];
+    const sOptions: optionWithSearch[] = [];
+    const iOptions: optionWithSearch[] = [];
 
     let stringOptions: string[] = [];
 
