@@ -10,9 +10,8 @@ import HandleLogout from "./handleLogout.tsx";
 
 export function NavigationBar() {
     const {isAuthenticated, isLoading} = useAuth0();
+    const handleLogout = HandleLogout();
 
-    console.log(isAuthenticated);
-    console.log(isLoading);
 
     {
 
@@ -50,7 +49,7 @@ export function NavigationBar() {
                             <div className="self-center">
                                 <div className="float-end centerContent px-16">
 
-                                    <NavLink onClick={HandleLogout}><div className="flex flex-row gap-2">
+                                    <NavLink onClick={handleLogout}><div className="flex flex-row gap-2">
                                         <img src={user_icon} alt="Username icon" height="20" width="20"/>LOGOUT</div></NavLink>
                                 </div>
                             </div>
