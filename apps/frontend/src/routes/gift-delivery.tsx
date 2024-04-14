@@ -23,17 +23,16 @@ import axios from "axios";
 import Dropdown from "../components/dropdown.tsx";
 import Calendar from 'react-calendar';
 import '../Calendar.css';
+import RadioButton from "../components/RadioButton.tsx";
 
 
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
+
 
 function GiftDelivery() {
     const formRef = useRef<HTMLFormElement>(null);
     const [cart, setCart] = useState<giftItem[]>([]);
     const [locationOptions, setLocationOptions] = useState<string[]>([]);
     const [cleared, setCleared] = useState(false);
-    const [value, onChange] = useState<Value>(new Date());
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         formScreen: "block",
         submittedScreen: "hidden"
@@ -41,8 +40,10 @@ function GiftDelivery() {
     const [request, setRequest] = useState<giftRequest>({
         receiverName:"",
         senderName: "",
+        priority:"Low",
         location:"",
         message: "",
+        date: new Date(),
         cart: []
     });
 
@@ -156,6 +157,16 @@ function GiftDelivery() {
         setRequest({...request, location: str});
     }
 
+    function handlePriorityInput(e: ChangeEvent<HTMLInputElement>): void {
+        setCleared(false);
+        setRequest({...request, priority: e.target.value});
+    }
+
+    function handleCalendarInput( newDate:Date){
+        setCleared(false);
+        setRequest({...request, date: newDate});
+    }
+
     function scrollToTop(): void{
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -165,7 +176,9 @@ function GiftDelivery() {
         setRequest({ receiverName:"",
             senderName: "",
             location:"",
+            priority:"Low",
             message: "",
+            date: new Date(),
             cart: []});
         setCleared(false);
         location.reload();
@@ -177,12 +190,12 @@ function GiftDelivery() {
             <div className=" right-5 fixed top-20 text-2xl text-center text-Ash-black text-bold ">
                 <Button onClick={scrollToTop} children={"Go to Cart"} px={"px-9"} py={"py-4"}/>
             </div>
-            <div className="centerContent">
+            <div className="centerContent ">
 
                 <div className="w-5/6">
                     <div className={submittedWindowVisibility.formScreen}>
 
-                        <div className=" justify-center bg-light-white my-10 p-10 rounded-3xl">
+                        <div className="justify-between bg-light-white my-10 p-10 rounded-3xl">
                             <h1 className="text-3xl font-HeadlandOne align-text-top">
                                 Gift Delivery Request Form
                             </h1>
@@ -191,8 +204,9 @@ function GiftDelivery() {
                                 e.preventDefault();
                             }}>
                                 <br/><br/>
-                                <div className="flex flex-wrap mb-4 px-20 gap-20 h-fit">
-                                    <div className="flex-grid items-start flex-grow-1 w-1/3 h-full">
+                                <div className="centerContent">
+                                <div className=" content-start justify-between flex mb-4 px-20 bg-gray-200 py-20 rounded-3xl w-5/6">
+                                    <div className=" flex-col items-start 1 w-1/3 h-full">
 
                                         <label htmlFor="message"
                                                className="font-OpenSans text-md font-bold text-Ash-black ">
@@ -202,41 +216,67 @@ function GiftDelivery() {
                                                   onChange={handleMessage}
                                                   className="border-solid border-deep-blue border-2 rounded p-1 px-2 w-full h-56">
                         </textarea>
+                                        <label htmlFor="message"
+                                               className="font-OpenSans text-md font-bold text-Ash-black ">
+                                            Pick a Date: </label>
                                         <div>
-                                            <Calendar onChange={onChange} value={value}/>
+                                            <Calendar onChange={handleCalendarInput} value={request.date}/>
                                         </div>
                                     </div>
-                                    <div className="w-1/5 centerContent flex-col justify-start items-start h-3/4 gap-2">
-                                    <label htmlFor="receiverName"
+                                    <div className="text-left grid w-1/5 h-full gap-5 content-between">
+                                        <div>
+                                            <label htmlFor="receiverName"
                                                className="font-OpenSans font-bold text-md text-Ash-black">To: </label>
                                         <input type="text" id="receiverName" name="receiverName"
                                                placeholder={"Recipient's Name"}
                                                className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
                                                onChange={handleInput}></input><br/>
-
-
+                                        </div>
+                                        <div>
                                         <label htmlFor="senderName"
                                                className="font-OpenSans font-bold text-md text-Ash-black">From: </label>
                                         <input type="text" id="senderName" name="senderName"
                                                className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
                                                placeholder={"Sender's Name"}
                                                onChange={handleInput}></input><br/>
-
+                                        </div>
+                                        <div>
                                         <label htmlFor="location"
                                                className="font-OpenSans font-bold text-md text-Ash-black">Location: </label>
-                                        <div className="border-solid border-deep-blue border-2 rounded">
+                                        <div className="border-solid border-deep-blue border-2 rounded w-full">
                                             <Dropdown options={locationOptions} placeholder="Location"
                                                       name="Location Dropdown"
                                                       id="location" setInput={handleLocationInput} value={cleared}
                                                       required={true}
+                                                      width="w-full"
                                             />
-
                                         </div>
-
+                                        </div>
+                                        <div className="">
+                                            <p className={"text-left font-bold"}>What is the priority?</p>
+                                            <div className="border-deep-blue border-solid border-2 w-full">
+                                                <RadioButton value={"Low"} name={"priority"} id={"priority1"}
+                                                             state={request.priority}
+                                                             onChange={handlePriorityInput} required={true}
+                                                             width={"w-full"}/>
+                                                <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
+                                                             state={request.priority}
+                                                             onChange={handlePriorityInput} required={true}
+                                                             width={"w-full"}/>
+                                                <RadioButton value={"High"} name={"priority"} id={"priority3"}
+                                                             state={request.priority}
+                                                             onChange={handlePriorityInput} required={true}
+                                                             width={"w-full"}/>
+                                                <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
+                                                             state={request.priority}
+                                                             onChange={handlePriorityInput} required={true}
+                                                             width={"w-full"}/>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="centerContent w-1/3">
+                                    <div className=" w-1/3 flex ">
 
-                                    <div
+                                        <div
                                             className=" bg-white rounded-3xl w-full object-cover overflow-hidden h-full">
                                             <div className=" bg-deep-blue border-rounded w-full ">
                                                 <h2 className="text-2xl text-bone-white font-bold w-full py-2">
@@ -245,15 +285,14 @@ function GiftDelivery() {
                                             </div>
 
                                             <div
-                                                className="text-xl  text-Ash-black text-bold">
+                                                className="text-xl  text-Ash-black text-bold h-3/4">
 
-                                                <div className="top-5 w-full h-4/5 overflow-y-scroll py-3">
+                                                <div className=" w-full h-4/5 overflow-y-scroll py-5">
                                                     {createCart()}
                                                 </div>
                                             </div>
-
                                             <div
-                                                className=" align-bottom bottom-5 text-xl text-Ash-black text-bold">
+                                                className=" text-xl text-Ash-black text-bold">
                                                 <p>Total Cost: ${calcCost()}</p>
                                                 <Button onClick={handleSubmit} children={"Purchase"}/>
                                             </div>
@@ -261,7 +300,7 @@ function GiftDelivery() {
 
                                     </div>
                                 </div>
-
+                                </div>
                                 <br/><br/>
                                 {/*Flowers*/}
                                 <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
@@ -346,8 +385,8 @@ function GiftDelivery() {
                             </form>
                         </div>
                     </div>
-                    <div className={submittedWindowVisibility.submittedScreen}>
-                        <div className="p-6 bg-white rounded-2xl mt-20 max-w-2x items-center">
+                    <div className="submittedWindowVisibility.submittedScreen flex-col centerContent">
+                        <div className="flex-col p-6 bg-white rounded-2xl mt-20 w-1/2 ">
                             <div className={"text-center"}>
                                 <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
                                     Submission:</h3>
@@ -360,28 +399,36 @@ function GiftDelivery() {
                                 <p className={"font-bold"}>Where do you want to send this gift?</p>
                                 <p className={""}>{request.location}</p>
 
+                                <p className={"font-bold"}>When would you like this gift delivered?</p>
+                                <p className={""}>{(request.date).toDateString()}</p>
+
+                                <p className={"font-bold"}>What is the priority of the delivery??</p>
+                                <p className={""}>{request.priority}</p>
+
                                 <p className={"font-bold "}>Additional Message:</p>
                                 <p className={"text-pretty break-words text-center"}>{request.message}</p>
 
                                 <p className={"font-bold"}>Total Cost:</p>
                                 <p className={""}>${calcCost()}</p>
 
-                                <p className="font-HeadlandOne p-3 text-xl center">Thank you for submitting!</p>
+                                <p className="font-HeadlandOne p-3 text-xl ">Thank you for submitting!</p>
                                 <Button onClick={handleNewSubmission} children="Submit a new request" px="text-xl p-2"/>
                                 <br/>
                             </div>
                         </div>
-                        <div className="text-center center p-6 bg-white rounded-2xl mt-20">
-                            <p className={"font-bold text-center"}>Cart:</p>
-                            <p className={"text-center center"}>{request.cart.map((item: giftItem) => {
+                        <div className="text-center p-6 bg-white rounded-2xl mt-20 w-1/3">
+                        <p className={"font-bold text-center"}>Cart:</p>
+                            <p className={"text-center"}>{request.cart.map((item: giftItem) => {
                                 return <p>{item.quantity} x {item.name}: ${item.cost}</p>;
                             })}</p></div>
 
                     </div>
-                    <div className="mb-12">
+
+                    <div className="pt-10 h-full">
                         <p className={"font-HeadlandOne text-deep-blue"}>Created by Kendall and Jade, styled by Ben and
                             Theresa</p>
                     </div>
+
                 </div>
 
             </div>
