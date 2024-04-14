@@ -5,10 +5,10 @@ import l2map from "../assets/floors/02_thesecondfloor.png";
 import l3map from "../assets/floors/03_thethirdfloor.png";
 import plus from "../assets/plus.svg";
 import minus from "../assets/minus.svg";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 // import axios from "axios";
 // import {startEndNodes} from "common/src/pathfinding.ts";
-import Node from "../../../../packages/common/src/node";
+//import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import useNodes from "../hooks/useNodes.ts";
@@ -63,23 +63,44 @@ export function MapEditor(){
     //     setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.56)); // Decrease zoom level, min 0.4
     // }
 
-    let dragNode: Node;
-    function startDrag(e: MouseEvent, node) {
-        dragNode = node;
+    const [dragCount, setDragCount] = useState(0);
+
+    const dragNodeID: React.MutableRefObject<string> = useRef("");
+    const dragNodeCoordsX = useRef<number>(0);
+    const dragNodeCoordsY = useRef<number>(0);
+    function startDrag(e: MouseEvent, node: string) {
+        const coords = getSVGCoords(e);
+        dragNodeCoordsX.current = coords[0];
+        dragNodeCoordsY.current = coords[1];
+        dragNodeID.current = node;
         setDragging(true);
     }
-    function handleDrag(e: MouseEvent, node) {
-        if (dragNode != null) {
-            if (node.nodeID == dragNode.nodeID) {
-                alert("here");
-                setDragNodeCoords(getSVGCoords(e));
-            }
-        }
+    function handleDrag(e: MouseEvent, nodeID: string) {
+        e.preventDefault();
+            if (nodeID == dragNodeID.current) {
+                const coords = getSVGCoords(e);
+                dragNodeCoordsX.current = coords[0];
+                dragNodeCoordsY.current = coords[1];
+                updateNodes(dragNodeID.current, dragNodeCoordsX.current, dragNodeCoordsY.current);
+                setEditNodes(nodes);
+                setDragCount(dragCount+1);
 
-        //alert("here");
+        }
     }
     function endDrag() {
+        dragNodeID.current = "";
         setDragging(false);
+
+
+    }
+
+    function updateNodes(node: string, xcoord: number, ycoord: number) {
+        for (let i = 0; i < nodes.length; i++) {
+            if (nodes[i].nodeID == node) {
+                nodes[i].xcoord = xcoord;
+                nodes[i].ycoord = ycoord;
+            }
+        }
     }
 
     const imgRef = useRef(null);
@@ -94,30 +115,37 @@ export function MapEditor(){
 
         const x = (e.clientX - offsetLeft) * initialZoomX;
         const y= (e.clientY - offsetTop) * initialZoomY;
-
-        return ([x, y]);
+        console.log([Math.round(x), Math.round(y)]);
+        return ([Math.round(x), Math.round(y)]);
     }
 
     const {nodes,nodeMap} = useNodes();
     const {edges} = useEdges();
 
-    const [dragNodeCoords, setDragNodeCoords] = useState([0,0]);
+    const [editNodes, setEditNodes] = useState(useNodes().nodes);
+    useEffect(() => setEditNodes(nodes), [nodes]);
+
+    //const [dragNodeCoords, setDragNodeCoords] = useState([0,0]);
+    //const [editNodes, setEditNodes] = useState(nodes);
 
     function setXCoords(node) {
-        if (dragNode != null) {
-            if (node.nodeID == dragNode.nodeID) {
-                return dragNodeCoords[0];
-            }
+        if (node.nodeID == dragNodeID.current) {
+            return dragNodeCoordsX.current;
         }
         return node.xcoord;
-
+    }
+    function setYCoords(node) {
+        if (node.nodeID == dragNodeID.current){
+            return dragNodeCoordsY.current;
+        }
+        return node.ycoord;
     }
 
     return (
+        <div className = "fixed">
         <TransformWrapper disabled={dragging} disablePadding={true} limitToBounds={true}>
             <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)"}} >
-                <svg viewBox={"0 0 5000 3400"} width={"100vw"}
-                                             onClick={getSVGCoords}>
+                <svg viewBox={"0 0 5000 3400"} width={"100vw"} onMouseMove={(e) => handleDrag(e, dragNodeID.current)}>
                                             <image xlinkHref={floorImages[currentFloor]} width={5000} height={3400}
                                                    key={JSON.stringify(floorImages[currentFloor])}
                                                    ref = {imgRef}></image>
@@ -139,26 +167,31 @@ export function MapEditor(){
                                                 }
 
                                             })}
-                                            {nodes.filter(node => {
+                                            {editNodes.filter(node => {
                                                 return node.floor === currentFloor;
                                             }).map((node) => {
-                                                return <circle cx={setXCoords(node)} cy={node.ycoord } key = {dragNodeCoords[0]}
-                                                                      r={8 } fill="#F6BD38"
-                                                               onMouseMove={(e) => handleDrag(e, node)}
-                                                                      onMouseDown={(e) => startDrag(e, node)} onMouseUp={endDrag}/>;
+                                                return <>
+                                                    <circle cx={setXCoords(node)} cy={setYCoords(node)} r={8}
+                                                            fill="#F6BD38"
+                                                            onMouseMove={(e) => handleDrag(e, node.nodeID)}
+                                                            onMouseDown={(e) => startDrag(e, node.nodeID)}
+                                                            onMouseUp={(e) => endDrag(e, node.nodeID)}/>
+
+                                                </>;
                                             })}
-                                        </svg>
-                                </TransformComponent>
-                        <FloorSelector
-                            onClick1={() => setCurrentFloor("L2")}
-                            onClick2={() => setCurrentFloor("L1")}
-                            onClick3={() => setCurrentFloor("1")}
-                            onClick4={() => setCurrentFloor("2")}
+                </svg>
+            </TransformComponent>
+            <FloorSelector
+                onClick1={() => setCurrentFloor("L2")}
+                onClick2={() => setCurrentFloor("L1")}
+                onClick3={() => setCurrentFloor("1")}
+                onClick4={() => setCurrentFloor("2")}
                             onClick5={() => setCurrentFloor("3")}
                             currentFloor={currentFloor}
                         />
                         <ZoomControls></ZoomControls>
                     </TransformWrapper>
+        </div>
 
 )
     ;
