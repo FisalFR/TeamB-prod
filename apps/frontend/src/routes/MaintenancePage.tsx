@@ -7,7 +7,7 @@ import axios from "axios";
 
 
 export function MaintenancePage() {
-    const [request, setRequest] = useState<MaintenanceRequest>({issue: "", location: "", priority: "", feedback: ""});
+    const [request, setRequest] = useState<MaintenanceRequest>({employeeName: "", issue: "", location: "", priority: "", feedback: ""});
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         formScreen: "block",
         submittedScreen: "hidden"
@@ -52,6 +52,9 @@ export function MaintenancePage() {
 
     }
 
+    function handleNameInput(e: ChangeEvent<HTMLInputElement>): void{
+        setRequest({...request, employeeName: e.target.value});
+    }
     function handleIssueInput(e: ChangeEvent<HTMLInputElement>): void {
         setRequest({...request, issue: e.target.value});
     }
@@ -61,7 +64,7 @@ export function MaintenancePage() {
         setRequest({...request, location: str});
     }
 
-    function handleUrgentCheck(e: ChangeEvent<HTMLInputElement>): void {
+    function handlePriorityInput(e: ChangeEvent<HTMLInputElement>): void {
         setRequest({...request, priority: e.target.value});
     }
 
@@ -76,36 +79,49 @@ export function MaintenancePage() {
     }
 
     return (
+        <>
         <div className="centerContent flex flex-col">
             <div className={submittedWindowVisibility.formScreen}>
-                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
+                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl w-auto">
                     <h1 className={"text-3xl font-HeadlandOne py-4"}>Welcome to the Maintenance page!</h1>
                     <p>Fill out the form below to report an issue and make a maintenance request.</p>
 
                     <form ref={formRef} onSubmit={e => {
                         e.preventDefault();
                     }}>
-                        <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
-                            <div>
-                                <p className={"text-left font-bold"}>What kind of issue?</p>
-                                <div className="border-deep-blue border-solid border-2">
-                                    <RadioButton value={"Elevator"} name={"issue"} id={"issue1"} state={request.issue}
-                                                 onChange={handleIssueInput} required={true}/>
-                                    <RadioButton value={"Power"} name={"issue"} id={"issue2"} state={request.issue}
-                                                 onChange={handleIssueInput} required={true}/>
-                                    <RadioButton value={"Plumbing"} name={"issue"} id={"issue3"} state={request.issue}
-                                                 onChange={handleIssueInput} required={true}/>
-                                    <RadioButton value={"Repair"} name={"issue"} id={"issue4"} state={request.issue}
-                                                 onChange={handleIssueInput} required={true}/>
-                                    <RadioButton value={"Other"} name={"issue"} id={"issue5"} state={request.issue}
-                                                 onChange={handleIssueInput} required={true}/>
-                                </div>
+                        <div className="formTest w-full my-10 grid grid-cols-2 gap-12 ">
+                            <div className="flex flex-col w-fit">
+                                <p className={"text-left font-bold"}>Employee Name</p>
+                                <input type="text" required
+                                       onChange={handleNameInput} value={request.employeeName}
+                                       placeholder={"Name"}
+                                       className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-[5px] w-full"}/>
+                                <br/>
+                                <div>
+                                    <p className={"text-left font-bold"}>What kind of issue?</p>
+                                    <div className="border-deep-blue border-solid border-2 rounded w-full">
+                                        <RadioButton value={"Elevator"} name={"issue"} id={"issue1"}
+                                                     state={request.issue}
+                                                     onChange={handleIssueInput} required={true}/>
+                                        <RadioButton value={"Power"} name={"issue"} id={"issue2"} state={request.issue}
+                                                     onChange={handleIssueInput} required={true}/>
+                                        <RadioButton value={"Plumbing"} name={"issue"} id={"issue3"}
+                                                     state={request.issue}
+                                                     onChange={handleIssueInput} required={true}/>
+                                        <RadioButton value={"Repair"} name={"issue"} id={"issue4"} state={request.issue}
+                                                     onChange={handleIssueInput} required={true}/>
+                                        <RadioButton value={"Other"} name={"issue"} id={"issue5"} state={request.issue}
+                                                     onChange={handleIssueInput} required={true}/>
+                                    </div>
+                                    <br/>
 
+                                </div>
                             </div>
 
-                            <div>
+
+                            <div className="flex flex-col w-fit">
                                 <p className={"text-left font-bold"}>What location is this issue in?</p>
-                                <div className="border-deep-blue border-solid border-2">
+                                <div className="border-deep-blue border-solid border-2 rounded">
                                     <Dropdown options={locationOptions} placeholder={"Location"}
                                               name={"locationDropdown"}
                                               id={"dropdown1"} value={cleared}
@@ -115,16 +131,23 @@ export function MaintenancePage() {
 
                                 <br/>
 
-                                <p className={"text-left font-bold"}>Is this an urgent issue?</p>
-                                <div className="border-deep-blue border-solid border-2">
-                                    <RadioButton value={"Yes"} name={"urgency"} id={"urgency1"} state={request.priority}
-                                                 onChange={handleUrgentCheck} required={true}/>
-                                    <RadioButton value={"No"} name={"urgency"} id={"urgency2"} state={request.priority}
-                                                 onChange={handleUrgentCheck} required={true}/>
+                                <p className={"text-left font-bold "}>What is the priority of this request?</p>
+                                <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                    <RadioButton value={"Low"} name={"priority"} id={"priority1"}
+                                                 state={request.priority}
+                                                 onChange={handlePriorityInput} required={true} width={"w-80"}/>
+                                    <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
+                                                 state={request.priority}
+                                                 onChange={handlePriorityInput} required={true} width={"w-80"}/>
+                                    <RadioButton value={"High"} name={"priority"} id={"priority3"}
+                                                 state={request.priority}
+                                                 onChange={handlePriorityInput} required={true} width={"w-80"}/>
+                                    <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
+                                                 state={request.priority}
+                                                 onChange={handlePriorityInput} required={true} width={"w-80"}/>
                                 </div>
 
 
-                                <br/>
                             </div>
                         </div>
 
@@ -132,7 +155,7 @@ export function MaintenancePage() {
                             issue</label>
                         <div className="">
                             <textarea id={"feedback"}
-                                      className={"w-full max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2"}
+                                      className={"w-full max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2 rounded"}
                                       onChange={handleFeedbackInput}
                                       value={request.feedback} required={true}
                                       placeholder="Enter detailed description here..."/>
@@ -173,6 +196,7 @@ export function MaintenancePage() {
                 <p className={"font-HeadlandOne text-deep-blue"}>Created by Nick</p>
             </div>
         </div>
+        </>
     );
 }
 
