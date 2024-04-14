@@ -13,9 +13,8 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     const [dropdownClass, setDropdownClass] = useState("search-dropdown hidden z-10");
     const [scrollIndicator, setScrollIndicator] = useState(checkScrollIndicator(optionList.length));
     const [activeOption, setActiveOption] = useState(-1);
-
-    //strings of the options showing with the current search
-    let optionStrings: optionWithSearch[] = [];
+    const [currentOptions, setCurrentOptions] = useState(['']);
+    const [prevSearchLen, setSearchLen] = useState(0);
 
     //strings of the options showing with the corresponding search of a specific search type
     //n-normal t-transposition d-deletion s-substitution i-insertion
@@ -25,6 +24,8 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     let sOptions: optionWithSearch[] = [];
     let iOptions: optionWithSearch[] = [];
 
+    let stringOptions: string[] = [];
+
     //check if the list of options showing is long enough for the scroll indicator to show
     function checkScrollIndicator(listLength: number) {
         if (listLength > 5) {
@@ -33,17 +34,22 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
         return "scroll-indicator text-center w-full hidden";
     }
 
-
     function handleInput(e: ChangeEvent<HTMLInputElement>) {
-        setSearch(e.target.value);
-        resetActive();
-        const filteredLength = filterList(optionList, e.target.value).length;
-        setScrollIndicator(checkScrollIndicator(filteredLength));
+        if (e.target.value !== search) {
+            setSearch(e.target.value);
+            setSearchLen(search.length);
+            setCurrentOptions(stringOptions);
+            resetActive();
+            setScrollIndicator(checkScrollIndicator(currentOptions.length));
+        }
     }
 
     function createOptions() {
         const filteredOptions: optionWithSearch[] = filterList(optionList, search);
-        optionStrings = filteredOptions;
+        stringOptions = [];
+        for (let i = 0; i < filteredOptions.length; i++) {
+            stringOptions.push(filteredOptions[i].option);
+        }
         listElements.current = [];
         return filteredOptions.map( (option, index) =>
             <div className="dropdown-option p-1 bg-white aria-selected:bg-bone-white" onMouseLeave={resetActive}
@@ -55,28 +61,25 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
             </div>);
     }
 
-    function getBolded(option: optionWithSearch) { //RETURN TO REFACTOR <----------------------------------------------
+    function getBolded(option: optionWithSearch) {
+        let thisSearch = option.search;
         if (option.option.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
-            const searchInd = option.option.toLowerCase().indexOf(search.toLowerCase());
-            const firstHalf = option.option.substring(0,searchInd);
-            const bolded = option.option.substring(searchInd, searchInd + search.length);
-            const lastHalf = option.option.substring(searchInd + search.length, option.length);
-            return <span>{firstHalf}<b>{bolded}</b>{lastHalf}</span>;
-        } else {
-            const searchInd = option.option.toLowerCase().indexOf(option.search.toLowerCase());
-            const firstHalf = option.option.substring(0,searchInd);
-            const bolded = option.option.substring(searchInd, searchInd + option.search.length);
-            const lastHalf = option.option.substring(searchInd + option.search.length, option.option.length);
-            return <span><i>{firstHalf}<b>{bolded}</b>{lastHalf}</i></span>;
+            thisSearch = search;
         }
+        const searchInd = option.option.toLowerCase().indexOf(thisSearch.toLowerCase());
+        const firstHalf = option.option.substring(0, searchInd);
+        const bolded = option.option.substring(searchInd, searchInd + thisSearch.length);
+        const lastHalf = option.option.substring(searchInd + thisSearch.length, option.option.length);
+        if (thisSearch === search) {
+            return <span>{firstHalf}<b>{bolded}</b>{lastHalf}</span>;
+        }
+        return <span><i>{firstHalf}<b>{bolded}</b>{lastHalf}</i></span>;
     }
 
     function filterList(options : string[], search : string): optionWithSearch[] {
-        nOptions = [];
-        tOptions = [];
-        dOptions = [];
-        sOptions = [];
-        iOptions = [];
+        if (search.length >= prevSearchLen) {
+            options = currentOptions;
+        }
         options.filter((option) => fuzzySearch(option, search));
         return nOptions.concat(tOptions, dOptions, sOptions, iOptions);
     }
@@ -107,16 +110,16 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                 switch (searchType) {
                     case 'transposition':
                         tOptions.push({option: option, search: searchArray.join('')});
-                        break;
+                        return true;
                     case 'deletion':
                         dOptions.push({option: option, search: searchArray.join('')});
-                        break;
+                        return true;
                     case 'substitution':
                         sOptions.push({option: option, search: searchArray.join('')});
-                        break;
+                        return true;
                     case 'insertion':
                         iOptions.push({option: option, search: searchArray.join('')});
-                        break;
+                        return true;
                 }
             }
             searchArray = search.split('');
@@ -125,30 +128,38 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
         const chars: string[] = 'abcdefghijklmnopqrstuvwxyz1234567890&?- '.split('');
         let searchArray: string[] = search.split('');
 
-        //transposition
         if (searchArray.length > 1) {
+            //transposition
             for (let pos = 0; pos < searchArray.length - 1; pos++) {
                 searchArray.splice(pos, 0, searchArray[pos + 1]);
                 searchArray.splice(pos + 2, 1);
-                testSearch('transposition');
+                if (testSearch('transposition')) {
+                    return true;
+                }
             }
-        }
 
-        //deletion
-        for (let pos = 0; pos < searchArray.length; pos++) {
-            searchArray.splice(pos, 1);
-            testSearch('deletion');
-        }
+            //deletion
+            for (let pos = 0; pos < searchArray.length; pos++) {
+                searchArray.splice(pos, 1);
+                if (testSearch('deletion')) {
+                    return true;
+                }
+            }
 
-        //substitution
-        for (let pos = 0; pos < searchArray.length; pos++) {
-            testSearch('substitution', pos);
-        }
+            //substitution
+            for (let pos = 1; pos < searchArray.length - 1; pos++) {
+                if (testSearch('substitution', pos)) {
+                    return true;
+                }
+            }
 
-        //insertion
-        for (let pos = 1; pos < searchArray.length; pos++) {
-            searchArray.splice(pos, 0, ' ');
-            testSearch('insertion', pos);
+            //insertion
+            for (let pos = 1; pos < searchArray.length; pos++) {
+                searchArray.splice(pos, 0, ' ');
+                if (testSearch('insertion', pos)) {
+                    return true;
+                }
+            }
         }
     }
 
@@ -168,7 +179,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     function keyDown(e: { preventDefault: () => void; key: string; }) {
         switch(e.key) {
             case "ArrowDown":
-                if (activeOption < optionStrings.length-1) {
+                if (activeOption < currentOptions.length - 1) {
                     changeActive(activeOption + 1);
                 }
                 break;
@@ -179,10 +190,13 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                 break;
             case "Enter":
                 if (activeOption >= 0) {
-                    fillSearch(optionStrings[activeOption].option);
+                    fillSearch(currentOptions[activeOption]);
                     resetActive();
                     setScrollIndicator("scroll-indicator text-center hidden");
                 }
+                break;
+            case "Backspace":
+                fillSearch('');
                 break;
             case "Home":
             case "PageUp":
@@ -194,8 +208,8 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
             case "End":
             case "PageDown":
                 e.preventDefault();
-                if (activeOption != optionStrings.length-1) {
-                    changeActive(optionStrings.length - 1);
+                if (activeOption != currentOptions.length - 1) {
+                    changeActive(currentOptions.length - 1);
                 }
                 break;
         }
