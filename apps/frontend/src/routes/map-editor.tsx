@@ -44,7 +44,9 @@ export function MapEditor(){
     const {edges} = useEdges();
     return (
         <div className="fixed">
-        <TransformWrapper limitToBounds={true} disablePadding={true}>
+        <TransformWrapper limitToBounds={true} disablePadding={true}
+                          minScale={1}
+                          maxScale={4.5}>
             <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)"}}>
                 <svg viewBox={"0 0 5000 3400"} width={"100vw"}>
                     <image xlinkHref={floorImages[currentFloor]} width={5000} height={3400}
