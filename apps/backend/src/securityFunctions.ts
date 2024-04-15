@@ -14,15 +14,15 @@ class securityFunctions {
         type: "Security",
         assignee: "",
         location: request.location,
+        priority: request.priority,
+        employeeName: request.employeeName,
       },
     });
     await prisma.securityRequests.create({
       data: {
         securityRequest: UUID,
-        employeeName: request.employeeName,
         request: request.securityReason,
         quantity: request.quantity,
-        priority: request.priority,
         additionalInfo: request.additionalInfo,
       },
     });

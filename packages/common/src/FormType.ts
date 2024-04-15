@@ -5,6 +5,8 @@ export type FormType = {
     assignee: string
     dateCreated: Date
     location: string
+    priority: string
+    employeeName: string
 }
 
 export default FormType;

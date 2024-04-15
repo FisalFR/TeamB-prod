@@ -14,13 +14,14 @@ class maintenanceFunctions {
         type: "Maintenance",
         assignee: "",
         location: request.location,
+        priority: request.priority,
+        employeeName: request.employeeName,
       },
     });
     await prisma.maintenances.create({
       data: {
         maintenanceRequest: UUID,
         issue: request.issue,
-        isUrgent: request.isUrgent,
         feedback: request.feedback,
       },
     });

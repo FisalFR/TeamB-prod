@@ -14,13 +14,13 @@ class sanitationFunctions {
         type: "Sanitation",
         assignee: "",
         location: request.location,
+        priority: request.priority,
+        employeeName: request.employeeName,
       },
     });
     await prisma.sanitationRequests.create({
       data: {
         sanitationRequest: UUID,
-        employeeName: request.employeeName,
-        priority: request.priority,
         serviceType: request.serviceType,
         contaminant: request.contaminant,
         additionalComments: request.additionalComments,
