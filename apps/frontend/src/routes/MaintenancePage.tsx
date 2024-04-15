@@ -97,23 +97,23 @@ export function MaintenancePage() {
                                        placeholder={"Name"}
                                        className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-[5px] w-full"}/>
                                 <br/>
+
                                 <div>
                                     <p className={"text-left font-bold"}>What kind of issue?</p>
                                     <div className="border-deep-blue border-solid border-2 rounded w-full">
                                         <RadioButton value={"Elevator"} name={"issue"} id={"issue1"}
                                                      state={request.issue}
-                                                     onChange={handleIssueInput} required={true}/>
+                                                     onChange={handleIssueInput} required={true} width={"w-80"}/>
                                         <RadioButton value={"Power"} name={"issue"} id={"issue2"} state={request.issue}
-                                                     onChange={handleIssueInput} required={true}/>
+                                                     onChange={handleIssueInput} required={true} width={"w-80"}/>
                                         <RadioButton value={"Plumbing"} name={"issue"} id={"issue3"}
                                                      state={request.issue}
-                                                     onChange={handleIssueInput} required={true}/>
+                                                     onChange={handleIssueInput} required={true} width={"w-80"}/>
                                         <RadioButton value={"Repair"} name={"issue"} id={"issue4"} state={request.issue}
-                                                     onChange={handleIssueInput} required={true}/>
-                                        <RadioButton value={"Other"} name={"issue"} id={"issue5"} state={request.issue}
-                                                     onChange={handleIssueInput} required={true}/>
+                                                     onChange={handleIssueInput} required={true} width={"w-80"}/>
+
                                     </div>
-                                    <br/>
+
 
                                 </div>
                             </div>
@@ -121,15 +121,16 @@ export function MaintenancePage() {
 
                             <div className="flex flex-col w-fit">
                                 <p className={"text-left font-bold"}>What location is this issue in?</p>
-                                <div className="border-deep-blue border-solid border-2 rounded">
+                                <div className="border-deep-blue border-solid border-2 rounded w-fit">
                                     <Dropdown options={locationOptions} placeholder={"Location"}
                                               name={"locationDropdown"}
                                               id={"dropdown1"} value={cleared}
-                                              setInput={handleLocationInput} required={true}/>
+                                              setInput={handleLocationInput} required={true} width={"w-80"}/>
                                 </div>
 
 
                                 <br/>
+
 
                                 <p className={"text-left font-bold "}>What is the priority of this request?</p>
                                 <div className={"border-solid border-deep-blue border-2 rounded"}>
@@ -153,19 +154,24 @@ export function MaintenancePage() {
 
                         <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Description of
                             issue</label>
+
+
                         <div className="">
                             <textarea id={"feedback"}
                                       className={"w-full max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2 rounded"}
                                       onChange={handleFeedbackInput}
                                       value={request.feedback} required={true}
                                       placeholder="Enter detailed description here..."/>
-                        </div>
+
 
 
                         <div className={"formButtons flex gap-4 my-4"}>
                             <Button onClick={handleSubmit} children={"Submit"}/>
                             <Button onClick={handleClear} children={"Clear"}/>
                         </div>
+                        </div>
+
+
                     </form>
                 </div>
             </div>
