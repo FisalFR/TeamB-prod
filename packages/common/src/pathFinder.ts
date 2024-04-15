@@ -70,7 +70,7 @@ class Path {
           }
       }
 
-        if(endNode.building === "Tower" && nextNode.building !== endNode.building) {
+        if(endNode.building === "Tower") {
             if (nextNode.nodeType === "ELEV" && nextNode.shortName.includes("Elevator L")) {
                 return 0;
             } else if (nextNode.nodeType === "ELEV" && !nextNode.shortName.includes("Elevator L")) {
