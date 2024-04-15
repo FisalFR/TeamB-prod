@@ -3,34 +3,37 @@ import AnimatedSVG from "../components/HeroImage.tsx";
 
 import React from 'react';
 import Carousel from "../components/Carousel";
-import image1 from '../assets/Carousel/car.jpg';
-import image2 from '../assets/Carousel/hill.jpg';
-import image3 from '../assets/Carousel/lightbulb.jpg';
+import image1 from '../assets/Carousel/GiftDelivery.png';
+import image2 from '../assets/Carousel/InterpreterRequest.png';
+import image3 from '../assets/Carousel/SecurityPage.png';
 
 export function LoginPage() {
     const content = [
         {
             image: { src: image1, alt: 'Description of image 1' },
             text: {
-                title: "Navigate Seamlessly",
-                description: "Find your room in Brigham & Women's with ease. With pathfinding locate your destination in the smallest steps. Never get lost, no wasted time, get there stress free.",
-                callToAction: "Click here to navigate!"
+                title: "Gift Delivery",
+                description: "We're excited to introduce our new Gift Delivery Service—now you can send thoughtful presents directly to your loved ones in the hospital, right from our website!",
+                callToAction: "Click here to navigate!",
+                route: "/giftdelivery"
             }
         },
         {
             image: { src: image2, alt: 'Description of image 2' },
             text: {
-                title: "New Security Features",
-                description: "Need help getting to your car? Somebody bothering you at the hospital? Submit a Security Service Request we can assist you.",
-                callToAction: "Explore security services!"
+                title: "Interpreter Request",
+                description: "We are thrilled to launch our new Interpreter Request feature—making language assistance easily accessible to all our patients directly through our website!",
+                callToAction: "Explore security services!",
+                route: "/interpreter",
             }
         },
         {
             image: { src: image3, alt: 'Description of image 3' },
             text: {
-                title: "Efficient Parking",
-                description: "Use our app to find parking spots quickly without the hassle. Save time and enjoy your visit without any parking troubles.",
-                callToAction: "Learn more about parking!"
+                title: "Security Request",
+                description: "We're pleased to announce our enhanced security request feature, allowing you to request for help at anytime through our website.",
+                callToAction: "Learn more about parking!",
+                route: "/security",
             }
         }
     ];
@@ -44,11 +47,14 @@ export function LoginPage() {
                 <div className="w-1/2 flex flex-col">
                     <div className="text-center p-10 rounded mx-auto animate-scale-in-ver-top">
                         <h1 className="font-bold font-HeadlandOne text-6xl text-deep-blue-900 mb-2">Navigate Seamlessly</h1>
-                        <p className="text-xl hover:cursor-pointer hover:text-deep-blue-500 hover:font-bold transition duration-300 ease-in-out">Click here to navigate!</p>
+
+                    <a href={"/map"}  className=" hover:animate-none text-xl hover:cursor-pointer hover:text-deep-blue hover:font-bold pb-5" >
+                        Click here to navigate!</a>
                     </div>
                     <div className="flex justify-center">
                         <div className="bg-white outline-1 shadow-md rounded-lg border border-deep-blue-900 hover:scale-105 transition-transform duration-300">
                             <Carousel content={content} autoPlay={true} interval={10000} />
+
                         </div>
                     </div>
                 </div>

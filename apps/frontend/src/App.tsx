@@ -16,8 +16,7 @@ import {Auth0Provider} from "@auth0/auth0-react";
 import SecurityPage from "./routes/SecurityRequest.tsx";
 
 import GiftDelivery from "./routes/gift-delivery.tsx";
-// import MapEditor from "./routes/map-editor.tsx";
-import CarouselPage from "./routes/Carousel-Page.tsx";
+import MapEditor from "./routes/map-editor.tsx";
 
 function App() {
 
@@ -80,13 +79,12 @@ function App() {
 
                         },
 
-
                         {
-                            path:"/Carousel",
-                            element:<CarouselPage/>,
-
+                            path:"/mapEditor",
+                            element:<MapEditor/>,
 
                         },
+
 
             ],
         },
