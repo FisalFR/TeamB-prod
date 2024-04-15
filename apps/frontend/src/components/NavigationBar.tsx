@@ -11,7 +11,9 @@ import HandleLogout from "./handleLogout.tsx";
 export function NavigationBar() {
     const {isAuthenticated, isLoading} = useAuth0();
     const handleLogout = HandleLogout();
-
+    function home() {
+        window.location.href = "/";
+    }
 
     {
 
@@ -34,7 +36,7 @@ export function NavigationBar() {
                 {(isAuthenticated && !isLoading) ? (
                     <>
                         <div className="navbar z-50 bg-deep-blue static h-14 top-0 left-0 grid w-full">
-                            <img className="h-3/6 self-center px-4" src={bwhLogo}
+                            <img onClick={home} className="hover:cursor-pointer h-3/6 self-center px-4" src={bwhLogo}
                                  alt="Brighams Logo White"></img>
                             <nav className="uppercase divide-x divide-solid centerContent w-fit justify-self-center">
 
