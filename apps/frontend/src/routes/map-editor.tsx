@@ -323,7 +323,25 @@ export function MapEditor(){
         }
     }
 
-
+    const originalEdges = useEdges().edges;
+    function getDeletedEdges() {
+        let toDelete = [];
+        for (let i = 0; i < originalEdges.length; i++) {
+            if (!editEdges.includes(originalEdges[i])) {
+                toDelete.push(originalEdges[i]);
+            }
+        }
+        return toDelete;
+    }
+    function getAddedEdges() {
+        let toAdd = [];
+        for (let i = 0; i < editEdges.length; i++) {
+            if (!originalEdges.includes(editEdges[i])) {
+                toAdd.push(editEdges[i]);
+            }
+        }
+        return toAdd;
+    }
     function handleSubmit() {
         //submit editNodes and editEdges to the database
         console.log(editNodes);
@@ -332,6 +350,14 @@ export function MapEditor(){
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
+            const toAdd = getAddedEdges();
+            const toDelete = getDeletedEdges();
+            for (let i = 0; i < toAdd.length; i++) {
+
+            }
+            for (let i = 0; i < toDelete.length; i++) {
+
+            }
             // axios.post("/api/csvManager/editEdges", editEdges, {
             //     headers: {
             //         'Content-Type': 'application/json'
