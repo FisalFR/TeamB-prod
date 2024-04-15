@@ -14,7 +14,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     const [scrollIndicator, setScrollIndicator] = useState(checkScrollIndicator(optionList.length));
     const [activeOption, setActiveOption] = useState(-1);
     const [currentOptions, setCurrentOptions] = useState(['']);
-    const [prevSearchLen, setSearchLen] = useState(0);
+    const [cache, addToCache] = useState([{search: '', options: [{option: '', search: ''}]}]);
 
     //strings of the options showing with the corresponding search of a specific search type
     //n-normal t-transposition d-deletion s-substitution i-insertion
@@ -24,7 +24,8 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     const sOptions: optionWithSearch[] = [];
     const iOptions: optionWithSearch[] = [];
 
-    let stringOptions: string[] = [];
+    //list of options for the current search
+    let searchOptions: string[] = [];
 
     //check if the list of options showing is long enough for the scroll indicator to show
     function checkScrollIndicator(listLength: number) {
@@ -37,8 +38,8 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     function handleInput(e: ChangeEvent<HTMLInputElement>) {
         if (e.target.value !== search) {
             setSearch(e.target.value);
-            setSearchLen(search.length);
-            setCurrentOptions(stringOptions);
+            setCurrentOptions(searchOptions);
+            addToCache(cache);
             resetActive();
             setScrollIndicator(checkScrollIndicator(currentOptions.length));
         }
@@ -46,9 +47,9 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 
     function createOptions() {
         const filteredOptions: optionWithSearch[] = filterList(optionList, search);
-        stringOptions = [];
+        searchOptions = [];
         for (let i = 0; i < filteredOptions.length; i++) {
-            stringOptions.push(filteredOptions[i].option);
+            searchOptions.push(filteredOptions[i].option);
         }
         listElements.current = [];
         return filteredOptions.map( (option, index) =>
@@ -77,11 +78,26 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     }
 
     function filterList(options : string[], search : string): optionWithSearch[] {
-        if (search.length >= prevSearchLen) {
-            options = currentOptions;
+        let FSOptions: optionWithSearch[] = [];
+        if (search === '') {
+            options.filter((option) => fuzzySearch(option, ''));
+            return nOptions;
+        }
+        for (let i = 0; i < cache.length; i++) {
+            if (search.toLowerCase() === cache[i].search.toLowerCase()) {
+                return cache[i].options;
+            }
+        }
+        if (search.slice(0, search.length - 1).toLowerCase() === cache[cache.length - 1].search.toLowerCase()) {
+            currentOptions.filter((option) => fuzzySearch(option, search));
+            FSOptions = nOptions.concat(tOptions, dOptions, sOptions, iOptions);
+            cache.push({search: search, options: FSOptions});
+            return FSOptions;
         }
         options.filter((option) => fuzzySearch(option, search));
-        return nOptions.concat(tOptions, dOptions, sOptions, iOptions);
+        FSOptions = nOptions.concat(tOptions, dOptions, sOptions, iOptions);
+        cache.push({search: search, options: FSOptions});
+        return FSOptions;
     }
 
     function fuzzySearch(option: string, search: string) {
@@ -194,9 +210,6 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                     resetActive();
                     setScrollIndicator("scroll-indicator text-center hidden");
                 }
-                break;
-            case "Backspace":
-                fillSearch('');
                 break;
             case "Home":
             case "PageUp":
