@@ -15,12 +15,12 @@ class medicineFunctions {
         assignee: "",
         location: request.location,
         priority: request.priority,
+        employeeName: request.employeeName,
       },
     });
     await prisma.medicineRequests.create({
       data: {
         medicineRequest: UUID,
-        employeeName: request.employeeName,
         medicine: request.medicine,
         quantity: request.quantity,
         additionalComments: request.additionalComments,

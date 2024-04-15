@@ -115,13 +115,13 @@ export function CsvManager() {
             </div>
             <div className="centerContent gap-5 flex-col w-full py-10">
                 <h3 className={"text-xl font-HeadlandOne"}>Nodes</h3>
-                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full">
+                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full px-5">
                     <Table data={nodeData} headings={["Name", "Node ID", "X-Coord", "Y-Coord"]}
                            keys={["name", "id", "xcord", "ycord"]}/>
                 </div>
                 <br/>
                 <h3 className={"text-xl font-HeadlandOne"}>Edges</h3>
-                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full">
+                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full px-5">
                     <Table data={edgeData} headings={["Edge ID", "Start Node", "End Node"]} keys={["edgeID", "startNodeID", "endNodeID"]}/>
                 </div>
             </div>
