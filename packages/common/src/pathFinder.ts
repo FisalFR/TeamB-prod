@@ -48,7 +48,8 @@ class Path {
       const nextFloor: number = Path.convertFloor(nextNode.floor);
       // const currentFloor: number = Path.convertFloor(currentNode.floor);
       let EuclideanDistance = Math.sqrt((endNode.ycoord - nextNode.ycoord) ** 2 + (endNode.xcoord - nextNode.xcoord) ** 2);
-      const DistToElev: number = Math.sqrt((924 -nextNode.ycoord) ** 2 + (1785 - nextNode.xcoord) ** 2);
+      const DistToElevL: number = Math.sqrt((924 -nextNode.ycoord) ** 2 + (1785 - nextNode.xcoord) ** 2);
+      const DistToElevQ: number = Math.sqrt((1825 -nextNode.ycoord) ** 2 + (1751 - nextNode.xcoord) ** 2);
       const floorDifference = Math.abs(endFloor - nextFloor);
 
       if ((endNode.building === "Shapiro" || endNode.building === "BTM") && (nextNode.building !== endNode.building )){
@@ -59,16 +60,25 @@ class Path {
           }
       }
 
+      if (endNode.building === "Shapiro" && nextNode.building === "Shapiro" && endNode.floor === "L1"){
+          if(nextNode.nodeType === "ELEV" && nextNode.longName.includes("Elevator Q")){
+                return 0;
+          } else if (nextNode.nodeType === "ELEV" && !nextNode.longName.includes("Elevator Q")){
+              return 10000;
+          } else {
+              return DistToElevQ;
+          }
+      }
+
         if(endNode.building === "Tower" && nextNode.building !== endNode.building) {
             if (nextNode.nodeType === "ELEV" && nextNode.shortName.includes("Elevator L")) {
                 return 0;
             } else if (nextNode.nodeType === "ELEV" && !nextNode.shortName.includes("Elevator L")) {
                 return 10000;
             } else {
-                return DistToElev;
+                return DistToElevL;
             }
         }
-
 
       // If we approach an ELEVATOR, prioritize if we're on the wrong floor
       // Otherwise,  DON'T TAKE THE ELEVATOR
