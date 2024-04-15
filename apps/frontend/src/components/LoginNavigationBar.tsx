@@ -5,16 +5,21 @@ import HandleLogin from "./handleLogin.tsx";
 import user_icon from "../assets/user_icon.svg";
 
 export function LoginNavigationBar() {
+    const login = HandleLogin();
+    function home() {
+        window.location.href = "/";
+    }
     {
         return (
 
             <>
 
                 <div  className="navbar z-50 bg-deep-blue static h-14 top-0 left-0 grid w-full">
-                    <img className="h-3/6 self-center px-4" src={bwhLogo}
+
+                    <img onClick={home} className="hover:cursor-pointer h-3/6 self-center px-4" src={bwhLogo}
                          alt="Brighams Logo White"></img>
                  <br/>
-                    <div onClick={() => {HandleLogin();}}  className="self-center hover:cursor-pointer pl-20">
+                    <div onClick={login}  className="self-center hover:cursor-pointer pl-20">
                         <p  className="py-1 relative group font-OpenSans items-center font-bold text-bone-white">
                             <img className="inline" src={user_icon} alt="Username icon" height="20" width="20"/><a className="inline pl-2 pb-3">LOGIN</a>
                             <span
