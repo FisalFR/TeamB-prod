@@ -6,7 +6,8 @@ import axios from "axios";
 import RadioButton from "../components/RadioButton.tsx";
 
 function LanguageInterpreter(){
-    const [request, setRequest] = useState<LanguageInterpreterTypes>({language: "", location: "", priority: ""});
+    const [request, setRequest] = useState<LanguageInterpreterTypes>(
+        {language: "", location: "", priority: "", employeeName: "", feedback: "" });
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         requestScreen: "block",
         submittedScreen: "hidden"
@@ -81,7 +82,7 @@ function LanguageInterpreter(){
     function handleClearLanguage(e: { preventDefault: () => void; }): void {
         e.preventDefault();
         // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-        setRequest({language: "", location: "", priority: ""});
+        setRequest({language: "", location: "", priority: "", employeeName:"", feedback:""});
         // use resetActive from Dropdown?
 
         setCleared(true);
@@ -98,7 +99,7 @@ function LanguageInterpreter(){
     function handleNewSubmissionLanguage(): void {
         setSubmittedWindowVisibility({requestScreen: "block", submittedScreen: "hidden"});
         // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-        setRequest({language: "", location: "", priority: ""});
+        setRequest({language: "", location: "", priority: "", employeeName:"", feedback:""});
         // use resetActive from Dropdown?
         setCleared(false);
     }
@@ -109,7 +110,7 @@ function LanguageInterpreter(){
         setRequest({...request, employeeName: e.target.value});
     }
     function handleFeedbackInput(e: ChangeEvent<HTMLTextAreaElement>): void {
-        setRequest({...request, additionalComments: e.target.value});
+        setRequest({...request, feedback: e.target.value});
     }
 
     return (
@@ -221,7 +222,7 @@ function LanguageInterpreter(){
                                         <textarea id={"feedback"}
                                                   className={"w-100 max-w-full h-40 max-h-40 p-1 border-solid border-deep-blue border-2 rounded"}
                                                   onChange={handleFeedbackInput}
-                                                  value={request.additionalComments} required={true}
+                                                  value={request.feedback} required={false}
                                                   placeholder="Enter detailed description here..."/>
                                     </div>
                                 </div>
@@ -245,11 +246,20 @@ function LanguageInterpreter(){
                         <div className={"text-left"}>
                             <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
                                 Submission:</h3>
+                            <p className={"font-bold"}> Employee Name </p>
+                            <p className={""}> {request.employeeName}</p>
+
                             <p className={"font-bold"}>What language do you need an interpreter for?</p>
                             <p className={""}>{request.language}</p>
 
                             <p className={"font-bold"}>What room do you need the interpreter?</p>
                             <p className={""}>{request.location}</p>
+
+                            <p className="font-bold">What is the priority of this request?</p>
+                            <p className={""}>{request.priority}  </p>
+
+                            <p className="font-bold">Additional Comments </p>
+                            <p className={""}>{request.feedback}  </p>
 
 
                         </div>
