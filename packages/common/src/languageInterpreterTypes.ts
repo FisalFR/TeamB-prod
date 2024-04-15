@@ -3,4 +3,5 @@ export type LanguageInterpreterTypes = {
     location: string;
     priority: string;
     employeeName: string;
+    feedback: string;
 }
