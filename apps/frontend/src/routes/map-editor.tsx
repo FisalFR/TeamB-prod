@@ -325,7 +325,7 @@ export function MapEditor(){
 
     const originalEdges = useEdges().edges;
     function getDeletedEdges() {
-        let toDelete = [];
+        const toDelete = [];
         for (let i = 0; i < originalEdges.length; i++) {
             if (!editEdges.includes(originalEdges[i])) {
                 toDelete.push(originalEdges[i]);
@@ -334,7 +334,7 @@ export function MapEditor(){
         return toDelete;
     }
     function getAddedEdges() {
-        let toAdd = [];
+        const toAdd = [];
         for (let i = 0; i < editEdges.length; i++) {
             if (!originalEdges.includes(editEdges[i])) {
                 toAdd.push(editEdges[i]);
