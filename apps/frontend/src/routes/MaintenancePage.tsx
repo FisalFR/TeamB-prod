@@ -80,7 +80,7 @@ export function MaintenancePage() {
 
     return (
         <>
-        <div className="centerContent flex flex-col px-100">
+        <div className="centerContent flex flex-col">
             <div className={submittedWindowVisibility.formScreen}>
                 <div className="bg-light-white my-10 p-10 px-20 rounded-3xl w-auto">
                     <h1 className={"text-3xl font-HeadlandOne py-4"}>Welcome to the Maintenance page!</h1>

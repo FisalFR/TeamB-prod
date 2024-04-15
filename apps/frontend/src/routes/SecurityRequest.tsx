@@ -138,7 +138,7 @@ export function SecurityPage() {
                                     <br/>
                                     <p className={"text-left font-bold"}>Quantity of Personnel</p>
                                     <input
-                                        className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full mb-3"}
+                                        className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
                                         type="number" min='1' required defaultValue={'1'}/>
                                     <br/>
 
