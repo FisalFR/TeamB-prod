@@ -51,7 +51,7 @@ export function SecurityPage() {
         function handleClear(e: { preventDefault: () => void; }): void {
             e.preventDefault();
             // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-            setRequest({additionalInfo: "", quantity: 0, employeeName: "", securityReason: "", location: "", priority: ""});
+            setRequest({additionalInfo: "", quantity: 1, employeeName: "", securityReason: "", location: "", priority: ""});
             // use resetActive from Dropdown?
             setCleared(true);
         }
@@ -80,7 +80,7 @@ export function SecurityPage() {
 
     function handleNewSubmission(): void {
         setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
-        setRequest({additionalInfo: "", employeeName: "", securityReason: "", location: "", priority: "", quantity:0});
+        setRequest({additionalInfo: "", employeeName: "", securityReason: "", location: "", priority: "", quantity:1});
         setCleared(false);
     }
 
@@ -130,7 +130,7 @@ export function SecurityPage() {
                                 <p className={"text-left font-bold w-full"}>Quantity of Personnel</p>
                                 <input
                                     className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
-                                    type="number" min='1' required defaultValue={1} onChange={e => handleQuantityInput(e)}/>
+                                    type="number" id={"quantity"} value={request.quantity} min='1' required defaultValue={1} onChange={e => handleQuantityInput(e)}/>
 
 
                                 <br/>
@@ -144,11 +144,6 @@ export function SecurityPage() {
                                                   width={"w-full"}
                                         />
                                     </div>
-                                    <br/>
-                                    <p className={"text-left font-bold"}>Quantity of Personnel</p>
-                                    <input
-                                        className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
-                                        type="number" min='1' required defaultValue={'1'}/>
                                     <br/>
 
                                 <p className={"flex text-left font-bold w-full"}>What is the reason for the security
@@ -204,11 +199,9 @@ export function SecurityPage() {
                         <p className={"font-bold"}>What is the security request?</p>
                     <p className={""}>{request.securityReason}</p>
 
-                    <p className={"font-bold"}>How many personnel are required??</p>
+                    <p className={"font-bold"}>How many personnel are required?</p>
                     <p className={""}>{request.quantity}</p>
 
-                    <p className={"font-bold"}>What is the priority?</p>
-                    <p className={""}>{request.priority}</p>
                 </div>
             </div>
             </div>
