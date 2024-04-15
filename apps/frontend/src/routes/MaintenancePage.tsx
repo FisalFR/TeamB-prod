@@ -46,7 +46,7 @@ export function MaintenancePage() {
     function handleClear(e: { preventDefault: () => void; }): void {
         e.preventDefault();
         // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-        setRequest({issue: "", location: "", priority: "", feedback: ""});
+        setRequest({employeeName: "", issue: "", location: "", priority: "", feedback: ""});
         // use resetActive from Dropdown?
         setCleared(true);
 
@@ -74,7 +74,7 @@ export function MaintenancePage() {
 
     function handleNewSubmission(): void {
         setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
-        setRequest({issue: "", location: "", priority: "", feedback: ""});
+        setRequest({employeeName: "", issue: "", location: "", priority: "", feedback: ""});
         setCleared(false);
     }
 
