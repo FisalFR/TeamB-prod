@@ -166,7 +166,7 @@ export function SecurityPage() {
                                 </div>
                             </div>
 
-
+                            </div>
                     </div>
 
                         <p className={"flex w-full text-left font-bold"}>Additional Info</p>
