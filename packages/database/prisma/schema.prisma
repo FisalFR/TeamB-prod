@@ -94,6 +94,7 @@ model forms {
 model languageInterpreterRequests {
   languageRequest   String @id
   language          String
+  feedback          String
   languageRequestID forms  @relation(name: "languageRequestID", fields: [languageRequest], references: [formID])
 }
 
