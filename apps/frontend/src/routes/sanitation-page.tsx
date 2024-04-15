@@ -69,6 +69,7 @@ function Sanitation() {
     }
 
     return (
+        <>
         <div className="centerContent flex flex-col">
             <div className={submittedWindowVisibility.formScreen}>
 
@@ -201,6 +202,7 @@ function Sanitation() {
                 <p className={"font-HeadlandOne text-deep-blue"}>Created by Jeremy and Ben</p>
             </div>
         </div>
+        </>
     );
 }
 
