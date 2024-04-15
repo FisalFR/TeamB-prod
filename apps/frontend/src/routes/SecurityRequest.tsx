@@ -82,21 +82,20 @@ export function SecurityPage() {
 
     return (
         <>
-        <div className="centerContent flex flex-col">
+        <div className="centerContent flex flex-col px-100">
             <div className={submittedWindowVisibility.formScreen}>
                 <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
                 <h1 className={"text-3xl font-HeadlandOne py-4"}>Security Service Request</h1>
-                <p className="pb-8 text-center">Fill out the form below to make a security request.</p>
+                <p >Fill out the form below to make a security request.</p>
 
                 <form ref={formRef} onSubmit={e => {
                     e.preventDefault();
                 }}>
-                    <div className="formTest gap-24">
-                        <div className="formTest grid grid-cols-2 gap-8 flex-col">
+                    <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
                             <div>
                                 <div>
                                     <p className={"text-left font-bold"}>Employee Name</p>
-                                    <div className="border-deep-blue border-solid border-2 w-full">
+                                    <div className="border-deep-blue border-solid border-2 rounded w-full">
                                         <input
                                             className={"border-solid border-deep-blue overflow-hidden flex items-start p-[5px] w-full"}
                                             onChange={handleNameInput}
@@ -105,19 +104,19 @@ export function SecurityPage() {
                                     </div>
                                 </div>
 
-                                <br/>
+
                                 <div className="my-5">
                                     <p className={"text-left font-bold"}>What is the priority?</p>
-                                    <div className="border-deep-blue border-solid border-2 w-full">
+                                    <div className="border-deep-blue border-solid border-2 rounded w-full">
                                         <RadioButton value={"Low"} name={"priority"} id={"priority1"}
                                                      state={request.priority}
                                                      onChange={handlePriorityInput} required={true} width={"w-full"}/>
                                         <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
                                                      state={request.priority}
-                                                     onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                                                     onChange={handlePriorityInput} required={true} width={"w-full"} />
                                         <RadioButton value={"High"} name={"priority"} id={"priority3"}
                                                      state={request.priority}
-                                                     onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                                                     onChange={handlePriorityInput} required={true} width={"w-full"} />
                                         <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
                                                      state={request.priority}
                                                      onChange={handlePriorityInput} required={true} width={"w-full"}/>
@@ -128,23 +127,23 @@ export function SecurityPage() {
                             <div>
                                 <div>
                                     <p className={"text-left font-bold"}>What is the location?</p>
-                                    <div className="border-deep-blue border-solid border-2">
+                                    <div className="border-solid border-deep-blue border-2 rounded w-full mb-3">
                                         <Dropdown options={locationOptions} placeholder={"Location"}
                                                   name={"locationDropdown"}
                                                   id={"dropdown1"} value={cleared}
                                                   setInput={handleLocationInput} required={true}
-                                                  width={"w-full"}/>
+                                                  width={"w-full"}
+                                        />
                                     </div>
-                                    <br/> <br/>
-                                    <p className={"text-left font-bold w-full"}>Quantity of Personnel</p>
+                                    <br/>
+                                    <p className={"text-left font-bold"}>Quantity of Personnel</p>
                                     <input
-                                        className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
+                                        className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full mb-3"}
                                         type="number" min='1' required defaultValue={'1'}/>
-                                    <br/> <br/>
+                                    <br/>
 
-                                    <p className={"flex text-left font-bold w-full"}>What is the reason for the security
-                                        request?</p>
-                                    <div className="border-deep-blue border-solid border-2 w-full">
+                                    <p className={"flex text-left font-bold"}>What is the reason for security?</p>
+                                    <div className="border-deep-blue border-solid border-2 rounded">
                                         <Dropdown
                                             name="reason"
                                             id="reason"
@@ -153,19 +152,18 @@ export function SecurityPage() {
                                             value={cleared}
                                             setInput={(str: string) => setRequest({...request, securityReason: str})}
                                             required={true}
-                                            width={"w-full"}/>
+                                            width={"w-full"}
+                                        />
                                     </div>
                                 </div>
                             </div>
-
-                        </div>
 
 
                     </div>
 
                         <p className={"flex w-full text-left font-bold"}>Additional Info</p>
                         <textarea id={"additionalInfo"}
-                                  className={"w-full w-max-full max-w-full p-[5px] border-deep-blue border-solid border-2"}
+                                  className={" w-full w-max-full max-w-full p-[5px] border-deep-blue border-solid border-2 rounded h-20"}
                                   onChange={handleAdditionalInfoInput}
                                   value={request.additionalInfo} required={true}
                                   placeholder="Enter detailed description here..."/>
