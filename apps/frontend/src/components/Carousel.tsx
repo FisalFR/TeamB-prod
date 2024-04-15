@@ -20,7 +20,7 @@ const Carousel = ({ content, autoPlay, interval }) => {
                     <div className="w-1/2 h-1/2 p-lg">
                         <h4 className="text-xl font-bold">{item.text.title}</h4>
                         <p>{item.text.description}</p>
-                        <button className="mt-4 text-blue-500">{item.text.callToAction}</button>
+                        <button className="mt-4 text-blue-500 bg-origin-padding">{item.text.callToAction}</button>
                     </div>
                 </div>
             ))}
