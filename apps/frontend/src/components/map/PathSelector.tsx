@@ -13,7 +13,9 @@ export function PathSelector(props: {
     selectedAlgo: string | null,
     onClick1: () => void,
     onClick2: () => void,
-    onClick3: () => void
+    onClick3: () => void,
+    selectedStartOption?: string,
+    selectedEndOption?: string
 }) {
     return <div
         className="absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end">
@@ -21,13 +23,13 @@ export function PathSelector(props: {
             <img src={from} alt="from" className={"px-1"}/>
             <Select label="" id="nodeStartSelect" options={props.options}
                     onChange={props.handleStartChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}
-                    defaultOption={"Select your start location"}/>
+                    defaultOption={ props.selectedStartOption !== undefined ? props.selectedStartOption : "Select your start location"}/>
             <img src={dots} alt="dots" className={"h-7 pb-1 px-1"}/>
             <div></div>
             <img src={destination} alt="destination" className={"px-1"}/>
             <Select label="" id="nodeEndSelect" options={props.options}
                     onChange={props.handleEndChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}
-                    defaultOption={"Select your end location"}/>
+                    defaultOption={ props.selectedEndOption !== undefined ? props.selectedEndOption :  "Select your end location"}/>
         </div>
         <div
             className="flex flex-row justify-center mt-2 w-full bg-deep-blue rounded-br-xl rounded-bl-xl font-OpenSans items-center font-bold text-bone-white">

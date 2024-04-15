@@ -3,9 +3,11 @@ import Node from "common/src/node.ts";
 import CircleFrom from '../../assets/from_to_icons/circle_from.svg';
 import IconTo from '../../assets/from_to_icons/icon_to.svg';
 import React from "react";
+import useNodes from "../../hooks/useNodes.ts";
 
 function PathVisual(props: {width: number; height: number;
-    showPath: boolean; floormap: Map<string, Node[][]>; nodes: Node[]; images: Map<string, string>; currentFloor: string}) {
+    showPath: boolean; floormap: Map<string, Node[][]>; nodes: Node[]; images: Map<string, string>; currentFloor: string; onClickCircle: (Node: Node) => void}) {
+    const {nodes} = useNodes();
     let startCoord: number[] = [];
     let endCoord: number[] = [];
     if (props.nodes[0] != null) {
@@ -54,6 +56,15 @@ function PathVisual(props: {width: number; height: number;
                             className={classname}
                             key = {JSON.stringify(keys[x] + "svg")}>
                     {createFloor(keys[x])}
+                    {nodes.filter(node => {
+                        return node.floor === props.currentFloor;
+                    }).map((node) => {
+                        return <circle cx={node.xcoord } cy={node.ycoord } r={8 }
+                                       fill="#F6BD38"
+                                       onClick={ () => {
+                                           props.onClickCircle(node);
+                        }}/>;
+                    })}
                 </motion.svg>
                 </>
             );
