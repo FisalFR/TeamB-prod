@@ -94,7 +94,8 @@ export function CsvManager() {
 
 
     return (
-        <div className={"csvManager"}>
+        <div className={"csvManager centerContent flex flex-col"}>
+            <div className="bg-light-white my-10 p-10 px-20 rounded-3xl w-1/3">
             <h2 className={"text-3xl font-HeadlandOne py-4"}>Map CSV Manager</h2>
             <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Node CSV</h3>
             <form ref = {formRefNodes} onSubmit={e => {e.preventDefault();}}>
@@ -113,19 +114,21 @@ export function CsvManager() {
                 {<Button onClick={handleExportNodes}>Download Nodes</Button>}
                 {<Button onClick={handleExportEdges}>Download Edges</Button>}
             </div>
-            <div className="centerContent gap-5 flex-col w-full py-10">
+            </div>
+            <div className="centerContent gap-5 flex-col py-20 bg-light-white my-10 px-25 rounded-3xl w-3/4">
                 <h3 className={"text-xl font-HeadlandOne"}>Nodes</h3>
-                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full px-5">
+                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-3/4 px-5">
                     <Table data={nodeData} headings={["Name", "Node ID", "X-Coord", "Y-Coord"]}
                            keys={["name", "id", "xcord", "ycord"]}/>
                 </div>
                 <br/>
                 <h3 className={"text-xl font-HeadlandOne"}>Edges</h3>
-                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full px-5">
+                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-3/4 px-5">
                     <Table data={edgeData} headings={["Edge ID", "Start Node", "End Node"]} keys={["edgeID", "startNodeID", "endNodeID"]}/>
                 </div>
             </div>
         </div>
+
     );
 }
 
