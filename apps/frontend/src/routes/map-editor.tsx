@@ -14,9 +14,10 @@ import FloorSelector from "../components/map/FloorSelector.tsx";
 import useNodes from "../hooks/useNodes.ts";
 import useEdges from "../hooks/useEdges.ts";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
-import Edge from "common/src/edge.ts";
 import Select from "../components/Select.tsx";
 import Button from "../components/Button.tsx";
+import axios from "axios";
+import EdgeType from "common/src/EdgeType.ts";
 
 export function MapEditor(){
 
@@ -200,9 +201,10 @@ export function MapEditor(){
         if (adding != undefined) {
             if ((addNode != "Select node") && (!otherNeighbors.includes(adding)) && (adding != currentNode)) {
                 const newEdges = editEdges;
-                const newEdge: Edge = {
+                const newEdge: EdgeType = {
                     startNodeID: editNode.nodeID,
-                    endNodeID: addNode
+                    endNodeID: addNode,
+                    edgeID: editNode.nodeID + "_" + addNode
                 };
                 newEdges.push(newEdge);
                 setEditEdges(newEdges);
@@ -324,6 +326,21 @@ export function MapEditor(){
 
     function handleSubmit() {
         //submit editNodes and editEdges to the database
+        console.log(editNodes);
+        axios.post("/api/csvManager/editOneNode",currentNode,{
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            // axios.post("/api/csvManager/editEdges", editEdges, {
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     }
+            // }).then( () => {
+            //     alert("success");
+            // });
+            console.log(response);
+    });
     }
 
 
@@ -382,7 +399,7 @@ export function MapEditor(){
                     </div>
 
                     <div className = "centerContent w-full p-5 bottom-0 sticky bg-white">
-                        <Button onClick={handleSubmit}>Submit All Changes</Button>
+                        <Button onClick={handleSubmit}>Submit Node Edit</Button>
                     </div>
                 </div>
                 <FloorSelector
