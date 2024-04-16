@@ -39,7 +39,7 @@ class AStarStrategy implements PathfindingStrategy {
         const endFloor: number  = this.convertFloor(endNode.floor);
         const nextFloor: number = this.convertFloor(nextNode.floor);
         // const currentFloor: number = Path.convertFloor(currentNode.floor);
-        let EuclideanDistance = Math.sqrt((endNode.ycoord - nextNode.ycoord) ** 2 + (endNode.xcoord - nextNode.xcoord) ** 2);
+        const EuclideanDistance = Math.sqrt((endNode.ycoord - nextNode.ycoord) ** 2 + (endNode.xcoord - nextNode.xcoord) ** 2);
         const DistToElevL: number = Math.sqrt((924 -nextNode.ycoord) ** 2 + (1785 - nextNode.xcoord) ** 2);
         const DistToElevQ: number = Math.sqrt((1825 -nextNode.ycoord) ** 2 + (1751 - nextNode.xcoord) ** 2);
         const floorDifference = Math.abs(endFloor - nextFloor);
