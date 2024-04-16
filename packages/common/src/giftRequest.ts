@@ -9,7 +9,5 @@ export type giftRequest = {
     date : string,
     message: string
     employeeName: string
-    date: string
-    priority: string
     cart: giftItem[]
 }

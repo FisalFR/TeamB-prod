@@ -62,12 +62,14 @@
     "dotenv": "^16.4.5",
     "dotenv-cli": "^7.4.0",
     "flatted": "^3.3.1",
+    "frontend": "workspace:^",
     "fs": "^0.0.1-security",
     "node-fs": "^0.1.7",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.0",
     "react-calendar": "^4.8.0",
     "react-csv-importer": "^0.8.1",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "workspace": "^0.0.1-preview.1"
   }
 }

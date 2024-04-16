@@ -25,6 +25,7 @@ class giftDeliveryFunctions {
         receiverName: request.receiverName,
         senderName: request.senderName,
         message: request.message,
+        date: request.date,
       },
     });
 
