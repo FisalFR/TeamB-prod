@@ -124,15 +124,15 @@ export function CsvManager() {
                     {<Button px="px-10" py="py-5" onClick={handleExportEdges}>Download Edges</Button>}
                 </div>
             </div>
-            <div className="flex flex-col gap-5 py-20 bg-light-white my-10 rounded-3xl w-3/5 w-min-fit justify-center centerContent">
+            <div className="flex flex-col gap-5 py-20 bg-light-white px-36 my-10 rounded-3xl w-3/4 w-min-fit justify-center centerContent">
                 <h3 className={"text-xl font-HeadlandOne"}>Nodes</h3>
-                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-3/4 px-5">
+                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full">
                     <Table data={nodeData} headings={["Name", "Node ID", "X-Coord", "Y-Coord"]}
                            keys={["name", "id", "xcord", "ycord"]}/>
                 </div>
                 <br/>
                 <h3 className={"text-xl font-HeadlandOne"}>Edges</h3>
-                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-3/4 px-5">
+                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full">
                     <Table data={edgeData} headings={["Edge ID", "Start Node", "End Node"]} keys={["edgeID", "startNodeID", "endNodeID"]}/>
                 </div>
             </div>
