@@ -5,7 +5,7 @@ import HandleLogin from "./handleLogin.tsx";
 import user_icon from "../assets/user_icon.svg";
 
 export function LoginNavigationBar() {
-    const redirectUri = `${window.location.origin.concat("/map")}`;
+    const redirectUri = "/map";
     const homeRedirect = `${window.location.origin.concat("/")}`;
     console.log(redirectUri);
     function home() {
