@@ -212,7 +212,7 @@ export function MapEditor(){
                 newEdges.push(newEdge);
                 setEditEdges(newEdges);
                 addedEdges.push(newEdge);
-                console.log(setAddedEdges);
+                // console.log(setAddedEdges);
                 setReplaceThis(replaceThis+1);
             }
         }
@@ -346,6 +346,8 @@ export function MapEditor(){
     }
 
     function handleSubmit() {
+        console.log(editEdgesID);
+        console.log(addedEdges);
         //submit editNodes and editEdges to the database
         axios.post("/api/csvManager/editOneNode",currentNode,{
             headers: {
@@ -360,6 +362,7 @@ export function MapEditor(){
                     'Content-Type': 'application/json'
                 }
             }).then( () => {
+                resetEdges();
                 alert("Add Success");
             });
             }
@@ -375,6 +378,10 @@ export function MapEditor(){
     }});
     }
 
+    const resetEdges = () => {
+        setAddedEdges([]);
+        setEditEdgesID([]); // Reset editEdgesID
+    };
 
     return (
         <div className="relative">
