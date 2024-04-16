@@ -328,25 +328,25 @@ router.post("/editOneNode", async (req, res) => {
 });
 
 router.post("/addManyEdge", async (req, res) => {
-  const importedEdge: edgeType = req.body;
+  const importedEdge: edgeType[] = req.body;
   const updatedEdge = await client.edges.createMany({
-    data: {
-      edgeID: importedEdge.edgeID,
-      startNodeID: importedEdge.startNodeID,
-      endNodeID: importedEdge.endNodeID,
-    },
+    data: importedEdge,
   });
   return res.json(updatedEdge);
 });
 
 router.post("/deleteManyEdge", async (req, res) => {
-  const importedEdge: edgeType = req.body;
-  const updatedEdge = await client.edges.deleteMany({
+  const importedEdge: edgeType[] = req.body;
+
+  const edgeIDs = importedEdge.map((edge) => edge.edgeID);
+  const deletedEdges = await client.edges.deleteMany({
     where: {
-      edgeID: importedEdge.edgeID,
+      edgeID: {
+        in: edgeIDs, // Using 'in' operator to match multiple edgeIDs
+      },
     },
   });
-  return res.json(updatedEdge);
+  return res.json(deletedEdges);
 });
 
 export default router;

@@ -12,7 +12,7 @@ import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import useNodes from "../hooks/useNodes.ts";
-import useEdges from "../hooks/useEdges.ts";
+import useEdges, {useEdgesID} from "../hooks/useEdges.ts";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
 import Select from "../components/Select.tsx";
 import Button from "../components/Button.tsx";
@@ -134,7 +134,7 @@ export function MapEditor(){
 
         const x = (e.clientX - offsetLeft) * initialZoomX;
         const y= (e.clientY - offsetTop) * initialZoomY;
-        console.log([Math.round(x), Math.round(y)]);
+        // console.log([Math.round(x), Math.round(y)]);
         return ([Math.round(x), Math.round(y)]);
     }
 
@@ -192,8 +192,11 @@ export function MapEditor(){
         });
         newEdges.splice(spliceInd, 1);
         setEditEdges(newEdges);
+        setEditEdgesID(newEdges.map(edge => edge.edgeID));
         setReplaceThis(replaceThis+1);
     }
+
+    const [addedEdges, setAddedEdges] = useState<EdgeType[]>([]);
 
     function addNeighbor(editNode: Node, addNode: string) {
         const otherNeighbors = getNeighbors(editNode);
@@ -208,6 +211,7 @@ export function MapEditor(){
                 };
                 newEdges.push(newEdge);
                 setEditEdges(newEdges);
+                addedEdges.push(newEdge);
                 setReplaceThis(replaceThis+1);
             }
         }
@@ -324,56 +328,50 @@ export function MapEditor(){
     }
 
     const originalEdges = useEdges().edges;
+
+    const [editEdgesID, setEditEdgesID] = useState(useEdgesID().edges);
+
     function getDeletedEdges() {
         const toDelete = [];
         for (let i = 0; i < originalEdges.length; i++) {
-            if (!editEdges.includes(originalEdges[i])) {
+            if (!editEdgesID.includes(originalEdges[i].edgeID)) {
                 toDelete.push(originalEdges[i]);
             }
         }
+        if(toDelete.length === originalEdges.length){
+            return [];
+        }
         return toDelete;
     }
-    function getAddedEdges() {
-        const toAdd = [];
-        for (let i = 0; i < editEdges.length; i++) {
-            if (!originalEdges.includes(editEdges[i])) {
-                toAdd.push(editEdges[i]);
-            }
-        }
-        return toAdd;
-    }
+
     function handleSubmit() {
         //submit editNodes and editEdges to the database
-        console.log(editNodes);
         axios.post("/api/csvManager/editOneNode",currentNode,{
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            const toAdd = getAddedEdges();
             const toDelete = getDeletedEdges();
-            // for (let i = 0; i < toAdd.length; i++) {
-            //
-            // }
-            // for (let i = 0; i < toDelete.length; i++) {
-            //
-            // }
             //This should add all the edges and delete all the edges and one go
-            axios.post("/api/csvManager/addManyEdge", toAdd, {
+            if(addedEdges.length > 0){
+            axios.post("/api/csvManager/addManyEdge", addedEdges, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then( () => {
+                alert("Add Success");
+            });
+            }
+            if(toDelete.length > 0){
                 axios.post("/api/csvManager/deleteManyEdge", toDelete, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 }).then( () => {
-                    alert("success");
+                    alert("Delete Success");
                 });
-            });
             console.log(response);
-    });
+    }});
     }
 
 
