@@ -12,11 +12,12 @@ import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import useNodes from "../hooks/useNodes.ts";
-import useEdges from "../hooks/useEdges.ts";
+import useEdges, {useEdgesID} from "../hooks/useEdges.ts";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
-import Edge from "common/src/edge.ts";
 import Select from "../components/Select.tsx";
 import Button from "../components/Button.tsx";
+import axios from "axios";
+import EdgeType from "common/src/EdgeType.ts";
 
 export function MapEditor(){
 
@@ -133,7 +134,7 @@ export function MapEditor(){
 
         const x = (e.clientX - offsetLeft) * initialZoomX;
         const y= (e.clientY - offsetTop) * initialZoomY;
-        console.log([Math.round(x), Math.round(y)]);
+        // console.log([Math.round(x), Math.round(y)]);
         return ([Math.round(x), Math.round(y)]);
     }
 
@@ -191,8 +192,11 @@ export function MapEditor(){
         });
         newEdges.splice(spliceInd, 1);
         setEditEdges(newEdges);
+        setEditEdgesID(newEdges.map(edge => edge.edgeID));
         setReplaceThis(replaceThis+1);
     }
+
+    const [addedEdges, setAddedEdges] = useState<EdgeType[]>([]);
 
     function addNeighbor(editNode: Node, addNode: string) {
         const otherNeighbors = getNeighbors(editNode);
@@ -200,12 +204,15 @@ export function MapEditor(){
         if (adding != undefined) {
             if ((addNode != "Select node") && (!otherNeighbors.includes(adding)) && (adding != currentNode)) {
                 const newEdges = editEdges;
-                const newEdge: Edge = {
+                const newEdge: EdgeType = {
                     startNodeID: editNode.nodeID,
-                    endNodeID: addNode
+                    endNodeID: addNode,
+                    edgeID: editNode.nodeID + "_" + addNode
                 };
                 newEdges.push(newEdge);
                 setEditEdges(newEdges);
+                addedEdges.push(newEdge);
+                // console.log(setAddedEdges);
                 setReplaceThis(replaceThis+1);
             }
         }
@@ -321,11 +328,60 @@ export function MapEditor(){
         }
     }
 
+    const originalEdges = useEdges().edges;
 
-    function handleSubmit() {
-        //submit editNodes and editEdges to the database
+    const [editEdgesID, setEditEdgesID] = useState(useEdgesID().edges);
+
+    function getDeletedEdges() {
+        const toDelete = [];
+        for (let i = 0; i < originalEdges.length; i++) {
+            if (!editEdgesID.includes(originalEdges[i].edgeID)) {
+                toDelete.push(originalEdges[i]);
+            }
+        }
+        if(toDelete.length === originalEdges.length){
+            return [];
+        }
+        return toDelete;
     }
 
+    function handleSubmit() {
+        console.log(editEdgesID);
+        console.log(addedEdges);
+        //submit editNodes and editEdges to the database
+        axios.post("/api/csvManager/editOneNode",currentNode,{
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            const toDelete = getDeletedEdges();
+            //This should add all the edges and delete all the edges and one go
+            if(addedEdges.length > 0){
+            axios.post("/api/csvManager/addManyEdge", addedEdges, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then( () => {
+                resetEdges();
+                // alert("Add Success");
+            });
+            }
+            if(toDelete.length > 0){
+                axios.post("/api/csvManager/deleteManyEdge", toDelete, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then( () => {
+                    // alert("Delete Success");
+                });
+            console.log(response);
+    }});
+    }
+
+    const resetEdges = () => {
+        setAddedEdges([]);
+        setEditEdgesID([]); // Reset editEdgesID
+    };
 
     return (
         <div className="relative">
@@ -382,7 +438,7 @@ export function MapEditor(){
                     </div>
 
                     <div className = "centerContent w-full p-5 bottom-0 sticky bg-white">
-                        <Button onClick={handleSubmit}>Submit All Changes</Button>
+                        <Button onClick={handleSubmit}>Submit Node Edit</Button>
                     </div>
                 </div>
                 <FloorSelector
