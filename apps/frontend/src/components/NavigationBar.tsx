@@ -7,7 +7,7 @@ import {useEffect, useLayoutEffect, useState} from "react";
 import {ClassValue, clsx} from "clsx";
 import {twMerge} from "tailwind-merge";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {motion, Variants} from "framer-motion";
+import {motion} from "framer-motion"; // need Variants ?
 
 export function NavigationBar() {
     const dropdownList = [
@@ -47,25 +47,26 @@ export function NavigationBar() {
     }
 
     // Adapted from https://stackoverflow.com/questions/19014250/rerender-view-on-browser-resize-with-react
-    // function useWindowHeight() {
-    //     const [height, setHeight] = useState(0);
-    //     useLayoutEffect(() => {
-    //         function updateHeight() {
-    //             setHeight(window.innerHeight);
-    //         }
-    //
-    //         window.addEventListener('resize', updateHeight);
-    //         updateHeight();
-    //         return () => window.removeEventListener('resize', updateHeight);
-    //     }, []);
-    //     return height;
-    // }
+    function useWindowHeight() {
+        const [height, setHeight] = useState(0);
+        useLayoutEffect(() => {
+            function updateHeight() {
+                setHeight(window.innerHeight);
+            }
+
+            window.addEventListener('resize', updateHeight);
+            updateHeight();
+            return () => window.removeEventListener('resize', updateHeight);
+        }, []);
+        return height;
+    }
+
+    const height = useWindowHeight();
 
     useEffect(() => {
         // TODO add pulltab that occupies the same space as the navbar's container
         const handleMouseMove = (e: MouseEvent) => {
-            // (0.1 * useWindowHeight())
-            if (e.clientY < 100) { // Adjust the value based on how close to the top you want the hover to trigger
+            if (e.clientY < (0.1 * height)) { // Adjust the value based on how close to the top you want the hover to trigger
                 setShowNavbar(true);
             } else {
                 setShowNavbar(false);
@@ -74,7 +75,7 @@ export function NavigationBar() {
 
         window.addEventListener('mousemove', handleMouseMove);
         return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
+    }, [height]);
 
     return (
         <>
