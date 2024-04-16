@@ -101,7 +101,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                         break;
                     } case "Medicine": {
                         newInformation.push("Medicine: " + response.data.medicineRequests[0].medicine);
-                        newInformation.push("Quantity: " + response.data.medicineRequests[0].quantity.toString());
+                        newInformation.push("Quantity: " + response.data.medicineRequests[0].quantity);
                         newInformation.push("Additional Comments: " + response.data.medicineRequests[0].additionalComments);
                         break;
                     } case "Gift": {
