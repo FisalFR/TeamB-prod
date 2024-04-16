@@ -3,7 +3,7 @@ import React, {ReactNode} from "react";
 
 function LongButton(props:{onClick:(e: React.MouseEvent) => void, children: ReactNode}) {
     return(
-        <motion.button className={"px-28 py-2 bg-deep-blue font-bold text-white w-fit rounded"} onClick={props.onClick} whileHover={{scale: 1.1}}
+        <motion.button className={"py-2 w-full bg-deep-blue font-bold text-white rounded"} onClick={props.onClick} whileHover={{scale: 1.1}}
                        whileTap={{scale: 0.9}}>
             {props.children}
 

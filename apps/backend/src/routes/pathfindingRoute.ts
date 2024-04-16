@@ -1,11 +1,15 @@
 import express, { Router } from "express";
 import { startEndNodes } from "../../../../packages/common/src/pathfinding";
-import Path from "../../../../packages/common/src/pathFinder";
+import Path from "../../../../packages/common/src/Pathfinding/Path";
 //import Parser from "../../../../packages/common/src/parser";
 import Node from "../../../../packages/common/src/node";
 import client from "../bin/database-connection";
 // import writeNode from "../writeNode";
 import { filteringNodes } from "../filteringNodes";
+import AStarStrategy from "common/src/Pathfinding/AStarStrategy";
+import BFSStrategy from "common/src/Pathfinding/BFSStrategy";
+import DFSStrategy from "common/src/Pathfinding/DFSStrategy";
+import DijkstraStrategy from "common/src/Pathfinding/DijkstraStrategy";
 // import {stringify, parse} from 'flatted';
 
 const router: Router = express.Router();
@@ -21,11 +25,10 @@ router.get("/halls", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const finalPath: Path = new Path();
+  const finalPath: Path = new Path(new AStarStrategy());
   finalPath.nodeList = await client.nodes.findMany();
   finalPath.edgeList = await client.edges.findMany();
   const algorithm = req.body.algorithm;
-  console.log(algorithm);
 
   finalPath.generateNodeMap();
   const pathfinding: startEndNodes = req.body;
@@ -37,26 +40,25 @@ router.post("/", async (req, res) => {
   let nodeCoords: number[][] = [];
   switch (algorithm) {
     case "Astar":
-      path = finalPath.AStar(node1, node2);
-      nodeCoords = finalPath.AStar(node1, node2).map((node) => {
-        return [node.xcoord, node.ycoord];
-      });
+      finalPath.setStrategy(new AStarStrategy());
       break;
     case "BFS":
-      path = finalPath.BFS(node1, node2);
-      nodeCoords = finalPath.BFS(node1, node2).map((node) => {
-        return [node.xcoord, node.ycoord];
-      });
+      finalPath.setStrategy(new BFSStrategy());
       break;
     case "DFS":
-      path = finalPath.DFS(node1, node2);
-      nodeCoords = finalPath.DFS(node1, node2).map((node) => {
-        return [node.xcoord, node.ycoord];
-      });
+      finalPath.setStrategy(new DFSStrategy());
+      break;
+    case "Dijkstra":
+      finalPath.setStrategy(new DijkstraStrategy());
       break;
     default:
       return res.status(400).send({ error: "Invalid algorithm" });
   }
+
+  path = finalPath.findPath(node1, node2);
+  nodeCoords = finalPath.findPath(node1, node2).map((node) => {
+    return [node.xcoord, node.ycoord];
+  });
 
   // Section to return a map of Floors and their respective continuous path fragments
   const floorMap = new Map<string, Node[][]>();
@@ -75,7 +77,6 @@ router.post("/", async (req, res) => {
       }
     }
   }
-  console.log(floorMap);
 
   // Nuking the neighbors because JSON doesn't like circular structures
   path.map((node) => {
@@ -93,7 +94,6 @@ router.post("/", async (req, res) => {
     floorMap: convertMap,
   };
 
-  console.log(body.floorMap);
   res.send(body);
 });
 

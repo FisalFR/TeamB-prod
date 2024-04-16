@@ -104,6 +104,7 @@ export function MedicineRequest(){
     }
 
     return(
+        <>
 
         <div className="dark:bg-black centerContent flex flex-col">
             <div className={submittedWindowVisibility.formScreen}>
@@ -237,6 +238,7 @@ export function MedicineRequest(){
                 <p className={"dark:text-white font-HeadlandOne text-deep-blue"}>Created by Mo and Colin</p>
             </div>
         </div>
+        </>
     );
 
 }

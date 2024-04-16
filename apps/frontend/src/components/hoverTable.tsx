@@ -9,8 +9,7 @@ import LongButton from "./LongButton.tsx";
 
 
 
-
-function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], keys: string[]}) {
+function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], keys: string[], dataUpdated:boolean, setDataUpdated: React.Dispatch<React.SetStateAction<boolean>>}) {
 
 
     function createTableHeader(){
@@ -23,7 +22,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
 
     function createTableRows(){
         return props.data.map((request) =>
-            <motion.tr className="dark:odd:bg-black dark:text-white dark:even:bg-Ash-black dark:hover:bg-blue-900 odd:bg-white even:bg-gray-100 border-b dark:border-gray-700 hover:bg-blue-200 group"
+            <motion.tr className="odd:bg-white even:bg-gray-100 border-b dark:border-gray-700 hover:bg-blue-200 group"
                        onClick={()=> handleRowClick(request)}
                 //whileHover={{scale: 1.01}}
                        whileTap={{scale: 0.9}}>
@@ -41,6 +40,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
 
 
     const [open, setOpen] = useState<boolean>(false);
+    const [openDelete, setOpenDelete] = useState<boolean>(false);
     const[information, setInformation] = useState<string[]>([]);
     const emptyDate: Date = new Date();
 
@@ -55,6 +55,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             assignee: "",
             dateCreated: emptyDate,
             priority: "",
+            employeeName: request.employeeName,
             maintenances: [],
             language: [],
             sanitation: [],
@@ -76,6 +77,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                     "Status: " + response.data.status,
                     "Assignee: " + response.data.assignee,
                     "Priority: " + response.data.priority,
+                    "Employee Name: " + response.data.employeeName,
                 ];
                 switch (response.data.type) {
                     case "Maintenance": {
@@ -85,21 +87,19 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                     }
                     case "Language": {
                         newInformation.push("Language: " + response.data.languageRequests[0].language);
+                        newInformation.push("Feedback: " + response.data.languageRequests[0].feedback);
                         break;
                     } case "Sanitation": {
-                        newInformation.push("Employee Name: " + response.data.sanitationRequests[0].employeeName);
                         newInformation.push("Issue: " + response.data.sanitationRequests[0].contaminant);
                         newInformation.push("Service Type: " + response.data.sanitationRequests[0].serviceType);
                         newInformation.push("Additional Comments: " + response.data.sanitationRequests[0].additionalComments);
                         break;
                     } case "Security": {
-                        newInformation.push("Employee Name: " + response.data.securityRequests[0].employeeName);
                         newInformation.push("Request: " + response.data.securityRequests[0].request);
                         newInformation.push("Number of Personnel Required: " + response.data.securityRequests[0].quantity);
                         newInformation.push("Additional Comments: " + response.data.securityRequests[0].additionalInfo);
                         break;
                     } case "Medicine": {
-                        newInformation.push("Employee Name: " + response.data.medicineRequests[0].employeeName);
                         newInformation.push("Medicine: " + response.data.medicineRequests[0].medicine);
                         newInformation.push("Quantity: " + response.data.medicineRequests[0].quantity.toString());
                         newInformation.push("Additional Comments: " + response.data.medicineRequests[0].additionalComments);
@@ -121,7 +121,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                 }
                 setInformation(newInformation);
                 setAssignment({...assignment, assignee: response.data.assignee, type: response.data.type, location: response.data.location,
-                    formID: response.data.formID, priority: response.data.priority, status: response.data.status, dateCreated: response.data.dateCreated});
+                    formID: response.data.formID, priority: response.data.priority, status: response.data.status, dateCreated: response.data.dateCreated, employeeName: response.data.employeeName});
             }
         } catch (error) {
             console.error("Error fetching data: ", error);
@@ -129,8 +129,8 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
     }
 
     const formRef = useRef<HTMLFormElement>(null);
-    const [form, setForm] = useState([]);
-    const [formIDOptions, setFormID] = useState<string[]>([]);
+    // const [form, setForm] = useState([]);
+    // const [formIDOptions, setFormID] = useState<string[]>([]);
     const [submitted, setSubmit] = useState<number>(0);
     const [cleared, setCleared] = useState(false);
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
@@ -141,14 +141,10 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
         location: "",
         status: "",
         assignee: "",
-        dateCreated: emptyDate
+        dateCreated: emptyDate,
+        employeeName: "",
     });
-    const [open2, setOpen2] = useState<boolean>(false);
 
-    function handleFormIDAssignment(str: string): void {
-        setCleared(false);
-        setAssignment({...assignment, formID: str});
-    }
 
     function handleStatusAssignment(str: string): void {
         setCleared(false);
@@ -162,29 +158,49 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
 
     useEffect(() => {
         axios.get("/api/csvManager").then((response) => {
-            setForm(response.data.reverse());
+            // setForm(response.data.reverse());
             const formIDStrings = [];
             for (let i = 0; i < response.data.length; i++) {
                 formIDStrings.push(response.data[i].formID);
             }
-            setFormID(formIDStrings);
         });
     }, [submitted]);
 
     function handleSubmit(e: { preventDefault: () => void; }) {
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
-        axios.post("/api/csvManager/insert", assignment, {
+        axios.post("/api/csvManager/update", assignment, {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then(() => {
-            setOpen2(true);
             setCleared(true);
             setSubmit(submitted + 1); // Spaghetti Code to Update the page
-            console.log(form);
+            setOpen(close);
+            props.setDataUpdated(true);
         });
     }
+
+    function handleDelete() {
+        axios.post("/api/csvManager/delete", assignment, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(() => {
+            setOpenDelete(close);
+            setOpen(close);
+            setCleared(true);
+            setSubmit(submitted + 1); // Spaghetti Code to Update the page
+            props.setDataUpdated(true);
+        });
+    }
+
+    function firstDelete(){
+        setOpenDelete(open);
+    }
+
+
+
 
 
     return (
@@ -196,15 +212,16 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             <tbody>
             {createTableRows()}
             <Modal open={open} onClose={() => setOpen(false) }>
-                <div className="dark:bg-Ash-black flex flex-row gap-8 p-12 w-fit ">
+                <div className="flex flex-row gap-8 p-12 w-fit ">
                     <div>
-                    <h1 className="dark:text-light-white text-3xl">Information</h1>
-                        <ul className="dark:bg-Ash-black dark:text-light-white item-start justify-start leading-8 max-w-100">
+                        <h1 className="text-3xl">Information</h1>
+                        <ul className="item-start justify-start leading-8 max-w-100">
                             <li>FormID: {assignment.formID}</li>
                             <li>Type: {assignment.type}</li>
                             <li>Status: {assignment.status}</li>
                             <li>Priority: {assignment.priority}</li>
                             <li>Assignee: {assignment.assignee}</li>
+                            <li>Created By: {assignment.employeeName}</li>
                             <li>{information[6]}</li>
                             <li>{information[7]}</li>
                             <li>{information[8]}</li>
@@ -214,44 +231,35 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                             <li>Date Created: {assignment.dateCreated.toString()}</li>
                         </ul>
                     </div>
-                    <div className="dark:bg-Ash-black rounded-2xl bg-deep-blue bg-opacity-5">
+                    <div className="rounded-2xl bg-deep-blue bg-opacity-5">
                         <form ref={formRef} onSubmit={e => {
                             e.preventDefault();
                         }}
                               className="w-[22vw]  flex flex-col items-start p-3 gap-4 pl-5">
-                            <h2 className={"dark:text-light-white font-extrabold text-2xl font-HeadlandOne flex items-start"}>Assign Staff
+                            <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start"}>Assign Staff
                                 Request</h2>
-                            <p className={"dark:text-light-white text-left font-bold"}>Form ID</p>
-                            <Dropdown options={formIDOptions} placeholder={"Choose Form ID"}
-                                      name={"formIDAssignment"}
-                                      id={"dropdown4"} value={cleared}
-                                      setInput={handleFormIDAssignment} required={true}/>
-
-
-                            <p className={"dark:text-light-white text-left font-bold"}>Request Status</p>
+                            <p className={"text-left font-bold"}>Request Status</p>
                             <Dropdown options={statusTypeOptions} placeholder={"Choose Status"}
                                       name={"statusAssignment"}
                                       id={"dropdown5"} value={cleared}
                                       setInput={handleStatusAssignment} required={true}/>
-
-
-                            <p className={"dark:text-light-white text-left font-bold"}>Assigned Staff</p>
+                            <p className={"text-left font-bold"}>Assigned Staff</p>
                             <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"} name={"staffAssignment"}
                                       id={"dropdown6"} value={cleared}
                                       setInput={handleStaffAssignment} required={true}/>
-
-                            <div className={"flex items-center pt-2 pb-4"}>
+                            <div className={"flex flex-col pt-8 pb-4 pr-4 w-full"}>
                                 <LongButton onClick={handleSubmit} children={"Submit"}/>
-                                <Modal open={open2} onClose={() => setOpen2(false)}>
-                                    <div className="flex flex-col gap-4">
-                                        <h1 className="text-2xl">Success!</h1>
-                                        <p>
-                                            Assigned
-                                        </p>
-                                    </div>
-                                </Modal>
                             </div>
                         </form>
+                        <div className={"flex flex-col p-3 gap-4 pl-5 pb-4 pr-7 w-full "}>
+                            <LongButton onClick={firstDelete} children={"Delete Request"}/>
+                        </div>
+                        <Modal open={openDelete} onClose={() => setOpenDelete(false)}>
+                            <div className="flex flex-col gap-4">
+                                <h1 className="text-2xl">Are you sure?</h1>
+                                <LongButton onClick={handleDelete} children={"Delete Request"}/>
+                            </div>
+                        </Modal>
                     </div>
                 </div>
             </Modal>
