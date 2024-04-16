@@ -25,7 +25,6 @@ router.post("/", async (req, res) => {
   finalPath.nodeList = await client.nodes.findMany();
   finalPath.edgeList = await client.edges.findMany();
   const algorithm = req.body.algorithm;
-  console.log(algorithm);
 
   finalPath.generateNodeMap();
   const pathfinding: startEndNodes = req.body;
@@ -81,7 +80,6 @@ router.post("/", async (req, res) => {
       }
     }
   }
-  console.log(floorMap);
 
   // Nuking the neighbors because JSON doesn't like circular structures
   path.map((node) => {
@@ -99,7 +97,6 @@ router.post("/", async (req, res) => {
     floorMap: convertMap,
   };
 
-  console.log(body.floorMap);
   res.send(body);
 });
 
