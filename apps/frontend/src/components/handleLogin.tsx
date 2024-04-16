@@ -1,16 +1,22 @@
 import auth0 from "../contexts/auth0-client.ts";
 
+
 export function HandleLogin() {
+    console.log("login");
     const redirectUri = `${window.location.origin}/map`;
-    document.addEventListener('click',async () =>{
+
+    return async () => {
+
         await auth0.loginWithRedirect({
             authorizationParams:{
                 redirect_uri: redirectUri,
             }
-        });
-        const user = await auth0.getUser();
-        console.log(user);
-    });
 
+
+
+        });
+        console.log("logged in");
+
+    };
 }
 export default HandleLogin;

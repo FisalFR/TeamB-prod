@@ -8,6 +8,7 @@ export type fullServiceFormType = {
     dateCreated: Date
     location: string
     priority: string
+    employeeName: string
     maintenances?: maintenances[]
     language?: languageInterpreterRequests[]
     medicine?: medicineRequests[]

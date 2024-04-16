@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {forms} from "database/.prisma/client";
 import HoverTable from "../components/hoverTable.tsx";
+import formType from "common/src/FormType.ts";
 function LogBook() {
 
 
@@ -18,12 +19,14 @@ function LogBook() {
         priority: ""
     });
     const [cleared, setCleared] = useState(false);
-    const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
     const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
     const [formIDOptions, setFormID] = useState<string[]>([]);
     const [requestTypeOptions, setRequestOptions] = useState<string[]>([]);
+    const [statusTypeOptions, setTypeOptions] = useState<string[]>([]);
     const [locationOptions, setLocation] = useState<string[]>([]);
     const [priorityOptions, setPriority] = useState<string[]>([]);
+    const [createdByOptions, setCreatedBy] = useState<string[]>([]);
+    const [dataUpdated, setDataUpdated] = useState<boolean>(false);
 
 
     const removeDups = (arr: string[]): string[] => {
@@ -39,18 +42,26 @@ function LogBook() {
             const requestStrings = [];
             const locationStrings = [];
             const priorityStrings = [];
+            const statusStrings = [];
+            const createdByStrings = [];
             for (let i = 0; i < response.data.length; i++) {
                 formIDStrings.push(response.data[i].formID);
                 requestStrings.push(response.data[i].type);
                 locationStrings.push(response.data[i].location);
+                statusStrings.push(response.data[i].status);
                 priorityStrings.push(response.data[i].priority);
+                createdByStrings.push(response.data[i].employeeName);
+
             }
             setFormID(formIDStrings);
             setRequestOptions(removeDups(requestStrings));
             setLocation(removeDups(locationStrings));
+            setTypeOptions(removeDups(statusStrings));
             setPriority(removeDups(priorityStrings));
+            setCreatedBy(removeDups(createdByStrings));
+            setDataUpdated(false);
         });
-    }, []);
+    }, [dataUpdated]);
 
 
     // Use Effect that updates the page everytime you input something into the dropdowns in Filter Data
@@ -62,6 +73,19 @@ function LogBook() {
     }).then((response) => {
         const reversedData = response.data.reverse();
         setForm(reversedData);
+        const formIDStrings = reversedData.map((item: formType) => item.formID);
+        const typeStrings = reversedData.map((item: formType) => item.type);
+        const locationStrings = reversedData.map((item: formType) => item.location);
+        const statusStrings = reversedData.map((item: formType) => item.status);
+        const priorityStrings = reversedData.map((item: formType) => item.priority);
+        const createdStrings = reversedData.map((item: formType) => item.employeeName);
+
+        setFormID(formIDStrings);
+        setRequestOptions(removeDups(typeStrings));
+        setLocation(removeDups(locationStrings));
+        setTypeOptions(removeDups(statusStrings));
+        setPriority(removeDups(priorityStrings));
+        setCreatedBy(removeDups(createdStrings));
     });
     }, [request]);
 
@@ -97,11 +121,31 @@ function LogBook() {
         setRequest({...request, priority: str});
     }
 
+    function handleCreatedBy(str: string): void {
+        setCleared(false);
+        setRequest({...request, employeeName: str});
+    }
+
+    function clearAll(){
+            setRequest({ formID: "",
+                type: "",
+                location: "",
+                status: "",
+                assignee: "",
+                dateCreated: emptyDate,
+                priority: ""});
+            setCleared(true);
+        setDataUpdated(true);
+    }
+
     return (
-            <div className="flex py-10">
+            <div className="flex pt-8">
                 {/*Form to filter current requests*/}
                 <div className=" h-full mx-3 space-y-7 my-3">
                     <div className="rounded-2xl bg-deep-blue bg-opacity-5">
+                        <a onClick={clearAll}
+                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline absolute top-[120px] left-60">Clear
+                            Filter</a>
                         <form
                             className="w-[22vw]  flex flex-col items-start p-3 pl-5">
                             <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start pb-3"}>Filter
@@ -116,7 +160,7 @@ function LogBook() {
                         </form>
 
                         <form
-                            className="w-[22vw] flex flex-col items-start p-3 gap-4 pl-5">
+                            className="w-[22vw] flex flex-col items-start p-3 pl-5">
                             <p className={"text-left font-bold"}>Request Type</p>
                             <Dropdown options={requestTypeOptions} placeholder={"Choose Request Type"}
                                       name={"requestTypeDropdown"}
@@ -125,7 +169,7 @@ function LogBook() {
                         </form>
 
                         <form
-                            className="w-[22vw] flex flex-col items-start p-3 gap-4 pl-5">
+                            className="w-[22vw] flex flex-col items-start p-3 pl-5">
                             <p className={"text-left font-bold"}>Location</p>
                             <Dropdown options={locationOptions} placeholder={"Choose Location"}
                                       name={"locationDropdown"}
@@ -134,7 +178,7 @@ function LogBook() {
                         </form>
 
                         <form
-                            className="w-[22vw]  flex flex-col items-start p-3 gap-4 pl-5">
+                            className="w-[22vw]  flex flex-col items-start p-3 pl-5">
                             <p className={"text-left font-bold"}>Request Status</p>
                             <Dropdown options={statusTypeOptions} placeholder={"Choose Status"} name={"statusDropdown"}
                                       id={"statusDropdown"} value={cleared}
@@ -142,23 +186,31 @@ function LogBook() {
                         </form>
 
                         <form
-                            className="w-[22vw] flex flex-col items-start p-3 gap-4 pl-5">
+                            className="w-[22vw] flex flex-col items-start p-3 pl-5">
                             <p className={"text-left font-bold"}>Assigned Staff</p>
-                            <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"}
+                            <Dropdown options={staffTypeOptions} placeholder={"Choose Assignee"}
                                       name={"staffDropdown"}
                                       id={"dropdown5"} value={cleared}
                                       setInput={handleAssigneeType} required={true}/>
                         </form>
 
                         <form
-                            className="w-[22vw] flex flex-col items-start p-3 gap-4 pl-5">
+                            className="w-[22vw] flex flex-col items-start p-3 pl-5">
+                            <p className={"text-left font-bold"}>Created By</p>
+                            <Dropdown options={createdByOptions} placeholder={"Choose Created By"}
+                                      name={"createdDropdown"}
+                                      id={"dropdown7"} value={cleared}
+                                      setInput={handleCreatedBy} required={true}/>
+                        </form>
+
+                        <form
+                            className="w-[22vw] flex flex-col items-start p-3 pb-5 pl-5">
                             <p className={"text-left font-bold"}>Priority</p>
                             <Dropdown options={priorityOptions} placeholder={"Choose Priority"}
                                       name={"priorityDropdown"}
                                       id={"dropdown6"} value={cleared}
                                       setInput={handlePriority} required={true}/>
                         </form>
-
                     </div>
                 </div>
 
@@ -166,8 +218,9 @@ function LogBook() {
                 <div
                     className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable overflow-auto mt-3">
                     <HoverTable data={form}
-                                headings={["Form ID", "Type", "Location", "Status", "Assignee", "priority", "Date Created"]}
-                                keys={["formID", "type", "location", "status", "assignee", "priority", "dateCreated"]}/>
+                                headings={["Form ID", "Type", "Location", "Status", "Assignee", "Created By", "priority", "Date Created"]}
+                                keys={["formID", "type", "location", "status", "assignee", "employeeName", "priority", "dateCreated"]}
+                                dataUpdated={dataUpdated} setDataUpdated={setDataUpdated}/>
                 </div>
 
             </div>

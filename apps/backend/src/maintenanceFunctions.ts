@@ -15,6 +15,7 @@ class maintenanceFunctions {
         assignee: "",
         location: request.location,
         priority: request.priority,
+        employeeName: request.employeeName,
       },
     });
     await prisma.maintenances.create({

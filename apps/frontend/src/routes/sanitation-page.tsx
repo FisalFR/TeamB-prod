@@ -14,7 +14,7 @@ function Sanitation() {
     const [cleared, setCleared] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
 
-    const employeeNameOptions: string[] = ["Employee 1", "Employee 2", "Employee 3", "Employee 4"];
+   // const employeeNameOptions: string[] = ["Employee 1", "Employee 2", "Employee 3", "Employee 4"];
     const [locationOptions, setLocationOptions] = useState<string[]>([]);
 
     useEffect(() => {
@@ -46,6 +46,9 @@ function Sanitation() {
         setCleared(true);
     }
 
+    function handleName(e: ChangeEvent<HTMLInputElement>): void {
+        setRequest({...request, employeeName: e.target.value});
+    }
     function handleInput(e: ChangeEvent<HTMLInputElement>): void {
         setRequest({...request, [e.target.name]: e.target.value});
     }
@@ -66,6 +69,7 @@ function Sanitation() {
     }
 
     return (
+        <>
         <div className="centerContent flex flex-col">
             <div className={submittedWindowVisibility.formScreen}>
 
@@ -79,16 +83,18 @@ function Sanitation() {
                         <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
                             <div>
                                 <p className={"text-left font-bold"}>Employee Name:</p>
-                                <div className="border-solid border-deep-blue border-2 rounded">
-                                    <Dropdown options={employeeNameOptions} placeholder={"Employee Name"}
+
+                                   {/* <Dropdown options={employeeNameOptions} placeholder={"Employee Name"}
                                               name={"employeeNameDropdown"}
                                               id={"dropdownEmployeeName"} value={cleared}
                                               setInput={(str: string) => setRequest({...request, employeeName: str})}
-                                              required={true}/>
-                                </div>
+                                              required={true}/>*/}
+                                    <input className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-72 h-9"}
+                                   type="text" placeholder="Name" onChange={handleName} value={request.employeeName} />
+
                                 <br/>
                                 <p className={"text-left font-bold"}>What kind of service?</p>
-                                <div className="border-solid border-deep-blue border-2 rounded">
+                                <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
                                     <RadioButton value={"Bed Cleaning"} name={"serviceType"} id={"serviceType1"}
                                                  state={request.serviceType}
                                                  onChange={handleInput} required={true}/>
@@ -101,7 +107,7 @@ function Sanitation() {
                                 </div>
                                 <br/>
                                 <p className={"text-left font-bold"}>Priority</p>
-                                <div className="border-solid border-deep-blue border-2 rounded">
+                                <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
                                     <RadioButton value={"Low"} name={"priority"} id={"priority1"}
                                                  state={request.priority}
                                                  onChange={handleInput} required={true}/>
@@ -122,7 +128,7 @@ function Sanitation() {
 
 
                                 <p className={"text-left font-bold"}>What location is this issue in?</p>
-                                <div className="border-solid border-deep-blue border-2 rounded">
+                                <div className="border-solid border-deep-blue border-2 rounded ">
                                     <Dropdown options={locationOptions} placeholder={"Location"}
                                               name={"locationDropdown"}
                                               id={"dropdown1"} value={cleared}
@@ -130,7 +136,7 @@ function Sanitation() {
                                 </div>
                                 <br/>
                                 <p className={"text-left font-bold"}>Contaminant</p>
-                                <div className="border-solid border-deep-blue border-2 rounded">
+                                <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
                                     <RadioButton value={"Biological Fluids"} name={"contaminant"} id={"contaminant1"}
                                                  state={request.contaminant}
                                                  onChange={handleInput} required={true}/>
@@ -196,6 +202,7 @@ function Sanitation() {
                 <p className={"font-HeadlandOne text-deep-blue"}>Created by Jeremy and Ben</p>
             </div>
         </div>
+        </>
     );
 }
 
