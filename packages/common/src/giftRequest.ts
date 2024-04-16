@@ -6,7 +6,6 @@ export type giftRequest = {
     senderName: string
     location: string
     date : string,
-    priority: string,
     message: string
     employeeName: string
     cart: giftItem[]

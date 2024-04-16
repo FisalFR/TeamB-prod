@@ -135,7 +135,6 @@ model giftRequests {
   senderName    String
   message       String
   date          String
-  priority      String
   cart          giftItem[] @relation(name: "cartID")
   giftRequestID forms      @relation(name: "giftRequestID", fields: [giftRequest], references: [formID])
 }

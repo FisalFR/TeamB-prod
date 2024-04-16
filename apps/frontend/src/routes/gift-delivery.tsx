@@ -180,7 +180,7 @@ function GiftDelivery() {
             location:"",
             priority:"Low",
             message: "",
-            date: new Date(),
+            date: new Date().toDateString(),
             cart: []});
         setCleared(false);
         location.reload();
