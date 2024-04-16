@@ -122,10 +122,10 @@ function LanguageInterpreter(){
                 <div className={submittedWindowVisibility.requestScreen}>
 
                     <div className="">
-                        <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                            <h1 className={" text-3xl font-HeadlandOne "}>Language Interpreter Request</h1>
+                        <div className="dark:bg-Ash-black bg-light-white my-10 p-10 px-20 rounded-3xl">
+                            <h1 className={"dark:text-light-white text-3xl font-HeadlandOne "}>Language Interpreter Request</h1>
                             <br/>
-                            <p className="text-left">
+                            <p className="dark:text-white text-left">
                                 Brigham and Women's Hospital is committed to clearly and thoroughly communicating with
                                 all
                                 patients
@@ -137,7 +137,7 @@ function LanguageInterpreter(){
                                 Please let your doctor know in advance about your language or hearing needs.
                             </p>
                             <br/>
-                            <p className="text-left">
+                            <p className="dark:text-white text-left">
                                 Spanish interpreters are available 24 hours a day by appointment only; interpreters for
                                 29 other
                                 languages are available as needed.
@@ -148,7 +148,7 @@ function LanguageInterpreter(){
                                 to request an interpreter to your location.
                             </p>
                             <br/>
-                            <p className="font-bold text-left ">Please select the languages in the dropdown. Any
+                            <p className="dark:text-light-white font-bold text-left ">Please select the languages in the dropdown. Any
                                 languages
                                 entered that are not in the dropdown will need
                                 to be requested through hospital administration.
@@ -159,16 +159,16 @@ function LanguageInterpreter(){
                                 e.preventDefault();
                             }} className="flex flex-col">
                                 <div>
-                                    <p className={"text-left font-bold"}>Employee Name</p>
+                                    <p className={"dark:text-white text-left font-bold"}>Employee Name</p>
                                     <input type="text" required
                                            onChange={handleNameInput} value={request.employeeName}
                                            placeholder={"Name"}
-                                           className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-100"}/>
+                                           className={"dark:bg-black dark:text-white border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-100"}/>
                                 </div>
                                 <br/>
                                 <div className="flex justify-between">
                                     <div className="">
-                                        <label className="float-left font-bold"> What language do you need an
+                                        <label className="dark:text-light-white float-left font-bold"> What language do you need an
                                             interpreter for?</label>
                                         <div
                                             className=" float-left border-solid border-deep-blue border-2 rounded">
@@ -181,7 +181,7 @@ function LanguageInterpreter(){
                                         </div>
                                     </div>
                                     <div className="flex flex-col justify-items-start">
-                                        <label className="flex justify-start font-bold">What room do you need the
+                                        <label className="dark:text-light-white flex justify-start font-bold">What room do you need the
                                             interpreter?</label>
                                         <div
                                             className=" float-start inline-block border-solid border-deep-blue border-2 rounded">
@@ -196,7 +196,7 @@ function LanguageInterpreter(){
                                 <br/>
                                 <div className="flex justify-between">
                                     <div className="w-fit">
-                                        <p className={"text-left font-bold "}>What is the priority of this request?</p>
+                                        <p className={"dark:text-white text-left font-bold "}>What is the priority of this request?</p>
                                         <div className={"border-solid border-deep-blue border-2 rounded "}>
                                             <RadioButton value={"Low"} name={"priority"} id={"priority1"}
                                                          state={request.priority}
@@ -217,10 +217,10 @@ function LanguageInterpreter(){
                                         </div>
                                     </div>
                                     <div className="flex flex-col">
-                                        <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Additional
+                                        <label htmlFor={"feedback"} className={"dark:text-white flex w-full text-left font-bold"}>Additional
                                             Comments</label>
                                         <textarea id={"feedback"}
-                                                  className={"w-100 max-w-full h-40 max-h-40 p-1 border-solid border-deep-blue border-2 rounded"}
+                                                  className={"dark:bg-black dark:text-light-white w-100 max-w-full h-40 max-h-40 p-1 border-solid border-deep-blue border-2 rounded"}
                                                   onChange={handleFeedbackInput}
                                                   value={request.feedback} required={false}
                                                   placeholder="Enter detailed description here..."/>
@@ -239,11 +239,11 @@ function LanguageInterpreter(){
 
                 <div className={submittedWindowVisibility.submittedScreen}>
                     <div className="pt-32">
-                        <div className="p-6 bg-white rounded-2xl">
-                            <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+                        <div className="dark:bg-Ash-black p-6 bg-white rounded-2xl">
+                            <p className="dark:text-white font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
                             <Button onClick={handleNewSubmissionLanguage} children="Submit a new request"/>
                         </div>
-                        <div className={"text-left"}>
+                        <div className={"dark:text-light-white text-left"}>
                             <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
                                 Submission:</h3>
                             <p className={"font-bold"}> Employee Name </p>
@@ -268,7 +268,7 @@ function LanguageInterpreter(){
                 </div>
             </div>
                 <div>
-                    <p className={"font-HeadlandOne text-deep-blue"}>Created by Theresa</p>
+                    <p className={"dark:text-white font-HeadlandOne text-deep-blue"}>Created by Theresa</p>
                 </div>
             </div>
         </>

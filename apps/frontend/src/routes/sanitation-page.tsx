@@ -73,27 +73,27 @@ function Sanitation() {
         <div className="centerContent flex flex-col">
             <div className={submittedWindowVisibility.formScreen}>
 
-                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                    <h1 className={"text-3xl font-HeadlandOne py-4"}>Welcome to the Sanitation page!</h1>
-                    <p>Fill out the form below to report an issue and make a sanitation request.</p>
+                <div className="dark:bg-Ash-black bg-light-white my-10 p-10 px-20 rounded-3xl">
+                    <h1 className={"dark:text-white text-3xl font-HeadlandOne py-4"}>Welcome to the Sanitation page!</h1>
+                    <p className={"dark:text-white"}>Fill out the form below to report an issue and make a sanitation request.</p>
 
                     <form ref={formRef} onSubmit={e => {
                         e.preventDefault();
                     }}>
                         <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
                             <div>
-                                <p className={"text-left font-bold"}>Employee Name:</p>
+                                <p className={"dark:text-white text-left font-bold"}>Employee Name:</p>
 
                                    {/* <Dropdown options={employeeNameOptions} placeholder={"Employee Name"}
                                               name={"employeeNameDropdown"}
                                               id={"dropdownEmployeeName"} value={cleared}
                                               setInput={(str: string) => setRequest({...request, employeeName: str})}
                                               required={true}/>*/}
-                                    <input className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-72 h-9"}
+                                    <input className={"dark:bg-black dark:text-white border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-72 h-9"}
                                    type="text" placeholder="Name" onChange={handleName} value={request.employeeName} />
 
                                 <br/>
-                                <p className={"text-left font-bold"}>What kind of service?</p>
+                                <p className={"dark:text-white text-left font-bold"}>What kind of service?</p>
                                 <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
                                     <RadioButton value={"Bed Cleaning"} name={"serviceType"} id={"serviceType1"}
                                                  state={request.serviceType}
@@ -106,7 +106,7 @@ function Sanitation() {
                                                  onChange={handleInput} required={true}/>
                                 </div>
                                 <br/>
-                                <p className={"text-left font-bold"}>Priority</p>
+                                <p className={"dark:text-white text-left font-bold"}>Priority</p>
                                 <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
                                     <RadioButton value={"Low"} name={"priority"} id={"priority1"}
                                                  state={request.priority}
@@ -127,7 +127,7 @@ function Sanitation() {
                             <div>
 
 
-                                <p className={"text-left font-bold"}>What location is this issue in?</p>
+                                <p className={"dark:text-white text-left font-bold"}>What location is this issue in?</p>
                                 <div className="border-solid border-deep-blue border-2 rounded ">
                                     <Dropdown options={locationOptions} placeholder={"Location"}
                                               name={"locationDropdown"}
@@ -135,7 +135,7 @@ function Sanitation() {
                                               setInput={handleLocationInput} required={true}/>
                                 </div>
                                 <br/>
-                                <p className={"text-left font-bold"}>Contaminant</p>
+                                <p className={"dark:text-white text-left font-bold"}>Contaminant</p>
                                 <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
                                     <RadioButton value={"Biological Fluids"} name={"contaminant"} id={"contaminant1"}
                                                  state={request.contaminant}
@@ -148,10 +148,10 @@ function Sanitation() {
                                                  onChange={handleInput} required={true}/>
                                 </div>
                                 <br/>
-                                <label htmlFor={"additionalComments"} className={"flex w-full text-left font-bold"}>Additional
+                                <label htmlFor={"additionalComments"} className={"dark:text-light-white flex w-full text-left font-bold"}>Additional
                                     Comments</label>
                                 <textarea id={"additionalComments"}
-                                          className={"w-full max-w-full h-40 max-h-40 p-1 border-solid border-deep-blue border-2 rounded"}
+                                          className={"dark:bg-black dark:text-white w-full max-w-full h-40 max-h-40 p-1 border-solid border-deep-blue border-2 rounded"}
                                           onChange={handleAdditionalComments}
                                           value={request.additionalComments} required={false}
                                           placeholder="Enter detailed description here..."/>
@@ -169,11 +169,11 @@ function Sanitation() {
 
             <div className={submittedWindowVisibility.submittedScreen}>
                 <div className="pt-32">
-                    <div className="p-6 bg-white rounded-2xl">
-                        <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+                    <div className="dark:bg-black p-6 bg-white rounded-2xl">
+                        <p className="dark:text-light-white font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
                         <Button onClick={handleNewSubmission} children="Submit a new request"/>
                     </div>
-                    <div className={"text-left"}>
+                    <div className={"dark:text-light-white text-left"}>
                         <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
                         <p className={"font-bold"}>Employee Name:</p>
                         <p className={""}>{request.employeeName}</p>
@@ -199,7 +199,7 @@ function Sanitation() {
                 </div>
             </div>
             <div>
-                <p className={"font-HeadlandOne text-deep-blue"}>Created by Jeremy and Ben</p>
+                <p className={"dark:text-white font-HeadlandOne text-deep-blue"}>Created by Jeremy and Ben</p>
             </div>
         </div>
         </>
