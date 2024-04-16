@@ -61,7 +61,7 @@ function PathVisual(props: {width: number; height: number;
                         }).map((node, index) => {
                             return <>
                                 <circle cx={node.xcoord } cy={node.ycoord } r={50} // larger invisible circle
-                                        opacity={1}
+                                        opacity={0}
                                         onMouseEnter={ () => {
                                             const newOpacity = nodeOpacity;
                                             newOpacity[index] = 1;
