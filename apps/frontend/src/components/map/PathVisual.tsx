@@ -55,7 +55,7 @@ function PathVisual(props: {width: number; height: number;
                             key = {JSON.stringify(keys[x] + "svg")}>
                     {createFloor(keys[x])}
                     {props.allNodes.filter(node => {
-                        return node.floor === props.currentFloor;
+                        return node.floor === props.currentFloor && !node.longName.includes("Hall");
                     }).map((node) => {
                         return <circle cx={node.xcoord } cy={node.ycoord } r={8 }
                                        fill="#F6BD38"
