@@ -12,7 +12,7 @@ export function SecurityPage() {
         additionalInfo: "",
         location: "",
         priority: "",
-        quantity: 0
+        quantity: 1
     });
     const securityOptions: string[] = ["Theft","Walk to Car"," Trespassing","Intruder","Threat","VIP","Assault"];
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
@@ -51,7 +51,7 @@ export function SecurityPage() {
         function handleClear(e: { preventDefault: () => void; }): void {
             e.preventDefault();
             // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-            setRequest({additionalInfo: "", quantity: 0, employeeName: "", securityReason: "", location: "", priority: ""});
+            setRequest({additionalInfo: "", quantity: 1, employeeName: "", securityReason: "", location: "", priority: ""});
             // use resetActive from Dropdown?
             setCleared(true);
         }
@@ -74,19 +74,22 @@ export function SecurityPage() {
         setRequest({...request, priority: e.target.value});
     }
 
+    function handleQuantityInput(e: ChangeEvent<HTMLInputElement>): void {
+        setRequest({...request, quantity: e.target.value});
+    }
+
     function handleNewSubmission(): void {
         setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
-        setRequest({additionalInfo: "", employeeName: "", securityReason: "", location: "", priority: "", quantity:0});
+        setRequest({additionalInfo: "", employeeName: "", securityReason: "", location: "", priority: "", quantity:1});
         setCleared(false);
     }
 
     return (
-        <>
-        <div className="centerContent flex flex-col px-100">
+        <div className="centerContent flex flex-col">
             <div className={submittedWindowVisibility.formScreen}>
                 <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
                 <h1 className={"text-3xl font-HeadlandOne py-4"}>Security Service Request</h1>
-                <p >Fill out the form below to make a security request.</p>
+                <p className="pb-8 text-center">Fill out the form below to make a security request.</p>
 
                 <form ref={formRef} onSubmit={e => {
                     e.preventDefault();
@@ -122,9 +125,15 @@ export function SecurityPage() {
                                                      onChange={handlePriorityInput} required={true} width={"w-full"}/>
                                     </div>
                                 </div>
-
                             </div>
                             <div>
+                                <p className={"text-left font-bold w-full"}>Quantity of Personnel</p>
+                                <input
+                                    className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
+                                    type="number" id={"quantity"} value={request.quantity} min='1' required defaultValue={1} onChange={e => handleQuantityInput(e)}/>
+
+
+                                <br/>
                                 <div>
                                     <p className={"text-left font-bold"}>What is the location?</p>
                                     <div className="border-solid border-deep-blue border-2 rounded w-full mb-3">
@@ -136,29 +145,23 @@ export function SecurityPage() {
                                         />
                                     </div>
                                     <br/>
-                                    <p className={"text-left font-bold"}>Quantity of Personnel</p>
-                                    <input
-                                        className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
-                                        type="number" min='1' required defaultValue={'1'}/>
-                                    <br/>
 
-                                    <p className={"flex text-left font-bold"}>What is the reason for security?</p>
-                                    <div className="border-deep-blue border-solid border-2 rounded">
-                                        <Dropdown
-                                            name="reason"
-                                            id="reason"
-                                            placeholder="Select a reason"
-                                            options={securityOptions}
-                                            value={cleared}
-                                            setInput={(str: string) => setRequest({...request, securityReason: str})}
-                                            required={true}
-                                            width={"w-full"}
-                                        />
-                                    </div>
+                                <p className={"flex text-left font-bold w-full"}>What is the reason for the security
+                                    request?</p>
+                                <div className="border-deep-blue border-solid border-2 w-full">
+                                    <Dropdown
+                                        name="reason"
+                                        id="reason"
+                                        placeholder="Select a reason"
+                                        options={securityOptions}
+                                        value={cleared}
+                                        setInput={(str: string) => setRequest({...request, securityReason: str})}
+                                        required={true}
+                                        width={"w-full"}/>
                                 </div>
                             </div>
 
-
+                            </div>
                     </div>
 
                         <p className={"flex w-full text-left font-bold"}>Additional Info</p>
@@ -196,11 +199,9 @@ export function SecurityPage() {
                         <p className={"font-bold"}>What is the security request?</p>
                     <p className={""}>{request.securityReason}</p>
 
-                    <p className={"font-bold"}>How many personnel are required??</p>
+                    <p className={"font-bold"}>How many personnel are required?</p>
                     <p className={""}>{request.quantity}</p>
 
-                    <p className={"font-bold"}>What is the priority?</p>
-                    <p className={""}>{request.priority}</p>
                 </div>
             </div>
             </div>
@@ -208,7 +209,7 @@ export function SecurityPage() {
                 <p className={"font-HeadlandOne text-deep-blue"}>Created by Nick and Henry</p>
             </div>
         </div>
-        </>
+
     );
 }
 
