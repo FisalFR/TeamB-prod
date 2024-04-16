@@ -46,16 +46,47 @@ class Path {
     heuristic(endNode: Node, nextNode: Node, currentNode:Node): number {
       const endFloor: number  = Path.convertFloor(endNode.floor);
       const nextFloor: number = Path.convertFloor(nextNode.floor);
-      const EuclideanDistance = Math.sqrt((endNode.ycoord - nextNode.ycoord) ** 2 + (endNode.xcoord - nextNode.xcoord) ** 2);
+      // const currentFloor: number = Path.convertFloor(currentNode.floor);
+      let EuclideanDistance = Math.sqrt((endNode.ycoord - nextNode.ycoord) ** 2 + (endNode.xcoord - nextNode.xcoord) ** 2);
+      const DistToElevL: number = Math.sqrt((924 -nextNode.ycoord) ** 2 + (1785 - nextNode.xcoord) ** 2);
+      const DistToElevQ: number = Math.sqrt((1825 -nextNode.ycoord) ** 2 + (1751 - nextNode.xcoord) ** 2);
       const floorDifference = Math.abs(endFloor - nextFloor);
+
+      if ((endNode.building === "Shapiro" || endNode.building === "BTM") && (nextNode.building !== endNode.building )){
+          if((nextFloor === 1 && endFloor == 1) && endNode.building === "Shapiro"){
+              return EuclideanDistance/2;
+          } else if(nextFloor === 4 || (nextFloor === 4 && endNode.building === "BTM")){
+              return EuclideanDistance/2;
+          }
+      }
+
+      if (endNode.building === "Shapiro" && nextNode.building === "Shapiro" && endNode.floor === "L1"){
+          if(nextNode.nodeType === "ELEV" && nextNode.longName.includes("Elevator Q")){
+                return 0;
+          } else if (nextNode.nodeType === "ELEV" && !nextNode.longName.includes("Elevator Q")){
+              return 10000;
+          } else {
+              return DistToElevQ;
+          }
+      }
+
+        if(endNode.building === "Tower") {
+            if (nextNode.nodeType === "ELEV" && nextNode.shortName.includes("Elevator L")) {
+                return 0;
+            } else if (nextNode.nodeType === "ELEV" && !nextNode.shortName.includes("Elevator L")) {
+                return 10000;
+            } else {
+                return DistToElevL;
+            }
+        }
 
       // If we approach an ELEVATOR, prioritize if we're on the wrong floor
       // Otherwise,  DON'T TAKE THE ELEVATOR
       if((nextNode.nodeType === "ELEV" && currentNode.nodeType !== "ELEV")){
           if(nextFloor !== endFloor){
-                return EuclideanDistance + (floorDifference * 100);
+                return EuclideanDistance + floorDifference;
           } else if (nextFloor === endFloor){
-              return EuclideanDistance + 100000;
+              return EuclideanDistance + 10;
           }
       }
 
@@ -63,19 +94,18 @@ class Path {
         // Otherwise,  DON'T TAKE THE STAIRS
       if((nextNode.nodeType === "STAI" && currentNode.nodeType !== "STAI")){
             if(nextFloor !== endFloor){
-                return EuclideanDistance + (floorDifference * 100);
+                return EuclideanDistance + (floorDifference *2);
             } else if (nextFloor === endFloor){
-                return EuclideanDistance + 100000;
+                return EuclideanDistance + 10;
             }
       }
 
       if (endFloor === nextFloor){
-          return EuclideanDistance;
-      } else if (endFloor !== nextFloor){
           return EuclideanDistance + 10;
+      } else if (endFloor !== nextFloor){
+          return EuclideanDistance + 1000;
       }
 
-        return EuclideanDistance;
     }
 
 
