@@ -5,6 +5,7 @@ import user_icon from "../assets/user_icon.svg";
 import {useAuth0} from "@auth0/auth0-react";
 import LoginNavigationBar from "./LoginNavigationBar.tsx";
 import HandleLogout from "./handleLogout.tsx";
+import DarkLightSwitcher from "./darkLightSwitcher.tsx";
 
 
 
@@ -48,12 +49,15 @@ export function NavigationBar() {
 
                                 <NavDropDown mainLink={["", "Admin"]} dropdownLinks={adminDropdownList}></NavDropDown>
                             </nav>
+
                             <div className="self-center">
                                 <div className="float-end centerContent px-16">
-
+                                    <DarkLightSwitcher/>
                                     <NavLink onClick={handleLogout}><div className="flex flex-row gap-2">
                                         <img src={user_icon} alt="Username icon" height="20" width="20"/>LOGOUT</div></NavLink>
                                 </div>
+
+
                             </div>
                         </div>
                     </>
