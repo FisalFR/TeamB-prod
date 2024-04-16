@@ -50,9 +50,9 @@ export function LoginPage() {
                 </div>
                 <div className="w-1/2 flex flex-col">
                     <div className="text-center p-10 rounded mx-auto animate-scale-in-ver-top">
-                        <h1 className="font-bold font-HeadlandOne text-6xl text-deep-blue-900 mb-2">Navigate Seamlessly</h1>
+                        <h1 className="pb-5 font-bold font-HeadlandOne text-6xl text-deep-blue-900 mb-2">Navigate Seamlessly</h1>
 
-                    <a href={"/map"}  className=" hover:animate-none text-xl hover:cursor-pointer hover:text-deep-blue hover:font-bold pb-5" >
+                    <a href={"/map"}  className=" hover:animate-none text-3xl hover:cursor-pointer hover:text-deep-blue hover:font-bold pb-5" >
                         Click here to navigate!</a>
                     </div>
                     <div className="flex justify-center">
