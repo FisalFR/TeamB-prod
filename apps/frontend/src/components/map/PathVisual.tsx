@@ -3,16 +3,14 @@ import Node from "common/src/node.ts";
 import CircleFrom from '../../assets/from_to_icons/circle_from.svg';
 import IconTo from '../../assets/from_to_icons/icon_to.svg';
 import React from "react";
-import useNodes from "../../hooks/useNodes.ts";
 
 function PathVisual(props: {width: number; height: number;
-    showPath: boolean; floormap: Map<string, Node[][]>; nodes: Node[]; images: Map<string, string>; currentFloor: string; onClickCircle: (Node: Node) => void}) {
-    const {nodes} = useNodes();
+    showPath: boolean; floormap: Map<string, Node[][]>; pathNodes: Node[]; images: Map<string, string>; currentFloor: string; onClickCircle: (Node: Node) => void; allNodes: Node[]}) {
     let startCoord: number[] = [];
     let endCoord: number[] = [];
-    if (props.nodes[0] != null) {
-        startCoord = [props.nodes[0].xcoord, props.nodes[0].ycoord];
-        endCoord = [props.nodes[props.nodes.length - 1].xcoord, props.nodes[props.nodes.length - 1].ycoord];
+    if (props.pathNodes[0] != null) {
+        startCoord = [props.pathNodes[0].xcoord, props.pathNodes[0].ycoord];
+        endCoord = [props.pathNodes[props.pathNodes.length - 1].xcoord, props.pathNodes[props.pathNodes.length - 1].ycoord];
     }
 
     const draw = {
@@ -56,7 +54,7 @@ function PathVisual(props: {width: number; height: number;
                             className={classname}
                             key = {JSON.stringify(keys[x] + "svg")}>
                     {createFloor(keys[x])}
-                    {nodes.filter(node => {
+                    {props.allNodes.filter(node => {
                         return node.floor === props.currentFloor;
                     }).map((node) => {
                         return <circle cx={node.xcoord } cy={node.ycoord } r={8 }
@@ -121,40 +119,40 @@ function PathVisual(props: {width: number; height: number;
         const returnDivs = [];
         let nodePos = 0;
         //Beginning
-        if (props.nodes[0].nodeID == start.nodeID) {
+        if (props.pathNodes[0].nodeID == start.nodeID) {
             returnDivs.push(
                 <svg x={startCoord[0] - 20 } y={startCoord[1] - 20}>
                     <image xlinkHref={CircleFrom} width={40}></image>
                 </svg>
             );
         } else {
-            nodePos = props.nodes.findIndex((node) => node.nodeID == start.nodeID);
+            nodePos = props.pathNodes.findIndex((node) => node.nodeID == start.nodeID);
             returnDivs.push(<svg>
-                    <circle cx={start.xcoord + (props.nodes[nodePos-1].floor.length-1)*12 + 16} cy={start.ycoord - 16}
+                    <circle cx={start.xcoord + (props.pathNodes[nodePos-1].floor.length-1)*12 + 16} cy={start.ycoord - 16}
                             r={36} fill="#F6BD38"
                             key={JSON.stringify(startCoord[0] + startCoord[1])}/>
                     <text x={start.xcoord} y={start.ycoord} key={JSON.stringify(startCoord[0] + startCoord[1] + "text")}
                           className="text-5xl font-bold fill-deep-blue font-OpenSans">
-                        {props.nodes[nodePos - 1].floor}</text>
+                        {props.pathNodes[nodePos - 1].floor}</text>
                 </svg>
             );
         }
         //End
-        if (props.nodes[props.nodes.length-1].nodeID == end.nodeID) {
+        if (props.pathNodes[props.pathNodes.length-1].nodeID == end.nodeID) {
             returnDivs.push(
                 <svg x={endCoord[0] - 24} y={endCoord[1] -60}>
                     <image xlinkHref = {IconTo} width={50}></image>
                 </svg>
             );
         } else {
-            nodePos = props.nodes.findIndex((node) => node.nodeID == end.nodeID);
+            nodePos = props.pathNodes.findIndex((node) => node.nodeID == end.nodeID);
             returnDivs.push(
                 <svg>
-                    <circle cx={end.xcoord + (props.nodes[nodePos + 1].floor.length - 1)*12 + 16} cy={end.ycoord - 16} r={36} fill="#012D5A"
+                    <circle cx={end.xcoord + (props.pathNodes[nodePos + 1].floor.length - 1)*12 + 16} cy={end.ycoord - 16} r={36} fill="#012D5A"
                             key={JSON.stringify(endCoord[0] + endCoord[1])}/>
                     <text x={end.xcoord} y={end.ycoord} key={JSON.stringify(endCoord[0] + endCoord[1] + "text")}
                           className="text-5xl font-bold fill-gold-yellow font-OpenSans ">
-                        {props.nodes[nodePos + 1].floor}</text>
+                        {props.pathNodes[nodePos + 1].floor}</text>
                 </svg>
             );
         }
@@ -170,10 +168,10 @@ function PathVisual(props: {width: number; height: number;
     }
 
     const viewBox = "0 0 " + (props.width) + " " + (props.height);
-    if (props.nodes[0] != null) {
+    if (props.pathNodes[0] != null) {
         return (
             <>
-                <div className="flex flex-col" key = {JSON.stringify("floors" + props.nodes)}>
+                <div className="flex flex-col" key = {JSON.stringify("floors" + props.pathNodes)}>
                     {createFloors()}
                 </div>
             </>

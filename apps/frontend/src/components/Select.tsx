@@ -1,11 +1,14 @@
 import React from "react";
 
-function Select(props: { options: string[]; label: string; id: string; defaultOption?: string; onChange:(e: React.ChangeEvent) => void}) {
+function Select(props: { options: string[]; display: string[]; label: string; id: string; defaultOption?: string; onChange:(e: React.ChangeEvent) => void}) {
     const selectOptions = props.options; //set to props.options
 
     function createOptions() {
-        return selectOptions.map((option) =>
-            <option value={option}>{option}</option>);
+        return selectOptions.map((option, i) =>
+
+            <option value={option}>
+                {props.display[i]}
+            </option>);
     }
 
     return (

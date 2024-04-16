@@ -4,9 +4,10 @@ import dots from "../../assets/from_to_icons/circles_from_to.svg";
 import destination from "../../assets/from_to_icons/icon_to.svg";
 import {AlgorithmButtons} from "./AlgorithmButtons.tsx";
 import star from "../../assets/Star.svg";
+import Node from "../../../../../packages/common/src/node";
 
 export function PathSelector(props: {
-    options: string[],
+    nodes: Node[],
     handleStartChange: (e: React.ChangeEvent<HTMLSelectElement>) => void,
     handleEndChange: (e: React.ChangeEvent<HTMLSelectElement>) => void,
     onClick: () => void,
@@ -21,13 +22,25 @@ export function PathSelector(props: {
         className="absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end">
         <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center pt-2 pr-2 pl-2">
             <img src={from} alt="from" className={"px-1"}/>
-            <Select label="" id="nodeStartSelect" options={props.options}
+            <Select label="" id="nodeStartSelect"
+                    options={props.nodes.map((node) =>{
+                        return node.nodeID;
+                    })}
+                    display = {props.nodes.map((node) =>{
+                        return node.longName;
+                    })}
                     onChange={props.handleStartChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}
                     defaultOption={ props.selectedStartOption !== undefined ? props.selectedStartOption : "Select your start location"}/>
             <img src={dots} alt="dots" className={"h-7 pb-1 px-1"}/>
             <div></div>
             <img src={destination} alt="destination" className={"px-1"}/>
-            <Select label="" id="nodeEndSelect" options={props.options}
+            <Select label="" id="nodeEndSelect"
+                    options={props.nodes.map((node) =>{
+                        return node.nodeID;
+                    })}
+                    display = {props.nodes.map((node) =>{
+                        return node.longName;
+                    })}
                     onChange={props.handleEndChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}
                     defaultOption={ props.selectedEndOption !== undefined ? props.selectedEndOption :  "Select your end location"}/>
         </div>

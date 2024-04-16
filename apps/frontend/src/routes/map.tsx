@@ -14,16 +14,17 @@ import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import {PathSelector} from "../components/map/PathSelector.tsx";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
+import useNodes from "../hooks/useNodes.ts";
 
 
 
 export function Map(){
-    interface NodeData {
-        [key: string]: {
-            id: string;
-            coords: number[];
-        };
-    }
+    // interface NodeData {
+    //     [key: string]: {
+    //         id: string;
+    //         coords: number[];
+    //     };
+    // }
 
     interface FloorMap {
         [key: string]: Node[][];
@@ -43,10 +44,21 @@ export function Map(){
     const [selectedAlgo, setSelectedAlgo] = useState<string | null>("Astar");
 
 
-    const [mapPoints, setMapPoints] = useState(["Error accessing map points"]);
-    const [nodeData, setNodeData] = useState<NodeData>({});
+    // const [mapPoints, setMapPoints] = useState(["Error accessing map points"]);
+    // const [nodeData, setNodeData] = useState<NodeData>({});
+    const {nodes,nodeMap} = useNodes();
     const [floorMap, setFloorMap] = useState<FloorMap>({});
-    const [pathNodes, setPathNodes] = useState<Node[]>([]);
+    const [pathNodes, setPathNodes] = useState<Node[]>([{
+        nodeID: "",
+        xcoord: 0,
+        ycoord: 0,
+        floor: "",
+        building: "",
+        nodeType: "",
+        longName: "",
+        shortName: "",
+        neighbors: []
+    }]);
 
     const floorImages: FloorImages = {
         "L1": ll1map,
@@ -81,31 +93,31 @@ export function Map(){
     }, [algo]); // algo is a dependency here
 
     function handleStartChange(e: React.ChangeEvent<HTMLSelectElement>) {
-        setRequest({...request, startNode: nodeData[e.target.value].id});
+        setRequest({...request, startNode: e.target.value});
         setShowPath(true);
-        findPath(nodeData[e.target.value].id, request.endNode);
+        findPath(e.target.value, request.endNode);
     }
     function handleEndChange(e: React.ChangeEvent<HTMLSelectElement>) {
-        setRequest({...request, endNode: nodeData[e.target.value].id});
+        setRequest({...request, endNode: e.target.value});
         setShowPath(true);
-        findPath(request.startNode, nodeData[e.target.value].id);
+        findPath(request.startNode, e.target.value);
     }
 
-    useEffect( () => {
-        axios.get("/api/pathfinding/halls").then((response) => {
-            const nodeStrings = [];
-            const tempNodeData: NodeData = {};
-            for (let i = 0; i < response.data.length; i++) {
-                nodeStrings.push(response.data[i].longName);
-                tempNodeData[response.data[i].longName as keyof NodeData] = {id: response.data[i].nodeID, coords: [response.data[i].xcoord, response.data[i].ycoord]};
-            }
-            setMapPoints(nodeStrings);
-            setNodeData(tempNodeData);
-
-            setPathNodes([response.data[0], response.data[response.data.length-1]]);
-            setShowPath(false);
-        });
-    }, []);
+    // useEffect( () => {
+    //     axios.get("/api/pathfinding/halls").then((response) => {
+    //         // const nodeStrings = [];
+    //         // const tempNodeData: NodeData = {};
+    //         // for (let i = 0; i < response.data.length; i++) {
+    //             // nodeStrings.push(response.data[i].longName);
+    //             // tempNodeData[response.data[i].longName as keyof NodeData] = {id: response.data[i].nodeID, coords: [response.data[i].xcoord, response.data[i].ycoord]};
+    //         // }
+    //         // setMapPoints(nodeStrings);
+    //         // setNodeData(tempNodeData);
+    //
+    //         setPathNodes([response.data[0], response.data[response.data.length-1]]);
+    //         // setShowPath(false);
+    //     });
+    // }, []);
 
     useEffect(() => {
         if(request.startNode && request.endNode) {
@@ -142,14 +154,16 @@ export function Map(){
                 <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)"}}>
                     <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor={currentFloor}
                                 showPath={showPath} floormap={floorMap as Record<string, Node[][]>}
-                                nodes={pathNodes}
+                                pathNodes={pathNodes}
                                 images={floorImages as Record<string, string>}
-                                onClickCircle={onClickCircle}/>
+                                onClickCircle={onClickCircle}
+                                allNodes ={nodes}/>
                 </TransformComponent>
-                <PathSelector options={mapPoints} handleStartChange={handleStartChange}
+                <PathSelector nodes={nodes.filter(node => !node.longName.includes("Hall"))}
+                              handleStartChange={handleStartChange}
                               handleEndChange={handleEndChange}
-                              selectedStartOption={request.startNode !== "" ? request.startNode : undefined}
-                              selectedEndOption={request.endNode !== "" ? request.endNode : undefined}
+                              selectedStartOption={request.startNode !== "" ? nodeMap.get(request.startNode)?.longName : undefined}
+                              selectedEndOption={request.endNode !== "" ? nodeMap.get(request.endNode)?.longName : undefined}
                               onClick={() => {
                     setAlgo("Astar");
                     setSelectedAlgo("Astar");
@@ -162,7 +176,7 @@ export function Map(){
                 }} onClick3={() => {
                     setAlgo("Dijkstra");
                     setSelectedAlgo("Dijkstra");
-                }}/>
+                }} />
                 <FloorSelector
                     onClick1={() => setCurrentFloor("L2")}
                     onClick2={() => setCurrentFloor("L1")}
