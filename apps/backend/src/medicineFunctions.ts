@@ -22,7 +22,7 @@ class medicineFunctions {
       data: {
         medicineRequest: UUID,
         medicine: request.medicine,
-        quantity: request.quantity,
+        quantity: parseInt(request.quantity),
         additionalComments: request.additionalComments,
       },
     });
