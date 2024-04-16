@@ -75,11 +75,9 @@ function App() {
                         {
                             path:"/giftdelivery",
                             element:<GiftDelivery/>,
-
-
                         },
                         {
-                          path:"/mapEditor",
+                            path:"/mapEditor",
                             element:<MapEditor/>,
                         },
 
@@ -111,7 +109,7 @@ function App() {
 
 
             >
-            <div className="w-full h-full bg-scroll ...">
+            <div className="w-full h-full bs-scroll ...">
                 <NavigationBar/>
 
 

@@ -87,6 +87,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                     }
                     case "Language": {
                         newInformation.push("Language: " + response.data.languageRequests[0].language);
+                        newInformation.push("Feedback: " + response.data.languageRequests[0].feedback);
                         break;
                     } case "Sanitation": {
                         newInformation.push("Issue: " + response.data.sanitationRequests[0].contaminant);
