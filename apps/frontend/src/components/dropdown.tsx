@@ -36,7 +36,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
         optionStrings = filteredOptions;
         listElements.current = [];
         return filteredOptions.map( (option, index) =>
-            <div className="dropdown-option p-1 bg-white aria-selected:bg-bone-white" onMouseLeave={resetActive}
+            <div className="dark:bg-Ash-black dropdown-option p-1 bg-white aria-selected:bg-bone-white" onMouseLeave={resetActive}
                  onMouseDown={() => {fillSearch(option); props.setInput(option);}}
                  role="option" onMouseOver={() => setActiveOption(index)}
                  aria-selected={index === activeOption} id = {"option" + index} key = {"option" + index}
@@ -126,8 +126,8 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 
 
     return (
-        <div className={`${props.width} text-left` }>
-            <input className="w-full p-[5px]" type="text"
+        <div className={`${props.width} dark:bg-black dark:text-light-white text-left` }>
+            <input className="dark:bg-black w-full p-[5px]" type="text"
 
                    placeholder={props.placeholder} name = {props.name} id = {props.id} role = "combobox"
                    onBlur={hideDropdown} onFocus={showDropdown} onKeyDown={keyDown}
@@ -137,9 +137,9 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                    aria-activedescendant = {"option" + activeOption} aria-haspopup="listbox">
             </input>
 
-            <div className={`${props.width} relative`} >
+            <div className={`${props.width} dark:bg-black relative`} >
                 <div className={dropdownClass}>
-                    <div className="max-h-48 overflow-scroll" role="listbox" id="options-dropdown">
+                    <div className="dark:bg-black max-h-48 overflow-scroll" role="listbox" id="options-dropdown">
                         {createOptions()}
                     </div>
                     <div className={scrollIndicator}>▼</div>

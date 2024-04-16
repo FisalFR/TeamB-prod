@@ -212,38 +212,38 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             <tbody>
             {createTableRows()}
             <Modal open={open} onClose={() => setOpen(false) }>
-                <div className="flex flex-row gap-8 p-12 w-fit ">
+                <div className="dark:bg-black flex flex-row gap-8 p-12 w-fit ">
                     <div>
-                        <h1 className="text-3xl">Information</h1>
+                        <h1 className="dark:text-white text-3xl">Information</h1>
                         <ul className="item-start justify-start leading-8 max-w-100">
-                            <li>FormID: {assignment.formID}</li>
-                            <li>Type: {assignment.type}</li>
-                            <li>Status: {assignment.status}</li>
-                            <li>Priority: {assignment.priority}</li>
-                            <li>Assignee: {assignment.assignee}</li>
-                            <li>Created By: {assignment.employeeName}</li>
-                            <li>{information[6]}</li>
-                            <li>{information[7]}</li>
-                            <li>{information[8]}</li>
-                            <li>{information[9]}</li>
-                            <li>{information[10]}</li>
-                            <li>Location: {assignment.location}</li>
-                            <li>Date Created: {assignment.dateCreated.toString()}</li>
+                            <li className="dark:text-white">FormID: {assignment.formID}</li>
+                            <li className="dark:text-white">Type: {assignment.type}</li>
+                            <li className="dark:text-white">Status: {assignment.status}</li>
+                            <li className="dark:text-white">Priority: {assignment.priority}</li>
+                            <li className="dark:text-white">Assignee: {assignment.assignee}</li>
+                            <li className="dark:text-white">Created By: {assignment.employeeName}</li>
+                            <li className="dark:text-white">{information[6]}</li>
+                            <li className="dark:text-white">{information[7]}</li>
+                            <li className="dark:text-white">{information[8]}</li>
+                            <li className="dark:text-white">{information[9]}</li>
+                            <li className="dark:text-white">{information[10]}</li>
+                            <li className="dark:text-white">Location: {assignment.location}</li>
+                            <li className="dark:text-white">Date Created: {assignment.dateCreated.toString()}</li>
                         </ul>
                     </div>
-                    <div className="rounded-2xl bg-deep-blue bg-opacity-5">
+                    <div className="dark:bg-Ash-black rounded-2xl bg-deep-blue bg-opacity-5">
                         <form ref={formRef} onSubmit={e => {
                             e.preventDefault();
                         }}
                               className="w-[22vw]  flex flex-col items-start p-3 gap-4 pl-5">
-                            <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start"}>Assign Staff
+                            <h2 className={"dark:text-white font-extrabold text-2xl font-HeadlandOne flex items-start"}>Assign Staff
                                 Request</h2>
-                            <p className={"text-left font-bold"}>Request Status</p>
+                            <p className={"dark:text-light-white text-left font-bold"}>Request Status</p>
                             <Dropdown options={statusTypeOptions} placeholder={"Choose Status"}
                                       name={"statusAssignment"}
                                       id={"dropdown5"} value={cleared}
                                       setInput={handleStatusAssignment} required={true}/>
-                            <p className={"text-left font-bold"}>Assigned Staff</p>
+                            <p className={"dark:text-light-white text-left font-bold"}>Assigned Staff</p>
                             <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"} name={"staffAssignment"}
                                       id={"dropdown6"} value={cleared}
                                       setInput={handleStaffAssignment} required={true}/>
@@ -255,8 +255,8 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                             <LongButton onClick={firstDelete} children={"Delete Request"}/>
                         </div>
                         <Modal open={openDelete} onClose={() => setOpenDelete(false)}>
-                            <div className="flex flex-col gap-4">
-                                <h1 className="text-2xl">Are you sure?</h1>
+                            <div className="dark:bg-Ash-black flex flex-col gap-4">
+                                <h1 className="dark:text-white text-2xl">Are you sure?</h1>
                                 <LongButton onClick={handleDelete} children={"Delete Request"}/>
                             </div>
                         </Modal>

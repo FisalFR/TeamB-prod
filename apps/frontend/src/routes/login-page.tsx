@@ -46,13 +46,13 @@ export function LoginPage() {
                 </div>
                 <div className="w-1/2 flex flex-col">
                     <div className="text-center p-10 rounded mx-auto animate-scale-in-ver-top">
-                        <h1 className="font-bold font-HeadlandOne text-6xl text-deep-blue-900 mb-2">Navigate Seamlessly</h1>
+                        <h1 className="dark:text-white font-bold font-HeadlandOne text-6xl text-deep-blue-900 mb-2">Navigate Seamlessly</h1>
 
-                    <a href={"/map"}  className=" hover:animate-none text-xl hover:cursor-pointer hover:text-deep-blue hover:font-bold pb-5" >
+                    <a href={"/map"}  className="dark:text-light-white hover:animate-none text-xl hover:cursor-pointer hover:text-deep-blue hover:font-bold pb-5" >
                         Click here to navigate!</a>
                     </div>
                     <div className="flex justify-center">
-                        <div className="bg-white outline-1 shadow-md rounded-lg border border-deep-blue-900 hover:scale-105 transition-transform duration-300">
+                        <div className="dark:bg-Ash-black dark:text-white bg-white outline-1 shadow-md rounded-lg border border-deep-blue-900 hover:scale-105 transition-transform duration-300">
                             <Carousel content={content} autoPlay={true} interval={10000} />
 
                         </div>

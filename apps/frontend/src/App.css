@@ -43,6 +43,12 @@ input[type="radio"]:checked::before {
   align-items: center;
 }
 
+.bottom-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 .login-container {
   display: flex;
   flex-direction: column;

@@ -16,7 +16,7 @@ export function PathSelector(props: {
     onClick3: () => void
 }) {
     return <div
-        className="absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end">
+        className="dark:bg-Ash-black absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end">
         <div className="grid grid-cols-[auto_1fr] grid-rows-3 h-fit justify-items-center items-center pt-2 pr-2 pl-2">
             <img src={from} alt="from" className={"px-1"}/>
             <Select label="" id="nodeStartSelect" options={props.options}

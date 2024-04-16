@@ -84,7 +84,7 @@ export function MaintenancePage() {
             <div className={submittedWindowVisibility.formScreen}>
                 <div className="dark:bg-Ash-black bg-light-white my-10 p-10 px-20 rounded-3xl w-auto">
                     <h1 className={"dark:text-light-white text-3xl font-HeadlandOne py-4"}>Welcome to the Maintenance page!</h1>
-                    <p className={"text-white"}>Fill out the form below to report an issue and make a maintenance request.</p>
+                    <p className={"dark:text-white"}>Fill out the form below to report an issue and make a maintenance request.</p>
 
                     <form ref={formRef} onSubmit={e => {
                         e.preventDefault();

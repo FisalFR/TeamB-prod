@@ -13,7 +13,7 @@ function ShopCard(props:{image: string, name: string, cost: number, altName: str
 
     return(
 
-        <div className=" border-2 rounded-3xl border-2 bg-gradient-to-t from-white to-blue-300">
+        <div className="dark:to-deep-blue border-2 rounded-3xl border-2 bg-gradient-to-t from-white to-blue-300">
             <div className="h-60 my-auto">
                 <img src={props.image} alt={props.altName} className="object-cover w-full h-full object-top rounded-t-3xl"/>
             </div>
@@ -22,7 +22,7 @@ function ShopCard(props:{image: string, name: string, cost: number, altName: str
                 <h3>${props.cost}</h3>
 
                 <label htmlFor="quantity" className="text-deep-blue ">Quantity: </label>
-                <input type="number" id="quantity" name="quantity" min="0" max="10" className="w-full h-12 px-4 py-2 rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:outline-none" onChange={changeQuantity}
+                <input type="number" id="quantity" name="quantity" min="0" max="10" className="dark:bg-Ash-black dark:text-light-white w-full h-12 px-4 py-2 rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:outline-none" onChange={changeQuantity}
                        defaultValue={0}></input> <br/>
             </div>
         </div>
