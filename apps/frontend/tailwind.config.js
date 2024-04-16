@@ -19,6 +19,7 @@ export default {
       fontFamily: {
         'HeadlandOne': ['Headland One', 'serif'],
         'OpenSans': ['Open Sans', 'sans-serif'],
+        'Colfax': ["Colfax", "sans-serif"],
       },
       spacing: {
         'databasetable': '39rem',
