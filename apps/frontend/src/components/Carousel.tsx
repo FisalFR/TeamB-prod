@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-//import { Link } from 'react-router-dom';
-//import {NavLink} from "./NavLink.tsx";
-//import handleLogin from "./handleLogin.tsx";
+
 import {HandleLogin} from "./handleLogin.tsx";
 const Carousel = ({ content, autoPlay, interval }) => {
     const [currentIndex, setCurrentIndex] = useState(0);

@@ -1,4 +1,3 @@
-//import Button from "../components/Button.tsx";
 import AnimatedSVG from "../components/HeroImage.tsx";
 
 import React, {useState} from 'react';
