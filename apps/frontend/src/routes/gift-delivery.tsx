@@ -207,8 +207,8 @@ function GiftDelivery() {
                             }}>
                                 <br/><br/>
                                 <div className="centerContent">
-                                <div className=" content-start justify-between flex mb-4 px-20 bg-gray-200 py-20 rounded-3xl w-5/6">
-                                    <div className=" flex-col items-start 1 w-1/3 h-full">
+                                <div className=" content-start justify-between flex mb-4 px-28 bg-gray-200 py-20 rounded-3xl w-7/8">
+                                    <div className=" flex-col items-start 1 w-4/12 h-full">
 
                                         <label htmlFor="message"
                                                className="font-OpenSans text-md font-bold text-Ash-black ">
@@ -216,16 +216,16 @@ function GiftDelivery() {
                                         <textarea id="message" name="message" rows={4} cols={40}
                                                   placeholder={"Send a nice message!"}
                                                   onChange={handleMessage}
-                                                  className="border-solid border-deep-blue border-2 rounded p-1 px-2 w-full h-56">
+                                                  className="border-solid border-deep-blue border-2 rounded p-1 px-2 w-full h-40">
                         </textarea>
                                         <label htmlFor="message"
                                                className="font-OpenSans text-md font-bold text-Ash-black ">
                                             Pick a Date: </label>
-                                        <div>
+                                        <div className=" text-xl font-Colfax text-md text-Ash-black ">
                                             <Calendar onChange={handleCalendarInput} value={date}/>
                                         </div>
                                     </div>
-                                    <div className="text-left grid w-1/5 h-full gap-5 content-between">
+                                    <div className="text-left grid w-1/4 h-full gap-5 content-between">
                                         <div>
                                             <label htmlFor="receiverName"
                                                className="font-OpenSans font-bold text-md text-Ash-black">To: </label>
