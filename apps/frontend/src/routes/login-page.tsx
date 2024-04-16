@@ -5,12 +5,21 @@ import Carousel from "../components/Carousel";
 import image1 from '../assets/Carousel/GiftDelivery.png';
 import image2 from '../assets/Carousel/InterpreterRequest.png';
 import image3 from '../assets/Carousel/SecurityPage.png';
-
+import image4 from '../assets/Carousel/mapPathfinding.png';
 export function LoginPage() {
     const [isHovered,setIsHovered] = useState(true);
     const content = [
         {
-            image: { src: image1, alt: 'Description of image 1' },
+            image: { src: image4, alt: 'Description of image 1' },
+            text: {
+                title: "Map",
+                description: "We're excited to introduce our new Pathfinding Feature—now you can navigate to your destination in the hospital at your own convenience!",
+                callToAction: "Click here explore the map!",
+                route: "/map"
+            }
+        },
+        {
+            image: { src: image1, alt: 'Description of image 2' },
             text: {
                 title: "Gift Delivery",
                 description: "We're excited to introduce our new Gift Delivery Service—now you can send thoughtful presents directly to your loved ones in the hospital, right from our website!",
@@ -19,7 +28,7 @@ export function LoginPage() {
             }
         },
         {
-            image: { src: image2, alt: 'Description of image 2' },
+            image: { src: image2, alt: 'Description of image 3' },
             text: {
                 title: "Interpreter Request",
                 description: "We are thrilled to launch our new Interpreter Request feature—making language assistance easily accessible to all our patients directly through our website!",
@@ -28,7 +37,7 @@ export function LoginPage() {
             }
         },
         {
-            image: { src: image3, alt: 'Description of image 3' },
+            image: { src: image3, alt: 'Description of image 4' },
             text: {
                 title: "Security Request",
                 description: "We're pleased to announce our enhanced security request feature, allowing you to request for help at anytime through our website.",
@@ -56,20 +65,20 @@ export function LoginPage() {
                         Click here to navigate!</a>
                     </div>
                     <div className="flex justify-center">
-                        <div className=" bg-white outline-1 shadow-md rounded-lg border border-deep-blue-900 hover:cursor-pointer hover:scale-105 transition-transform duration-300"
-                            onMouseEnter={()=>setIsHovered(false)}
-                            onMouseLeave={()=>setIsHovered(true)}>
 
-                            <Carousel content={content} autoPlay={isHovered} interval={5000} />
+                        <div
+                            className=" bg-white outline-1 shadow-md rounded-lg border border-deep-blue-900 hover:cursor-pointer hover:scale-105 transition-transform duration-300"
+                            onMouseEnter={() => setIsHovered(false)}
+                            onMouseLeave={() => setIsHovered(true)}>
+
+                            <Carousel content={content} autoPlay={isHovered} interval={5000}/>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     );
-
-
-
 
 
 }
