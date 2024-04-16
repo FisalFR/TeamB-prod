@@ -6,6 +6,7 @@ import Dropdown from "../components/dropdown.tsx";
 import axios from "axios";
 
 
+
 export function MaintenancePage() {
     const [request, setRequest] = useState<MaintenanceRequest>({issue: "", location: "", priority: "", feedback: ""});
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
@@ -79,8 +80,10 @@ export function MaintenancePage() {
         <div className="centerContent flex flex-col">
             <div className={submittedWindowVisibility.formScreen}>
                 <div className="dark:bg-Ash-black bg-light-white my-10 p-10 px-20 rounded-3xl">
-                    <h1 className={"dark:text-white text-3xl font-HeadlandOne py-4"}>Welcome to the Maintenance page!</h1>
-                    <p className="dark:text-light-white">Fill out the form below to report an issue and make a maintenance request.</p>
+                    <h1 className={"dark:text-white text-3xl font-HeadlandOne py-4"}>Welcome to the Maintenance
+                        page!</h1>
+                    <p className="dark:text-light-white">Fill out the form below to report an issue and make a
+                        maintenance request.</p>
 
                     <form ref={formRef} onSubmit={e => {
                         e.preventDefault();
@@ -104,7 +107,8 @@ export function MaintenancePage() {
                             </div>
 
                             <div>
-                                <p className={"dark:text-light-white text-left font-bold"}>What location is this issue in?</p>
+                                <p className={"dark:text-light-white text-left font-bold"}>What location is this issue
+                                    in?</p>
                                 <div className="border-deep-blue border-solid border-2">
                                     <Dropdown options={locationOptions} placeholder={"Location"}
                                               name={"locationDropdown"}
@@ -128,7 +132,8 @@ export function MaintenancePage() {
                             </div>
                         </div>
 
-                        <label htmlFor={"feedback"} className={"dark:text-light-white flex w-full text-left font-bold"}>Description of
+                        <label htmlFor={"feedback"} className={"dark:text-light-white flex w-full text-left font-bold"}>Description
+                            of
                             issue</label>
                         <div className="">
                             <textarea id={"feedback"}
