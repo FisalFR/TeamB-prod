@@ -6,13 +6,14 @@ import l3map from "../assets/floors/03_thethirdfloor.png";
 import plus from "../assets/plus.svg";
 import minus from "../assets/minus.svg";
 import PathVisual from "../components/map/PathVisual.tsx";
-import React, {useEffect, useRef, useState, useCallback} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import axios from "axios";
 import {startEndNodes} from "common/src/pathfinding.ts";
 import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import {PathSelector} from "../components/map/PathSelector.tsx";
+import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
 
 
 export function Map(){
@@ -34,7 +35,6 @@ export function Map(){
     const PlusSvg = <img src={plus} alt="Plus" className={"w-5"} />;
     const MinusSvg = <img src={minus} alt="Minus" className={"w-5"} />;
 
-    const [zoom, setZoom] = useState(0.4);
     const [showPath, setShowPath] = useState(false);
 
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
@@ -56,16 +56,10 @@ export function Map(){
         "3": l3map
     };
 
-    const divRef = useRef<HTMLDivElement>(null);
+
 
     const [currentFloor, setCurrentFloor] = useState("2");
-    function zoomIn() {
-        setZoom(prevZoom => Math.min(prevZoom * 1.2, 1.0)); // Increase zoom level, max 1.0
-    }
 
-    function zoomOut() {
-        setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.4)); // Decrease zoom level, min 0.4
-    }
 
 
     const findPath = useCallback((start: string, end: string) => {
@@ -119,45 +113,52 @@ export function Map(){
         }
     }, [algo, findPath, request.endNode, request.startNode]);
 
+    function ZoomControls() {
+        const { zoomIn, zoomOut } = useControls();
+        return(
+            <ZoomButtons onClick1={() => zoomIn()} plusSvg={PlusSvg}
+                         onClick2={() => zoomOut()} minusSvg={MinusSvg}/>
+        );
+    }
+
 
     return (
-        <>
-            <div className="centerContent">
-                <div className="relative w-full h-full"> {/* Add relative positioning here */}
-                    <div className="w-screen h-screen fixed overflow-scroll" ref={divRef}>
-                        <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor={currentFloor}
-                                    scale={zoom} showPath={showPath} floormap={floorMap as Record<string, Node[][]>}
-                                    nodes={pathNodes}
-                                    images={floorImages as Record<string, string>}/>
-                    </div>
-                    <PathSelector options={nodes} handleStartChange={handleStartChange}
-                                  handleEndChange={handleEndChange} onClick={() => {
-                        setAlgo("Astar");
-                        setSelectedAlgo("Astar");
-                    }} selectedAlgo={selectedAlgo} onClick1={() => {
-                        setAlgo("BFS");
-                        setSelectedAlgo("BFS");
-                    }} onClick2={() => {
-                        setAlgo("DFS");
-                        setSelectedAlgo("DFS");
-                    }} onClick3={() => {
-                        setAlgo("Dijkstra");
-                        setSelectedAlgo("Dijkstra");
-                    }}/>
-                    <FloorSelector
-                        onClick1={() => setCurrentFloor("L2")}
-                        onClick2={() => setCurrentFloor("L1")}
-                        onClick3={() => setCurrentFloor("1")}
-                        onClick4={() => setCurrentFloor("2")}
-                        onClick5={() => setCurrentFloor("3")}
-                        currentFloor={currentFloor}
-                    />
-                    <ZoomButtons onClick1={zoomIn} plusSvg={PlusSvg}
-                                 onClick2={zoomOut} minusSvg={MinusSvg}/>
-
-                </div>
-            </div>
-        </>
+        <div className="fixed">
+            <TransformWrapper limitToBounds={true} disablePadding={true}
+                              initialScale={0.38}
+                              minScale={0.38}
+                              maxScale={1.28}>
+                <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)"}}>
+                    <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor={currentFloor}
+                                showPath={showPath} floormap={floorMap as Record<string, Node[][]>}
+                                nodes={pathNodes}
+                                images={floorImages as Record<string, string>}/>
+                </TransformComponent>
+                <PathSelector options={nodes} handleStartChange={handleStartChange}
+                              handleEndChange={handleEndChange} onClick={() => {
+                    setAlgo("Astar");
+                    setSelectedAlgo("Astar");
+                }} selectedAlgo={selectedAlgo} onClick1={() => {
+                    setAlgo("BFS");
+                    setSelectedAlgo("BFS");
+                }} onClick2={() => {
+                    setAlgo("DFS");
+                    setSelectedAlgo("DFS");
+                }} onClick3={() => {
+                    setAlgo("Dijkstra");
+                    setSelectedAlgo("Dijkstra");
+                }}/>
+                <FloorSelector
+                    onClick1={() => setCurrentFloor("L2")}
+                    onClick2={() => setCurrentFloor("L1")}
+                    onClick3={() => setCurrentFloor("1")}
+                    onClick4={() => setCurrentFloor("2")}
+                    onClick5={() => setCurrentFloor("3")}
+                    currentFloor={currentFloor}
+                />
+                <ZoomControls/>
+            </TransformWrapper>
+        </div>
     );
 }
 

@@ -4,7 +4,7 @@ import CircleFrom from '../../assets/from_to_icons/circle_from.svg';
 import IconTo from '../../assets/from_to_icons/icon_to.svg';
 import React from "react";
 
-function PathVisual(props: {width: number; height: number; scale:number;
+function PathVisual(props: {width: number; height: number;
     showPath: boolean; floormap: Map<string, Node[][]>; nodes: Node[]; images: Map<string, string>; currentFloor: string}) {
     let startCoord: number[] = [];
     let endCoord: number[] = [];
@@ -45,8 +45,8 @@ function PathVisual(props: {width: number; height: number; scale:number;
             }
             floorSVGs.push(
                 <>
-                <motion.svg width={props.width * props.scale}
-                            height={props.height * props.scale}
+                <motion.svg width={props.width}
+                            height={props.height}
                             viewBox={viewBox}
                             initial="hidden"
                             animate="visible"
@@ -80,17 +80,17 @@ function PathVisual(props: {width: number; height: number; scale:number;
                         <>
                             //border
                             <motion.path d={createPath(pathCoords)} stroke="#009CA6" fill="none" initial="hidden"
-                                         strokeWidth={6 * ((5/3)/props.scale)}
+                                         strokeWidth={16}
                                          strokeLinecap={"round"}
                                          strokeLinejoin={"round"}/>
                             //background
                             <motion.path d={createPath(pathCoords)} stroke="#012D5A" fill="none" initial="hidden"
-                                         strokeWidth={3 * ((5/3)/props.scale)}
+                                         strokeWidth={9}
                                          strokeLinecap={"round"}
                                          strokeLinejoin={"round"}/>
                             //strokes
                             <motion.path d={createPath(pathCoords)} stroke="#89D4E3" fill="none" initial="hidden"
-                                         strokeWidth={3 * ((4/3)/props.scale)}
+                                         strokeWidth={9}
                                          animate={{ strokeDashoffset: [0, -30] }}
                                          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                                          strokeDasharray="10,20"
@@ -109,10 +109,30 @@ function PathVisual(props: {width: number; height: number; scale:number;
     function createStartEnd(start: Node, end: Node) {
         const returnDivs = [];
         let nodePos = 0;
+        //Beginning
+        if (props.nodes[0].nodeID == start.nodeID) {
+            returnDivs.push(
+                <svg x={startCoord[0] - 20 } y={startCoord[1] - 20}>
+                    <image xlinkHref={CircleFrom} width={40}></image>
+                </svg>
+            );
+        } else {
+            nodePos = props.nodes.findIndex((node) => node.nodeID == start.nodeID);
+            returnDivs.push(<svg>
+                    <circle cx={start.xcoord + (props.nodes[nodePos-1].floor.length-1)*12 + 16} cy={start.ycoord - 16}
+                            r={36} fill="#F6BD38"
+                            key={JSON.stringify(startCoord[0] + startCoord[1])}/>
+                    <text x={start.xcoord} y={start.ycoord} key={JSON.stringify(startCoord[0] + startCoord[1] + "text")}
+                          className="text-5xl font-bold fill-deep-blue font-OpenSans">
+                        {props.nodes[nodePos - 1].floor}</text>
+                </svg>
+            );
+        }
+        //End
         if (props.nodes[props.nodes.length-1].nodeID == end.nodeID) {
             returnDivs.push(
-                <svg x={endCoord[0] - 17*(1/props.scale)} y={endCoord[1] -45*(1/props.scale)    }>
-                    <image xlinkHref = {IconTo} width={36*(1/props.scale)}></image>
+                <svg x={endCoord[0] - 24} y={endCoord[1] -60}>
+                    <image xlinkHref = {IconTo} width={50}></image>
                 </svg>
             );
         } else {
@@ -124,24 +144,6 @@ function PathVisual(props: {width: number; height: number; scale:number;
                     <text x={end.xcoord} y={end.ycoord} key={JSON.stringify(endCoord[0] + endCoord[1] + "text")}
                           className="text-5xl font-bold fill-gold-yellow font-OpenSans ">
                         {props.nodes[nodePos + 1].floor}</text>
-                </svg>
-            );
-        }
-        if (props.nodes[0].nodeID == start.nodeID) {
-            returnDivs.push(
-                <svg x={startCoord[0] - 13 * (1 / props.scale)} y={startCoord[1] - 13 * (1 / props.scale)}>
-                    <image xlinkHref={CircleFrom} width={24 * (1/props.scale)}></image>
-                </svg>
-            );
-        } else {
-            nodePos = props.nodes.findIndex((node) => node.nodeID == start.nodeID);
-            returnDivs.push(<svg>
-                    <circle cx={start.xcoord + (props.nodes[0].floor.length-1)*12 + 16} cy={start.ycoord - 16}
-                            r={36} fill="#F6BD38"
-                            key={JSON.stringify(startCoord[0] + startCoord[1])}/>
-                    <text x={start.xcoord} y={start.ycoord} key={JSON.stringify(startCoord[0] + startCoord[1] + "text")}
-                          className="text-5xl font-bold fill-deep-blue font-OpenSans">
-                        {props.nodes[nodePos - 1].floor}</text>
                 </svg>
             );
         }
@@ -171,7 +173,7 @@ function PathVisual(props: {width: number; height: number; scale:number;
             <>
 
                 <motion.svg width="100%"
-                            height={props.height * props.scale}
+                            height={props.height}
                             viewBox={viewBox}
                             initial="hidden"
                             animate="visible"
