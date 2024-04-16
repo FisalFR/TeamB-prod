@@ -9,4 +9,12 @@ router.get("/", async function (req: Request, res: Response) {
   res.status(200).json(edges);
 });
 
+router.get("/getID", async function (req: Request, res: Response) {
+  const edges = await client.edges.findMany({
+    select: {
+      edgeID: true,
+    },
+  });
+  res.status(200).json(edges);
+});
 export default router;

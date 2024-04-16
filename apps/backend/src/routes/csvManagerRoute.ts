@@ -10,6 +10,7 @@ import NodeType from "common/src/NodeType";
 import EdgeType from "common/src/EdgeType";
 import FormType from "common/src/FormType";
 import { formFilter } from "../formFunctions";
+import edgeType from "common/src/EdgeType";
 
 router.use(fileUpload());
 
@@ -286,6 +287,66 @@ router.post("/filterForms", async (req, res) => {
   const formType: FormType = req.body;
   const filteredForms = await formFilter(formType.formID, formType.type);
   return res.json(filteredForms);
+});
+
+router.post("/editNodes", async (req, res) => {
+  const importedNodes: NodeType[] = req.body;
+  console.log(importedNodes);
+  client.edges.deleteMany().then(() => {
+    client.nodes.deleteMany().then(() => {
+      populateNode.populateManyNodeDB(importedNodes).then(() => {
+        return res.json(300);
+      });
+    });
+  });
+});
+
+router.post("/editEdges", async (req, res) => {
+  const importedEdges: EdgeType[] = req.body;
+  populateEdge.populateManyEdgeDB(importedEdges).then(() => {
+    return res.json(300);
+  });
+});
+
+router.post("/editOneNode", async (req, res) => {
+  const importedNode: NodeType = req.body;
+  const updatedNode = await client.nodes.update({
+    where: {
+      nodeID: importedNode.nodeID,
+    },
+    data: {
+      nodeID: importedNode.nodeID,
+      xcoord: parseFloat(importedNode.xcoord),
+      ycoord: parseFloat(importedNode.ycoord),
+      building: importedNode.building,
+      nodeType: importedNode.nodeType,
+      longName: importedNode.longName,
+      shortName: importedNode.shortName,
+    },
+  });
+  return res.json(updatedNode);
+});
+
+router.post("/addManyEdge", async (req, res) => {
+  const importedEdge: edgeType[] = req.body;
+  const updatedEdge = await client.edges.createMany({
+    data: importedEdge,
+  });
+  return res.json(updatedEdge);
+});
+
+router.post("/deleteManyEdge", async (req, res) => {
+  const importedEdge: edgeType[] = req.body;
+
+  const edgeIDs = importedEdge.map((edge) => edge.edgeID);
+  const deletedEdges = await client.edges.deleteMany({
+    where: {
+      edgeID: {
+        in: edgeIDs, // Using 'in' operator to match multiple edgeIDs
+      },
+    },
+  });
+  return res.json(deletedEdges);
 });
 
 export default router;
