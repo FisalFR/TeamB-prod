@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Node from "common/src/node.ts";
 import CircleFrom from '../../assets/from_to_icons/circle_from.svg';
 import IconTo from '../../assets/from_to_icons/icon_to.svg';
-import React from "react";
+import React, {useState} from "react";
 
 function PathVisual(props: {width: number; height: number;
     showPath: boolean; floormap: Map<string, Node[][]>; pathNodes: Node[]; images: Map<string, string>; currentFloor: string; onClickCircle: (Node: Node) => void; allNodes: Node[]}) {
@@ -12,6 +12,8 @@ function PathVisual(props: {width: number; height: number;
         startCoord = [props.pathNodes[0].xcoord, props.pathNodes[0].ycoord];
         endCoord = [props.pathNodes[props.pathNodes.length - 1].xcoord, props.pathNodes[props.pathNodes.length - 1].ycoord];
     }
+    const [nodeOpacity, setNodeOpacity] = useState<number[]>(Array(props.allNodes.length).fill(0));
+    const [replaceThis, setReplaceThis] = useState(0);
 
     const draw = {
         hidden: { pathLength: 0, opacity: 1 },
@@ -56,22 +58,28 @@ function PathVisual(props: {width: number; height: number;
                         {createFloor(keys[x])}
                         {props.allNodes.filter(node => {
                             return node.floor === props.currentFloor && !node.longName.includes("Hall");
-                        }).map((node) => {
+                        }).map((node, index) => {
                             return <>
-                            <circle cx={node.xcoord } cy={node.ycoord } r={8}
-                                           fill="#F6BD38"
-                                           opacity={0}
-                                           onMouseMove={ (e) => {
-                                               const target = e.target as HTMLElement;
-                                               const rect = target.getBoundingClientRect();
-                                               const x = e.clientX - rect.left; //x position within the element.
-                                               const y = e.clientY - rect.top;  //y position within the element.
-                                               const dist = Math.hypot(node.xcoord - x, node.ycoord - y);
-                                               target.style.opacity = dist <= 4000 ? '1' : '0'; // change opacity based on distance
-                                           }}
-                                           onClick={ () => {
-                                               props.onClickCircle(node);
-                                           }}/>
+                                <circle cx={node.xcoord } cy={node.ycoord } r={50} // larger invisible circle
+                                        opacity={1}
+                                        onMouseEnter={ () => {
+                                            const newOpacity = nodeOpacity;
+                                            newOpacity[index] = 1;
+                                            setNodeOpacity(newOpacity);
+                                            setReplaceThis(replaceThis + 1);
+                                        }}
+                                        onMouseLeave={ () => {
+                                            const newOpacity = nodeOpacity;
+                                            newOpacity[index] = 0;
+                                            setNodeOpacity(newOpacity);
+                                            setReplaceThis(replaceThis + 1);
+                                        }}/>
+                                <circle id={`node-${node.nodeID}`} cx={node.xcoord } cy={node.ycoord } r={8} // smaller visible circle
+                                        fill="#F6BD38"
+                                        opacity={nodeOpacity[index]}
+                                        onClick={ () => {
+                                            props.onClickCircle(node);
+                                        }}/>
                             </>;
                         })}
                     </motion.svg>
