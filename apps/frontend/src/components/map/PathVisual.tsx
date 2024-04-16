@@ -45,25 +45,36 @@ function PathVisual(props: {width: number; height: number;
             }
             floorSVGs.push(
                 <>
-                <motion.svg width={props.width}
-                            height={props.height}
-                            viewBox={viewBox}
-                            initial="hidden"
-                            animate="visible"
-                            variants={draw}
-                            className={classname}
-                            key = {JSON.stringify(keys[x] + "svg")}>
-                    {createFloor(keys[x])}
-                    {props.allNodes.filter(node => {
-                        return node.floor === props.currentFloor && !node.longName.includes("Hall");
-                    }).map((node) => {
-                        return <circle cx={node.xcoord } cy={node.ycoord } r={8 }
-                                       fill="#F6BD38"
-                                       onClick={ () => {
-                                           props.onClickCircle(node);
-                        }}/>;
-                    })}
-                </motion.svg>
+                    <motion.svg width={props.width}
+                                height={props.height}
+                                viewBox={viewBox}
+                                initial="hidden"
+                                animate="visible"
+                                variants={draw}
+                                className={classname}
+                                key = {JSON.stringify(keys[x] + "svg")}>
+                        {createFloor(keys[x])}
+                        {props.allNodes.filter(node => {
+                            return node.floor === props.currentFloor && !node.longName.includes("Hall");
+                        }).map((node) => {
+                            return <>
+                            <circle cx={node.xcoord } cy={node.ycoord } r={8}
+                                           fill="#F6BD38"
+                                           opacity={0}
+                                           onMouseMove={ (e) => {
+                                               const target = e.target as HTMLElement;
+                                               const rect = target.getBoundingClientRect();
+                                               const x = e.clientX - rect.left; //x position within the element.
+                                               const y = e.clientY - rect.top;  //y position within the element.
+                                               const dist = Math.hypot(node.xcoord - x, node.ycoord - y);
+                                               target.style.opacity = dist <= 4000 ? '1' : '0'; // change opacity based on distance
+                                           }}
+                                           onClick={ () => {
+                                               props.onClickCircle(node);
+                                           }}/>
+                            </>;
+                        })}
+                    </motion.svg>
                 </>
             );
         }
