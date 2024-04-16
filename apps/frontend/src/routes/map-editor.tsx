@@ -212,6 +212,7 @@ export function MapEditor(){
                 newEdges.push(newEdge);
                 setEditEdges(newEdges);
                 addedEdges.push(newEdge);
+                console.log(setAddedEdges);
                 setReplaceThis(replaceThis+1);
             }
         }
