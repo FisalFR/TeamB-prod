@@ -387,7 +387,8 @@ function GiftDelivery() {
                             </form>
                         </div>
                     </div>
-                    <div className="submittedWindowVisibility.submittedScreen flex-col centerContent">
+                    <div className={submittedWindowVisibility.submittedScreen}>
+                    <div className=" flex-col centerContent">
                         <div className="flex-col p-6 bg-white rounded-2xl mt-20 w-1/2 ">
                             <div className={"text-center"}>
                                 <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
@@ -424,6 +425,7 @@ function GiftDelivery() {
                                 return <p>{item.quantity} x {item.name}: ${item.cost}</p>;
                             })}</p></div>
 
+                    </div>
                     </div>
 
                     <div className="pt-10 h-full">
