@@ -38,7 +38,6 @@ class AStarStrategy implements PathfindingStrategy {
     heuristic(endNode: Node, nextNode: Node, currentNode:Node): number {
         const endFloor: number  = this.convertFloor(endNode.floor);
         const nextFloor: number = this.convertFloor(nextNode.floor);
-        // const currentFloor: number = Path.convertFloor(currentNode.floor);
         const EuclideanDistance = Math.sqrt((endNode.ycoord - nextNode.ycoord) ** 2 + (endNode.xcoord - nextNode.xcoord) ** 2);
         const DistToElevL: number = Math.sqrt((924 -nextNode.ycoord) ** 2 + (1785 - nextNode.xcoord) ** 2);
         const DistToElevQ: number = Math.sqrt((1825 -nextNode.ycoord) ** 2 + (1751 - nextNode.xcoord) ** 2);
@@ -62,7 +61,7 @@ class AStarStrategy implements PathfindingStrategy {
             }
         }
 
-        if(endNode.building === "Tower") {
+        if(endNode.building === "Tower" && endFloor !== nextFloor) {
             if (nextNode.nodeType === "ELEV" && nextNode.shortName.includes("Elevator L")) {
                 return 0;
             } else if (nextNode.nodeType === "ELEV" && !nextNode.shortName.includes("Elevator L")) {
@@ -76,7 +75,7 @@ class AStarStrategy implements PathfindingStrategy {
         // Otherwise,  DON'T TAKE THE ELEVATOR
         if((nextNode.nodeType === "ELEV" && currentNode.nodeType !== "ELEV")){
             if(nextFloor !== endFloor){
-                return EuclideanDistance + floorDifference;
+                return EuclideanDistance - floorDifference;
             } else if (nextFloor === endFloor){
                 return EuclideanDistance + 10;
             }
@@ -85,10 +84,16 @@ class AStarStrategy implements PathfindingStrategy {
         // If we approach a STAIR, prioritize if we're on the wrong floor
         // Otherwise,  DON'T TAKE THE STAIRS
         if((nextNode.nodeType === "STAI" && currentNode.nodeType !== "STAI")){
-            if(nextFloor !== endFloor){
-                return EuclideanDistance + (floorDifference *2);
+            if(nextFloor !== endFloor && floorDifference === 1){
+                return EuclideanDistance - (floorDifference/2);
             } else if (nextFloor === endFloor){
                 return EuclideanDistance + 10;
+            }
+        } else if ((nextNode.nodeType === "STAI" && currentNode.nodeType === "STAI")){
+            if(nextFloor === endFloor){
+                return 0;
+            } else if (nextFloor !== endFloor){
+                return EuclideanDistance + 100000;
             }
         }
 
