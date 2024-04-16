@@ -352,19 +352,26 @@ export function MapEditor(){
         }).then((response) => {
             const toAdd = getAddedEdges();
             const toDelete = getDeletedEdges();
-            for (let i = 0; i < toAdd.length; i++) {
-
-            }
-            for (let i = 0; i < toDelete.length; i++) {
-
-            }
-            // axios.post("/api/csvManager/editEdges", editEdges, {
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     }
-            // }).then( () => {
-            //     alert("success");
-            // });
+            // for (let i = 0; i < toAdd.length; i++) {
+            //
+            // }
+            // for (let i = 0; i < toDelete.length; i++) {
+            //
+            // }
+            //This should add all the edges and delete all the edges and one go
+            axios.post("/api/csvManager/addManyEdge", toAdd, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then( () => {
+                axios.post("/api/csvManager/deleteManyEdge", toDelete, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then( () => {
+                    alert("success");
+                });
+            });
             console.log(response);
     });
     }

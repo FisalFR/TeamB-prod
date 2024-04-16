@@ -327,9 +327,9 @@ router.post("/editOneNode", async (req, res) => {
   return res.json(updatedNode);
 });
 
-router.post("/addOneEdge", async (req, res) => {
+router.post("/addManyEdge", async (req, res) => {
   const importedEdge: edgeType = req.body;
-  const updatedEdge = await client.edges.create({
+  const updatedEdge = await client.edges.createMany({
     data: {
       edgeID: importedEdge.edgeID,
       startNodeID: importedEdge.startNodeID,
@@ -339,9 +339,9 @@ router.post("/addOneEdge", async (req, res) => {
   return res.json(updatedEdge);
 });
 
-router.post("/deleteOneEdge", async (req, res) => {
+router.post("/deleteManyEdge", async (req, res) => {
   const importedEdge: edgeType = req.body;
-  const updatedEdge = await client.edges.delete({
+  const updatedEdge = await client.edges.deleteMany({
     where: {
       edgeID: importedEdge.edgeID,
     },
