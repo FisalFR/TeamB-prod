@@ -94,9 +94,11 @@ function PathVisual(props: {width: number; height: number;
                         }).map((node) => {
                             return <>
 
-                                <circle id={`node-${node.nodeID}`} cx={node.xcoord } cy={node.ycoord } r={8} // smaller visible circle
+                                <motion.circle id={`node-${node.nodeID}`} cx={node.xcoord } cy={node.ycoord } r={8} // smaller visible circle
                                         fill="#F6BD38"
-                                        opacity={getOpacity(node)}
+                                               initial={{ opacity: 0 }}
+                                               animate={{ opacity: getOpacity(node) }}
+                                               transition={{ duration: 0.8 }}
                                         onClick={ () => {
                                             props.onClickCircle(node);
                                         }}/>
