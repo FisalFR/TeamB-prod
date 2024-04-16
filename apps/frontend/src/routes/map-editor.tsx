@@ -372,7 +372,7 @@ export function MapEditor(){
                         'Content-Type': 'application/json'
                     }
                 }).then( () => {
-                    alert("Delete Success");
+                    // alert("Delete Success");
                 });
             console.log(response);
     }});
