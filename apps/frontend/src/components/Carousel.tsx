@@ -14,7 +14,7 @@ const Carousel = ({ content, autoPlay, interval }) => {
     }, [autoPlay, interval, content.length]);
 
     return (
-        <div  className=" relative w-full select-none">
+        <div  className="pr-2 relative w-full select-none">
             {content.map((item, index) => (
                 <div onClick={HandleLogin({path:item.text.route})} key={index} className={`flex items-center space-x-4 ${currentIndex === index ? 'flex' : 'hidden'}`} style={{ height: '100%' }}>
                     <img src={item.image.src} alt={item.image.alt} className="w-1/2 h-1/2 object-cover" />
