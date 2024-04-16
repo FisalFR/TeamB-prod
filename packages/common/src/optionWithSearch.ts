@@ -1,4 +1,4 @@
 export type optionWithSearch = {
-    option: string;
-    search: string;
+    option: string
+    search: string
 }

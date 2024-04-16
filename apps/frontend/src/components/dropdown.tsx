@@ -8,21 +8,22 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 
     const optionList = props.options;
     const listElements = useRef<HTMLDivElement[]>([]);
+    const cache = useRef([{search: '', options: [{option: '', search: ''}]}]);
 
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState('');
+    const [prevSearch, setPrevSearch] = useState('');
     const [dropdownClass, setDropdownClass] = useState("search-dropdown hidden z-10");
     const [scrollIndicator, setScrollIndicator] = useState(checkScrollIndicator(optionList.length));
     const [activeOption, setActiveOption] = useState(-1);
     const [currentOptions, setCurrentOptions] = useState(['']);
-    const [cache, addToCache] = useState([{search: '', options: [{option: '', search: ''}]}]);
 
     //strings of the options showing with the corresponding search of a specific search type
     //n-normal t-transposition d-deletion s-substitution i-insertion
-    const nOptions: optionWithSearch[] = [];
-    const tOptions: optionWithSearch[] = [];
-    const dOptions: optionWithSearch[] = [];
-    const sOptions: optionWithSearch[] = [];
-    const iOptions: optionWithSearch[] = [];
+    let nOptions: optionWithSearch[] = [];
+    let tOptions: optionWithSearch[] = [];
+    let dOptions: optionWithSearch[] = [];
+    let sOptions: optionWithSearch[] = [];
+    let iOptions: optionWithSearch[] = [];
 
     //list of options for the current search
     let searchOptions: string[] = [];
@@ -37,9 +38,10 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 
     function handleInput(e: ChangeEvent<HTMLInputElement>) {
         if (e.target.value !== search) {
+            setPrevSearch(search);
             setSearch(e.target.value);
             setCurrentOptions(searchOptions);
-            addToCache(cache);
+            //addToCache(cache);
             resetActive();
             setScrollIndicator(checkScrollIndicator(currentOptions.length));
         }
@@ -78,26 +80,53 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     }
 
     function filterList(options : string[], search : string): optionWithSearch[] {
-        let FSOptions: optionWithSearch[] = [];
+        function filterAndCache(inputOptions: string[], sliceIndex: number) {
+            let FSOptions: optionWithSearch[] = [];
+            if (sliceIndex !== -1) {
+                for (let i = sliceIndex; i < search.length; i++) {
+                    nOptions = []; tOptions = []; dOptions = []; sOptions = []; iOptions = [];
+                    inputOptions = inputOptions.filter((option) => fuzzySearch(option, search.slice(0, i + 1)));
+                    FSOptions = nOptions.concat(tOptions, dOptions, sOptions, iOptions);
+                    cache.current.push({search: search.slice(0, i + 1), options: FSOptions});
+                }
+            }
+            else {
+                inputOptions.filter((option) => fuzzySearch(option, search));
+                FSOptions = nOptions.concat(tOptions, dOptions, sOptions, iOptions);
+                cache.current.push({search: search, options: FSOptions});
+            }
+            console.log(cache);
+            return FSOptions;
+        }
+
         if (search === '') {
             options.filter((option) => fuzzySearch(option, ''));
             return nOptions;
         }
-        for (let i = 0; i < cache.length; i++) {
-            if (search.toLowerCase() === cache[i].search.toLowerCase()) {
-                return cache[i].options;
+        for (let i = 0; i < cache.current.length; i++) {
+            if (search.toLowerCase() === cache.current[i].search.toLowerCase()) {
+                return cache.current[i].options;
             }
         }
-        if (search.slice(0, search.length - 1).toLowerCase() === cache[cache.length - 1].search.toLowerCase()) {
-            currentOptions.filter((option) => fuzzySearch(option, search));
-            FSOptions = nOptions.concat(tOptions, dOptions, sOptions, iOptions);
-            cache.push({search: search, options: FSOptions});
-            return FSOptions;
+        if (search.slice(0, search.length - 1).toLowerCase() === prevSearch.toLowerCase() ||
+            search.slice(1, search.length).toLowerCase() === prevSearch.toLowerCase()) {
+            return filterAndCache(currentOptions, -1);
         }
-        options.filter((option) => fuzzySearch(option, search));
-        FSOptions = nOptions.concat(tOptions, dOptions, sOptions, iOptions);
-        cache.push({search: search, options: FSOptions});
-        return FSOptions;
+        for (let i = 1; i < search.length - 1; i++) {
+            if (search.split('')[i] !== prevSearch.split('')[i]) {
+                for (let j = 0; j < cache.current.length; j++) {
+                    if (search.slice(0, i).toLowerCase() === cache.current[j].search.toLowerCase()) {
+                        const subSearch: string[] = [];
+                        for (let k = 0; k < cache.current[j].options.length; k++) {
+                            subSearch.push(cache.current[j].options[k].option);
+                        }
+                        return filterAndCache(subSearch, i);
+                    }
+                }
+                break;
+            }
+        }
+        return filterAndCache(options, 0);
     }
 
     function fuzzySearch(option: string, search: string) {
