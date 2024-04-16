@@ -5,7 +5,7 @@ export type giftRequest = {
     receiverName: string
     senderName: string
     location: string
-    date : Date,
+    date : string,
     priority: string,
     message: string
     employeeName: string

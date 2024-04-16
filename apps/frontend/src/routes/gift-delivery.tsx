@@ -37,13 +37,14 @@ function GiftDelivery() {
         formScreen: "block",
         submittedScreen: "hidden"
     });
+    const [date, setDate] = useState<Date>(new Date());
     const [request, setRequest] = useState<giftRequest>({
         receiverName:"",
         senderName: "",
         priority:"Low",
         location:"",
         message: "",
-        date: new Date(),
+        date: new Date().toDateString(),
         cart: []
     });
 
@@ -164,7 +165,8 @@ function GiftDelivery() {
 
     function handleCalendarInput( newDate:Date){
         setCleared(false);
-        setRequest({...request, date: newDate});
+        setDate(newDate);
+        setRequest({...request, date: newDate.toDateString()});
     }
 
     function scrollToTop(): void{
@@ -220,7 +222,7 @@ function GiftDelivery() {
                                                className="font-OpenSans text-md font-bold text-Ash-black ">
                                             Pick a Date: </label>
                                         <div>
-                                            <Calendar onChange={handleCalendarInput} value={request.date}/>
+                                            <Calendar onChange={handleCalendarInput} value={date}/>
                                         </div>
                                     </div>
                                     <div className="text-left grid w-1/5 h-full gap-5 content-between">
@@ -400,9 +402,9 @@ function GiftDelivery() {
                                 <p className={""}>{request.location}</p>
 
                                 <p className={"font-bold"}>When would you like this gift delivered?</p>
-                                <p className={""}>{(request.date).toDateString()}</p>
+                                <p className={""}>{request.date}</p>
 
-                                <p className={"font-bold"}>What is the priority of the delivery??</p>
+                                <p className={"font-bold"}>What is the priority of the delivery?</p>
                                 <p className={""}>{request.priority}</p>
 
                                 <p className={"font-bold "}>Additional Message:</p>
