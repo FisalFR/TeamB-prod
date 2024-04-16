@@ -5,9 +5,11 @@ import HandleLogin from "./handleLogin.tsx";
 import user_icon from "../assets/user_icon.svg";
 
 export function LoginNavigationBar() {
-    const login = HandleLogin();
+    const redirectUri = `${window.location.origin.concat("/map")}`;
+    const homeRedirect = `${window.location.origin.concat("/")}`;
+    console.log(redirectUri);
     function home() {
-        window.location.href = "/";
+        window.location.href = homeRedirect;
     }
     {
         return (
@@ -19,7 +21,7 @@ export function LoginNavigationBar() {
                     <img onClick={home} className="hover:cursor-pointer h-3/6 self-center px-4" src={bwhLogo}
                          alt="Brighams Logo White"></img>
                  <br/>
-                    <div onClick={login}  className="self-center hover:cursor-pointer pl-20">
+                    <div onClick={HandleLogin({path:redirectUri})} className="self-center hover:cursor-pointer pl-20">
                         <p  className="py-1 relative group font-OpenSans items-center font-bold text-bone-white">
                             <img className="inline" src={user_icon} alt="Username icon" height="20" width="20"/><a className="inline pl-2 pb-3">LOGIN</a>
                             <span
