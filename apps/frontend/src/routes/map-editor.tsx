@@ -363,7 +363,7 @@ export function MapEditor(){
                 }
             }).then( () => {
                 resetEdges();
-                alert("Add Success");
+                // alert("Add Success");
             });
             }
             if(toDelete.length > 0){
