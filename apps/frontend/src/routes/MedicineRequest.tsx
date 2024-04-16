@@ -11,7 +11,7 @@ export function MedicineRequest(){
         priority: "",
         location: "",
         medicine: "",
-        quantity: 0,
+        quantity: 1,
         additionalComments: "",
     });
     const[requestList, setRequestList] = useState<MedicineRequestType[]>([]);
@@ -58,7 +58,7 @@ export function MedicineRequest(){
             priority: "",
             location: "",
             medicine: "",
-            quantity: 0,
+            quantity: 1,
             additionalComments: ""});
         // use resetActive from Dropdown?
         setCleared(true);
@@ -88,6 +88,10 @@ export function MedicineRequest(){
     //     setRequest({...request, isUrgent: e.target.value});
     // }
 
+    function handleQuantityInput(e: ChangeEvent<HTMLInputElement>): void {
+        setRequest({...request, quantity: e.target.value});
+    }
+
     function handleFeedbackInput(e: ChangeEvent<HTMLTextAreaElement>): void {
         setRequest({...request, additionalComments: e.target.value});
     }
@@ -98,7 +102,7 @@ export function MedicineRequest(){
             priority: "",
             location: "",
             medicine: "",
-            quantity: 0,
+            quantity: 1,
             additionalComments: ""});
         setCleared(false);
     }
@@ -173,7 +177,7 @@ export function MedicineRequest(){
                                             <p className={"text-left font-bold"}>Quantity</p>
                                             <input
                                                 className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-50"}
-                                                type="number" required min={'1'} defaultValue={'1'}/>
+                                                type="number" required min={1} value={request.quantity} defaultValue={1} onChange={handleQuantityInput}/>
                                         </div>
                                     </div>
 
