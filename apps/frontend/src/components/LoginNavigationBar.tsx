@@ -1,13 +1,13 @@
 import bwhLogo from "../assets/bwh-logo-white.svg";
 //import {NavLink} from "./NavLink.tsx";
 //import user_icon from "../assets/user_icon.svg";
-import HandleLogin from "./handleLogin.tsx";
+// import HandleLogin from "./handleLogin.tsx";
 import user_icon from "../assets/user_icon.svg";
+import {HandleLogin} from "./handleLogin.tsx";
 
 export function LoginNavigationBar() {
     const redirectUri = "/map";
     const homeRedirect = `${window.location.origin.concat("/")}`;
-    console.log(redirectUri);
     function home() {
         window.location.href = homeRedirect;
     }
@@ -21,7 +21,7 @@ export function LoginNavigationBar() {
                     <img onClick={home} className="hover:cursor-pointer h-3/6 self-center px-4" src={bwhLogo}
                          alt="Brighams Logo White"></img>
                  <br/>
-                    <div onClick={HandleLogin({path:redirectUri})} className="self-center hover:cursor-pointer pl-20">
+                    <div onClick={() => HandleLogin({path:redirectUri})}  className="self-center hover:cursor-pointer pl-20">
                         <p  className="py-1 relative group font-OpenSans items-center font-bold text-bone-white">
                             <img className="inline" src={user_icon} alt="Username icon" height="20" width="20"/><a className="inline pl-2 pb-3">LOGIN</a>
                             <span

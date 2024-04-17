@@ -286,7 +286,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 
             <div className={`${props.width} relative`} >
                 <div className={dropdownClass}>
-                    <div className="max-h-48 overflow-scroll" role="listbox" id="options-dropdown">
+                    <div className="max-h-48 overflow-auto" role="listbox" id="options-dropdown">
                         {createOptions()}
                     </div>
                     <div className={scrollIndicator}>▼</div>
