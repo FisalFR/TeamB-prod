@@ -146,7 +146,7 @@ export function MapEditor(){
         nodeStrings.push(nodes[i].nodeID);
     }
 
-    const [editNodes, setEditNodes] = useState(useNodes().nodes);
+    const [editNodes, setEditNodes] = useState<Node[]>([]);
     useEffect(() => setEditNodes(nodes), [nodes]);
 
     const [editEdges, setEditEdges] = useState(useEdges().edges);
