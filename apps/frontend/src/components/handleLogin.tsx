@@ -5,18 +5,13 @@ export function HandleLogin() {
     console.log("login");
     const redirectUri = `${window.location.origin}/map`;
 
-    return async () => {
-
+    const login = async () => {
         await auth0.loginWithRedirect({
             authorizationParams:{
                 redirect_uri: redirectUri,
-            }
-
-
-
+            },
         });
-        console.log("logged in");
-
     };
+    login().then();
 }
 export default HandleLogin;
