@@ -157,7 +157,7 @@ function LanguageInterpreter(){
 
                             <form ref={formRef} onSubmit={e => {
                                 e.preventDefault();
-                            }} className="flex flex-col">
+                            }} className="flex flex-col w-full justify-around">
                                 <div>
                                     <p className={"dark:text-white text-left font-bold"}>Employee Name</p>
                                     <input type="text" required
@@ -166,10 +166,11 @@ function LanguageInterpreter(){
                                            className={"dark:bg-black dark:text-white border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-100"}/>
                                 </div>
                                 <br/>
-                                <div className="flex justify-between">
-                                    <div className="">
+                                <div className="flex flex-row justify-between">
+                                    <div>
                                         <label className="dark:text-light-white float-left font-bold"> What language do you need an
                                             interpreter for?</label>
+                                    <br/>
                                         <div
                                             className=" float-left border-solid border-deep-blue border-2 rounded">
                                             <Dropdown options={languages} placeholder={"Languages"}
@@ -178,7 +179,7 @@ function LanguageInterpreter(){
                                                       setInput={handleLanguageInput} required={true}
                                                       width={"w-100"}/>
 
-                                        </div>
+                                    </div>
                                     </div>
                                     <div className="flex flex-col justify-items-start">
                                         <label className="dark:text-light-white flex justify-start font-bold">What room do you need the

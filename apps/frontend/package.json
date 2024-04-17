@@ -57,6 +57,7 @@
     "eslint-plugin-react-refresh": "^0.4.1",
     "prettier": "latest",
     "prettier-config-custom": "workspace:*",
+    "react-calendar": "^4.8.0",
     "sass": "^1.62.1",
     "tsconfig-custom": "workspace:*",
     "typescript": "^5.0.2",

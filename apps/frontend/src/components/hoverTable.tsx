@@ -101,7 +101,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                         break;
                     } case "Medicine": {
                         newInformation.push("Medicine: " + response.data.medicineRequests[0].medicine);
-                        newInformation.push("Quantity: " + response.data.medicineRequests[0].quantity.toString());
+                        newInformation.push("Quantity: " + response.data.medicineRequests[0].quantity);
                         newInformation.push("Additional Comments: " + response.data.medicineRequests[0].additionalComments);
                         break;
                     } case "Gift": {
@@ -116,10 +116,12 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                         newInformation.push("Message: " + response.data.giftRequests[0].message);
                         newInformation.push("Recipient: " + response.data.giftRequests[0].receiverName);
                         newInformation.push("Sender: " + response.data.giftRequests[0].senderName);
+                        newInformation.push("Delivery Date: " + response.data.giftRequests[0].date);
                         break;
                     }
                 }
                 setInformation(newInformation);
+                console.log(newInformation);
                 setAssignment({...assignment, assignee: response.data.assignee, type: response.data.type, location: response.data.location,
                     formID: response.data.formID, priority: response.data.priority, status: response.data.status, dateCreated: response.data.dateCreated, employeeName: response.data.employeeName});
             }
@@ -216,19 +218,21 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                     <div>
                         <h1 className="dark:text-white text-3xl">Information</h1>
                         <ul className="item-start justify-start leading-8 max-w-100">
-                            <li className="dark:text-white">FormID: {assignment.formID}</li>
-                            <li className="dark:text-white">Type: {assignment.type}</li>
-                            <li className="dark:text-white">Status: {assignment.status}</li>
-                            <li className="dark:text-white">Priority: {assignment.priority}</li>
-                            <li className="dark:text-white">Assignee: {assignment.assignee}</li>
-                            <li className="dark:text-white">Created By: {assignment.employeeName}</li>
-                            <li className="dark:text-white">{information[6]}</li>
-                            <li className="dark:text-white">{information[7]}</li>
-                            <li className="dark:text-white">{information[8]}</li>
-                            <li className="dark:text-white">{information[9]}</li>
-                            <li className="dark:text-white">{information[10]}</li>
-                            <li className="dark:text-white">Location: {assignment.location}</li>
-                            <li className="dark:text-white">Date Created: {assignment.dateCreated.toString()}</li>
+                            <li>FormID: {assignment.formID}</li>
+                            <li>Type: {assignment.type}</li>
+                            <li>Status: {assignment.status}</li>
+                            <li>Priority: {assignment.priority}</li>
+                            <li>Assignee: {assignment.assignee}</li>
+                            <li>Created By: {assignment.employeeName}</li>
+                            <li>{information[6]}</li>
+                            <li>{information[7]}</li>
+                            <li>{information[8]}</li>
+                            <li>{information[9]}</li>
+                            <li>{information[10]}</li>
+                            <li>{information[11]}</li>
+                            <li>{information[12]}</li>
+                            <li>Location: {assignment.location}</li>
+                            <li>Date Created: {assignment.dateCreated.toString()}</li>
                         </ul>
                     </div>
                     <div className="dark:bg-Ash-black rounded-2xl bg-deep-blue bg-opacity-5">

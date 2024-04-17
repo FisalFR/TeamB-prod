@@ -94,26 +94,37 @@ export function CsvManager() {
 
 
     return (
-        <div className={"dark:bg-black csvManager"}>
-            <h2 className={"dark:text-white text-3xl font-HeadlandOne py-4"}>Map CSV Manager</h2>
-            <h3 className={"dark:text-light-white text-xl font-HeadlandOne py-4"}>Upload Node CSV</h3>
-            <form ref = {formRefNodes} onSubmit={e => {e.preventDefault();}}>
-                <input className="dark:text-white" type="file" name="importedNodes"/>
-                <Button onClick={handleImportNodes}>Upload</Button>
-            </form>
+        <div className={"dark:bg-black csvManager centerContent flex flex-col"}>
+            <div className="flex flex-col bg-light-white my-10 p-10 px-20 rounded-3xl w-1/3 min-w-fit">
+                <h2 className={"dark:text-white text-3xl font-HeadlandOne py-4"}>Map CSV Manager</h2>
+                <h3 className={"dark:text-light-white text-xl font-HeadlandOne py-4"}>Upload Node CSV</h3>
+
+                <form ref={formRefNodes} onSubmit={e => {
+                    e.preventDefault();
+                }}>
+                    <div className={"dark:text-white flex flex-row justify-between"}>
+                        <input type="file" name="importedNodes"/>
+                        <Button onClick={handleImportNodes}>Upload</Button>
+                    </div>
+                </form>
             <br/>
 
             <h3 className={"dark:text-light-white text-xl font-HeadlandOne py-4"}>Upload Edge CSV</h3>
-            <form ref = {formRefEdges} onSubmit={e => {e.preventDefault();}}>
-                <input className="dark:text-white" type="file" name="importedEdges"/>
-                <Button onClick={handleImportEdges}>Upload</Button>
-            </form>
 
+                <form ref={formRefEdges} onSubmit={e => {
+                    e.preventDefault();
+                }}>
+                    <div className={"dark:text-white flex flex-row justify-between"}>
+                        <input type="file" name="importedEdges" className="left-4"/>
+                        <Button onClick={handleImportEdges}>Upload</Button>
+                    </div>
+                </form>
             <div className="centerContent gap-10 p-10">
-                {<Button onClick={handleExportNodes}>Download Nodes</Button>}
-                {<Button onClick={handleExportEdges}>Download Edges</Button>}
+                    {<Button px="px-10" py="py-5" onClick={handleExportNodes}>Download Nodes</Button>}
+                    {<Button px="px-10" py="py-5" onClick={handleExportEdges}>Download Edges</Button>}
+                </div>
             </div>
-            <div className="centerContent gap-5 flex-col w-full py-10">
+            <div className="flex flex-col gap-5 py-20 bg-light-white px-36 my-10 rounded-3xl w-3/4 w-min-fit justify-center centerContent">
                 <h3 className={"dark:text-white text-xl font-HeadlandOne"}>Nodes</h3>
                 <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full">
                     <Table data={nodeData} headings={["Name", "Node ID", "X-Coord", "Y-Coord"]}
@@ -126,6 +137,7 @@ export function CsvManager() {
                 </div>
             </div>
         </div>
+
     );
 }
 

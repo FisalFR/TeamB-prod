@@ -19,7 +19,7 @@ export function useNodes() {
             setNodeMap(nodeMap);
         });
     }, []);
-
+    nodes.sort((a, b) => a.longName.localeCompare(b.longName));
     return {nodes:nodes,nodeMap:nodeMap};
 }
 
