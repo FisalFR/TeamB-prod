@@ -64,9 +64,9 @@ export function LoginPage() {
                         locate your
                         destination in the smallest steps. Never get lost, no wasted time, get there stress free.</p>
 
-                    <a href={"/map"}
-                       className=" hover:animate-none text-3xl hover:cursor-pointer hover:text-deep-blue hover:font-bold pb-5">
-                        Click here to navigate!</a>
+                    {<a href={"/map"}
+                       className=" hover:animate-none text-4xl hover:cursor-pointer hover:text-4xl hover:text-deep-blue hover:font-bold pb-5 ">
+                        Click here to navigate!</a>}
                 </div>
                 <div className="flex justify-center">
 
@@ -75,7 +75,7 @@ export function LoginPage() {
                         onMouseEnter={() => setIsHovered(false)}
                         onMouseLeave={() => setIsHovered(true)}>
 
-                        <Carousel content={content} autoPlay={isHovered} interval={5000}/>
+                        <Carousel content={content} autoPlay={isHovered} interval={4000}/>
 
                     </div>
                 </div>
