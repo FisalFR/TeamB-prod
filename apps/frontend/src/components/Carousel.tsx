@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {HandleLogin} from "./handleLogin.tsx";
 const Carousel = ({ content, autoPlay, interval }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [, setDirection] = useState(0);
+   // const [, setDirection] = useState(0);
 
     useEffect(() => {
         if (autoPlay) {
@@ -13,13 +13,9 @@ const Carousel = ({ content, autoPlay, interval }) => {
             return () => clearInterval(timeout);
         }
     }, [autoPlay, interval, content.length]);
-    /* function arrowLeft(){
 
-     }
-     function arrowRight(){
-
-     }*/
-    const handleNext = () => {
+    //For the next and previous buttons
+/*    const handleNext = () => {
         setDirection(currentIndex + 1);
         setCurrentIndex((prevIndex) =>
             prevIndex + 1 === content.length ? 0 : prevIndex + 1
@@ -31,7 +27,7 @@ const Carousel = ({ content, autoPlay, interval }) => {
         setCurrentIndex((prevIndex) =>
             prevIndex - 1 < 0 ? content.length - 1 : prevIndex - 1
         );
-    };
+    };*/
 
 
     return (
@@ -62,12 +58,7 @@ const Carousel = ({ content, autoPlay, interval }) => {
             <div className={``}>
 
             </div>
-            <button onClick={handlePrevious}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-black p-2 rounded-full hover:cursor-pointer">
-                {"<"}</button>
-            <button onClick={handleNext}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-black p-2 rounded-full hover:cursor-pointer">
-                {">"}</button>
+
         </div>
     );
 };
