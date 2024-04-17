@@ -2,9 +2,9 @@ import AnimatedSVG from "../components/HeroImage.tsx";
 
 import React, {useState} from 'react';
 import Carousel from "../components/Carousel";
-import image1 from '../assets/Carousel/GiftDelivery.png';
-import image2 from '../assets/Carousel/InterpreterRequest.png';
-import image3 from '../assets/Carousel/SecurityPage.png';
+import image1 from '../assets/Carousel/GiftDelivery.jpg';
+import image2 from '../assets/Carousel/InterpreterRequest.jpg';
+import image3 from '../assets/Carousel/security.jpg';
 import image4 from '../assets/Carousel/mapPathfinding.png';
 export function LoginPage() {
     const [isHovered,setIsHovered] = useState(true);
