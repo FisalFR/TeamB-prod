@@ -323,29 +323,6 @@ function GiftDelivery() {
                                 </div>
                                 <br/><br/>
 
-                            </div>
-                            <br/><br/>
-
-
-                            {/*Flowers*/}
-                            <h1 className="dark:text-light-white text-xl font-HeadlandOne text-left text-Ash-black">
-                                Flowers:
-                            </h1>
-                            <br/>
-                            <div className="flex flex-row gap-10 w-full overflow-scroll">
-                                <ShopCard image={Tulip} cost={3.99} name="Tulip" altName="Single Tulip"
-                                          changeCart={changeCart}/>
-                                <ShopCard image={Rose} cost={5.99} name="Rose" altName="Single Rose"
-                                          changeCart={changeCart}/>
-                                <ShopCard image={tulipBouquet} cost={21.99} name="Bouquet of Tulips"
-                                          altName="Bouquet of Tulips"
-                                          changeCart={changeCart}/>
-                                <ShopCard image={roseBouquet} cost={29.99} name="Bouquet of Roses"
-                                          altName="Bouquet of Roses"
-                                          changeCart={changeCart}/>
-                            </div>
-                            <br/><br/>
-
                                 {/*Stuffed Animals*/}
                                 <br/><br/>
                                 <h1 className="dark:text-light-white text-xl font-HeadlandOne text-left text-Ash-black">

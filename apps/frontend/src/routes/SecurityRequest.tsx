@@ -146,7 +146,7 @@ export function SecurityPage() {
                                     </div>
                                     <br/>
 
-                                <p className={"dark:text-white flex text-left font-bold w-full"}>What is the reason for the security
+                                    <p className={"dark:text-white flex text-left font-bold w-full"}>What is the reason for the security
                                     request?</p>
                                 <div className="border-deep-blue border-solid border-2 w-full">
                                     <Dropdown
