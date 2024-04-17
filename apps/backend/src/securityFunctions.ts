@@ -22,7 +22,7 @@ class securityFunctions {
       data: {
         securityRequest: UUID,
         request: request.securityReason,
-        quantity: request.quantity,
+        quantity: parseInt(request.quantity),
         additionalInfo: request.additionalInfo,
       },
     });

@@ -3,6 +3,6 @@ export type MedicineRequestType = {
     priority: string,
     location: string,
     medicine: string,
-    quantity: 0,
+    quantity: number,
     additionalComments: string
 }
