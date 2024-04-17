@@ -133,7 +133,7 @@ export function Map(){
                                 onClickCircle={onClickCircle}
                                 allNodes ={nodes}/>
                 </TransformComponent>
-                <PathSelector nodes={nodes}
+                <PathSelector nodes={nodes.filter((node) =>  !node.longName.includes("Hall"))}
                               handleStartChange={handleStartChange}
                               handleEndChange={handleEndChange}
                               selectedStartOption={request.startNode !== "" ? nodeMap.get(request.startNode)?.longName : undefined}
