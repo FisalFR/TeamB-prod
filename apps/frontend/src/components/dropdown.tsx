@@ -4,7 +4,7 @@ import '../App.css';
 import {HTMLInputElement} from "happy-dom";
 import {optionWithSearch} from "common/src/optionWithSearch.ts";
 
-function Dropdown(props: { options: string[]; placeholder: string; name: string; id: string; setInput:(str: string) => void; value : boolean; required:boolean; width:string}) {
+function Dropdown(props: { options: string[]; placeholder: string; name: string; id: string; setInput:(str: string) => void; value: boolean; required: boolean; width:string}) {
 
     const optionList = props.options;
     const listElements = useRef<HTMLDivElement[]>([]);
@@ -13,7 +13,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     const [search, setSearch] = useState('');
     const [prevSearch, setPrevSearch] = useState('');
     const [dropdownClass, setDropdownClass] = useState("search-dropdown hidden z-10");
-    const [scrollIndicator, setScrollIndicator] = useState(checkScrollIndicator(optionList.length));
+    const [scrollIndicator, setScrollIndicator] = useState(checkScrollIndicator(0));
     const [activeOption, setActiveOption] = useState(-1);
     const [currentOptions, setCurrentOptions] = useState(['']);
 
@@ -26,11 +26,11 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     let iOptions: optionWithSearch[] = [];
 
     //list of options for the current search
-    let searchOptions: string[] = [];
+    const searchOptions: string[] = [];
 
     //check if the list of options showing is long enough for the scroll indicator to show
     function checkScrollIndicator(listLength: number) {
-        if (listLength > 5) {
+        if (listLength > 4) {
             return "scroll-indicator text-center w-full block";
         }
         return "scroll-indicator text-center w-full hidden";
@@ -41,15 +41,13 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
             setPrevSearch(search);
             setSearch(e.target.value);
             setCurrentOptions(searchOptions);
-            //addToCache(cache);
             resetActive();
-            setScrollIndicator(checkScrollIndicator(currentOptions.length));
+            setScrollIndicator(checkScrollIndicator(0));
         }
     }
 
     function createOptions() {
         const filteredOptions: optionWithSearch[] = filterList(optionList, search);
-        searchOptions = [];
         for (let i = 0; i < filteredOptions.length; i++) {
             searchOptions.push(filteredOptions[i].option);
         }
@@ -95,7 +93,6 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                 FSOptions = nOptions.concat(tOptions, dOptions, sOptions, iOptions);
                 cache.current.push({search: search, options: FSOptions});
             }
-            console.log(cache);
             return FSOptions;
         }
 
@@ -224,7 +221,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     function keyDown(e: { preventDefault: () => void; key: string; }) {
         switch(e.key) {
             case "ArrowDown":
-                if (activeOption < currentOptions.length - 1) {
+                if (activeOption < searchOptions.length - 1) {
                     changeActive(activeOption + 1);
                 }
                 break;
@@ -235,7 +232,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                 break;
             case "Enter":
                 if (activeOption >= 0) {
-                    fillSearch(currentOptions[activeOption]);
+                    fillSearch(searchOptions[activeOption]);
                     resetActive();
                     setScrollIndicator("scroll-indicator text-center hidden");
                 }
@@ -250,8 +247,8 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
             case "End":
             case "PageDown":
                 e.preventDefault();
-                if (activeOption != currentOptions.length - 1) {
-                    changeActive(currentOptions.length - 1);
+                if (activeOption != searchOptions.length - 1) {
+                    changeActive(searchOptions.length - 1);
                 }
                 break;
         }
