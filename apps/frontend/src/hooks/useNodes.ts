@@ -9,13 +9,11 @@ export function useNodes() {
     // const [edges,setEdges] = useState<Edge[]>([]);
     useEffect( () => {
         axios.get("/api/pathfinding/nodemap").then((response) => {
-            console.log();
             setNodes(response.data.nodeList);
             const nodeMap = new Map<string, Node>();
             for (let i = 0; i < response.data.nodeList.length; i++) {
                 nodeMap.set(response.data.nodeList[i].nodeID, response.data.nodeList[i]);
             }
-            console.log(nodeMap);
             setNodeMap(nodeMap);
         });
     }, []);

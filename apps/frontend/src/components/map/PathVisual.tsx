@@ -40,7 +40,7 @@ function PathVisual(props: {width: number; height: number;
 
     function getSVGCoords(e: MouseEvent) {
 
-        console.log(imgRef);
+
         if (imgRef.current == null) {
             return [0,0];
         }
@@ -49,12 +49,12 @@ function PathVisual(props: {width: number; height: number;
 
         const offsetLeft = imgRef.current.getBoundingClientRect().left;
         const offsetTop = imgRef.current.getBoundingClientRect().top;
-        console.log(imgRef.current.getBoundingClientRect());
+
         const initialZoomX = 5000/imgRef.current.getBoundingClientRect().width;
         const initialZoomY = 3400/imgRef.current.getBoundingClientRect().height;
         const x = (e.clientX - offsetLeft) * initialZoomX;
         const y= (e.clientY - offsetTop) * initialZoomY;
-        console.log([Math.round(x), Math.round(y)]);
+
 
         return ([Math.round(x), Math.round(y)]);
     }
