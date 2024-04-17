@@ -43,10 +43,14 @@ class AStarStrategy implements PathfindingStrategy {
         const DistToElevQ: number = Math.sqrt((1825 -nextNode.ycoord) ** 2 + (1751 - nextNode.xcoord) ** 2);
         const floorDifference = Math.abs(endFloor - nextFloor);
 
-        if (nextNode.building !== endNode.building ){
+        if ((nextNode.building !== endNode.building) && (endNode.building === "Shapiro" || endNode.building === "BTM") ){
             if((nextFloor === 1 && endFloor == 1) && endNode.building === "Shapiro"){
                 return EuclideanDistance/2;
             } else if(nextFloor === 4 || (nextFloor === 4 && endNode.building === "BTM")){
+                return EuclideanDistance/2;
+            }
+        } else if ((currentNode.building === "Shapiro" || currentNode.building === "BTM") && (nextNode.building !== endNode.building) && (endFloor >=3)){
+            if(nextFloor === 4){
                 return EuclideanDistance/2;
             }
         }
@@ -100,7 +104,7 @@ class AStarStrategy implements PathfindingStrategy {
         if (endFloor === nextFloor){
             return EuclideanDistance + 10;
         } else if (endFloor !== nextFloor){
-            return EuclideanDistance + 1000;
+            return EuclideanDistance + 10000;
         }
 
         return EuclideanDistance + 10;
