@@ -27,8 +27,10 @@ import RadioButton from "../components/RadioButton.tsx";
 
 
 
+
 //this is a commit just for mo :)
 function GiftDelivery() {
+
     const formRef = useRef<HTMLFormElement>(null);
     const [cart, setCart] = useState<giftItem[]>([]);
     const [locationOptions, setLocationOptions] = useState<string[]>([]);
@@ -37,6 +39,7 @@ function GiftDelivery() {
         formScreen: "block",
         submittedScreen: "hidden"
     });
+
     const [date, setDate] = useState<Date>(new Date());
     const [request, setRequest] = useState<giftRequest>({
         receiverName:"",
@@ -193,7 +196,6 @@ function GiftDelivery() {
                 <Button onClick={scrollToTop} children={"Go to Cart"} px={"px-9"} py={"py-4"}/>
             </div>
             <div className="centerContent ">
-
                 <div className="w-5/6">
                     <div className={submittedWindowVisibility.formScreen}>
 
@@ -201,7 +203,6 @@ function GiftDelivery() {
                             <h1 className="text-3xl font-HeadlandOne align-text-top">
                                 Gift Delivery Request Form
                             </h1>
-
                             <form ref={formRef} onSubmit={e => {
                                 e.preventDefault();
                             }}>
