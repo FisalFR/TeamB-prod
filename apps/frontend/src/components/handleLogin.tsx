@@ -1,9 +1,9 @@
 import auth0 from "../contexts/auth0-client.ts";
 
 
-export function HandleLogin() {
+export function HandleLogin(props:{path:string}) {
     console.log("login");
-    const redirectUri = `${window.location.origin}/map`;
+    const redirectUri = `${window.location.origin.concat(props.path)}`;
 
     const login = async () => {
         await auth0.loginWithRedirect({

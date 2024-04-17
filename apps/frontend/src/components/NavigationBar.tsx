@@ -11,8 +11,9 @@ import LoginNavigationBar from "./LoginNavigationBar.tsx";
 export function NavigationBar() {
     const {isAuthenticated, isLoading} = useAuth0();
     const handleLogout = HandleLogout();
+    const homeRedirect = `${window.location.origin.concat("/")}`;
     function home() {
-        window.location.href = "/";
+        window.location.href = homeRedirect;
     }
 
     {
