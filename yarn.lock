@@ -1300,6 +1300,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.memoize@npm:^4.1.7":
+  version: 4.1.9
+  resolution: "@types/lodash.memoize@npm:4.1.9"
+  dependencies:
+    "@types/lodash": "npm:*"
+  checksum: d11efe604911aabbf9c49eb02e944de856619d6e0ab348d83be3ff07de245ee605ea71b1f3ee24b5c134286d02625119edf3ac2c0e6aa4732f699b1f4aa55240
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.17.0
+  resolution: "@types/lodash@npm:4.17.0"
+  checksum: 2053203292b5af99352d108656ceb15d39da5922fc3fb8186e1552d65c82d6e545372cc97f36c95873aa7186404d59d9305e9d49254d4ae55e77df1e27ab7b5d
+  languageName: node
+  linkType: hard
+
 "@types/methods@npm:^1.1.4":
   version: 1.1.4
   resolution: "@types/methods@npm:1.1.4"
@@ -1806,6 +1822,13 @@ __metadata:
     loupe: "npm:^2.3.6"
     pretty-format: "npm:^29.5.0"
   checksum: 09a1b2122ceb5541b4f3d64410088e363a36d6e4addf208b6458615ac856adf36c1c9b5431a45ea13a78c30e6a7dcb0696854abe69a710089ffa229356a5202b
+  languageName: node
+  linkType: hard
+
+"@wojtekmaj/date-utils@npm:^1.1.3":
+  version: 1.5.1
+  resolution: "@wojtekmaj/date-utils@npm:1.5.1"
+  checksum: 73dced08ab39fadc92a5bb95153b1bb068d006911db11521078aec878a5029d65a966abead333a43c0997197a52da6edf542e37c7fbb36b780f97d3451ece69f
   languageName: node
   linkType: hard
 
@@ -2630,6 +2653,13 @@ __metadata:
   dependencies:
     mimic-response: "npm:^1.0.0"
   checksum: 4e671cac39b11c60aa8ba0a450657194a5d6504df51bca3fac5b3bd0145c4f8e8464898f87c8406b83232e3bc5cca555f51c1f9c8ac023969ebfbf7f6bdabb2e
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "clsx@npm:2.1.0"
+  checksum: 2e0ce7c3b6803d74fc8147c408f88e79245583202ac14abd9691e2aebb9f312de44270b79154320d10bb7804a9197869635d1291741084826cff20820f31542b
   languageName: node
   linkType: hard
 
@@ -3882,7 +3912,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"frontend@workspace:apps/frontend":
+"frontend@workspace:^, frontend@workspace:apps/frontend":
   version: 0.0.0-use.local
   resolution: "frontend@workspace:apps/frontend"
   dependencies:
@@ -3917,6 +3947,7 @@ __metadata:
     prettier-config-custom: "workspace:*"
     react: "npm:^18.2.0"
     react-bootstrap: "npm:^2.7.4"
+    react-calendar: "npm:^4.8.0"
     react-dom: "npm:^18.2.0"
     react-router-bootstrap: "npm:^0.26.2"
     react-router-dom: "npm:^6.11.2"
@@ -4026,6 +4057,16 @@ __metadata:
   version: 6.0.1
   resolution: "get-stream@npm:6.0.1"
   checksum: 781266d29725f35c59f1d214aedc92b0ae855800a980800e2923b3fbc4e56b3cb6e462c42e09a1cf1a00c64e056a78fa407cbe06c7c92b7e5cd49b4b85c2a497
+  languageName: node
+  linkType: hard
+
+"get-user-locale@npm:^2.2.1":
+  version: 2.3.1
+  resolution: "get-user-locale@npm:2.3.1"
+  dependencies:
+    "@types/lodash.memoize": "npm:^4.1.7"
+    lodash.memoize: "npm:^4.1.1"
+  checksum: d19b65fa4d8b894d4eaa37bd1dd043d0ea2b3b7d4205df2e74031400ec497a8bbdf0f2ffbc7c9dbb7cc5aed725473d478e0f201d08e6b8d76a255264e7fce8a8
   languageName: node
   linkType: hard
 
@@ -4712,6 +4753,13 @@ __metadata:
   dependencies:
     p-locate: "npm:^5.0.0"
   checksum: 72eb661788a0368c099a184c59d2fee760b3831c9c1c33955e8a19ae4a21b4116e53fa736dc086cdeb9fce9f7cc508f2f92d2d3aae516f133e16a2bb59a39f5a
+  languageName: node
+  linkType: hard
+
+"lodash.memoize@npm:^4.1.1":
+  version: 4.1.2
+  resolution: "lodash.memoize@npm:4.1.2"
+  checksum: 192b2168f310c86f303580b53acf81ab029761b9bd9caa9506a019ffea5f3363ea98d7e39e7e11e6b9917066c9d36a09a11f6fe16f812326390d8f3a54a1a6da
   languageName: node
   linkType: hard
 
@@ -5899,7 +5947,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -6052,6 +6100,26 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 848ce845ef4ec1da954785ab8271f0468485080a1266ae97a21df726f6d70ff85a955e3f3e61b9d38a801a35a8e629fea4047f8667eaf083236598a159b4cb35
+  languageName: node
+  linkType: hard
+
+"react-calendar@npm:^4.8.0":
+  version: 4.8.0
+  resolution: "react-calendar@npm:4.8.0"
+  dependencies:
+    "@wojtekmaj/date-utils": "npm:^1.1.3"
+    clsx: "npm:^2.0.0"
+    get-user-locale: "npm:^2.2.1"
+    prop-types: "npm:^15.6.0"
+    warning: "npm:^4.0.0"
+  peerDependencies:
+    "@types/react": ^16.8.0 || ^17.0.0 || ^18.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 26a58d9bbe9b1bbe1201612628d0f6bdeec0355ed3730013d066b9e87adbbee4b6f3f1c83352978c0e2f317d8d32ac31ac2cbb3c6f83833bef0ba047c5bb6907
   languageName: node
   linkType: hard
 
@@ -6755,6 +6823,7 @@ __metadata:
     eslint-config-custom: "workspace:*"
     express-fileupload: "npm:^1.5.0"
     flatted: "npm:^3.3.1"
+    frontend: "workspace:^"
     fs: "npm:^0.0.1-security"
     happy-dom: "npm:^10.6.3"
     husky: "npm:^8.0.0"
@@ -6763,6 +6832,7 @@ __metadata:
     prettier-config-custom: "workspace:*"
     react: "npm:^18.2.0"
     react-bootstrap: "npm:^2.10.0"
+    react-calendar: "npm:^4.8.0"
     react-csv-importer: "npm:^0.8.1"
     react-dom: "npm:^18.2.0"
     react-table: "npm:^7.8.0"
@@ -6770,6 +6840,7 @@ __metadata:
     turbo: "npm:latest"
     typescript: "npm:^5.0.4"
     vitest: "npm:^0.33.0"
+    workspace: "npm:^0.0.1-preview.1"
   languageName: unknown
   linkType: soft
 
@@ -7812,6 +7883,13 @@ __metadata:
   dependencies:
     string-width: "npm:^5.0.1"
   checksum: 64c48cf27171221be5f86fc54b94dd29879165bdff1a7aa92dde723d9a8c99fb108312768a5d62c8c2b80b701fa27bbd36a1ddc58367585cd45c0db7920a0cba
+  languageName: node
+  linkType: hard
+
+"workspace@npm:^0.0.1-preview.1":
+  version: 0.0.1-preview.1
+  resolution: "workspace@npm:0.0.1-preview.1"
+  checksum: 0d3a1ed8a5735bd3295f2685a92cfd59a53d9386d6177e3dc036416e0b200729632a3760d9b34d75597b826e30620d7b02d9852c9bc2e0028c64436c9c5cda2e
   languageName: node
   linkType: hard
 

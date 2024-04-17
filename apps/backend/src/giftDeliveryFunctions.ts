@@ -14,7 +14,7 @@ class giftDeliveryFunctions {
         type: "Gift",
         assignee: "",
         location: request.location,
-        priority: "N/A",
+        priority: request.priority,
         employeeName: "N/A",
       },
     });
@@ -25,6 +25,7 @@ class giftDeliveryFunctions {
         receiverName: request.receiverName,
         senderName: request.senderName,
         message: request.message,
+        date: request.date,
       },
     });
 
