@@ -6,7 +6,7 @@ import l3map from "../assets/floors/03_thethirdfloor.png";
 import plus from "../assets/plus.svg";
 import minus from "../assets/minus.svg";
 import PathVisual from "../components/map/PathVisual.tsx";
-import React, {useEffect, useState, useCallback} from "react";
+import React, {useEffect, useState, useCallback, useRef} from "react";
 import axios from "axios";
 import {startEndNodes} from "common/src/pathfinding.ts";
 import Node from "../../../../packages/common/src/node";
@@ -14,15 +14,17 @@ import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import {PathSelector} from "../components/map/PathSelector.tsx";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
+import useNodes from "../hooks/useNodes.ts";
+
 
 
 export function Map(){
-    interface NodeData {
-        [key: string]: {
-            id: string;
-            coords: number[];
-        };
-    }
+    // interface NodeData {
+    //     [key: string]: {
+    //         id: string;
+    //         coords: number[];
+    //     };
+    // }
 
     interface FloorMap {
         [key: string]: Node[][];
@@ -42,11 +44,21 @@ export function Map(){
     const [selectedAlgo, setSelectedAlgo] = useState<string | null>("Astar");
 
 
-    const [nodes, setNodes] = useState(["Error accessing map points"]);
-
-    const [nodeData, setNodeData] = useState<NodeData>({});
+    // const [mapPoints, setMapPoints] = useState(["Error accessing map points"]);
+    // const [nodeData, setNodeData] = useState<NodeData>({});
+    const {nodes,nodeMap} = useNodes();
     const [floorMap, setFloorMap] = useState<FloorMap>({});
-    const [pathNodes, setPathNodes] = useState<Node[]>([]);
+    const [pathNodes, setPathNodes] = useState<Node[]>([{
+        nodeID: "",
+        xcoord: 0,
+        ycoord: 0,
+        floor: "",
+        building: "",
+        nodeType: "",
+        longName: "",
+        shortName: "",
+        neighbors: []
+    }]);
 
     const floorImages: FloorImages = {
         "L1": ll1map,
@@ -81,31 +93,31 @@ export function Map(){
     }, [algo]); // algo is a dependency here
 
     function handleStartChange(e: React.ChangeEvent<HTMLSelectElement>) {
-        setRequest({...request, startNode: nodeData[e.target.value].id});
+        setRequest({...request, startNode: e.target.value});
         setShowPath(true);
-        findPath(nodeData[e.target.value].id, request.endNode);
+        findPath(e.target.value, request.endNode);
     }
     function handleEndChange(e: React.ChangeEvent<HTMLSelectElement>) {
-        setRequest({...request, endNode: nodeData[e.target.value].id});
+        setRequest({...request, endNode: e.target.value});
         setShowPath(true);
-        findPath(request.startNode, nodeData[e.target.value].id);
+        findPath(request.startNode, e.target.value);
     }
 
-    useEffect( () => {
-        axios.get("/api/pathfinding/halls").then((response) => {
-            const nodeStrings = [];
-            const tempNodeData: NodeData = {};
-            for (let i = 0; i < response.data.length; i++) {
-                nodeStrings.push(response.data[i].longName);
-                tempNodeData[response.data[i].longName as keyof NodeData] = {id: response.data[i].nodeID, coords: [response.data[i].xcoord, response.data[i].ycoord]};
-            }
-            setNodes(nodeStrings);
-            setNodeData(tempNodeData);
-
-            setPathNodes([response.data[0], response.data[response.data.length-1]]);
-            setShowPath(false);
-        });
-    }, []);
+    // useEffect( () => {
+    //     axios.get("/api/pathfinding/halls").then((response) => {
+    //         // const nodeStrings = [];
+    //         // const tempNodeData: NodeData = {};
+    //         // for (let i = 0; i < response.data.length; i++) {
+    //             // nodeStrings.push(response.data[i].longName);
+    //             // tempNodeData[response.data[i].longName as keyof NodeData] = {id: response.data[i].nodeID, coords: [response.data[i].xcoord, response.data[i].ycoord]};
+    //         // }
+    //         // setMapPoints(nodeStrings);
+    //         // setNodeData(tempNodeData);
+    //
+    //         setPathNodes([response.data[0], response.data[response.data.length-1]]);
+    //         // setShowPath(false);
+    //     });
+    // }, []);
 
     useEffect(() => {
         if(request.startNode && request.endNode) {
@@ -120,6 +132,17 @@ export function Map(){
                          onClick2={() => zoomOut()} minusSvg={MinusSvg}/>
         );
     }
+    let ref = useRef(0);
+    function onClickCircle(Node: Node) {
+        if(ref.current%2 == 0){
+            setRequest({...request, startNode: Node.nodeID});
+            ref.current++;
+        }
+        else{
+            setRequest({...request, endNode: Node.nodeID});
+            ref.current++;
+        }
+    }
 
 
     return (
@@ -131,11 +154,17 @@ export function Map(){
                 <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)"}}>
                     <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor={currentFloor}
                                 showPath={showPath} floormap={floorMap as Record<string, Node[][]>}
-                                nodes={pathNodes}
-                                images={floorImages as Record<string, string>}/>
+                                pathNodes={pathNodes}
+                                images={floorImages as Record<string, string>}
+                                onClickCircle={onClickCircle}
+                                allNodes ={nodes}/>
                 </TransformComponent>
-                <PathSelector options={nodes} handleStartChange={handleStartChange}
-                              handleEndChange={handleEndChange} onClick={() => {
+                <PathSelector nodes={nodes}
+                              handleStartChange={handleStartChange}
+                              handleEndChange={handleEndChange}
+                              selectedStartOption={request.startNode !== "" ? nodeMap.get(request.startNode)?.longName : undefined}
+                              selectedEndOption={request.endNode !== "" ? nodeMap.get(request.endNode)?.longName : undefined}
+                              onClick={() => {
                     setAlgo("Astar");
                     setSelectedAlgo("Astar");
                 }} selectedAlgo={selectedAlgo} onClick1={() => {
@@ -147,7 +176,7 @@ export function Map(){
                 }} onClick3={() => {
                     setAlgo("Dijkstra");
                     setSelectedAlgo("Dijkstra");
-                }}/>
+                }} />
                 <FloorSelector
                     onClick1={() => setCurrentFloor("L2")}
                     onClick2={() => setCurrentFloor("L1")}
