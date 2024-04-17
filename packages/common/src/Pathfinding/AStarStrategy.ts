@@ -83,6 +83,12 @@ class AStarStrategy implements PathfindingStrategy {
             } else if (nextFloor === endFloor){
                 return EuclideanDistance + 10;
             }
+        } else if ((nextNode.nodeType === "ELEV" && currentNode.nodeType === "ELEV")){
+            if(nextFloor === endFloor){
+                return 0;
+            } else if (nextFloor !== endFloor){
+                return EuclideanDistance + 100000 + (floorDifference* 100);
+            }
         }
 
         // If we approach a STAIR, prioritize if we're on the wrong floor
@@ -107,7 +113,7 @@ class AStarStrategy implements PathfindingStrategy {
             return EuclideanDistance + 10000;
         }
 
-        return EuclideanDistance + 10;
+        return EuclideanDistance+ 10;
 
     }
 
