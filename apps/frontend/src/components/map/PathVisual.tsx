@@ -12,8 +12,6 @@ function PathVisual(props: {width: number; height: number;
         startCoord = [props.pathNodes[0].xcoord, props.pathNodes[0].ycoord];
         endCoord = [props.pathNodes[props.pathNodes.length - 1].xcoord, props.pathNodes[props.pathNodes.length - 1].ycoord];
     }
-    // const [nodeOpacity, setNodeOpacity] = useState<number[]>(Array(props.allNodes.length).fill(0));
-    // const [replaceThis, setReplaceThis] = useState(0);
     const [mouseCoord, setMouseCoord] = useState([0, 0]);
 
     const draw = {
