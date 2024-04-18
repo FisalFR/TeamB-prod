@@ -29,34 +29,32 @@ export function PathSelector(props: {
     const variants = {
         hidden: {
             opacity: 0,
-            height: 0,
+            width: 0,
         },
         visible: {
             opacity: 1,
-            height: "auto",
+            width: "auto",
             transition: {
-                height: { duration: 0.2, when: "beforeChildren" },
+                width: { duration: 0.2, when: "beforeChildren" },
                 opacity: { duration: 0.2, delay: 0.2, when: "afterChildren" }
             }
         },
         exit: {
             opacity: 0,
-            height: 0,
+            width: 0,
             transition: {
                 opacity: { duration: 0.2, when: "beforeChildren" },
-                height: { duration: 0.2, delay: 0.2, when: "afterChildren" }
+                width: { duration: 0.2, delay: 0.2, when: "afterChildren" }
             }
         }
     };
 
     return (
-        <div className="absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end w-[435px]">
+        <div className="absolute top-7 flex flex-row-reverse items-center bg-white w-fit rounded-r-xl h-[160px]">
             <button
                 onClick={toggleVisibility}
-                className={"w-full px-20 bg-deep-blue rounded-t-lg font-OpenSans items-center font-bold text-bone-white py-2" + (isVisible ? '' : ' rounded-b-lg')}
-            >
-                {isVisible ? 'Hide Pathfinder' : 'Show Pathfinder'}
-            </button>
+                className={"h-full px-5 bg-deep-blue font-OpenSans items-center font-bold text-bone-white rounded-r-xl"}
+            >B</button>
             <AnimatePresence>
                 {isVisible && (
                     <motion.div
@@ -91,8 +89,8 @@ export function PathSelector(props: {
                                         defaultOption={props.selectedEndOption !== undefined ? props.selectedEndOption : "Select your end location"}/>
                             </div>
                             <div
-                                className="w-full flex flex-row justify-center mt-2 w-full bg-deep-blue rounded-br-xl rounded-bl-xl font-OpenSans items-center font-bold text-bone-white">
-                                <div className="divide-x divide-solid py-2 flex flex-row">
+                                className="w-full flex flex-row justify-center mt-2 w-full rounded-br-xl rounded-bl-0 font-OpenSans items-center font-bold text-bone-white">
+                                <div className="divide-x divide-solid py-2 flex flex-row divide-deep-blue">
                                     <AlgorithmButtons px="px-8" onClick={props.onClick}
                                                       isActive={props.selectedAlgo === "Astar"}>
                                         A <img src={star} alt="A Star Icon" height="15" width="15"/>
