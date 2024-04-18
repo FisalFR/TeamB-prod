@@ -143,16 +143,71 @@ export function CsvManager() {
 
 
     return (
-        <div>
-            {/* Tabbed interface */}
-            <div className="pl-[380px] border-b border-gray-200 dark:border-gray-700 pb-1">
-                <ul className="flex flex-wrap justify-center mt-1 text-sm font-medium text-center w-full bg-white rounded-xl"
+        <div className={"flex flex-row h-[90vh] pt-2"}>
+            <div className={"mt-1"}>
+                <div className="mx-3 space-y-7 h-full">
+                    <div className="h-full rounded-2xl bg-deep-blue bg-opacity-5">
+
+                        <div className="flex flex-col items-start p-3 pl-5 rounded-3xl w-1/3 min-w-fit">
+                            <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start pb-3"}>CSV
+                                Manager</h2>
+                            <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Node CSV</h3>
+                            <form ref={formRefNodes} onSubmit={e => {
+                                e.preventDefault();
+                            }}>
+                                <div className={"flex flex-row justify-between bg-light-white p-2 rounded-md"}>
+                                    <input className={"space-x-10"} type="file" name="importedNodes"/>
+                                </div>
+                                <div className={"flex centerContent space-x-5 pt-5"}>
+                                    <Button onClick={handleImportNodes}>Upload</Button>
+                                    {<Button onClick={handleExportNodes}>Download</Button>}
+                                </div>
+                            </form>
+
+                            <br/>
+
+                            <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Edge CSV</h3>
+                            <form ref={formRefEdges} onSubmit={e => {
+                                e.preventDefault();
+                            }}>
+                                <div className={"flex flex-row justify-between bg-light-white p-2 rounded-md"}>
+                                    <input type="file" name="importedEdges" className="left-4"/>
+                                </div>
+                                <div className={"flex centerContent space-x-5 pt-5"}>
+                                    <Button onClick={handleImportEdges}>Upload</Button>
+                                    {<Button onClick={handleExportEdges}>Download</Button>}
+                                </div>
+                            </form>
+
+                            <br/>
+
+                            <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Employee CSV</h3>
+                            <form ref={formRefEdges} onSubmit={e => {
+                                e.preventDefault();
+                            }}>
+                                <div className={"flex flex-row justify-between bg-light-white p-2 rounded-md"}>
+                                    <input type="file" name="importedEdges" className="left-4"/>
+                                </div>
+                                <div className={"flex centerContent space-x-5 pt-5"}>
+                                    <Button onClick={handleImportEdges}>Upload</Button>
+                                    {<Button onClick={handleExportEdges}>Download</Button>}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    {/* Tabbed interface */}
+            <div className={"flex flex-col"}>
+            <div className="border-b border-gray-200 pb-1 overflow-hidden">
+                <ul className="flex justify-centerz` text-sm font-medium text-center w-full rounded-md bg-gray-200"
                     role="tablist">
                     {/* Node tab button */}
                     <li className={activeTab === "nodes" ? "me-2 active" : "me-2"}
                         onClick={() => handleTabClick("nodes")} role="presentation">
                         <button
-                            className={`inline-block p-4 border-b-2 px-40 rounded-t-lg hover:text-blue-600 hover:border-blue-300 dark:hover:text-blue-300  ${activeTab === "nodes" ? "border-b-2 border-blue-500 text-blue-500 font-bold" : ""}`}
+                            className={`inline-block text-md p-2 border-b-2 px-40 my-1 ml-1 rounded-md hover:bg-gray-100  ${activeTab === "nodes" ? "bg-gray-100 font-bold" : ""}`}
                             aria-selected={activeTab === "nodes"}>Nodes
                         </button>
                     </li>
@@ -160,7 +215,7 @@ export function CsvManager() {
                     <li className={activeTab === "edges" ? "me-2 active" : "me-2"}
                         onClick={() => handleTabClick("edges")} role="presentation">
                         <button
-                            className="inline-block p-4 border-b-2 px-40 rounded-t-lg hover:text-blue-600 hover:border-blue-300 dark:hover:text-blue-300"
+                            className={`inline-block text-md p-2 border-b-2 px-40 my-1 rounded-md hover:bg-gray-100  ${activeTab === "edges" ? "bg-gray-100 font-bold" : ""}`}
                             aria-selected={activeTab === "edges"}>Edges
                         </button>
                     </li>
@@ -168,7 +223,7 @@ export function CsvManager() {
                     <li className={activeTab === "employees" ? "me-2 active" : "me-2"}
                         onClick={() => handleTabClick("employees")} role="presentation">
                         <button
-                            className="inline-block p-4 border-b-2 px-40 rounded-t-lg hover:text-blue-600 hover:border-blue-300 dark:hover:text-blue-300"
+                            className={`inline-block text-md p-2 border-b-2 px-40 my-1 rounded-md hover:bg-gray-100  ${activeTab === "employees" ? "bg-gray-100 font-bold" : ""}`}
                             aria-selected={activeTab === "employees"}>Employees
                         </button>
                     </li>
@@ -187,61 +242,6 @@ export function CsvManager() {
                      aria-labelledby="employees-tab">
                 </div>
 
-
-                <div className={"flex"}>
-                    <div className=" h-full mx-3 space-y-7">
-                        <div className="rounded-2xl bg-deep-blue bg-opacity-5">
-
-                            <div className="flex flex-col items-start p-3 pl-5 rounded-3xl w-1/3 min-w-fit">
-                                <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start pb-3"}>CSV
-                                    Manager</h2>
-                                <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Node CSV</h3>
-                                <form ref={formRefNodes} onSubmit={e => {
-                                    e.preventDefault();
-                                }}>
-                                    <div className={"flex flex-row justify-between bg-light-white p-2 rounded-md"}>
-                                        <input className={"space-x-10"} type="file" name="importedNodes"/>
-                                    </div>
-                                    <div className={"flex centerContent space-x-5 pt-5"}>
-                                    <Button onClick={handleImportNodes}>Upload</Button>
-                                            {<Button onClick={handleExportNodes}>Download</Button>}
-                                        </div>
-                                    </form>
-
-                                    <br/>
-
-                                    <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Edge CSV</h3>
-                                    <form ref={formRefEdges} onSubmit={e => {
-                                        e.preventDefault();
-                                    }}>
-                                        <div className={"flex flex-row justify-between bg-light-white p-2 rounded-md"}>
-                                            <input type="file" name="importedEdges" className="left-4"/>
-                                        </div>
-                                        <div className={"flex centerContent space-x-5 pt-5"}>
-                                            <Button onClick={handleImportEdges}>Upload</Button>
-                                            {<Button onClick={handleExportEdges}>Download</Button>}
-                                        </div>
-                                    </form>
-
-                                    <br/>
-
-                                    <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Employee CSV</h3>
-                                    <form ref={formRefEdges} onSubmit={e => {
-                                        e.preventDefault();
-                                    }}>
-                                        <div className={"flex flex-row justify-between bg-light-white p-2 rounded-md"}>
-                                            <input type="file" name="importedEdges" className="left-4"/>
-                                        </div>
-                                        <div className={"flex centerContent space-x-5 pt-5"}>
-                                            <Button onClick={handleImportEdges}>Upload</Button>
-                                            {<Button onClick={handleExportEdges}>Download</Button>}
-                                        </div>
-                                    </form>
-
-                                </div>
-                            </div>
-                </div>
-
                 <div
                     className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable">
                     <div id="default-tab-content">
@@ -250,6 +250,7 @@ export function CsvManager() {
                 </div>
             </div>
         </div>
+
         </div>
     );
 }
