@@ -24,7 +24,8 @@ export function CsvManager() {
         axios.get("/api/csvManager/nodes").then((response) => {
             const tempNodeData = [];
             for (let i = 0; i < response.data.length; i++) {
-                tempNodeData.push({name: response.data[i].longName, id: response.data[i].nodeID, xcord: response.data[i].xcoord, ycord: response.data[i].ycoord});
+                tempNodeData.push({name: response.data[i].longName, id: response.data[i].nodeID, xcord: response.data[i].xcoord, ycord: response.data[i].ycoord,
+                    floor: response.data[i].floor, building: response.data[i].building, nodeType: response.data[i].nodeType, longName: response.data[i].longName, shortName: response.data[i].shortName});
             }
             setNodeData(tempNodeData);
         });
@@ -127,8 +128,8 @@ export function CsvManager() {
             <div className="flex flex-col gap-5 py-20 bg-light-white px-36 my-10 rounded-3xl w-3/4 w-min-fit justify-center centerContent">
                 <h3 className={"text-xl font-HeadlandOne"}>Nodes</h3>
                 <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full">
-                    <Table data={nodeData} headings={["Name", "Node ID", "X-Coord", "Y-Coord"]}
-                           keys={["name", "id", "xcord", "ycord"]}/>
+                    <Table data={nodeData} headings={["Name", "Node ID", "X-Coord", "Y-Coord", "Floor", "Building", "Node Type", "Long Name", "Short Name"]}
+                           keys={["name", "id", "xcord", "ycord", "floor", "building", "nodeType", "longName", "shortName"]}/>
                 </div>
                 <br/>
                 <h3 className={"text-xl font-HeadlandOne"}>Edges</h3>
