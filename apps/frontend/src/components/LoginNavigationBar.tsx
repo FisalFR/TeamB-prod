@@ -1,16 +1,14 @@
 import bwhLogo from "../assets/bwh-logo-white.svg";
-//import {NavLink} from "./NavLink.tsx";
-//import user_icon from "../assets/user_icon.svg";
-// import HandleLogin from "./handleLogin.tsx";
+
 import user_icon from "../assets/user_icon.svg";
 import {HandleLogin} from "./handleLogin.tsx";
 
+import HandleLogout from "./handleLogout.tsx";
+
 export function LoginNavigationBar() {
+    const useLogout = HandleLogout();
     const redirectUri = "/map";
-    const homeRedirect = `${window.location.origin.concat("/")}`;
-    function home() {
-        window.location.href = homeRedirect;
-    }
+
     {
         return (
 
@@ -18,7 +16,7 @@ export function LoginNavigationBar() {
 
                 <div  className="navbar z-50 bg-deep-blue static h-14 top-0 left-0 grid w-full">
 
-                    <img onClick={home} className="hover:cursor-pointer h-3/6 self-center px-4" src={bwhLogo}
+                    <img onClick={useLogout} className="hover:cursor-pointer h-3/6 self-center px-4" src={bwhLogo}
                          alt="Brighams Logo White"></img>
                  <br/>
                     <div onClick={() => HandleLogin({path:redirectUri})}  className="self-center hover:cursor-pointer pl-20">
