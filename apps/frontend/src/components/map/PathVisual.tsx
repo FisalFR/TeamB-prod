@@ -12,8 +12,6 @@ function PathVisual(props: {width: number; height: number;
         startCoord = [props.pathNodes[0].xcoord, props.pathNodes[0].ycoord];
         endCoord = [props.pathNodes[props.pathNodes.length - 1].xcoord, props.pathNodes[props.pathNodes.length - 1].ycoord];
     }
-    // const [nodeOpacity, setNodeOpacity] = useState<number[]>(Array(props.allNodes.length).fill(0));
-    // const [replaceThis, setReplaceThis] = useState(0);
     const [mouseCoord, setMouseCoord] = useState([0, 0]);
 
     const draw = {
@@ -42,7 +40,7 @@ function PathVisual(props: {width: number; height: number;
 
     function getSVGCoords(e: MouseEvent) {
 
-        console.log(imgRef);
+
         if (imgRef.current == null) {
             return [0,0];
         }
@@ -51,12 +49,12 @@ function PathVisual(props: {width: number; height: number;
 
         const offsetLeft = imgRef.current.getBoundingClientRect().left;
         const offsetTop = imgRef.current.getBoundingClientRect().top;
-        console.log(imgRef.current.getBoundingClientRect());
+
         const initialZoomX = 5000/imgRef.current.getBoundingClientRect().width;
         const initialZoomY = 3400/imgRef.current.getBoundingClientRect().height;
         const x = (e.clientX - offsetLeft) * initialZoomX;
         const y= (e.clientY - offsetTop) * initialZoomY;
-        console.log([Math.round(x), Math.round(y)]);
+
 
         return ([Math.round(x), Math.round(y)]);
     }
@@ -94,11 +92,11 @@ function PathVisual(props: {width: number; height: number;
                         }).map((node) => {
                             return <>
 
-                                <motion.circle id={`node-${node.nodeID}`} cx={node.xcoord } cy={node.ycoord } r={8} // smaller visible circle
+                                <motion.circle id={`node-${node.nodeID}`} cx={node.xcoord } cy={node.ycoord } r={12} // smaller visible circle
                                         fill="#F6BD38"
                                                initial={{ opacity: 0 }}
                                                animate={{ opacity: getOpacity(node) }}
-                                               transition={{ duration: 0.8 }}
+                                               transition={{ duration: 0.2 }}
                                         onClick={ () => {
                                             props.onClickCircle(node);
                                         }}/>
