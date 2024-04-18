@@ -89,7 +89,7 @@ export function PathSelector(props: {
                                         defaultOption={props.selectedEndOption !== undefined ? props.selectedEndOption : "Select your end location"}/>
                             </div>
                             <div
-                                className="w-full flex flex-row justify-center mt-2 w-full rounded-br-xl rounded-bl-0 font-OpenSans items-center font-bold text-bone-white">
+                                className="w-full flex flex-row justify-center mt-2 rounded-br-xl rounded-bl-0 font-OpenSans items-center font-bold text-bone-white">
                                 <div className="divide-x divide-solid py-2 flex flex-row divide-deep-blue">
                                     <AlgorithmButtons px="px-8" onClick={props.onClick}
                                                       isActive={props.selectedAlgo === "Astar"}>
@@ -108,4 +108,4 @@ export function PathSelector(props: {
             </AnimatePresence>
         </div>
     );
-};
+}
