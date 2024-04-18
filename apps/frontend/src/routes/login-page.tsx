@@ -50,7 +50,6 @@ export function LoginPage() {
 
 
 
-
     return (
         <div className='w-full flex justify-between px-10 pt-20 '>
             <div className="flex flex-col items-center w-1/2 h-full">
@@ -64,18 +63,18 @@ export function LoginPage() {
                         locate your
                         destination in the smallest steps. Never get lost, no wasted time, get there stress free.</p>
 
-                    <a href={"/map"}
-                       className=" hover:animate-none text-3xl hover:cursor-pointer hover:text-deep-blue hover:font-bold pb-5">
-                        Click here to navigate!</a>
+                    {<a href={"/map"}
+                       className=" hover:animate-none text-4xl hover:cursor-pointer hover:text-4xl hover:text-deep-blue hover:font-bold pb-5 ">
+                        Click here to navigate!</a>}
                 </div>
                 <div className="flex justify-center">
 
                     <div
-                        className=" bg-white outline-1 shadow-md rounded-lg border border-deep-blue-900 hover:cursor-pointer hover:scale-105 transition-transform duration-300"
+                        className=" overflow-hidden bg-white outline-1 shadow-md rounded-lg border border-deep-blue-900 hover:cursor-pointer hover:scale-105 transition-transform duration-300"
                         onMouseEnter={() => setIsHovered(false)}
                         onMouseLeave={() => setIsHovered(true)}>
 
-                        <Carousel content={content} autoPlay={isHovered} interval={5000}/>
+                        <Carousel content={content} autoPlay={isHovered} interval={4000}/>
 
                     </div>
                 </div>

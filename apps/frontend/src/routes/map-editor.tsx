@@ -234,48 +234,38 @@ export function MapEditor(){
             return (
                 <>
                     <p>Node ID: {currentNode.nodeID}</p>
-                    <div>
+                    <div className={"grid grid-cols-[auto_auto] gap-1"}>
                         <label htmlFor="longname">Long Name: </label>
                         <input value={autofillByDrag("longName")} id="longname"
                                onChange={(e) => {
                                    handleInput("longName", e);
-                               }} className = "border-deep-blue border-2 rounded"></input>
-                    </div>
-                    <div>
+                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
                         <label htmlFor="shortname">Short Name: </label>
                         <input value={autofillByDrag("shortName")} id="shortname"
                                onChange={(e) => {
                                    handleInput("shortName", e);
-                               }} className = "border-deep-blue border-2 rounded"></input>
-                    </div>
-                    <div>
+                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
                         <label htmlFor="building">Building: </label>
                         <input value={autofillByDrag("building")} id="building"
                                onChange={(e) => {
                                    handleInput("building", e);
-                               }} className = "border-deep-blue border-2 rounded"></input>
-                    </div>
-                    <p>Floor: {currentNode.floor}</p>
-                    <div>
+                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
+                    <p>Floor: {currentNode.floor}</p><div></div>
                         <label htmlFor="nodetype">Type: </label>
                         <input value={autofillByDrag("nodeType")} id="nodetype"
                                onChange={(e) => {
                                    handleInput("nodeType", e);
-                               }} maxLength={4} className = "border-deep-blue border-2 rounded"></input>
-                    </div>
-                    <div>
+                               }} maxLength={4} className = "border-deep-blue border-2 rounded flex-grow"></input>
                         <label htmlFor="xcoord">X Coordinate: </label>
                         <input type="number" value={autofillByDrag("xcoord")} id="longname"
                                onChange={(e) => {
                                    handleInput("xcoord", e);
-                               }} className = "border-deep-blue border-2 rounded"></input>
-                    </div>
-                    <div>
+                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
                         <label htmlFor="ycoord">Y Coordinate: </label>
                         <input type="number" value={autofillByDrag("ycoord")} id="longname"
                                onChange={(e) => {
                                    handleInput("ycoord", e);
-                               }} className = "border-deep-blue border-2 rounded"></input>
+                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
                     </div>
                     <p>Neighbors:</p>
                     <div className="flex flex-row gap-3 flex-wrap">
@@ -327,8 +317,6 @@ export function MapEditor(){
     }
 
     function handleSubmit() {
-        console.log(editEdgesID);
-        console.log(addedEdges);
         //submit editNodes and editEdges to the database
         axios.post("/api/csvManager/editOneNode",currentNode,{
             headers: {

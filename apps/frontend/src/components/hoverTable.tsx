@@ -202,9 +202,6 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
     }
 
 
-
-
-
     return (
         <table
             className="overflow-scroll border-collapse p-6 border-solid border-[1px] border-t-[0px] border-deep-blue w-full bg-white">
