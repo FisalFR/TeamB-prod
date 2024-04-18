@@ -50,7 +50,7 @@ export function PathSelector(props: {
     };
 
     return (
-        <div className="absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end w-100">
+        <div className="absolute top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-end w-[435px]">
             <button
                 onClick={toggleVisibility}
                 className={"w-full px-20 bg-deep-blue rounded-t-lg font-OpenSans items-center font-bold text-bone-white py-2" + (isVisible ? '' : ' rounded-b-lg')}
