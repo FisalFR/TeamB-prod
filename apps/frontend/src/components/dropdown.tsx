@@ -47,6 +47,9 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
     }
 
     function createOptions() {
+        if (search === '') {
+            cache.current = [];
+        }
         const filteredOptions: optionWithSearch[] = filterList(optionList, search);
         for (let i = 0; i < filteredOptions.length; i++) {
             searchOptions.push(filteredOptions[i].option);
