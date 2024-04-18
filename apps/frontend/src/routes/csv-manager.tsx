@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef} from "react"; // , useMemo
+import React, {useState, useEffect, useRef} from "react"; // , useMemo
 import axios from "axios";
 import Table from "../components/Table.tsx";
 import Button from "../components/Button.tsx";
@@ -9,7 +9,7 @@ import Button from "../components/Button.tsx";
 export function CsvManager() {
     // TODO refactor to work with two separate GET URLs based on radio button input
     const [nodeData, setNodeData] = useState(["Error accessing node data."]);
-    const [edgeData, setEdgeData] = useState(["Error accessing edge data."]);
+    // const [edgeData, setEdgeData] = useState(["Error accessing edge data."]);
 
     const formRefNodes = useRef<HTMLFormElement>(null);
     const formRefEdges = useRef<HTMLFormElement>(null);
@@ -95,47 +95,73 @@ export function CsvManager() {
 
 
     return (
-        <div className={"csvManager centerContent flex flex-col"}>
-            <div className="flex flex-col bg-light-white my-10 p-10 px-20 rounded-3xl w-1/3 min-w-fit">
-                <h2 className={"text-3xl font-HeadlandOne py-4"}>Map CSV Manager</h2>
-                <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Node CSV</h3>
+        <div className={"flex pt-8"}>
+            <div className=" h-full mx-3 space-y-7 my-3">
+                <div className="rounded-2xl bg-deep-blue bg-opacity-5">
+                    <div className="flex flex-col items-start p-3 pl-5 rounded-3xl w-1/3 min-w-fit">
+                        <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start pb-3"}>Map CSV
+                            Manager</h2>
+                        <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Node CSV</h3>
+                        <form ref={formRefNodes} onSubmit={e => {
+                            e.preventDefault();
+                        }}>
+                            <div className={"flex flex-row justify-between bg-light-white p-2 rounded-md"}>
+                                <input type="file" name="importedNodes"/>
+                            </div>
+                            <div className={"flex centerContent space-x-5 pt-5"}>
+                                <Button onClick={handleImportNodes}>Upload</Button>
+                                {<Button onClick={handleExportNodes}>Download</Button>}
+                            </div>
+                        </form>
 
-                <form ref={formRefNodes} onSubmit={e => {
-                    e.preventDefault();
-                }}>
-                    <div className={"flex flex-row justify-between"}>
-                        <input type="file" name="importedNodes"/>
-                        <Button onClick={handleImportNodes}>Upload</Button>
+                        <br/>
+
+                        <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Edge CSV</h3>
+                        <form ref={formRefEdges} onSubmit={e => {
+                            e.preventDefault();
+                        }}>
+                            <div className={"flex flex-row justify-between bg-light-white p-2 rounded-md"}>
+                                <input type="file" name="importedEdges" className="left-4"/>
+                            </div>
+                            <div className={"flex centerContent space-x-5 pt-5"}>
+                                <Button onClick={handleImportEdges}>Upload</Button>
+                                {<Button onClick={handleExportEdges}>Download</Button>}
+                            </div>
+                        </form>
+
+                        <br/>
+
+                        <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Employee CSV</h3>
+                        <form ref={formRefEdges} onSubmit={e => {
+                            e.preventDefault();
+                        }}>
+                            <div className={"flex flex-row justify-between bg-light-white p-2 rounded-md"}>
+                                <input type="file" name="importedEdges" className="left-4"/>
+                            </div>
+                            <div className={"flex centerContent space-x-5 pt-5"}>
+                                <Button onClick={handleImportEdges}>Upload</Button>
+                                {<Button onClick={handleExportEdges}>Download</Button>}
+                            </div>
+                        </form>
+
                     </div>
-                </form>
-            <br/>
-
-            <h3 className={"text-xl font-HeadlandOne py-4"}>Upload Edge CSV</h3>
-
-                <form ref={formRefEdges} onSubmit={e => {
-                    e.preventDefault();
-                }}>
-                    <div className={"flex flex-row justify-between"}>
-                        <input type="file" name="importedEdges" className="left-4"/>
-                        <Button onClick={handleImportEdges}>Upload</Button>
-                    </div>
-                </form>
-            <div className="centerContent gap-10 p-10">
-                    {<Button px="px-10" py="py-5" onClick={handleExportNodes}>Download Nodes</Button>}
-                    {<Button px="px-10" py="py-5" onClick={handleExportEdges}>Download Edges</Button>}
                 </div>
             </div>
-            <div className="flex flex-col gap-5 py-20 bg-light-white px-36 my-10 rounded-3xl w-3/4 w-min-fit justify-center centerContent">
-                <h3 className={"text-xl font-HeadlandOne"}>Nodes</h3>
-                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full">
-                    <Table data={nodeData} headings={["Name", "Node ID", "X-Coord", "Y-Coord", "Floor", "Building", "Node Type", "Long Name", "Short Name"]}
+
+            <div
+                className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable mt-3">
+                <div className="max-h-[73vh] overflow-auto w-full">
+                    <Table data={nodeData}
+                           headings={["Name", "Node ID", "X-Coord", "Y-Coord", "Floor", "Building", "Node Type", "Long Name", "Short Name"]}
                            keys={["name", "id", "xcord", "ycord", "floor", "building", "nodeType", "longName", "shortName"]}/>
                 </div>
-                <br/>
-                <h3 className={"text-xl font-HeadlandOne"}>Edges</h3>
-                <div className="max-h-[60vh] overflow-scroll border-solid border-b-[1px] border-deep-blue w-full">
-                    <Table data={edgeData} headings={["Edge ID", "Start Node", "End Node"]} keys={["edgeID", "startNodeID", "endNodeID"]}/>
-                </div>
+                {/*<br/>*/}
+                {/*<h3 className={"text-xl font-HeadlandOne"}>Edges</h3>*/}
+                {/*<div className="max-h-[60vh] overflow-auto w-full">*/}
+                {/*    <Table data={edgeData}*/}
+                {/*           headings={["Edge ID", "Start Node", "End Node"]}*/}
+                {/*           keys={["edgeID", "startNodeID", "endNodeID"]}/>*/}
+                {/*</div>*/}
             </div>
         </div>
 
