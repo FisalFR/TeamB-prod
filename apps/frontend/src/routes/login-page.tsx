@@ -101,7 +101,7 @@ const style = {
 
 
 
-                    <div className=" pt-20 opacity-25 z-20">
+                    <div className=" pt-20  z-20">
                         <AnimatedSVG/>
                     </div>
 
