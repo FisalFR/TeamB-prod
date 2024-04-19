@@ -1,19 +1,21 @@
-//import {useState} from "react";
 
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import RadioButton from "../components/RadioButton.tsx";
-import {MaintenanceRequest} from "common/src/maintenanceRequest.ts";
+import {TransportationRequest} from "common/src/transportationRequest.ts";
 import Dropdown from "../components/dropdown.tsx";
 import axios from "axios";
+import Button from "../components/Button.tsx";
 
 export function TransportationRequestPage() {
-    // const [request, setRequest] = useState<TransportationRequest>({
-    //     employeeName: "",
-    //     priority: "",
-    //     feedback: "",
-    // });
+    const [request, setRequest] = useState<TransportationRequest>({
+        employeeName: "",
+        priority: "",
+        feedback: "",
+        location:"",
+        address: "",
+        transport: "",
+    });
     //TODO switch to my own use state; copy sanitation route backend as example
-    const [request, setRequest] = useState<MaintenanceRequest>({employeeName: "", location: "", priority: "", feedback: ""});
     const formRef = useRef<HTMLFormElement>(null);
     const [locationOptions, setLocationOptions] = useState<string[]>([]);
     //const [TransportOptions, setTransportOptions] = useState<string[]>([]);
@@ -28,6 +30,27 @@ export function TransportationRequestPage() {
         });
         //TODO create database for transport options
     }, []);
+
+    function handleSubmit(e: { preventDefault: () => void; }) {
+        (formRef.current as HTMLFormElement).requestSubmit();
+        e.preventDefault();
+        if ((formRef.current as HTMLFormElement).checkValidity()) {
+            axios.post("/api/transport/insert",request,{
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then();
+            setCleared(true);
+           // setSubmittedWindowVisibility({formScreen: "hidden", submittedScreen: "block"});
+        }
+    }
+    function handleClear(e: { preventDefault: () => void; }): void {
+        e.preventDefault();
+        // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
+        setRequest({feedback: "", employeeName: "", location: "", priority: "", address:"", transport:""});
+        // use resetActive from Dropdown?
+        setCleared(true);
+    }
     function handlePriorityInput(e: ChangeEvent<HTMLInputElement>): void {
         setRequest({...request, priority: e.target.value});
     }
@@ -40,6 +63,13 @@ export function TransportationRequestPage() {
     }
     function handleNameInput(e: ChangeEvent<HTMLInputElement>): void{
         setRequest({...request, employeeName: e.target.value});
+    }
+    function handleAddressInput(e: ChangeEvent<HTMLInputElement>): void{
+        setRequest({...request, address:e.target.value});
+    }
+    function handleTransportInput(str: string): void {
+        setCleared(false);
+        setRequest({...request, transport: str});
     }
 
     return (
@@ -80,14 +110,15 @@ export function TransportationRequestPage() {
                                     <Dropdown options={locationOptions} placeholder={"Transport Type"}
                                               name={"TransportDropdown"}
                                               id={"dropdown2"} value={cleared}
-                                              setInput={handleLocationInput} required={true} width={"w-80"}/>
+                                              setInput={handleTransportInput} required={true} width={"w-80"}/>
                                 </div>
                             </div>
                             <div>
                                 <p className="font-bold">Drop off Location Address</p>
-                                {/*onChange={handleAddressInput} value={request.address}*/}
+
                                 <input type="text" required
                                        placeholder={"Address"}
+                                       onChange={handleAddressInput} value={request.address}
                                        className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-[5px] w-full"}/>
                             </div>
                             <div>
@@ -114,6 +145,10 @@ export function TransportationRequestPage() {
                                           onChange={handleFeedbackInput}
                                           value={request.feedback} required={true}
                                           placeholder="Enter detailed description here..."/>
+                            </div>
+                            <div className={"formButtons flex gap-4 my-4"}>
+                                <Button onClick={handleSubmit} children={"Submit"}/>
+                                <Button onClick={handleClear} children={"Clear"}/>
                             </div>
 
                         </form>
