@@ -1,116 +1,88 @@
-import {ChangeEvent, useRef, useState} from "react";
-import {loginInfo} from "../common/login-info";
-import Button from "../components/Button.tsx";
-import user_icon from "../assets/user_icon.svg";
-import password_icon from "../assets/password_icon.svg";
 import AnimatedSVG from "../components/HeroImage.tsx";
-//import { useNavigate } from "react-router-dom";
 
-function LoginPage() {
-
-    //const navigate = useNavigate();
-    const [input, setInput] = useState<loginInfo>({username: "", password: ""});
-    const [loginWindowVisibility, setLoginWindowVisibility] = useState({
-        loginScreen: "block",
-        submittedScreen: "hidden"
-    });
-    const formRef = useRef<HTMLFormElement>(null);
-
-    function handleUsername(e: ChangeEvent<HTMLInputElement>) {
-        setInput({...input, username: e.target.value});
-    }
-
-    function handlePassword(e: ChangeEvent<HTMLInputElement>) {
-        setInput({...input, password: e.target.value});
-    }
-
-    function handleLogin() {
-       (formRef.current as HTMLFormElement).requestSubmit();
-        if ((formRef.current as HTMLFormElement).checkValidity()) {
-            console.log(input);
-            if(input.username == "admin" && input.password == "admin"){
-                //navigate("/map");
-                //return;
-                redirectToMap();
+import React, {useState} from 'react';
+import Carousel from "../components/Carousel";
+import image1 from '../assets/Carousel/GiftDelivery.jpg';
+import image2 from '../assets/Carousel/InterpreterRequest.jpg';
+import image3 from '../assets/Carousel/security.jpg';
+import image4 from '../assets/Carousel/mapPathfinding.png';
+export function LoginPage() {
+    const [isHovered,setIsHovered] = useState(true);
+    const content = [
+        {
+            image: { src: image4, alt: 'Description of image 1' },
+            text: {
+                title: "Map",
+                description: "We're excited to introduce our new Pathfinding Feature—now you can navigate to your destination in the hospital at your own convenience!",
+                callToAction: "Click here explore the map!",
+                route: "/map"
             }
-            else {
-                alert("Invalid username or password");
+        },
+        {
+            image: { src: image1, alt: 'Description of image 2' },
+            text: {
+                title: "Gift Delivery",
+                description: "We're excited to introduce our new Gift Delivery Service—now you can send thoughtful presents directly to your loved ones in the hospital, right from our website!",
+                callToAction: "Click here to make a gift request!",
+                route: "/giftdelivery"
             }
-            //setLoginWindowVisibility({loginScreen: "hidden", submittedScreen: "block"});
-        };
-    }
+        },
+        {
+            image: { src: image2, alt: 'Description of image 3' },
+            text: {
+                title: "Interpreter Request",
+                description: "We are thrilled to launch our new Interpreter Request feature—making language assistance easily accessible to all our patients directly through our website!",
+                callToAction: "Click here to request an interpreter!",
+                route: "/interpreter",
+            }
+        },
+        {
+            image: { src: image3, alt: 'Description of image 4' },
+            text: {
+                title: "Security Request",
+                description: "We're pleased to announce our enhanced security request feature, allowing you to request for help at anytime through our website.",
+                callToAction: "Click here to make a security request!",
+                route: "/security",
+            }
+        }
+    ];
 
-    function guestLogin() {
-        //navigate("/map");
-        redirectToMap();
-    }
-
-    function redirectToMap() {
-        const element = document.createElement("a");
-        element.href = "/map";
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
-    }
-
-
-    function handleLogout() {
-        console.log("Logged out");
-        setLoginWindowVisibility({loginScreen: "block", submittedScreen: "hidden"});
-        setInput({username: "", password: ""});
-
-        };
 
 
 
     return (
-                <div className="px-20 py-5 gap-5" >
-                    <h1 className="px-6 font-bold text-left font-HeadlandOne text-6xl">Navigate Seamlessly</h1>
-                    <div className='centerContent gap-10 w-full h-fit'>
-                        <div className="centerContent flex-col">
-                            <p className="text-left text-xl p-6">Find your room in Brigham & Women's with ease. With pathfinding locate your
-                                destination in the smallest steps. Never get lost, no wasted time, get there stress free.</p>
-                            <AnimatedSVG/>
-                        </div>
-                        <div className={loginWindowVisibility.loginScreen}>
-                            <div className='login-container centerContent bg-deep-blue px-[50px] py-[40px]'>
-                                <h1 className='text-white text-4xl text-left font-bold w-full'>Login</h1>
-                                <form className={'flex flex-col centerContent gap-6'} ref={formRef}
-                                      onSubmit={e => {
-                                          e.preventDefault();
-                                      }}>
-                                    <div className='flex items-center'>
-                                        <img src={user_icon} alt="Username icon" height="40" width="40" className="mr-2"/>
-                                        <input type='text' placeholder="Username" onChange={handleUsername}
-                                               value={input.username}
-                                               required={true}/>
-                                    </div>
-                                    <div className='flex items-center'>
-                                        <img src={password_icon} alt="Password icon" height="40" width="40" className="mr-2"/>
-                                        <input type='password' placeholder="Password" onChange={handlePassword}
-                                               value={input.password} required={true}/>
-                                    </div>
-                                    <Button onClick={handleLogin} children="Login"/>
-                                    <Button onClick={guestLogin} children="Login as Guest"/>
-                                </form>
-                            </div>
-                        </div>
+        <div className='w-full flex justify-between px-10 pt-20 '>
+            <div className="flex flex-col items-center w-1/2 h-full">
+                <AnimatedSVG/>
+            </div>
+            <div className="w-1/2 flex flex-col">
+                <div className="text-center pb-5 rounded mx-auto animate-scale-in-ver-top">
+                    <h1 className="font-bold font-HeadlandOne text-6xl text-deep-blue-900 mb-2">Navigate
+                        Seamlessly</h1>
+                    <p className="text-left text-xl py-6">Find your room in Brigham & Women's with ease. With pathfinding
+                        locate your
+                        destination in the smallest steps. Never get lost, no wasted time, get there stress free.</p>
 
-                        <div className={loginWindowVisibility.submittedScreen}>
-                            <div className="p-6 bg-white rounded-2xl">
-                                <div className="p-4">
+                    {<a href={"/map"}
+                       className=" hover:animate-none text-4xl hover:cursor-pointer hover:text-4xl hover:text-deep-blue hover:font-bold pb-5 ">
+                        Click here to navigate!</a>}
+                </div>
+                <div className="flex justify-center">
 
-                                    <p className="font-HeadlandOne p-1 text-xl">WELCOME TO THE HOSPITAL KIOSK</p>
-                                    <p className="font-HeadlandOne font-extrabold py-2 text-3xl">{input.username}</p>
-                                </div>
-                                <Button onClick={handleLogout} children="Logout"/>
-                            </div>
-                        </div>
+                    <div
+                        className=" overflow-hidden bg-white outline-1 shadow-md rounded-lg border border-deep-blue-900 hover:cursor-pointer hover:scale-105 transition-transform duration-300"
+                        onMouseEnter={() => setIsHovered(false)}
+                        onMouseLeave={() => setIsHovered(true)}>
+
+                        <Carousel content={content} autoPlay={isHovered} interval={4000}/>
+
                     </div>
                 </div>
+            </div>
+        </div>
     );
+
 
 }
 
 export default LoginPage;
-

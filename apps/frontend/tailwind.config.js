@@ -12,20 +12,25 @@ export default {
         'gold-yellow': '#F6BD38',
         'Ash-black': '#2F2F2F',
         'green-blue': '#0067B1',
-        'white': '#FFFFFF'
+        'white': '#FFFFFF',
+        'bwh-cyan': '#009CA6',
+        'light-white': '#FAFAFA',
       },
       fontFamily: {
         'HeadlandOne': ['Headland One', 'serif'],
         'OpenSans': ['Open Sans', 'sans-serif'],
+        'Colfax': ["Colfax", "sans-serif"],
       },
       spacing: {
-        'databasetable': '47.2rem',
+        'databasetable': '39rem',
         '100' : '26.15rem',
         '50': '12.29rem',
         '9': '2.4rem',
+        'medicineFormHeight': '50rem',
+        'medicineFormWidth': '45rem',
       }
     },
   },
   plugins: [],
-}
+};
 

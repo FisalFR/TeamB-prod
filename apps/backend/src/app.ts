@@ -8,6 +8,11 @@ import maintenanceRoute from "./routes/maintenanceRoute";
 import languageInterpreterRoute from "./routes/languageInterpreterRoute";
 import csvManagerRoute from "./routes/csvManagerRoute";
 import medicineRoute from "./routes/medicineRoute";
+import sanitationRoute from "./routes/sanitationRoute";
+import securityRoute from "./routes/securityRoute";
+import giftDeliveryRoute from "./routes/giftDeliveryRoute";
+import nodesRouter from "./routes/nodesRoute";
+import edgesRouter from "./routes/edgesRoute";
 
 const app: Express = express(); // Setup the backend
 
@@ -27,11 +32,18 @@ app.use(cookieParser()); // Cookie parser
 // Setup routers. ALL ROUTERS MUST use /api as a start point, or they
 // won't be reached by the default proxy and prod setup
 app.use("/api/high-score", exampleRouter);
+// app.use("/api/nodes", nodesRouter);
+app.use("/api/edges", edgesRouter);
+//TODO: Add "/api/nodes" so that it would just handle with nodes
+//TODO: Add "/api/edges" so that it would just handle with just edges
 app.use("/api/pathfinding", pathfindingRoute);
 app.use("/api/maintenance", maintenanceRoute);
 app.use("/api/languageInterpreter", languageInterpreterRoute);
 app.use("/api/csvManager", csvManagerRoute);
 app.use("/api/medicine", medicineRoute);
+app.use("/api/sanitation", sanitationRoute);
+app.use("/api/security", securityRoute);
+app.use("/api/gift", giftDeliveryRoute);
 
 app.use("/healthcheck", (req, res) => {
   res.status(200).send();

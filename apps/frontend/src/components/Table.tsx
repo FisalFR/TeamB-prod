@@ -1,10 +1,17 @@
+//import Modal from "./Modal.tsx";
+//import React, {useState} from "react";
+//import { motion } from "framer-motion";
+//import axios from "axios";
+//import {fullServiceFormType} from "common/src/fullServiceForm.ts";
 
-function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: string[]}) {
+
+
+function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: string[], px:string, py:string}) {
 
 
     function createTableHeader(){
         return props.headings.map((heading) =>
-            <th className="border-collapse p-2 border-solid border-t-[0px] border-[1px] border-deep-blue bg-deep-blue text-bone-white">
+            <th className={`border-collapse ${props.px} ${props.py} border-solid border-t-[0px] border-[1px] border-deep-blue bg-deep-blue text-bone-white`}>
                 {heading}
             </th>
 
@@ -12,7 +19,7 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
 
     function createTableRows(){
         return props.data.map((request) =>
-            <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-100 even:dark:bg-gray-800 border-b dark:border-gray-700">
+            <tr className="odd:bg-white even:bg-gray-100 border-b dark:border-gray-700">
                 {createRow(request)}
             </tr>
 
@@ -26,15 +33,20 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
         );}
 
     return(
-        <table className="overflow-scroll border-collapse p-6 border-solid border-[1px] border-t-[0px] border-deep-blue w-full bg-white">
+        <table className="overflow-scroll border-collapse p-6 border-solid border-[1px] border-t-[0px] border-deep-blue w-full bg-white table-auto">
             <thead className="sticky top-0">
-                {createTableHeader()}
+            {createTableHeader()}
             </thead>
             <tbody>
-                {createTableRows()}
+            {createTableRows()}
             </tbody>
         </table>
     );
 }
 
 export default Table;
+
+Table.defaultProps = {
+    px:"px-2",
+    py:"py-2"
+};

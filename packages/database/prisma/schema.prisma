@@ -81,30 +81,69 @@ model forms {
   assignee            String
   dateCreated         DateTime                      @default(now())
   location            String
+  priority            String
+  employeeName        String
   languageRequests    languageInterpreterRequests[] @relation(name: "languageRequestID")
   maintenanceRequests maintenances[]                @relation(name: "maintenanceRequestID")
+  medicineRequests    medicineRequests[]            @relation(name: "medicineRequestID")
+  sanitationRequests  sanitationRequests[]          @relation(name: "sanitationRequestID")
+  securityRequests    securityRequests[]            @relation(name: "securityRequestID")
+  giftRequests        giftRequests[]                @relation(name: "giftRequestID")
 }
 
 model languageInterpreterRequests {
   languageRequest   String @id
   language          String
+  feedback          String
   languageRequestID forms  @relation(name: "languageRequestID", fields: [languageRequest], references: [formID])
 }
 
 model maintenances {
   maintenanceRequest   String @id
   issue                String
-  isUrgent             String
   feedback             String
   maintenanceRequestID forms  @relation(name: "maintenanceRequestID", fields: [maintenanceRequest], references: [formID])
 }
 
 model medicineRequests {
-  medicineRequestID  Int    @id @default(autoincrement())
-  employeeName       String
-  priority           String
-  location           String
+  medicineRequest    String @id
   medicine           String
   quantity           Int
   additionalComments String
+  medicineRequestID  forms  @relation(name: "medicineRequestID", fields: [medicineRequest], references: [formID])
+}
+
+model sanitationRequests {
+  sanitationRequest  String @id
+  serviceType        String
+  contaminant        String
+  additionalComments String
+  sanitationRquestID forms  @relation(name: "sanitationRequestID", fields: [sanitationRequest], references: [formID])
+}
+
+model securityRequests {
+  securityRequest   String @id
+  request           String
+  additionalInfo    String
+  quantity          Int
+  securityRequestID forms  @relation(name: "securityRequestID", fields: [securityRequest], references: [formID])
+}
+
+model giftRequests {
+  giftRequest   String     @id
+  receiverName  String
+  senderName    String
+  message       String
+  date          String
+  cart          giftItem[] @relation(name: "cartID")
+  giftRequestID forms      @relation(name: "giftRequestID", fields: [giftRequest], references: [formID])
+}
+
+model giftItem {
+  giftItem String       @id
+  name     String
+  cost     Float
+  quantity Int
+  cart     String
+  cartID   giftRequests @relation(name: "cartID", fields: [cart], references: [giftRequest])
 }

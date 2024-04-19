@@ -33,7 +33,7 @@ import {NavLink} from "./NavLink.tsx";
                 </NavLink>
             </div>
             {isSeen && (
-                <div className= "bg-deep-blue absolute w-full">
+                <div className= "bg-deep-blue absolute w-full z-10">
                     {createDropdown()}
                 </div>
             )}

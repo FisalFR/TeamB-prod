@@ -9,11 +9,17 @@ import writeEdge from "../writeEdge";
 import NodeType from "common/src/NodeType";
 import EdgeType from "common/src/EdgeType";
 import FormType from "common/src/FormType";
+import { formFilter } from "../formFunctions";
+import edgeType from "common/src/EdgeType";
 
 router.use(fileUpload());
 
 router.get("/", async (req, res) => {
-  const formType = await client.forms.findMany();
+  const formType = await client.forms.findMany({
+    orderBy: {
+      formID: "desc",
+    },
+  });
   res.status(200).json(formType);
 });
 
@@ -26,74 +32,48 @@ router.get("/edges", async (req, res) => {
   const allEdges = await client.edges.findMany();
   res.status(200).json(allEdges);
 });
+
 router.post("/filter", async (req, res) => {
   const formType: FormType = req.body;
-  console.log(formType);
-  if (
-    formType.status !== "" &&
-    formType.type !== "" &&
-    formType.assignee !== ""
-  ) {
+  const whereCondition: FormType = {};
+
+  // Build the where condition dynamically based on the provided filters
+  if (formType.formID !== "") {
+    whereCondition.formID = { search: formType.formID };
+  }
+  if (formType.type !== "") {
+    whereCondition.type = { search: formType.type };
+  }
+  if (formType.location !== "") {
+    const escapedLocation = formType.location.replace(/\s/g, "\\ ");
+    whereCondition.location = { search: `"${escapedLocation}"` };
+  }
+  if (formType.status !== "") {
+    whereCondition.status = { search: formType.status };
+  }
+  if (formType.assignee !== "") {
+    whereCondition.assignee = { search: formType.assignee };
+  }
+  if (formType.priority !== "") {
+    whereCondition.priority = formType.priority;
+  }
+  if (formType.employeeName && formType.employeeName !== "") {
+    const escapedName = formType.employeeName.replace(/\s/g, "\\ ");
+    whereCondition.employeeName = { search: `"${escapedName}"` };
+  }
+  try {
     const filteredForm = await client.forms.findMany({
-      where: {
-        status: { search: formType.status },
-        type: { search: formType.type },
-        assignee: { search: formType.assignee },
-      },
+      where: whereCondition,
+      orderBy: { formID: "desc" },
     });
     res.status(200).json(filteredForm);
-  } else if (formType.status !== "" && formType.type !== "") {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        status: { search: formType.status },
-        type: { search: formType.type },
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else if (formType.type !== "" && formType.assignee !== "") {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        type: { search: formType.type },
-        assignee: { search: formType.assignee },
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else if (formType.status !== "" && formType.assignee !== "") {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        status: { search: formType.status },
-        assignee: { search: formType.assignee },
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else if (formType.status !== "") {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        status: { search: formType.status },
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else if (formType.type !== "") {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        type: { search: formType.type },
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else if (formType.assignee !== "") {
-    const filteredForm = await client.forms.findMany({
-      where: {
-        assignee: { search: formType.assignee },
-      },
-    });
-    res.status(200).json(filteredForm);
-  } else {
-    const filteredForm = await client.forms.findMany({});
-    res.status(200).json(filteredForm);
+  } catch (error) {
+    console.error("Error filtering forms:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.post("/insert", async (req, res) => {
+router.post("/update", async (req, res) => {
   const formType: FormType = req.body;
   const updateUser = await client.forms.update({
     where: {
@@ -104,10 +84,67 @@ router.post("/insert", async (req, res) => {
       assignee: formType.assignee,
     },
   });
-  console.log(updateUser);
   res.status(200).json(updateUser);
 });
 
+router.post("/delete", async (req, res) => {
+  const formType: FormType = req.body;
+  switch (formType.type) {
+    case "Maintenance":
+      await client.maintenances.delete({
+        where: {
+          maintenanceRequest: formType.formID,
+        },
+      });
+      break;
+    case "Language":
+      await client.languageInterpreterRequests.delete({
+        where: {
+          languageRequest: formType.formID,
+        },
+      });
+      break;
+    case "Medicine":
+      await client.medicineRequests.delete({
+        where: {
+          medicineRequest: formType.formID,
+        },
+      });
+      break;
+    case "Sanitation":
+      await client.sanitationRequests.delete({
+        where: {
+          sanitationRequest: formType.formID,
+        },
+      });
+      break;
+    case "Security":
+      await client.securityRequests.delete({
+        where: {
+          securityRequest: formType.formID,
+        },
+      });
+      break;
+    case "Gift":
+      await client.giftItem.deleteMany({
+        where: {
+          cart: formType.formID,
+        },
+      });
+      await client.giftRequests.delete({
+        where: {
+          giftRequest: formType.formID,
+        },
+      });
+      break;
+  }
+  const updateUser = await client.forms.delete({
+    where: {
+      formID: formType.formID,
+    },
+  });
+  res.status(200).json(updateUser);
+});
 router.post("/uploadNodes", function (req, res) {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.send("No files were uploaded.");
@@ -235,17 +272,81 @@ router.post("/uploadEdges", async (req, res) => {
 
 router.get("/exportNodes", async (req, res) => {
   const nodeFile = await writeNode.nodeDownload();
-  //console.log(nodeFile);
   res.setHeader("Content-disposition", "attachment; filename=nodeDataFile.csv");
   res.set("Content-Type", "text/csv");
   res.status(200).send(nodeFile);
 });
 router.get("/exportEdges", async (req, res) => {
   const nodeFile = await writeEdge.edgeDownload();
-  //console.log(nodeFile);
   res.setHeader("Content-disposition", "attachment; filename=edgeDataFile.csv");
   res.set("Content-Type", "text/csv");
   res.status(200).send(nodeFile);
+});
+
+router.post("/filterForms", async (req, res) => {
+  const formType: FormType = req.body;
+  const filteredForms = await formFilter(formType.formID, formType.type);
+  return res.json(filteredForms);
+});
+
+router.post("/editNodes", async (req, res) => {
+  const importedNodes: NodeType[] = req.body;
+  console.log(importedNodes);
+  client.edges.deleteMany().then(() => {
+    client.nodes.deleteMany().then(() => {
+      populateNode.populateManyNodeDB(importedNodes).then(() => {
+        return res.json(300);
+      });
+    });
+  });
+});
+
+router.post("/editEdges", async (req, res) => {
+  const importedEdges: EdgeType[] = req.body;
+  populateEdge.populateManyEdgeDB(importedEdges).then(() => {
+    return res.json(300);
+  });
+});
+
+router.post("/editOneNode", async (req, res) => {
+  const importedNode: NodeType = req.body;
+  const updatedNode = await client.nodes.update({
+    where: {
+      nodeID: importedNode.nodeID,
+    },
+    data: {
+      nodeID: importedNode.nodeID,
+      xcoord: parseFloat(importedNode.xcoord),
+      ycoord: parseFloat(importedNode.ycoord),
+      building: importedNode.building,
+      nodeType: importedNode.nodeType,
+      longName: importedNode.longName,
+      shortName: importedNode.shortName,
+    },
+  });
+  return res.json(updatedNode);
+});
+
+router.post("/addManyEdge", async (req, res) => {
+  const importedEdge: edgeType[] = req.body;
+  const updatedEdge = await client.edges.createMany({
+    data: importedEdge,
+  });
+  return res.json(updatedEdge);
+});
+
+router.post("/deleteManyEdge", async (req, res) => {
+  const importedEdge: edgeType[] = req.body;
+
+  const edgeIDs = importedEdge.map((edge) => edge.edgeID);
+  const deletedEdges = await client.edges.deleteMany({
+    where: {
+      edgeID: {
+        in: edgeIDs, // Using 'in' operator to match multiple edgeIDs
+      },
+    },
+  });
+  return res.json(deletedEdges);
 });
 
 export default router;
