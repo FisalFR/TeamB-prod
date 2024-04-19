@@ -6,7 +6,6 @@ import l3map from "../assets/floors/03_thethirdfloor.png";
 import plus from "../assets/plus.svg";
 import minus from "../assets/minus.svg";
 import React, {useEffect, useRef, useState} from "react";
-import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import useNodes from "../hooks/useNodes.ts";
@@ -16,13 +15,15 @@ import Select from "../components/Select.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
 import EdgeType from "common/src/EdgeType.ts";
+import NodeForm from "../components/map/NodeForm.tsx";
+import NodeType from "common/src/NodeType.ts";
 
 export function MapEditor(){
 
 
     const [dragging, setDragging] = useState(false);
 
-    const placeholderNode = {
+    const placeholderNode: NodeType = {
         nodeID: "",
         xcoord: 0,
         ycoord: 0,
@@ -30,8 +31,7 @@ export function MapEditor(){
         building: "",
         nodeType: "",
         longName: "",
-        shortName: "",
-        neighbors: [],
+        shortName: ""
     };
 
     const [currentNode, setCurrentNode] = useState(placeholderNode);
@@ -82,7 +82,7 @@ export function MapEditor(){
                 dragNodeCoordsX.current = coords[0];
                 dragNodeCoordsY.current = coords[1];
                 updateNodes(dragNodeID.current, dragNodeCoordsX.current, dragNodeCoordsY.current);
-                setEditNodes(nodes);
+                //setEditNodes(nodes);
                 setReplaceThis(replaceThis+1);
 
         }
@@ -127,8 +127,6 @@ export function MapEditor(){
         nodeStrings.push(nodes[i].nodeID);
     }
 
-    const [editNodes, setEditNodes] = useState<Node[]>([]);
-    useEffect(() => setEditNodes(nodes), [nodes]);
 
     const [editEdges, setEditEdges] = useState(useEdges().edges);
     useEffect(() => setEditEdges(edges), [edges]);
@@ -146,65 +144,14 @@ export function MapEditor(){
         return node.ycoord;
     }
 
-    function getNeighbors(node: Node) {
-        const neighbors: Node[] = [];
-        editEdges.map((edge) => {
-            const startNode = nodeMap.get(edge.startNodeID);
-            const endNode = nodeMap.get(edge.endNodeID);
-            if ((node == startNode) && (endNode != undefined)) {
-                neighbors.push(endNode);
-            }
-            if ((node == endNode) && (startNode != undefined)) {
-                neighbors.push(startNode);
-            }
-        });
-        return neighbors;
-    }
-
-    function removeNeighbor(editNode: Node, removeNode: Node) {
-        const newEdges = editEdges;
-        let spliceInd = 0;
-        newEdges.map((edge, index) => {
-            const startNode = nodeMap.get(edge.startNodeID);
-            const endNode = nodeMap.get(edge.endNodeID);
-            if (((startNode == editNode) && (endNode == removeNode)) || ((startNode == removeNode) && (endNode == editNode))) {
-                spliceInd = index;
-            }
-        });
-        newEdges.splice(spliceInd, 1);
-        setEditEdges(newEdges);
-        setEditEdgesID(newEdges.map(edge => edge.edgeID));
-        setReplaceThis(replaceThis+1);
-    }
-
     const [addedEdges, setAddedEdges] = useState<EdgeType[]>([]);
 
-    function addNeighbor(editNode: Node, addNode: string) {
-        const otherNeighbors = getNeighbors(editNode);
-        const adding = nodeMap.get(addNode);
-        if (adding != undefined) {
-            if ((addNode != "Select node") && (!otherNeighbors.includes(adding)) && (adding != currentNode)) {
-                const newEdges = editEdges;
-                const newEdge: EdgeType = {
-                    startNodeID: editNode.nodeID,
-                    endNodeID: addNode,
-                    edgeID: editNode.nodeID + "_" + addNode
-                };
-                newEdges.push(newEdge);
-                setEditEdges(newEdges);
-                addedEdges.push(newEdge);
-                // console.log(setAddedEdges);
-                setReplaceThis(replaceThis+1);
-            }
-        }
-
-    }
 
     const [changeElement, setChangeElement] = useState("");
 
     //handling form elements
-    function autofillByDrag(element: string) {
-        if (dragging || changeElement != element) {
+    function autofillByDrag(element: string, autofill: boolean) {
+        if ((dragging || changeElement != element) && autofill) {
             return currentNode[element];
         }
     }
@@ -224,74 +171,25 @@ export function MapEditor(){
             setChangeElement("");
         }
     }
-    const [neighborToAdd, setNeighborToAdd] = useState(null);
 
-    function setNeighbor(e) {
-        setNeighborToAdd(e.target.value);
+    function addEdge(edge: EdgeType) {
+        edges.push(edge);
+        setReplaceThis(replaceThis+1);
     }
+    function deleteEdge(spliceInd: number) {
+        edges.splice(spliceInd, 1);
+        setReplaceThis(replaceThis+1);
+    }
+
     function nodeEditor() {
         if (currentNode.nodeID != "") {
             return (
                 <>
-                    <p>Node ID: {currentNode.nodeID}</p>
-                    <div className={"grid grid-cols-[auto_auto] gap-1"}>
-                        <label htmlFor="longname">Long Name: </label>
-                        <input value={autofillByDrag("longName")} id="longname"
-                               onChange={(e) => {
-                                   handleInput("longName", e);
-                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
-                        <label htmlFor="shortname">Short Name: </label>
-                        <input value={autofillByDrag("shortName")} id="shortname"
-                               onChange={(e) => {
-                                   handleInput("shortName", e);
-                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
-                        <label htmlFor="building">Building: </label>
-                        <input value={autofillByDrag("building")} id="building"
-                               onChange={(e) => {
-                                   handleInput("building", e);
-                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
-                    <p>Floor: {currentNode.floor}</p><div></div>
-                        <label htmlFor="nodetype">Type: </label>
-                        <input value={autofillByDrag("nodeType")} id="nodetype"
-                               onChange={(e) => {
-                                   handleInput("nodeType", e);
-                               }} maxLength={4} className = "border-deep-blue border-2 rounded flex-grow"></input>
-                        <label htmlFor="xcoord">X Coordinate: </label>
-                        <input type="number" value={autofillByDrag("xcoord")} id="longname"
-                               onChange={(e) => {
-                                   handleInput("xcoord", e);
-                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
-                        <label htmlFor="ycoord">Y Coordinate: </label>
-                        <input type="number" value={autofillByDrag("ycoord")} id="longname"
-                               onChange={(e) => {
-                                   handleInput("ycoord", e);
-                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
-                    </div>
-                    <p>Neighbors:</p>
-                    <div className="flex flex-row gap-3 flex-wrap">
-                        {
-                            getNeighbors(currentNode).map((neighbor: Node) => {
-                                return (
-                                    <div className="bg-deep-blue rounded-2xl font-bold text-white p-2">
-                                        {neighbor.nodeID}
-                                        <button className="pl-2" onClick={() => {
-                                            removeNeighbor(currentNode, neighbor);
-                                        }}>X
-                                        </button>
-                                    </div>
-                                );
-                            })
-                        }
-                    </div>
-
-                    <span className="flex flex-row items-center gap-5">
-                    <Select defaultOption="Select node" options={nodeStrings} id="addNeighbor"
-                            onChange={(e: React.ChangeEvent) => {
-                                setNeighbor(e);
-                            }} label="Add Neighbor: "/>
-                    <button className="bg-deep-blue rounded-2xl px-2 py-1 font-bold text-white"
-                            onClick={() => {addNeighbor(currentNode, neighborToAdd);}}>Add</button>
-                    </span>
+                    {<NodeForm node={currentNode} keyLabels={["Node ID", "X Coordinate", "Y Coordinate", "Floor", "Building",
+                    "Type", "Long Name", "Short Name"]}
+                               disabled={["nodeID", "floor"]} handleInput={handleInput} value={autofillByDrag} nodeList={nodes}
+                               edgeList={edges} nodeMap={nodeMap} currentNode={currentNode} nodeStrings={nodeStrings}
+                               autofill={true} addEdge={addEdge} deleteEdge={deleteEdge}/>}
                 </>
             );
         } else {
@@ -377,7 +275,7 @@ export function MapEditor(){
                                 }
                             }
                         })}
-                        {editNodes.filter(node => {
+                        {nodes.filter(node => {
                             return node.floor === currentFloor;
                         }).map((node) => {
                             return <>
