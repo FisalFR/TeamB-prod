@@ -288,7 +288,7 @@ export function CsvManager() {
 
     return (
         <div className="flex">
-        <div className={"flex flex-row max-h-full bg-bone-white overflow-y-hidden"}>
+        <div className={"flex flex-row max-h-full bg-bone-white overflow-y-hidden w-full"}>
                 <div className="flex mx-3 space-y-7 h-full max-h-[93vh] min-w-fit overflow-y-auto overflow-x-hidden">
                     <div className="flex h-full max-h-[93vh]">
 
