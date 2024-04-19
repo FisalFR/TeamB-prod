@@ -15,6 +15,7 @@ import FloorSelector from "../components/map/FloorSelector.tsx";
 import {PathSelector} from "../components/map/PathSelector.tsx";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
 import useNodes from "../hooks/useNodes.ts";
+import ToggleNodes from "../components/map/ToggleNodes.tsx";
 
 
 
@@ -32,6 +33,7 @@ export function Map(){
     const MinusSvg = <img src={minus} alt="Minus" className={"w-5"} />;
 
     const [showPath, setShowPath] = useState(false);
+    const [showNodes, setShowNodes] = useState(false);
 
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
     const [algo, setAlgo] = useState<string>("Astar");
@@ -131,8 +133,10 @@ export function Map(){
                                 pathNodes={pathNodes}
                                 images={floorImages as Record<string, string>}
                                 onClickCircle={onClickCircle}
-                                allNodes ={nodes}/>
+                                allNodes ={nodes}
+                                showNodes = {showNodes}/>
                 </TransformComponent>
+                <ToggleNodes onClick={() => setShowNodes(!showNodes) } isOn={showNodes}/>
                 <PathSelector nodes={nodes.filter((node) =>  !node.longName.includes("Hall"))}
                               handleStartChange={handleStartChange}
                               handleEndChange={handleEndChange}

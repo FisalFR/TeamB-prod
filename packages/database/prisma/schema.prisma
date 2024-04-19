@@ -75,20 +75,21 @@ model interpreter {
 }
 
 model forms {
-  formID              String                        @id
-  status              String
-  type                String
-  assignee            String
-  dateCreated         DateTime                      @default(now())
-  location            String
-  priority            String
-  employeeName        String
-  languageRequests    languageInterpreterRequests[] @relation(name: "languageRequestID")
-  maintenanceRequests maintenances[]                @relation(name: "maintenanceRequestID")
-  medicineRequests    medicineRequests[]            @relation(name: "medicineRequestID")
-  sanitationRequests  sanitationRequests[]          @relation(name: "sanitationRequestID")
-  securityRequests    securityRequests[]            @relation(name: "securityRequestID")
-  giftRequests        giftRequests[]                @relation(name: "giftRequestID")
+  formID                 String                        @id
+  status                 String
+  type                   String
+  assignee               String
+  dateCreated            DateTime                      @default(now())
+  location               String
+  priority               String
+  employeeName           String
+  languageRequests       languageInterpreterRequests[] @relation(name: "languageRequestID")
+  maintenanceRequests    maintenances[]                @relation(name: "maintenanceRequestID")
+  medicineRequests       medicineRequests[]            @relation(name: "medicineRequestID")
+  sanitationRequests     sanitationRequests[]          @relation(name: "sanitationRequestID")
+  securityRequests       securityRequests[]            @relation(name: "securityRequestID")
+  giftRequests           giftRequests[]                @relation(name: "giftRequestID")
+  transportationRequests transportationRequests[]      @relation(name: "transportationID")
 }
 
 model languageInterpreterRequests {
@@ -146,4 +147,12 @@ model giftItem {
   quantity Int
   cart     String
   cartID   giftRequests @relation(name: "cartID", fields: [cart], references: [giftRequest])
+}
+
+model transportationRequests {
+  transportationRequest   String @id
+  address                 String
+  transport               String
+  feedback                String
+  transportationRequestID forms  @relation(name: "transportationID", fields: [transportationRequest], references: [formID])
 }
