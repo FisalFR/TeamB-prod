@@ -1,4 +1,4 @@
-//import AnimatedSVG from "../components/HeroImage.tsx";
+import AnimatedSVG from "../components/HeroImage.tsx";
 
 //import React, {useState} from 'react';
 //import Carousel from "../components/Carousel";
@@ -48,38 +48,53 @@ export function LoginPage() {
         }
     ];
 */
-    const style = {
-        backgroundImage: `url(${background})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-
-    };
+const style = {
+    backgroundImage: `linear-gradient(to bottom , rgba(21,155,211), rgba(1,45,90,0.3), rgba(1, 45, 90, 1)),url(${background})`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    zIndex: 0,
+    top: 0,
+    left: 0,
+    height: '100%',
+};
 
 
 
 
     return (
-        <div className="z-0 top-0 left-0 h-full " style={style}>
-
-            <div className='w-full  justify-between px-10 pt-20 h-full'>
+//
 
 
-                <div className="w-1/2 flex flex-col">
-                    <div className="text-center pb-5 rounded mx-auto animate-scale-in-ver-top">
-                        <h1 className="font-bold font-HeadlandOne text-6xl text-white mb-2">Navigate
-                            Seamlessly</h1>
-                        <p className="text-left text-xl py-6 text-white">Find your room in Brigham & Women's with ease. With
-                            pathfinding
-                            locate your
-                            destination in the smallest steps. Never get lost, no wasted time, get there stress
-                            free.</p>
+        <div className="z-0 top-0 left-0 h-full grid grid-cols-2" style={style}>
 
-                        {<a href={"/map"}
+            <div className=" m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col">
+                <h1 className=" font-HeadlandOne text-4xl text-white mb-2">Navigate
+                    Seamlessly</h1>
+                <p className="pl-10 text-left text-xl font-bold  text-white">Find your room in Brigham & Women's with
+                    ease.
+                    With
+                    pathfinding
+                    locate your
+                    destination in the smallest steps. Never get lost, no wasted time, get there stress
+                    free.</p>
+
+                {/*{<a href={"/map"}
                             className=" hover:animate-none text-4xl hover:cursor-pointer hover:text-4xl hover:text-deep-blue hover:font-bold pb-5 ">
-                            Click here to navigate!</a>}
+                            Click here to navigate!</a>}*/}
 
+
+            </div>
+
+
+
+
+                    <div className="pt-20 opacity-25">
+                        <AnimatedSVG/>
                     </div>
+
+
+
                     <div className="flex justify-center">
 
                         {/*<div
@@ -91,8 +106,8 @@ export function LoginPage() {
 
                         </div>*/}
                     </div>
-                </div>
-            </div>
+
+
         </div>
 
 
