@@ -16,6 +16,7 @@ export function TransportationRequestPage() {
     const [request, setRequest] = useState<MaintenanceRequest>({employeeName: "", location: "", priority: "", feedback: ""});
     const formRef = useRef<HTMLFormElement>(null);
     const [locationOptions, setLocationOptions] = useState<string[]>([]);
+    //const [TransportOptions, setTransportOptions] = useState<string[]>([]);
     const [cleared, setCleared] = useState(false);
     useEffect(() => {
         axios.get("/api/maintenance/location").then((response) => {
@@ -25,6 +26,7 @@ export function TransportationRequestPage() {
             }
             setLocationOptions(locationOptionsStrings);
         });
+        //TODO create database for transport options
     }, []);
     function handlePriorityInput(e: ChangeEvent<HTMLInputElement>): void {
         setRequest({...request, priority: e.target.value});
@@ -32,6 +34,12 @@ export function TransportationRequestPage() {
     function handleLocationInput(str: string): void {
         setCleared(false);
         setRequest({...request, location: str});
+    }
+    function handleFeedbackInput(e: ChangeEvent<HTMLTextAreaElement>): void {
+        setRequest({...request, feedback: e.target.value});
+    }
+    function handleNameInput(e: ChangeEvent<HTMLInputElement>): void{
+        setRequest({...request, employeeName: e.target.value});
     }
 
     return (
@@ -51,20 +59,36 @@ export function TransportationRequestPage() {
                         }}>
                             <div>
                                 <p className="font-bold">Employee Name</p>
-                                {/*onChange={handleNameInput} value={request.employeeName}*/}
                                 <input type="text" required
                                        placeholder={"Name"}
+                                       onChange={handleNameInput} value={request.employeeName}
                                        className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-[5px] w-full"}/>
 
                             </div>
                             <div>
-                                <p className={"text-left font-bold"}>What location is this issue in?</p>
+                                <p className={"text-left font-bold"}>What room is the patient in?</p>
                                 <div className="border-deep-blue border-solid border-2 rounded w-fit">
                                     <Dropdown options={locationOptions} placeholder={"Location"}
                                               name={"locationDropdown"}
                                               id={"dropdown1"} value={cleared}
                                               setInput={handleLocationInput} required={true} width={"w-80"}/>
                                 </div>
+                            </div>
+                            <div>
+                                <p className={"text-left font-bold"}>How will the patient be transported?</p>
+                                <div className="border-deep-blue border-solid border-2 rounded w-fit">
+                                    <Dropdown options={locationOptions} placeholder={"Transport Type"}
+                                              name={"TransportDropdown"}
+                                              id={"dropdown2"} value={cleared}
+                                              setInput={handleLocationInput} required={true} width={"w-80"}/>
+                                </div>
+                            </div>
+                            <div>
+                                <p className="font-bold">Drop off Location Address</p>
+                                {/*onChange={handleAddressInput} value={request.address}*/}
+                                <input type="text" required
+                                       placeholder={"Address"}
+                                       className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-[5px] w-full"}/>
                             </div>
                             <div>
                                 <p className={"text-left font-bold "}>What is the priority of this request?</p>
@@ -82,6 +106,14 @@ export function TransportationRequestPage() {
                                                  state={request.priority}
                                                  onChange={handlePriorityInput} required={true} width={"w-80"}/>
                                 </div>
+                            </div>
+                            <div>
+                                <p className="font-bold">Additional Comments </p>
+                                <textarea id={"feedback"}
+                                          className={"w-full max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2 rounded"}
+                                          onChange={handleFeedbackInput}
+                                          value={request.feedback} required={true}
+                                          placeholder="Enter detailed description here..."/>
                             </div>
 
                         </form>
