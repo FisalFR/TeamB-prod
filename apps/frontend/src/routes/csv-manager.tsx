@@ -336,7 +336,7 @@ export function CsvManager() {
                                         <Chart options={options}
                                                series={series}
                                                type="bar"
-                                               height={290}
+                                               height="100%"
                                         />
                                     </div>
                                     <div id="html-dist"></div>
