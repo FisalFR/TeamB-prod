@@ -87,7 +87,7 @@ class AStarStrategy implements PathfindingStrategy {
             if(nextFloor === endFloor){
                 return 0;
             } else if (nextFloor !== endFloor){
-                return EuclideanDistance + 100000 + (floorDifference* 100);
+                return EuclideanDistance + 100000 + (floorDifference * 100);
             }
         }
 
