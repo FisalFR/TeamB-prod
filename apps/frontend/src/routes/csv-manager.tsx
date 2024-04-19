@@ -228,7 +228,7 @@ export function CsvManager() {
         switch (activeTab) {
             case "nodes":
                 return (
-                    <div className="shadow-xl p-3 rounded-xl bg-white">
+                    <div className="shadow-xl p-3 rounded-xl bg-white w-full">
                         <h3 className={"flex items-start text-xl font-OpenSans font-bold pb-4 pt-2"}>Upload Node
                             CSV</h3>
                         <form ref={formRefNodes} onSubmit={e => {
@@ -246,7 +246,7 @@ export function CsvManager() {
                 );
             case "edges":
                 return (
-                    <div className="shadow-xl p-3 rounded-xl bg-blue-200">
+                    <div className="shadow-xl p-3 rounded-xl bg-white w-full">
                     <h3 className={"flex items-start text-xl font-OpenSans font-bold pb-4 pt-2"}>Upload Edge CSV</h3>
                 <form ref={formRefEdges} onSubmit={e => {
                     e.preventDefault();
@@ -265,7 +265,7 @@ export function CsvManager() {
                 ;
             case "employees":
                 return (
-                    <div className="shadow-xl p-3 rounded-xl bg-blue-200">
+                    <div className="shadow-xl p-3 rounded-xl bg-white w-full">
                         <h3 className={"flex items-start text-xl font-OpenSans font-bold pb-4 pt-2"}>Upload Employee CSV</h3>
                         <form ref={formRefEdges} onSubmit={e => {
                             e.preventDefault();
@@ -326,7 +326,7 @@ export function CsvManager() {
                                     </ul>
                                 </div>
 
-                                <div className="flex" id="default-tab-content">
+                                <div className="flex w-full" id="default-tab-content">
                                     {renderTabUpload()}
                                 </div>
 
