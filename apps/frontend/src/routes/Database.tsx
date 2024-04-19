@@ -139,15 +139,15 @@ function LogBook() {
     }
 
     return (
-            <div className="flex bg-light-white max-h-fu">
+            <div className="flex bg-light-white max-h-[94.5%]">
                 {/*Form to filter current requests*/}
                 <div className="mx-3 space-y-7 my-3">
-                    <div className="pt-3">
+                    <a onClick={clearAll}
+                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline absolute top-[11%] left-60 ">Clear
+                        Filter</a>
+                    <div className="pt-[3%] space-y-[10%]">
                         <h2 className={"font-extrabold border-b-[2px] border-black text-3xl font-OpenSans flex items-start pl-5 pb-2"}>Filter
                             Data</h2>
-                        <a onClick={clearAll}
-                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline absolute top-[90px] left-60">Clear
-                            Filter</a>
                         <form
                             className="w-[22vw]  flex flex-col items-start p-3 pl-5 pt-5">
 
@@ -230,8 +230,8 @@ function LogBook() {
 
                 {/*Actual Database Table starts here*/}
                 <div
-                    className="border-solid border-b-[1px] border-deep-blue w-full max-h-[686px] overflow-y-auto">
-                    <HoverTable data={form}
+                    className="border-solid border-b-[1px] border-deep-blue w-full max-h-[50%] overflow-y-auto">
+                <HoverTable data={form}
                                 headings={["Form ID", "Type", "Location", "Status", "Assignee", "Created By", "Priority", "Date Created"]}
                                 keys={["formID", "type", "location", "status", "assignee", "employeeName", "priority", "dateCreated"]}
                                 dataUpdated={dataUpdated} setDataUpdated={setDataUpdated}/>
