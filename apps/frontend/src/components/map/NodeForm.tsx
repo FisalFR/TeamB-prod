@@ -1,12 +1,12 @@
-import Node from "common/src/node.ts";
 import Select from "../Select.tsx";
 import React, {useState} from "react";
 import NodeType from "common/src/NodeType.ts";
 import EdgeType from "common/src/EdgeType.ts";
 
-function NodeForm(props:{node: NodeType, keyLabels: string[], disabled: string[],
+function NodeForm(props:{node: NodeType,
+    keyLabels:  {nodeID: string, longName: string, shortName: string, building: string, floor: string, xcoord: string, nodeType: string}, disabled: string[],
     handleInput:(key: string, e: React.ChangeEvent) => void, value:(key: string, autofill: boolean) => string,
-    nodeList: NodeType[], edgeList: EdgeType[], nodeMap: Map<string, Node>, currentNode: NodeType,
+    nodeList: NodeType[], edgeList: EdgeType[], nodeMap: Map<string, NodeType>, currentNode: NodeType,
     nodeStrings: string[], autofill: boolean, addEdge: (edge: EdgeType) => void, deleteEdge: (spliceInd: number) => void}) {
 
     const [replaceThis, setReplaceThis] = useState(0);
@@ -17,7 +17,7 @@ function NodeForm(props:{node: NodeType, keyLabels: string[], disabled: string[]
     }
 
     function getNeighbors(node: NodeType) {
-        const neighbors: Node[] = [];
+        const neighbors: NodeType[] = [];
         props.edgeList.map((edge) => {
             const startNode = props.nodeMap.get(edge.startNodeID);
             const endNode = props.nodeMap.get(edge.endNodeID);
@@ -73,20 +73,19 @@ function NodeForm(props:{node: NodeType, keyLabels: string[], disabled: string[]
 
     function createInputs() {
         const inputDivs = [];
-        let keyNum = 0;
-        for (const [key, value] of Object.entries(props.node)) {
+        for (const [key, keyLabel] of Object.entries(props.keyLabels)) {
             if (props.disabled.includes(key)) {
                 inputDivs.push(
                     <>
-                        <p>{props.keyLabels[keyNum]}: </p>
-                        <p>{value}</p>
+                        <p>{keyLabel}: </p>
+                        <p>{props.currentNode[key]}</p>
                     </>
                 );
             }
             else {
                 inputDivs.push(
                     <>
-                        <label htmlFor={key + "Edit"}>{props.keyLabels[keyNum]}: </label>
+                        <label htmlFor={key + "Edit"}>{keyLabel}: </label>
                         <input value={props.value(key, props.autofill)} id={key + "Edit"}
                                onChange={(e) => {
                                    props.handleInput(key, e);
@@ -94,7 +93,6 @@ function NodeForm(props:{node: NodeType, keyLabels: string[], disabled: string[]
                     </>
                 );
             }
-            keyNum++;
         }
         return inputDivs;
 
@@ -108,7 +106,7 @@ function NodeForm(props:{node: NodeType, keyLabels: string[], disabled: string[]
             <p>Neighbors:</p>
             <div className="flex flex-row gap-3 flex-wrap">
                 {
-                    getNeighbors(props.currentNode).map((neighbor: Node) => {
+                    getNeighbors(props.currentNode).map((neighbor: NodeType) => {
                         return (
                             <div className="bg-deep-blue rounded-2xl font-bold text-white p-2">
                                 {neighbor.nodeID}

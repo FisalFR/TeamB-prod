@@ -33,6 +33,16 @@ export function MapEditor(){
         longName: "",
         shortName: ""
     };
+    const nodeLabels = {
+        "nodeID": "NodeId",
+        "longName": "Long Name",
+        "shortName": "Short Name",
+        "building": "Building",
+        "floor": "Floor",
+        "xcoord": "X Coordinate",
+        "ycoord": "Y Coordinate",
+        "nodeType": "Type"
+    };
 
     const [currentNode, setCurrentNode] = useState(placeholderNode);
     const PlusSvg = <img src={plus} alt="Plus" className={"w-5"} />;
@@ -185,8 +195,7 @@ export function MapEditor(){
         if (currentNode.nodeID != "") {
             return (
                 <>
-                    {<NodeForm node={currentNode} keyLabels={["Node ID", "X Coordinate", "Y Coordinate", "Floor", "Building",
-                    "Type", "Long Name", "Short Name"]}
+                    {<NodeForm node={currentNode} keyLabels={nodeLabels}
                                disabled={["nodeID", "floor"]} handleInput={handleInput} value={autofillByDrag} nodeList={nodes}
                                edgeList={edges} nodeMap={nodeMap} currentNode={currentNode} nodeStrings={nodeStrings}
                                autofill={true} addEdge={addEdge} deleteEdge={deleteEdge}/>}
