@@ -139,13 +139,13 @@ function LogBook() {
     }
 
     return (
-            <div className="flex bg-light-white max-h-[94.5%]">
+            <div className="flex bg-light-white max-h-[92%] overflow-hidden">
                 {/*Form to filter current requests*/}
                 <div className="mx-3 space-y-7 my-3">
                     <a onClick={clearAll}
-                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline absolute top-[11%] left-60 ">Clear
+                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline absolute top-[120px] left-60 ">Clear
                         Filter</a>
-                    <div className="pt-[3%] space-y-[10%]">
+                    <div className="pt-3 space-y-3">
                         <h2 className={"font-extrabold border-b-[2px] border-black text-3xl font-OpenSans flex items-start pl-5 pb-2"}>Filter
                             Data</h2>
                         <form
