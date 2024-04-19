@@ -11,7 +11,7 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
 
     function createTableHeader(){
         return props.headings.map((heading) =>
-            <th className={`border-collapse ${props.px} ${props.py} border-solid border-t-[0px] border-[1px] border-deep-blue bg-deep-blue text-bone-white`}>
+            <th className={`border-collapse ${props.px} ${props.py} border-solid border-t-[0px] border-[1px] border-deep-blue bg-deep-blue text-bone-white bg-graphite`}>
                 {heading}
             </th>
 
