@@ -199,8 +199,8 @@ export function CsvManager() {
                 );
             case "edges":
                 return (
-                    <div className="w-[319%]">
-                        {<div className="max-h-[93vh] overflow-auto">
+                    <div className=" flex flex-xl-grow-1 w-full">
+                        {<div className="max-h-[93vh] overflow-auto flex-grow w-full">
                             <Table data={edgeData}
                                    headings={["Edge ID", "Start Node", "End Node"]}
                                    keys={["edgeID", "startNodeID", "endNodeID"]}/>
@@ -289,7 +289,7 @@ export function CsvManager() {
     return (
         <div className={"flex flex-row h-[93vh] bg-bone-white"}>
                 <div className="mx-3 space-y-7 h-full">
-                    <div className="h-full">
+                    <div className="flex h-full">
 
                         <div className="flex flex-col items-start pt-3 rounded-3xl w-1/3 min-w-fit">
                             <h2 className={"font-extrabold text-3xl font-OpenSans flex items-start pb-5 pl-2"}>CSV
@@ -326,7 +326,7 @@ export function CsvManager() {
                                     </ul>
                                 </div>
 
-                                <div id="default-tab-content">
+                                <div className="flex" id="default-tab-content">
                                     {renderTabUpload()}
                                 </div>
 
@@ -348,7 +348,7 @@ export function CsvManager() {
 
 
             {/* Tab content */}
-            <div id="default-tab-content">
+            <div className="flex flex-grow w-full" id="default-tab-content">
                 <div className="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="nodes" role="tabpanel"
                      aria-labelledby="nodes-tab">
                 </div>
@@ -359,12 +359,10 @@ export function CsvManager() {
                      aria-labelledby="employees-tab">
                 </div>
 
-                <div
-                    className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable">
-                    <div id="default-tab-content">
+                <div className="flex flex-fill w-full" id="default-tab-content">
                         {renderTabContent()}
-                    </div>
                 </div>
+
             </div>
         </div>
     );
