@@ -139,23 +139,25 @@ function LogBook() {
     }
 
     return (
-            <div className="flex pt-8">
+            <div className="flex bg-light-white max-h-fu">
                 {/*Form to filter current requests*/}
-                <div className=" h-full mx-3 space-y-7 my-3">
-                    <div className="rounded-2xl bg-deep-blue bg-opacity-5">
+                <div className="mx-3 space-y-7 my-3">
+                    <div className="pt-3">
+                        <h2 className={"font-extrabold border-b-4 border-deep-blue text-3xl font-OpenSans flex items-start pl-5 pb-2"}>Filter
+                            Data</h2>
                         <a onClick={clearAll}
-                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline absolute top-[120px] left-60">Clear
+                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline absolute top-[90px] left-60">Clear
                             Filter</a>
                         <form
-                            className="w-[22vw]  flex flex-col items-start p-3 pl-5">
-                            <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start pb-3"}>Filter
-                                Data</h2>
+                            className="w-[22vw]  flex flex-col items-start p-3 pl-5 pt-5">
 
 
                             <p className={"text-left font-bold"}>Form ID</p>
                             <Dropdown options={formIDOptions} placeholder={"Choose FormID"}
                                       name={"formIDDropdown"}
                                       id={"dropdown1"} value={cleared}
+                                      color={"bg-deep-blue bg-opacity-5"}
+                                      rounded={"rounded-md"}
                                       setInput={handleFormID} required={true}/>
                         </form>
 
@@ -165,6 +167,8 @@ function LogBook() {
                             <Dropdown options={requestTypeOptions} placeholder={"Choose Request Type"}
                                       name={"requestTypeDropdown"}
                                       id={"dropdown2"} value={cleared}
+                                      color={"bg-deep-blue bg-opacity-5"}
+                                      rounded={"rounded-md"}
                                       setInput={handleRequestType} required={true}/>
                         </form>
 
@@ -174,6 +178,8 @@ function LogBook() {
                             <Dropdown options={locationOptions} placeholder={"Choose Location"}
                                       name={"locationDropdown"}
                                       id={"dropdown3"} value={cleared}
+                                      color={"bg-deep-blue bg-opacity-5"}
+                                      rounded={"rounded-md"}
                                       setInput={handleLocation} required={true}/>
                         </form>
 
@@ -182,6 +188,8 @@ function LogBook() {
                             <p className={"text-left font-bold"}>Request Status</p>
                             <Dropdown options={statusTypeOptions} placeholder={"Choose Status"} name={"statusDropdown"}
                                       id={"statusDropdown"} value={cleared}
+                                      color={"bg-deep-blue bg-opacity-5"}
+                                      rounded={"rounded-md"}
                                       setInput={handleStatusType} required={true}/>
                         </form>
 
@@ -191,6 +199,8 @@ function LogBook() {
                             <Dropdown options={staffTypeOptions} placeholder={"Choose Assignee"}
                                       name={"staffDropdown"}
                                       id={"dropdown5"} value={cleared}
+                                      color={"bg-deep-blue bg-opacity-5"}
+                                      rounded={"rounded-md"}
                                       setInput={handleAssigneeType} required={true}/>
                         </form>
 
@@ -200,6 +210,8 @@ function LogBook() {
                             <Dropdown options={createdByOptions} placeholder={"Choose Created By"}
                                       name={"createdDropdown"}
                                       id={"dropdown7"} value={cleared}
+                                      color={"bg-deep-blue bg-opacity-5"}
+                                      rounded={"rounded-md"}
                                       setInput={handleCreatedBy} required={true}/>
                         </form>
 
@@ -209,6 +221,8 @@ function LogBook() {
                             <Dropdown options={priorityOptions} placeholder={"Choose Priority"}
                                       name={"priorityDropdown"}
                                       id={"dropdown6"} value={cleared}
+                                      color={"bg-deep-blue bg-opacity-5"}
+                                      rounded={"rounded-md"}
                                       setInput={handlePriority} required={true}/>
                         </form>
                     </div>
@@ -216,15 +230,14 @@ function LogBook() {
 
                 {/*Actual Database Table starts here*/}
                 <div
-                    className="max-h border-solid border-b-[1px] border-deep-blue w-full h-full max-h-databasetable overflow-auto mt-3">
+                    className="border-solid border-b-[1px] border-deep-blue w-full max-h-[686px] overflow-y-auto">
                     <HoverTable data={form}
-                                headings={["Form ID", "Type", "Location", "Status", "Assignee", "Created By", "priority", "Date Created"]}
+                                headings={["Form ID", "Type", "Location", "Status", "Assignee", "Created By", "Priority", "Date Created"]}
                                 keys={["formID", "type", "location", "status", "assignee", "employeeName", "priority", "dateCreated"]}
                                 dataUpdated={dataUpdated} setDataUpdated={setDataUpdated}/>
                 </div>
 
             </div>
-
     );
 }
 
