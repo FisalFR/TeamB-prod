@@ -16,6 +16,7 @@ import Select from "../components/Select.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
 import EdgeType from "common/src/EdgeType.ts";
+import {EditingPopout} from "../components/map/EditingPopout.tsx";
 
 export function MapEditor(){
 
@@ -419,6 +420,7 @@ export function MapEditor(){
                     currentFloor={currentFloor}
                 />
                 <ZoomControls></ZoomControls>
+                <EditingPopout children={"X"}></EditingPopout>
             </TransformWrapper>
         </div>
 
