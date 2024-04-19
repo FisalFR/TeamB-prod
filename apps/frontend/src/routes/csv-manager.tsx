@@ -189,7 +189,7 @@ export function CsvManager() {
             case "nodes":
                 return (
                     <div className="">
-                        {<div className="max-h-[93vh] overflow-auto w-full">
+                        {<div className="max-h-[92vh] overflow-auto w-full">
                             <Table data={nodeData}
                                    headings={["Name", "Node ID", "X-Coord", "Y-Coord", "Floor", "Building", "Node Type", "Long Name", "Short Name"]}
                                    keys={["name", "id", "xcord", "ycord", "floor", "building", "nodeType", "longName", "shortName"]}
@@ -200,7 +200,7 @@ export function CsvManager() {
             case "edges":
                 return (
                     <div className=" flex flex-xl-grow-1 w-full">
-                        {<div className="max-h-[93vh] overflow-auto flex-grow w-full">
+                        {<div className="max-h-[92vh] overflow-auto flex-grow w-full">
                             <Table data={edgeData}
                                    headings={["Edge ID", "Start Node", "End Node"]}
                                    keys={["edgeID", "startNodeID", "endNodeID"]}/>
@@ -287,15 +287,16 @@ export function CsvManager() {
 
 
     return (
-        <div className={"flex flex-row h-[93vh] bg-bone-white"}>
-                <div className="mx-3 space-y-7 h-full">
-                    <div className="flex h-full">
+        <div className="flex">
+        <div className={"flex flex-row max-h-full bg-bone-white overflow-y-hidden"}>
+                <div className="flex mx-3 space-y-7 h-full max-h-[93vh] min-w-fit overflow-y-auto overflow-x-hidden">
+                    <div className="flex h-full max-h-[93vh]">
 
-                        <div className="flex flex-col items-start pt-3 rounded-3xl w-1/3 min-w-fit">
+                        <div className="flex flex-col items-start pt-3 rounded-3xl w-1/3 min-w-fit h-[92vh]">
                             <h2 className={"font-extrabold text-3xl font-OpenSans flex items-start pb-5 pl-2"}>CSV
                                 Manager</h2>
                             {/* Tabbed interface */}
-                            <div className={"flex flex-col w-full"}>
+                            <div className={"flex flex-col w-full max-h-[93vh]"}>
                                 <div className="border-b border-gray-200 pb-1 overflow-hidden">
                                     <ul className="flex justify-centerz` text-sm font-medium text-center w-full rounded-md bg-gray-200 mb-4"
                                         role="tablist">
@@ -324,18 +325,19 @@ export function CsvManager() {
                                             </button>
                                         </li>
                                     </ul>
+
+                                    <div className="flex w-full" id="default-tab-content">
+                                        {renderTabUpload()}
+                                    </div>
+
                                 </div>
 
-                                <div className="flex w-full" id="default-tab-content">
-                                    {renderTabUpload()}
-                                </div>
-
-                                <div className="flex flex-col items-center bg-white p-5 mt-5 rounded-xl shadowl-xl">
-                                    <div id="chart">
+                                <div className="flex flex-col flex-grow items-center bg-white p-4 mt-5 rounded-xl shadowl-xl">
+                                    <div className="flex flex-grow" id="chart">
                                         <Chart options={options}
                                                series={series}
                                                type="bar"
-                                               height={350}
+                                               height={285}
                                         />
                                     </div>
                                     <div id="html-dist"></div>
@@ -364,6 +366,7 @@ export function CsvManager() {
                 </div>
 
             </div>
+        </div>
         </div>
     );
 }

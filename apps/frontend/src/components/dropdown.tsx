@@ -4,7 +4,7 @@ import '../App.css';
 import {HTMLInputElement} from "happy-dom";
 import {optionWithSearch} from "common/src/optionWithSearch.ts";
 
-function Dropdown(props: { options: string[]; placeholder: string; name: string; id: string; setInput:(str: string) => void; value: boolean; required: boolean; width:string; color:string; rounded: string}) {
+function Dropdown(props: { options: string[]; placeholder: string; name: string; id: string; maxHeight: string; setInput:(str: string) => void; value: boolean; required: boolean; width:string; color:string; rounded: string}) {
 
     const optionList = props.options;
     const listElements = useRef<HTMLDivElement[]>([]);
@@ -289,7 +289,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 
             <div className={`${props.width} relative`} >
                 <div className={dropdownClass}>
-                    <div className="max-h-48 overflow-auto" role="listbox" id="options-dropdown">
+                    <div className={`${props.maxHeight} overflow-auto`} role="listbox" id="options-dropdown">
                         {createOptions()}
                     </div>
                     <div className={scrollIndicator}>▼</div>
@@ -303,7 +303,8 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 Dropdown.defaultProps = {
     width: "w-72",
     color: "bg-light-white",
-    rounded: ""
+    rounded: "",
+    maxHeight:"max-h-48"
 
 };
 
