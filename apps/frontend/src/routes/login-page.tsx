@@ -7,8 +7,20 @@ import image2 from '../assets/Carousel/InterpreterRequest.jpg';
 import image3 from '../assets/Carousel/security.jpg';
 import image4 from '../assets/Carousel/mapPathfinding.png';*/
 import background from '../assets/Hero_Image/brighams_hero.jpg';
+import {useEffect} from "react";
 export function LoginPage() {
-   // const [isHovered,setIsHovered] = useState(true);
+
+    useEffect(() => {
+        // Disable scrolling on the body element
+        document.body.style.overflow = 'hidden';
+
+        // Reset overflow when the component unmounts
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []); // Empty dependency array ensures this runs on mount and unmount only
+
+    // const [isHovered,setIsHovered] = useState(true);
   /*  const content = [
         {
             image: { src: image4, alt: 'Description of image 1' },
@@ -66,7 +78,7 @@ const style = {
 //
 
 
-        <div className="z-0 top-0 left-0 h-full grid grid-cols-2" style={style}>
+        <div className=" z-0 top-0 left-0 h-full grid grid-cols-2" style={style}>
 
             <div className=" m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col">
                 <h1 className=" font-HeadlandOne text-4xl text-white mb-2">Navigate
