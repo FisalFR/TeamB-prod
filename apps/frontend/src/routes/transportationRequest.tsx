@@ -15,11 +15,15 @@ export function TransportationRequestPage() {
         address: "",
         transport: "",
     });
-    //TODO switch to my own use state; copy sanitation route backend as example
+
     const formRef = useRef<HTMLFormElement>(null);
     const [locationOptions, setLocationOptions] = useState<string[]>([]);
-    //const [TransportOptions, setTransportOptions] = useState<string[]>([]);
     const [cleared, setCleared] = useState(false);
+    const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
+        formScreen: "block",
+        submittedScreen: "hidden"
+    });
+
     useEffect(() => {
         axios.get("/api/maintenance/location").then((response) => {
             const locationOptionsStrings: string[] = [];
@@ -28,7 +32,6 @@ export function TransportationRequestPage() {
             }
             setLocationOptions(locationOptionsStrings);
         });
-        //TODO create database for transport options
     }, []);
 
     function handleSubmit(e: { preventDefault: () => void; }) {
@@ -41,16 +44,16 @@ export function TransportationRequestPage() {
                 }
             }).then();
             setCleared(true);
-           // setSubmittedWindowVisibility({formScreen: "hidden", submittedScreen: "block"});
+           setSubmittedWindowVisibility({formScreen: "hidden", submittedScreen: "block"});
         }
     }
     function handleClear(e: { preventDefault: () => void; }): void {
         e.preventDefault();
-        // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
         setRequest({feedback: "", employeeName: "", location: "", priority: "", address:"", transport:""});
         // use resetActive from Dropdown?
         setCleared(true);
     }
+
     function handlePriorityInput(e: ChangeEvent<HTMLInputElement>): void {
         setRequest({...request, priority: e.target.value});
     }
@@ -72,10 +75,16 @@ export function TransportationRequestPage() {
         setRequest({...request, transport: str});
     }
 
+    function handleNewSubmission(): void {
+        setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
+        setRequest({employeeName: "", location: "", priority: "", feedback: "", transport:"", address:""});
+        setCleared(false);
+    }
+
     return (
         <>
             <div className="centerContent flex flex-col">
-                <div> {/*TODO this us where the submitted form screen function goes*/}
+                <div className={submittedWindowVisibility.formScreen}>
                     <div className="bg-light-white my-10 p-10 px-20 rounded-3xl w-auto">
                         <div>
                             <h1 className="text-3xl font-HeadlandOne py-4"> Welcome to the External Patient
@@ -87,22 +96,25 @@ export function TransportationRequestPage() {
                         <form ref={formRef} onSubmit={e => {
                             e.preventDefault();
                         }}>
-                            <div>
-                                <p className="font-bold">Employee Name</p>
-                                <input type="text" required
-                                       placeholder={"Name"}
-                                       onChange={handleNameInput} value={request.employeeName}
-                                       className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-[5px] w-full"}/>
-
-                            </div>
-                            <div>
-                                <p className={"text-left font-bold"}>What room is the patient in?</p>
-                                <div className="border-deep-blue border-solid border-2 rounded w-fit">
-                                    <Dropdown options={locationOptions} placeholder={"Location"}
-                                              name={"locationDropdown"}
-                                              id={"dropdown1"} value={cleared}
-                                              setInput={handleLocationInput} required={true} width={"w-80"}/>
+                            <div className="flex ">
+                                <div className="flex flex-col">
+                                    <p className="font-bold">Employee Name</p>
+                                    <input type="text" required
+                                           placeholder={"Name"}
+                                           onChange={handleNameInput} value={request.employeeName}
+                                           className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-[5px] w-80"}/>
                                 </div>
+                                <div className="flex flex-col ">
+                                    <p className={"font-bold"}>What room is the patient in?</p>
+                                    <div className="border-deep-blue border-solid border-2 rounded w-fit">
+                                        <Dropdown options={locationOptions} placeholder={"Location"}
+                                                  name={"locationDropdown"}
+                                                  id={"dropdown1"} value={cleared}
+                                                  setInput={handleLocationInput} required={true} width={"w-80"}/>
+                                    </div>
+                                </div>
+
+
                             </div>
                             <div>
                                 <p className={"text-left font-bold"}>How will the patient be transported?</p>
@@ -119,11 +131,11 @@ export function TransportationRequestPage() {
                                 <input type="text" required
                                        placeholder={"Address"}
                                        onChange={handleAddressInput} value={request.address}
-                                       className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-[5px] w-full"}/>
+                                       className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-[5px] w-80"}/>
                             </div>
                             <div>
                                 <p className={"text-left font-bold "}>What is the priority of this request?</p>
-                                <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                <div className={"w-80 border-solid border-deep-blue border-2 rounded "}>
                                     <RadioButton value={"Low"} name={"priority"} id={"priority1"}
                                                  state={request.priority}
                                                  onChange={handlePriorityInput} required={true} width={"w-80"}/>
@@ -141,7 +153,7 @@ export function TransportationRequestPage() {
                             <div>
                                 <p className="font-bold">Additional Comments </p>
                                 <textarea id={"feedback"}
-                                          className={"w-full max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2 rounded"}
+                                          className={"w-80 max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2 rounded"}
                                           onChange={handleFeedbackInput}
                                           value={request.feedback} required={true}
                                           placeholder="Enter detailed description here..."/>
@@ -152,6 +164,39 @@ export function TransportationRequestPage() {
                             </div>
 
                         </form>
+                    </div>
+                    <div>
+                        <p className={"font-HeadlandOne text-deep-blue"}>Created by Lily</p>
+                    </div>
+                </div>
+
+                <div className={submittedWindowVisibility.submittedScreen}>
+                    <div className="pt-32">
+                        <div className="p-6 bg-white rounded-2xl">
+                            <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+                            <Button onClick={handleNewSubmission} children="Submit a new request"/>
+                        </div>
+                        <div className={"text-left"}>
+                            <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
+                                Submission:</h3>
+                            <p className={"font-bold"}>Employee Name</p>
+                            <p className={""}>{request.employeeName}</p>
+
+                            <p className={"font-bold"}>What location is this issue in?</p>
+                            <p className={""}>{request.location}</p>
+
+                            <p className={"font-bold"}>How will the patient be transported?</p>
+                            <p className={""}>{request.transport}</p>
+
+                            <p className={"font-bold"}>Drop off Location Address?</p>
+                            <p className={""}>{request.address}</p>
+
+                            <p className={"font-bold"}>Is this an urgent issue?</p>
+                            <p className={""}>{request.priority}</p>
+
+                            <p className={"font-bold"}>Additional Feedback</p>
+                            <p className={""}>{request.feedback}</p>
+                        </div>
                     </div>
                 </div>
             </div>
