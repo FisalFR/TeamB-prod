@@ -4,7 +4,7 @@ import '../App.css';
 import {HTMLInputElement} from "happy-dom";
 import {optionWithSearch} from "common/src/optionWithSearch.ts";
 
-function Dropdown(props: { options: string[]; placeholder: string; name: string; id: string; setInput:(str: string) => void; value: boolean; required: boolean; width:string}) {
+function Dropdown(props: { options: string[]; placeholder: string; name: string; id: string; setInput:(str: string) => void; value: boolean; required: boolean; width:string; color:string; rounded: string}) {
 
     const optionList = props.options;
     const listElements = useRef<HTMLDivElement[]>([]);
@@ -276,8 +276,8 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 
 
     return (
-        <div className={`${props.width} text-left` }>
-            <input className="w-full p-[5px]" type="text"
+        <div className={`${props.width} text-left`}>
+            <input className={`w-full p-[5px] font-OpenSans ${props.color} ${props.rounded}`} type="text"
 
                    placeholder={props.placeholder} name = {props.name} id = {props.id} role = "combobox"
                    onBlur={hideDropdown} onFocus={showDropdown} onKeyDown={keyDown}
@@ -301,7 +301,10 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
 }
 
 Dropdown.defaultProps = {
-    width: "w-72"
+    width: "w-72",
+    color: "bg-light-white",
+    rounded: ""
+
 };
 
 export default Dropdown;
