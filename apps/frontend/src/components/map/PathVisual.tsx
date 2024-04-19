@@ -75,10 +75,10 @@ function PathVisual(props: {width: number; height: number;
                                                fill= "#FFFFFF"
                                                 stroke= "#012D5A"
                                                 strokeWidth= "4"
-
-                                               initial={{opacity: 0}}
-                                               animate={{opacity: getOpacity()}}
-                                               transition={{duration: 0.2}}
+                                                opacity={getOpacity()}
+                                               // initial={{opacity: 0}}
+                                               // animate={{opacity: getOpacity()}}
+                                               // transition={{duration: 0.2}}
                                                onClick={() => {
                                                    props.onClickCircle(node);
                                                }}/>
