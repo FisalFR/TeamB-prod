@@ -81,7 +81,7 @@ export function LoginPage() {
     return (
         <div className="z-0 top-0 left-0 h-full grid grid-cols-2 content-center" style={style}>
             <div className="m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col w-10/12">
-                <h1 className="font-OpenSans  font-bold text-7xl text-deep-blue text-left mb-2" style={{whiteSpace: 'nowrap'}} >Navigate Seamlessly</h1>
+                <h1 className="font-OpenSans  font-bold text-7xl text-white text-left mb-2" style={{whiteSpace: 'nowrap'}} >Navigate Seamlessly</h1>
                 <p className="pl-8  text-center text-xl font-extralight text-white"
                   >
                     Find your room in Brigham & Women's Hospital with ease.
