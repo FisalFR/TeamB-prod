@@ -15,6 +15,7 @@ export default {
         'white': '#FFFFFF',
         'bwh-cyan': '#009CA6',
         'light-white': '#FAFAFA',
+        'graphite': '#212121',
       },
       fontFamily: {
         'HeadlandOne': ['Headland One', 'serif'],
@@ -22,7 +23,7 @@ export default {
         'Colfax': ["Colfax", "sans-serif"],
       },
       spacing: {
-        'databasetable': '39rem',
+        'databasetable': '40rem',
         '100' : '26.15rem',
         '50': '12.29rem',
         '9': '2.4rem',
@@ -31,6 +32,8 @@ export default {
       }
     },
   },
-  plugins: [],
+
+  plugins: [
+  ],
 };
 
