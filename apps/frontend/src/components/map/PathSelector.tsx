@@ -22,11 +22,11 @@ export function PathSelector(props: {
     selectedEndOption?: string
 }) {
     const [isVisible, setIsVisible] = useState(false);
-    const [pointToFeature, setPointToFeature] = useState(true);
+    const [showArrow, setShowArrow] = useState(true);
 
     const toggleVisibility = () => {
         setIsVisible(!isVisible);
-        setPointToFeature(false);
+        setShowArrow(false);
     };
 
     const variants = {
@@ -39,7 +39,7 @@ export function PathSelector(props: {
             width: "auto",
             transition: {
                 width: {duration: 0.2, when: "beforeChildren"},
-                opacity: {duration: 0.2, delay: 0.3, when: "afterChildren"}
+                opacity: {duration: 0.1, delay: 0.3, when: "afterChildren"}
             }
         },
         exit: {
@@ -103,11 +103,11 @@ export function PathSelector(props: {
 
     const arrowAnimation = {
         animate: {
-            scale: [1, 1.2, 1]
+            x: [0, 12, 0]
         },
         transition: {
             duration: 1,
-            ease: "easeInOut",
+            ease: "circInOut",
             times: [0, 0.5, 1],
             repeat: Infinity
         },
@@ -115,12 +115,14 @@ export function PathSelector(props: {
 
     return (
         <div className="absolute top-7 flex flex-row-reverse items-center rounded-r-xl h-[172px]">
-            <div className={"h-full pl-4 items-center flex flex-col justify-around"}>
-                <motion.img animate={pointToFeature ? arrowAnimation.animate : {opacity: 0}} transition={pointToFeature ? arrowAnimation.transition : {duration: 0.5}} src={arrow} alt="arrow"/>
+            <div className={"h-full pl-4 items-center flex flex-col justify-around"} >
+                <motion.img animate={showArrow ? arrowAnimation.animate : {opacity: 0}} transition={showArrow ? arrowAnimation.transition : {duration: 0.6}} src={arrow} alt="arrow"/>
             </div>
             <motion.button
                 onClick={toggleVisibility}
-                className={"h-[164px] ml-1 px-3 pt-3 pb-2 bg-deep-blue items-center rounded-r-xl flex flex-col justify-around ring-4 " + (isVisible ? "ring-gold-yellow" : "ring-deep-blue")}>
+                animate={isVisible ? {borderColor: "rgb(246 189 56)"} : {borderColor: "#012D5A"}}
+                transition={{duration: 0.6}}
+                className={"h-full px-3 pt-3 pb-2 bg-deep-blue items-center rounded-r-xl flex flex-col justify-around border-4 border-deep-blue"}>
                 <motion.img animate={ImgAnimation.animateFrom} transition={ImgAnimation.transitionFromDest(0)}
                             src={fromIconInverse} alt="fromIconInverse"/>
                 <motion.img animate={ImgAnimation.animateDot} transition={ImgAnimation.transitionDot(0.8)}
