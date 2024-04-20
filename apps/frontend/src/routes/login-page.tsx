@@ -128,6 +128,9 @@ export function LoginPage() {
                     {/*        Click here to navigate!*/}
                     {/*    </a></span>*/}
                     {/*</button>*/}
+                    <div onClick={() => window.location.href = '/map'}>
+
+
                     <ButtonMovingBorder
                         borderRadius="0.3rem"
                         className="bg-deep-blue text-white border-neutral-200"
@@ -138,7 +141,7 @@ export function LoginPage() {
                             Click here to navigate!
                         </a>
                     </ButtonMovingBorder>
-
+                    </div>
                     {/*<ShinyButton>*/}
                     {/*    Click Here To Navigate!*/}
                     {/*</ShinyButton>*/}
