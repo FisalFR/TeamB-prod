@@ -23,6 +23,7 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "common": "workspace:*",
+    "dayjs": "^1.11.6",
     "framer-motion": "^11.0.24",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",

@@ -21,11 +21,9 @@ import caramels from "../assets/Gift_Images/caramels.jpeg";
 import {giftRequest} from "common/src/giftRequest.ts";
 import axios from "axios";
 import Dropdown from "../components/dropdown.tsx";
-import Calendar from 'react-calendar';
-import '../Calendar.css';
 import RadioButton from "../components/RadioButton.tsx";
-
-
+import {DatePicker} from '@atlaskit/datetime-picker';
+import backward from "../assets/backward.svg";
 
 //this is a commit just for mo :)
 function GiftDelivery() {
@@ -35,9 +33,9 @@ function GiftDelivery() {
     const [cleared, setCleared] = useState(false);
     const [submittedWindowVisibility, setSubmittedWindowVisibility] = useState({
         formScreen: "block",
-        submittedScreen: "hidden"
+        submittedScreen: "hidden",
+        cartScreen:"hidden"
     });
-    const [date, setDate] = useState<Date>(new Date());
     const [request, setRequest] = useState<giftRequest>({
         receiverName:"",
         senderName: "",
@@ -47,6 +45,8 @@ function GiftDelivery() {
         date: new Date().toDateString(),
         cart: []
     });
+    const [isFocused, setIsFocused] = useState(false);
+    const BackwardSVG = <img src={backward} alt="backward" className={"w-5"} />;
 
 
     useEffect(() => {
@@ -86,11 +86,17 @@ function GiftDelivery() {
         return total.toFixed(2);
     }
 
+    function handleCartScreen() {
+            setSubmittedWindowVisibility({formScreen: "hidden", submittedScreen: "hidden", cartScreen: "block"});
+    }
+
+    function handleBackbutton(){
+        setSubmittedWindowVisibility({formScreen:"block", submittedScreen: "hidden", cartScreen: "hidden"});
+    }
+
     function handleSubmit(e: {preventDefault: () => void}) {
         if (cart.length == 0){
         return alert("Please add an item to your cart.");}
-        console.log(cart);
-        console.log(request);
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
         if ((formRef.current as HTMLFormElement).checkValidity()) {
@@ -100,7 +106,7 @@ function GiftDelivery() {
                 }
             }).then();
             setCleared(true);
-            setSubmittedWindowVisibility({formScreen: "hidden", submittedScreen: "block"});
+            setSubmittedWindowVisibility({formScreen: "hidden", submittedScreen: "block", cartScreen: "hidden"});
         }
     }
 
@@ -163,15 +169,9 @@ function GiftDelivery() {
         setRequest({...request, priority: e.target.value});
     }
 
-    function handleCalendarInput( newDate:Date){
-        setCleared(false);
-        setDate(newDate);
-        setRequest({...request, date: newDate.toDateString()});
-    }
-
-    function scrollToTop(): void{
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    // function scrollToTop(): void{
+    //     window.scrollTo({ top: 0, behavior: 'smooth' });
+    // }
 
     function handleNewSubmission(): void {
 
@@ -184,19 +184,19 @@ function GiftDelivery() {
             cart: []});
         setCleared(false);
         location.reload();
-        // setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
+        setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
     }
+
 
     return (
         <div className="overflow-hidden ">
-            <div className=" right-5 fixed top-20 text-2xl text-center text-Ash-black text-bold ">
-                <Button onClick={scrollToTop} children={"Go to Cart"} px={"px-9"} py={"py-4"}/>
-            </div>
+            {/*<div className=" right-5 fixed top-20 text-2xl text-center text-Ash-black text-bold ">*/}
+            {/*    <Button onClick={scrollToTop} children={"Go to Cart"} px={"px-9"} py={"py-4"}/>*/}
+            {/*</div>*/}
             <div className="centerContent ">
 
                 <div className="w-5/6">
                     <div className={submittedWindowVisibility.formScreen}>
-
                         <div className="justify-between bg-light-white my-10 p-10 rounded-3xl">
                             <h1 className="text-3xl font-HeadlandOne align-text-top">
                                 Gift Delivery Request Form
@@ -206,103 +206,141 @@ function GiftDelivery() {
                                 e.preventDefault();
                             }}>
                                 <br/><br/>
-                                <div className="centerContent">
-                                <div className=" content-start justify-between flex mb-4 px-28 bg-gray-200 py-20 rounded-3xl w-7/8">
-                                    <div className=" flex-col items-start 1 w-4/12 h-full">
+                                <div
+                                    className="flex-col flex mb-4 px-28 bg-gray-200 py-20 rounded-3xl w-7/8 centerContent"> {/*Entire Cart Page*/}
 
-                                        <label htmlFor="message"
-                                               className="font-OpenSans text-md font-bold text-Ash-black ">
-                                            Send a Message: </label>
-                                        <textarea id="message" name="message" rows={4} cols={40}
-                                                  placeholder={"Send a nice message!"}
-                                                  onChange={handleMessage}
-                                                  className="border-solid border-deep-blue border-2 rounded p-1 px-2 w-full h-40">
-                        </textarea>
-                                        <label htmlFor="message"
-                                               className="font-OpenSans text-md font-bold text-Ash-black ">
-                                            Pick a Date: </label>
-                                        <div className=" text-xl font-Colfax text-md text-Ash-black ">
-                                            <Calendar onChange={handleCalendarInput} value={date}/>
-                                        </div>
-                                    </div>
-                                    <div className="text-left grid w-1/4 h-full gap-5 content-between">
-                                        <div>
-                                            <label htmlFor="receiverName"
-                                               className="font-OpenSans font-bold text-md text-Ash-black">To: </label>
-                                        <input type="text" id="receiverName" name="receiverName"
-                                               placeholder={"Recipient's Name"}
-                                               className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
-                                               onChange={handleInput}></input><br/>
-                                        </div>
-                                        <div>
-                                        <label htmlFor="senderName"
-                                               className="font-OpenSans font-bold text-md text-Ash-black">From: </label>
-                                        <input type="text" id="senderName" name="senderName"
-                                               className="w-full border-solid border-deep-blue border-2 rounded py-1 px-1"
-                                               placeholder={"Sender's Name"}
-                                               onChange={handleInput}></input><br/>
-                                        </div>
-                                        <div>
-                                        <label htmlFor="location"
-                                               className="font-OpenSans font-bold text-md text-Ash-black">Location: </label>
-                                        <div className="border-solid border-deep-blue border-2 rounded w-full">
-                                            <Dropdown options={locationOptions} placeholder="Location"
-                                                      name="Location Dropdown"
-                                                      id="location" setInput={handleLocationInput} value={cleared}
-                                                      required={true}
-                                                      width="w-full"
-                                            />
-                                        </div>
-                                        </div>
-                                        <div className="">
-                                            <p className={"text-left font-bold"}>What is the priority?</p>
-                                            <div className="border-solid border-deep-blue border-2 rounded w-full">
-                                                <RadioButton value={"Low"} name={"priority"} id={"priority1"}
-                                                             state={request.priority}
-                                                             onChange={handlePriorityInput} required={true}
-                                                             width={"w-full"}/>
-                                                <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
-                                                             state={request.priority}
-                                                             onChange={handlePriorityInput} required={true}
-                                                             width={"w-full"}/>
-                                                <RadioButton value={"High"} name={"priority"} id={"priority3"}
-                                                             state={request.priority}
-                                                             onChange={handlePriorityInput} required={true}
-                                                             width={"w-full"}/>
-                                                <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
-                                                             state={request.priority}
-                                                             onChange={handlePriorityInput} required={true}
-                                                             width={"w-full"}/>
+
+                                    <div className={"flex flex-row space-x-72"}> {/*Box on Top*/}
+                                        <div className={"flex flex-col"}> {/*Form Information Div (First Column)*/}
+                                            <div className={"flex flex-row space-x-20"}>{/*First Column of Form*/}
+
+                                                <div className={"flex flex-col w-[220px] space-y-3"}>
+                                                    <label htmlFor="receiverName"
+                                                           className="font-OpenSans font-bold text-md text-Ash-black">To: </label>
+                                                    <input type="text" id="receiverName" name="receiverName"
+                                                           placeholder={"Recipient's Name"}
+                                                           className="w-full border-solid border-deep-blue border-2 rounded"
+                                                           onChange={handleInput}></input><br/>
+
+                                                    <div className={"flex flex-col"}>
+                                                        <div>
+                                                            <label htmlFor="message"
+                                                                   className="font-OpenSans text-md font-bold text-Ash-black ">
+                                                                Pick a Date: </label>
+
+                                                            <DatePicker
+                                                                selectProps={{
+                                                                    inputId: 'default-date-picker-example',
+                                                                    className: 'w-full border-2 border-deep-blue rounded'
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="">
+                                                        <p className={"text-left font-bold"}>What is the
+                                                            priority?</p>
+                                                        <div
+                                                            className="border-solid border-deep-blue border-2 rounded w-full">
+                                                            <RadioButton value={"Low"} name={"priority"}
+                                                                         id={"priority1"}
+                                                                         state={request.priority}
+                                                                         onChange={handlePriorityInput}
+                                                                         required={true}
+                                                                         width={"w-full"}/>
+                                                            <RadioButton value={"Medium"} name={"priority"}
+                                                                         id={"priority2"}
+                                                                         state={request.priority}
+                                                                         onChange={handlePriorityInput}
+                                                                         required={true}
+                                                                         width={"w-full"}/>
+                                                            <RadioButton value={"High"} name={"priority"}
+                                                                         id={"priority3"}
+                                                                         state={request.priority}
+                                                                         onChange={handlePriorityInput}
+                                                                         required={true}
+                                                                         width={"w-full"}/>
+                                                            <RadioButton value={"Emergency"} name={"priority"}
+                                                                         id={"priority4"}
+                                                                         state={request.priority}
+                                                                         onChange={handlePriorityInput}
+                                                                         required={true}
+                                                                         width={"w-full"}/>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                {/**/}
+                                                <div className={"flex flex-col w-[220px] space-y-3"}>
+                                                    <label htmlFor="senderName"
+                                                           className="font-OpenSans font-bold text-md text-Ash-black">From: </label>
+                                                    <input type="text" id="senderName" name="senderName"
+                                                           className="w-full border-solid border-deep-blue border-2 rounded"
+                                                           placeholder={"Sender's Name"}
+                                                           onChange={handleInput}></input><br/>
+
+                                                    <div>
+                                                        <label htmlFor="location"
+                                                               className="font-OpenSans font-bold text-md text-Ash-black">Location: </label>
+                                                        <div
+                                                            className="border-solid border-deep-blue border-2 rounded w-full">
+                                                            <Dropdown options={locationOptions}
+                                                                      placeholder="Location"
+                                                                      name="Location Dropdown"
+                                                                      id="location"
+                                                                      setInput={handleLocationInput}
+                                                                      value={cleared}
+                                                                      required={true}
+                                                                      width="w-full"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className=" flex-col items-start 1 w-[220px] h-full">
+                                                        <label htmlFor="message"
+                                                               className="font-OpenSans text-md font-bold text-Ash-black ">
+                                                            Send a Message: </label>
+                                                        <textarea id="message" name="message" rows={4}
+                                                                  cols={40}
+                                                                  placeholder={"Send a nice message!"}
+                                                                  onChange={handleMessage}
+                                                                  className="border-solid border-deep-blue border-2 rounded w-full h-40">
+                                                                    </textarea>
+                                                    </div>
+                                                </div>
+
                                             </div>
+
                                         </div>
-                                    </div>
-                                    <div className=" w-1/3 flex ">
 
-                                        <div
-                                            className=" bg-white rounded-3xl w-full object-cover overflow-hidden h-full">
-                                            <div className=" bg-deep-blue border-rounded w-full ">
-                                                <h2 className="text-2xl text-bone-white font-bold w-full py-2">
-                                                    Cart
-                                                </h2>
-                                            </div>
-
+                                        <div className="w-full flex ">
                                             <div
-                                                className="text-xl  text-Ash-black text-bold h-3/4">
+                                                className=" bg-white rounded-3xl w-full object-cover overflow-hidden h-full">
+                                                <div className=" bg-deep-blue border-rounded w-full ">
+                                                    <h2 className="text-2xl text-bone-white font-bold w-full py-2">
+                                                        Cart
+                                                    </h2>
+                                                </div>
 
-                                                <div className=" w-full h-4/5 overflow-y-scroll py-5">
-                                                    {createCart()}
+                                                <div
+                                                    className="text-xl  text-Ash-black text-bold h-3/4">
+
+                                                    <div className=" w-full h-4/5 overflow-y-scroll py-5">
+                                                        {createCart()}
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    className=" text-xl text-Ash-black text-bold">
+                                                    <p>Total Cost: ${calcCost()}</p>
+                                                    <Button onClick={handleCartScreen} children={"Purchase"}/>
                                                 </div>
                                             </div>
-                                            <div
-                                                className=" text-xl text-Ash-black text-bold">
-                                                <p>Total Cost: ${calcCost()}</p>
-                                                <Button onClick={handleSubmit} children={"Purchase"}/>
-                                            </div>
-                                        </div>
 
+                                        </div>
                                     </div>
                                 </div>
-                                </div>
+
+
                                 <br/><br/>
                                 {/*Flowers*/}
                                 <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
@@ -387,52 +425,209 @@ function GiftDelivery() {
                             </form>
                         </div>
                     </div>
-                    <div className={submittedWindowVisibility.submittedScreen}>
-                    <div className=" flex-col centerContent">
-                        <div className="flex-col p-6 bg-white rounded-2xl mt-20 w-1/2 ">
-                            <div className={"text-center"}>
-                                <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
-                                    Submission:</h3>
-                                <p className={"font-bold"}>Receiver Name:</p>
-                                <p className={""}>{request.receiverName}</p>
+                    <div className={submittedWindowVisibility.cartScreen}>
+                        <div
+                            className="centerContent"> {/*Entire Cart Page*/}
+                            <div className = "absolute top-[70px] left-[20px]">
+                                <Button onClick={handleBackbutton} color={"bg-deep-blue"}  px={"px-3"} py={"py-3"} >
+                                    {BackwardSVG}
+                                </Button>
+                            </div>
+                            <div className={"flex flex-row space-x-[40px] mt-8"}> {/*Box on Top*/}
+                                <div
+                                    className={"flex flex-col bg-white p-8 rounded-xl shadow-xl"}> {/*Form Information Div (First Column)*/}
 
-                                <p className={"font-bold"}>Sender Name:</p>
-                                <p className={""}>{request.senderName}</p>
+                                    <h2 className="font-extrabold text-3xl font-OpenSans text-graphite w-full py-2 border-rounded border-b-4
+                                            border-graphite mb-6">
+                                        Delivery Information
+                                    </h2>
+                                    <div className={"flex flex-row space-x-10"}>{/*First Column of Form*/}
 
-                                <p className={"font-bold"}>Where do you want to send this gift?</p>
-                                <p className={""}>{request.location}</p>
+                                        <div className={"flex flex-col w-[220px] space-y-3"}>
+                                            <div className={"text-left mt-3"}>
+                                                <label htmlFor="receiverName"
+                                                       className=" font-OpenSans font-bold text-md text-Ash-black">To: </label>
+                                                <input type="text" id="receiverName" name="receiverName"
+                                                       placeholder={"Recipient's Name"}
+                                                       className="w-full border-solid border-gray-200 border-2 rounded p-2"
+                                                       onChange={handleInput}></input><br/>
+                                            </div>
+                                            <div className={"flex flex-col"}>
+                                                <div>
+                                                    <label htmlFor="message"
+                                                           className="font-OpenSans text-md font-bold text-Ash-black ">
+                                                        Pick a Date: </label>
 
-                                <p className={"font-bold"}>When would you like this gift delivered?</p>
-                                <p className={""}>{request.date}</p>
+                                                    <DatePicker
+                                                        selectProps={{
+                                                            inputId: 'default-date-picker-example',
+                                                            appearance: 'none',
+                                                            className: `w-full border-2 ${isFocused ? 'border-black' : 'border-gray-200'} rounded`,
+                                                            onFocus: () => setIsFocused(true),
+                                                            onBlur: () => setIsFocused(false)
+                                                        }}
+                                                        innerProps={{
+                                                            className: ""
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
 
-                                <p className={"font-bold"}>What is the priority of the delivery?</p>
-                                <p className={""}>{request.priority}</p>
+                                            <div className="">
+                                                <p className={"text-left font-bold"}>What is the
+                                                    priority?</p>
+                                                <div
+                                                    className="border-solid border-gray-200 border-2 rounded w-full">
+                                                    <RadioButton value={"Low"} name={"priority"}
+                                                                 id={"priority1"}
+                                                                 state={request.priority}
+                                                                 onChange={handlePriorityInput}
+                                                                 required={true}
+                                                                 width={"w-full"}/>
+                                                    <RadioButton value={"Medium"} name={"priority"}
+                                                                 id={"priority2"}
+                                                                 state={request.priority}
+                                                                 onChange={handlePriorityInput}
+                                                                 required={true}
+                                                                 width={"w-full"}/>
+                                                    <RadioButton value={"High"} name={"priority"}
+                                                                 id={"priority3"}
+                                                                 state={request.priority}
+                                                                 onChange={handlePriorityInput}
+                                                                 required={true}
+                                                                 width={"w-full"}/>
+                                                    <RadioButton value={"Emergency"} name={"priority"}
+                                                                 id={"priority4"}
+                                                                 state={request.priority}
+                                                                 onChange={handlePriorityInput}
+                                                                 required={true}
+                                                                 width={"w-full"}/>
+                                                </div>
 
-                                <p className={"font-bold "}>Additional Message:</p>
-                                <p className={"text-pretty break-words text-center"}>{request.message}</p>
+                                            </div>
+                                        </div>
+                                        {/**/}
+                                        <div className={"flex flex-col w-[235px] space-y-3"}>
+                                            <div className="mt-3 text-left">
+                                                <label htmlFor="senderName"
+                                                       className="font-bold text-md text-Ash-black">From: </label>
+                                                <input type="text" id="senderName" name="senderName"
+                                                       className="w-full border-solid border-gray-200 border-2 rounded p-2"
+                                                       placeholder={"Sender's Name"}
+                                                       onChange={handleInput}></input><br/>
+                                            </div>
 
-                                <p className={"font-bold"}>Total Cost:</p>
-                                <p className={""}>${calcCost()}</p>
+                                            <div className="text-left">
+                                                <label htmlFor="location"
+                                                       className="text-left font-OpenSans font-bold text-md text-Ash-black">Location: </label>
+                                                <div
+                                                    className="border-solid border-gray-200 border-2 rounded w-full p-[3px]">
+                                                    <Dropdown options={locationOptions}
+                                                              placeholder="Location"
+                                                              name="Location Dropdown"
+                                                              id="location"
+                                                              setInput={handleLocationInput}
+                                                              value={cleared}
+                                                              required={true}
+                                                              width="w-full"
+                                                              color="bg-white"
+                                                    />
+                                                </div>
+                                            </div>
 
-                                <p className="font-HeadlandOne p-3 text-xl ">Thank you for submitting!</p>
-                                <Button onClick={handleNewSubmission} children="Submit a new request" px="text-xl p-2"/>
-                                <br/>
+                                            <div className="w-full h-full text-le">
+                                                <label htmlFor="message"
+                                                       className=" font-OpenSans text-md font-bold text-Ash-black ">
+                                                    Send a Message: </label>
+                                                <textarea id="message" name="message" rows={4}
+                                                          cols={40}
+                                                          placeholder={"Send a nice message!"}
+                                                          onChange={handleMessage}
+                                                          className="border-solid border-gray-200 border-2 rounded w-full h-[165px] p-2">
+                                                                    </textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div className="flex w-96 h-fit">
+                                    <div
+                                        className="bg-white rounded-3xl w-full object-cover overflow-hidden h-full shadow-xl px-4 pb-4">
+
+                                        <h2 className="font-extrabold text-3xl font-OpenSans text-graphite w-full py-2 border-rounded border-b-4
+                                            border-graphite pt-10">
+                                            Cart
+                                        </h2>
+
+                                        <div
+                                            className="text-xl text-Ash-black text-bold min-h-96 w-full h-4/5 overflow-y-scroll py-5">
+                                            {createCart()}
+                                        </div>
+                                        <div
+                                            className="text-xl text-Ash-black text-bold border-t-2 space-y-4 border-dotted pt-4">
+                                            <div className="space-x-[185px]">
+                                                <a className={"text-gray-500 font-OpenSans"}>Total Cost: </a>
+                                                <a className="font-bold font-OpenSans">${calcCost()}</a>
+                                            </div>
+                                            <Button onClick={handleSubmit} children={"Purchase"} px={"px-[130px]"}
+                                                    rounded={"rounded-3xl"}
+                                                    color={"bg-black"}/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="text-center p-6 bg-white rounded-2xl mt-20 w-1/3">
-                        <p className={"font-bold text-center"}>Cart:</p>
-                            <p className={"text-center"}>{request.cart.map((item: giftItem) => {
-                                return <p>{item.quantity} x {item.name}: ${item.cost}</p>;
-                            })}</p></div>
 
                     </div>
-                    </div>
 
-                    <div className="pt-10 h-full">
-                        <p className={"font-HeadlandOne text-deep-blue"}>Created by Kendall and Jade, styled by Ben and
-                            Theresa</p>
-                    </div>
+                    <div className={submittedWindowVisibility.submittedScreen}>
+                        <div className=" flex-col centerContent">
+                            <div className="flex-col p-6 bg-white rounded-2xl mt-20 w-1/2 ">
+                                <div className={"text-center"}>
+                                    <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
+                                        Submission:</h3>
+                                    <p className={"font-bold"}>Receiver Name:</p>
+                                    <p className={""}>{request.receiverName}</p>
 
+                                    <p className={"font-bold"}>Sender Name:</p>
+                                    <p className={""}>{request.senderName}</p>
+
+                                    <p className={"font-bold"}>Where do you want to send this gift?</p>
+                                    <p className={""}>{request.location}</p>
+
+                                    <p className={"font-bold"}>When would you like this gift delivered?</p>
+                                    <p className={""}>{request.date}</p>
+
+                                    <p className={"font-bold"}>What is the priority of the delivery?</p>
+                                    <p className={""}>{request.priority}</p>
+
+                                    <p className={"font-bold "}>Additional Message:</p>
+                                    <p className={"text-pretty break-words text-center"}>{request.message}</p>
+
+                                    <p className={"font-bold"}>Total Cost:</p>
+                                    <p className={""}>${calcCost()}</p>
+
+                                    <p className="font-HeadlandOne p-3 text-xl ">Thank you for submitting!</p>
+                                    <Button onClick={handleNewSubmission} children="Submit a new request"
+                                            px="text-xl p-2"/>
+                                    <br/>
+                                </div>
+                            </div>
+                            <div className="text-center p-6 bg-white rounded-2xl mt-20 w-1/3">
+                                <p className={"font-bold text-center"}>Cart:</p>
+                                <p className={"text-center"}>{request.cart.map((item: giftItem) => {
+                                    return <p>{item.quantity} x {item.name}: ${item.cost}</p>;
+                                })}</p></div>
+                        </div>
+
+                        <div className="pt-6 h-full">
+                            <p className={"font-HeadlandOne text-deep-blue"}>Created by Kendall and Jade, styled by Ben
+                                and
+                                Theresa</p>
+                        </div>
+                    </div>
                 </div>
 
             </div>
