@@ -2,17 +2,17 @@ import { motion } from "framer-motion";
 import Node from "common/src/node.ts";
 import CircleFrom from '../../assets/from_to_icons/circle_from.svg';
 import IconTo from '../../assets/from_to_icons/icon_to.svg';
-import React, {useRef, useState} from "react";
+import React, {useRef} from "react";
 
 function PathVisual(props: {width: number; height: number;
-    showPath: boolean; floormap: Map<string, Node[][]>; pathNodes: Node[]; images: Map<string, string>; currentFloor: string; onClickCircle: (Node: Node) => void; allNodes: Node[]}) {
+    showPath: boolean; floormap: Map<string, Node[][]>; pathNodes: Node[]; images: Map<string, string>; currentFloor: string; onClickCircle: (Node: Node) => void; allNodes: Node[]; showNodes: boolean}) {
     let startCoord: number[] = [];
     let endCoord: number[] = [];
     if (props.pathNodes[0] != null) {
         startCoord = [props.pathNodes[0].xcoord, props.pathNodes[0].ycoord];
         endCoord = [props.pathNodes[props.pathNodes.length - 1].xcoord, props.pathNodes[props.pathNodes.length - 1].ycoord];
     }
-    const [mouseCoord, setMouseCoord] = useState([0, 0]);
+    // const [mouseCoord, setMouseCoord] = useState([0, 0]);
 
     const draw = {
         hidden: { pathLength: 0, opacity: 1 },
@@ -38,29 +38,8 @@ function PathVisual(props: {width: number; height: number;
 
     const imgRef = useRef<HTMLDivElement>(null);
 
-    function getSVGCoords(e: MouseEvent) {
-
-
-        if (imgRef.current == null) {
-            return [0,0];
-        }
-
-
-
-        const offsetLeft = imgRef.current.getBoundingClientRect().left;
-        const offsetTop = imgRef.current.getBoundingClientRect().top;
-
-        const initialZoomX = 5000/imgRef.current.getBoundingClientRect().width;
-        const initialZoomY = 3400/imgRef.current.getBoundingClientRect().height;
-        const x = (e.clientX - offsetLeft) * initialZoomX;
-        const y= (e.clientY - offsetTop) * initialZoomY;
-
-
-        return ([Math.round(x), Math.round(y)]);
-    }
-
-    function getOpacity(node): number {
-        if (Math.abs(mouseCoord[0] - node.xcoord) < 100 && Math.abs(mouseCoord[1] - node.ycoord) < 100) {
+    function getOpacity(): number {
+        if (props.showNodes) {
             return 1;
         }
         return 0;
@@ -83,7 +62,7 @@ function PathVisual(props: {width: number; height: number;
                                 animate="visible"
                                 variants={draw}
                                 className={classname}
-                                onMouseMove={ (e) => {setMouseCoord(getSVGCoords(e));}}
+                                // onMouseMove={ (e) => {setMouseCoord(getSVGCoords(e));}}
                                 key = {JSON.stringify(keys[x] + "svg")}
                     >
                         {createFloor(keys[x])}
@@ -91,15 +70,18 @@ function PathVisual(props: {width: number; height: number;
                             return node.floor === props.currentFloor && !node.longName.includes("Hall");
                         }).map((node) => {
                             return <>
-
-                                <motion.circle id={`node-${node.nodeID}`} cx={node.xcoord } cy={node.ycoord } r={12} // smaller visible circle
-                                        fill="#F6BD38"
-                                               initial={{ opacity: 0 }}
-                                               animate={{ opacity: getOpacity(node) }}
-                                               transition={{ duration: 0.2 }}
-                                        onClick={ () => {
-                                            props.onClickCircle(node);
-                                        }}/>
+                                <motion.circle  cx={node.xcoord} cy={node.ycoord}
+                                               r={12} // smaller visible circle
+                                               fill= "#FFFFFF"
+                                                stroke= "#012D5A"
+                                                strokeWidth= "4"
+                                                opacity={getOpacity()}
+                                               // initial={{opacity: 0}}
+                                               // animate={{opacity: getOpacity()}}
+                                               // transition={{duration: 0.2}}
+                                               onClick={() => {
+                                                   props.onClickCircle(node);
+                                               }}/>
                             </>;
                         })}
                     </motion.svg>
@@ -113,7 +95,8 @@ function PathVisual(props: {width: number; height: number;
         const floorImage = props.images[floor];
         const pathDivs = [];
         pathDivs.push(
-            <image xlinkHref={floorImage} width={props.width} height={props.height} key = {JSON.stringify(floorImage)} ref={imgRef}
+            <image xlinkHref={floorImage} width={props.width} height={props.height} key={JSON.stringify(floorImage)}
+                   ref={imgRef}
             ></image>
         );
         if (Object.prototype.hasOwnProperty.call(props.floormap, floor)) {

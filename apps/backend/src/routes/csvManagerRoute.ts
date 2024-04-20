@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express, { Request, Response, Router } from "express";
 import fileUpload from "express-fileupload";
 const router: Router = express.Router();
 import client from "../bin/database-connection";
@@ -347,6 +347,21 @@ router.post("/deleteManyEdge", async (req, res) => {
     },
   });
   return res.json(deletedEdges);
+});
+
+router.get("/countNodes", async function (req: Request, res: Response) {
+  const nodeCount = await client.nodes.count();
+  res.status(200).json(nodeCount);
+});
+
+router.get("/countEdges", async function (req: Request, res: Response) {
+  const edgeCount = await client.edges.count();
+  res.status(200).json(edgeCount);
+});
+
+router.get("/countEmployee", async function (req: Request, res: Response) {
+  const employeeCount = await client.employee.count();
+  res.status(200).json(employeeCount);
 });
 
 export default router;
