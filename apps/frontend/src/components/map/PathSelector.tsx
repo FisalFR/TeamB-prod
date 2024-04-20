@@ -83,12 +83,15 @@ export function PathSelector(props: {
             scale: [1, 1.5, 1.5, 1.5, 1],
             rotate: [0, 15, -15, 15, 0]
         },
+        animateArrow: {
+            x: [0, 12, 0]
+        },
         transitionFromDest: (delay: number) => ({
             duration: 1,
             ease: "circInOut",
             times: [0, 0.25, 0.5, 0.75, 1],
             repeat: Infinity,
-            repeatDelay: 8,
+            repeatDelay: 15,
             delay: delay
         }),
         transitionDot: (delay: number) => ({
@@ -96,27 +99,21 @@ export function PathSelector(props: {
             ease: "circInOut",
             times: [0, 0.2, 0.4, 0.6, 0.8],
             repeat: Infinity,
-            repeatDelay: 8.2,
+            repeatDelay: 15.2,
             delay: delay,
-        })
-    };
-
-    const arrowAnimation = {
-        animate: {
-            x: [0, 12, 0]
-        },
-        transition: {
+        }),
+        transitionArrow: {
             duration: 1,
             ease: "circInOut",
             times: [0, 0.5, 1],
             repeat: Infinity
-        },
+        }
     };
 
     return (
         <div className="absolute top-7 flex flex-row-reverse items-center rounded-r-xl h-[172px]">
             <div className={"h-full pl-4 items-center flex flex-col justify-around"} >
-                <motion.img animate={showArrow ? arrowAnimation.animate : {opacity: 0}} transition={showArrow ? arrowAnimation.transition : {duration: 0.6}} src={arrow} alt="arrow"/>
+                <motion.img animate={showArrow ? ImgAnimation.animateArrow : {opacity: 0}} transition={showArrow ? ImgAnimation.transitionArrow : {duration: 0.6}} src={arrow} alt="arrow"/>
             </div>
             <motion.button
                 onClick={toggleVisibility}
