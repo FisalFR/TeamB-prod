@@ -39,7 +39,7 @@ export function PathSelector(props: {
             width: "auto",
             transition: {
                 width: {duration: 0.2, when: "beforeChildren"},
-                opacity: {duration: 0.1, delay: 0.3, when: "afterChildren"}
+                opacity: {duration: 0.2, delay: 0.3, when: "afterChildren"}
             }
         },
         exit: {
