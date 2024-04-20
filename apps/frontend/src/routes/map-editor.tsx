@@ -34,7 +34,7 @@ export function MapEditor(){
         shortName: ""
     };
     const nodeLabels = {
-        "nodeID": "NodeId",
+        "nodeID": "Node ID",
         "longName": "Long Name",
         "shortName": "Short Name",
         "building": "Building",
@@ -132,6 +132,11 @@ export function MapEditor(){
     const {nodes,nodeMap} = useNodes();
     const {edges} = useEdges();
 
+
+    const nodeEdits = useRef<NodeType[]>([]);
+    const nodeAdds = useRef<NodeType[]>([]);
+    const nodeDeletes = useRef<string[]>([]);
+
     const nodeStrings: string[] = [];
     for (let i = 0; i < nodes.length; i++) {
         nodeStrings.push(nodes[i].nodeID);
@@ -166,11 +171,61 @@ export function MapEditor(){
         }
     }
 
+    const addNode = useRef(placeholderNode);
+    function handleAddInput(element: string, e) {
+        addNode.current[element] = e.target.value;
+        setReplaceThis(replaceThis+1);
+    }
+    function addNewNode() {
+        const newNode: NodeType = {
+            nodeID: addNode.current["nodeID"],
+            xcoord: addNode.current["xcoord"],
+            ycoord: addNode.current["ycoord"],
+            floor: addNode.current["floor"],
+            building: addNode.current["building"],
+            nodeType: addNode.current["nodeType"],
+            longName: addNode.current["longName"],
+            shortName: addNode.current["shortName"]
+        };
+        nodes.push(newNode);
+        nodeMap.set(newNode.nodeID, newNode);
+        nodeAdds.current.push(newNode);
+        setReplaceThis(replaceThis+1);
+    }
+    function deleteNode() {
+        const spliceInd = nodes.indexOf(currentNode);
+        removeAllNeighbors(currentNode);
+        nodes.splice(spliceInd, 1);
+        nodeDeletes.current.push(currentNode.nodeID);
+        setReplaceThis(replaceThis+1);
+
+    }
+    function removeAllNeighbors(deleteNode: NodeType) {
+        const spliceInd: number[] = [];
+        edges.map((edge, index) => {
+            const startNode = nodeMap.get(edge.startNodeID);
+            const endNode = nodeMap.get(edge.endNodeID);
+            if ((startNode == deleteNode) || (endNode == deleteNode)) {
+                spliceInd.push(index);
+            }
+        });
+        for (let i = 0; i < spliceInd.length; i++) {
+            deleteEdge(spliceInd[i]);
+        }
+        //deleteEdge(spliceInd);
+        //edgeList.splice(spliceInd, 1);
+        //setEditEdges(newEdges);
+        //setEditEdgesID(newEdges.map(edge => edge.edgeID));
+        setReplaceThis(replaceThis+1);
+    }
     function handleInput(element: string, e) {
         setChangeElement(element);
         const changeNode = currentNode;
         changeNode[element] = e.target.value;
         setCurrentNode(changeNode);
+        if (!nodeEdits.current.includes(changeNode)) {
+            nodeEdits.current.push(changeNode);
+        }
         setReplaceThis(replaceThis+1);
     }
     function editNode(e) {
@@ -311,9 +366,20 @@ export function MapEditor(){
                         <br/>
                         <h3 className="font-bold text-lg">Currently Editing: </h3>
                         {nodeEditor()}
+                        <Button onClick={deleteNode}>Delete Node</Button>
                     </div>
 
-                    <div className = "centerContent w-full p-5 bottom-0 sticky bg-white">
+                    <div className="p-6 flex flex-col gap-2">
+                        <h2 className="font-HeadlandOne text-[24px]">Add Node</h2>
+
+                        <NodeForm node={currentNode} keyLabels={nodeLabels}
+                                  disabled={[]} handleInput={handleAddInput} value={autofillByDrag} nodeList={nodes}
+                                  edgeList={edges} nodeMap={nodeMap} currentNode={addNode.current} nodeStrings={nodeStrings}
+                                  autofill={false} addEdge={addEdge} deleteEdge={deleteEdge}/>
+                        <Button onClick={addNewNode}>Add Node</Button>
+                    </div>
+
+                    <div className="centerContent w-full p-5 bottom-0 sticky bg-white">
                         <Button onClick={handleSubmit}>Submit Node Edit</Button>
                     </div>
                 </div>
