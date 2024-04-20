@@ -80,9 +80,9 @@ export function LoginPage() {
 
     return (
         <div className="z-0 top-0 left-0 h-full grid grid-cols-2" style={style}>
-            <div className="m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col">
-                <h1 className="pl-10 font-HeadlandOne text-7xl text-deep-blue mb-2" style={{whiteSpace: 'nowrap'}} >Navigate Seamlessly</h1>
-                <p className=" pl-10 text-wrap text-left text-xl font-bold text-white"
+            <div className="m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col w-10/12">
+                <h1 className="pl-10 font-OpenSans font-bold text-7xl text-white text-left mb-2" style={{whiteSpace: 'nowrap'}} >Navigate Seamlessly</h1>
+                <p className=" pl-10 text-wrap text-left text-xl font-semibold text-white"
                   >
                     Find your room in Brigham & Women's with ease.
                     With pathfinding locate your destination in
