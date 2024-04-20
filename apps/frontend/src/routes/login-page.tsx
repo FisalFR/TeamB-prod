@@ -1,4 +1,4 @@
-import AnimatedSVG from "../components/mazeLineComponent.tsx";
+import AnimatedSVG from "../components/HeroImage.tsx";
 
 import React, {useState} from 'react';
 import Carousel from "../components/Carousel";
@@ -158,7 +158,7 @@ export function LoginPage() {
 
             </div>
 
-            <div className="pt-20 z-20">
+            <div className=" z-20">
                 <AnimatedSVG/>
             </div>
 
