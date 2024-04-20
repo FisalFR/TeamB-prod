@@ -9,6 +9,9 @@
   font-family: 'Open Sans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+    --radial-gradient-background: 255, 255, 255;
+    --solid-color-background: 255, 255, 255;
+    --overlay-color: 250, 250, 250;
 
 
   color: #2F2F2F;
@@ -32,6 +35,102 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+.radial-gradient {
+    background: radial-gradient(
+            circle at 50% 0%,
+            rgba(var(--radial-gradient-background), 0.05) 0%,
+            transparent 60%
+    )
+    rgba(var(--solid-color-background), 1);
+}
+
+.linear-mask {
+    mask-image: linear-gradient(
+            -75deg,
+            white calc(var(--x) + 20%),
+            transparent calc(var(--x) + 30%),
+            white calc(var(--x) + 100%)
+    );
+    -webkit-mask-image: linear-gradient(
+            -75deg,
+            white calc(var(--x) + 20%),
+            transparent calc(var(--x) + 30%),
+            white calc(var(--x) + 100%)
+    );
+}
+
+.linear-overlay {
+    background-image: linear-gradient(
+            -75deg,
+            rgba(var(--overlay-color), 0.1) calc(var(--x) + 20%),
+            rgba(var(--overlay-color), 0.5) calc(var(--x) + 25%),
+            rgba(var(--overlay-color), 0.1) calc(var(--x) + 100%)
+    );
+    mask:
+            linear-gradient(white, white) content-box,
+            linear-gradient(white, white);
+    -webkit-mask:
+            linear-gradient(white, white) content-box,
+            linear-gradient(white, white);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+}
+
+.fancy {
+    --offset: 3px;
+    background: rgb(1, 45, 90);
+    border-radius: 10px;
+    position: relative;
+    height: 75px;
+    width: 400px;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Conic gradient */
+.fancy::before {
+    content: '';
+    background: conic-gradient(transparent 270deg, white, transparent);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    aspect-ratio: 1;
+    width: 100%;
+    animation: rotate 2s linear infinite;
+}
+
+/* Overlay */
+.fancy::after {
+    content: '';
+    background: inherit;
+    border-radius: inherit;
+    position: absolute;
+    inset: var(--offset);
+    height: calc(100% - 2 * var(--offset));
+    width: calc(100% - 2 * var(--offset));
+}
+
+.fancy a {
+    background: transparent;
+    color: white;
+    font-size: 1.5rem;
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    padding: 1.5rem;
+}
+
+@keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) scale(1.4) rotate(0turn);
+    }
+
+    to {
+        transform: translate(-50%, -50%) scale(1.4) rotate(1turn);
+    }
 }
 
 /*

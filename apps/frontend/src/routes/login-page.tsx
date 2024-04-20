@@ -8,6 +8,9 @@ import image3 from '../assets/Carousel/security.jpg';
 import image4 from '../assets/Carousel/Map.png';
 import background from '../assets/Hero_Image/brighams_hero.jpg';
 import {useEffect} from "react";
+import ShinyButton from "../components/ShinyButton.tsx";
+import Button from "../components/Button.tsx";
+import { motion } from "framer-motion";
 export function LoginPage() {
 
     useEffect(() => {
@@ -77,14 +80,44 @@ const style = {
     return (
         <div className="z-0 top-0 left-0 h-full grid grid-cols-2" style={style}>
             <div className="m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col">
-                <h1 className="font-HeadlandOne text-4xl text-white mb-2">Navigate Seamlessly</h1>
-                <p className="pl-10 text-left text-xl font-bold text-white">
+                <h1 className="font-OpenSans text-4xl text-white mb-2 font-bold">Navigate Seamlessly</h1>
+                <p className="pl-10 text-left text-xl text-white font-semibold">
                     Find your room in Brigham & Women's with ease.
-                    With pathfinding locate your destination in the smallest steps. Never get lost, no wasted time, get there stress free.
+                    With pathfinding locate your destination in the smallest steps. Never get lost, no wasted time, get
+                    there stress free.
                 </p>
-                <a href="/map" className="hover:animate-none text-4xl hover:cursor-pointer hover:text-4xl hover:text-deep-blue hover:font-bold pb-5">
-                    Click here to navigate!
-                </a>
+                <div className={"fancy p-5"}>
+                    <a href="/map"
+                       className="text-white text-xl hover:cursor-pointer hover:text-white hover:font-bold pb-5">
+                        Click here to navigate!
+                    </a>
+                    {/*<input type="text" placeholder="Enter your name"/>*/}
+
+                </div>
+                <motion.div className="pt-5"
+                            animate={{scale: [1.0, 1.05]}}
+                            transition={{
+                                duration: 0.4,
+                                repeat: Infinity,
+                                repeatType: "reverse",
+                            }}>
+
+                    <Button>
+                        <a href="/map"
+                           className=" font-OpenSans font-bold text-white text-xl hover:cursor-pointer hover:text-white hover:font-extrabold pb-5">
+                            Click here to navigate!
+                        </a>
+                    </Button>
+
+
+                </motion.div>
+
+
+                <div className={"pt-5"}>
+                    <ShinyButton>
+                        Click Here To Navigate!
+                    </ShinyButton>
+                </div>
             </div>
 
             <div className="pt-20 z-20">
@@ -92,7 +125,7 @@ const style = {
             </div>
 
             <div className="flex justify-center">
-                <div className="overflow-hidden bg-transparent shadow-md rounded-lg border-none hover:cursor-pointer hover:scale-105 transition-transform duration-300"
+            <div className="overflow-hidden bg-transparent shadow-md rounded-lg border-none hover:cursor-pointer hover:scale-105 transition-transform duration-300"
                      onMouseEnter={() => setIsHovered(false)}
                      onMouseLeave={() => setIsHovered(true)}>
                     <Carousel content={content} autoPlay={isHovered} interval={4000}/>
