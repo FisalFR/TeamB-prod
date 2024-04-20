@@ -30,7 +30,7 @@ export function LoginPage() {
             image: { src: image4, alt: 'Description of image 1' },
             text: {
                 title: "Map",
-                description: "Now you can navigate to your destination in the hospital at your own convenience!",
+                description: "We're excited to introduce our new Pathfinding Feature—now you can navigate to your destination in the hospital at your own convenience!",
                 callToAction: "Click here to explore the map!",
                 route: "/map"
             }
@@ -39,7 +39,7 @@ export function LoginPage() {
             image: { src: image1, alt: 'Description of image 2' },
             text: {
                 title: "Gift Delivery",
-                description: "Now you can send thoughtful presents directly to your loved ones in the hospital, right from our website!",
+                description: "We're excited to introduce our new Gift Delivery Service—now you can send thoughtful presents directly to your loved ones in the hospital, right from our website!",
                 callToAction: "Click here to make a gift request!",
                 route: "/giftdelivery"
             }
@@ -48,7 +48,7 @@ export function LoginPage() {
             image: { src: image2, alt: 'Description of image 3' },
             text: {
                 title: "Interpreter Request",
-                description: "Make language assistance easy! Accessible to all our patients directly through our website!",
+                description: "We are thrilled to launch our new Interpreter Request Feature—making language assistance easily accessible to all our patients directly through our website!",
                 callToAction: "Click here to request an interpreter!",
                 route: "/interpreter",
             }
@@ -57,7 +57,7 @@ export function LoginPage() {
             image: { src: image3, alt: 'Description of image 4' },
             text: {
                 title: "Security Request",
-                description: "Request help or assistance at anytime through our website.",
+                description: "We're pleased to announce our enhanced Security Request Feature—allowing you to request help or assistance at anytime through our website.",
                 callToAction: "Click here to make a security request!",
                 route: "/security",
             }
@@ -141,11 +141,9 @@ export function LoginPage() {
                         </a>
                     </ButtonMovingBorder>
 
-                    <div className={"pt-5"}>
-                        <ShinyButton>
-                            Click Here To Navigate!
-                        </ShinyButton>
-                    </div>
+                    <ShinyButton>
+                        Click Here To Navigate!
+                    </ShinyButton>
                     <div className="centerContent w-3/5 h-60 justify-center">
                         <div
                             className=" h-full hover:cursor-pointer hover:scale-105 transition-transform duration-300 centerContent"

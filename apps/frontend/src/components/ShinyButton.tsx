@@ -22,7 +22,7 @@ function ShinyButton(props:{ children: ReactNode }) {
                     mass: 0.1,
                 },
             }}
-            className="px-6 py-2 rounded-md relative " //radial-gradient
+            className="px-6 py-2 rounded-md relative radial-gradient" //radial-gradient
         >
       <span className="text-neutral-100 tracking-wide font-light h-full w-full block relative linear-mask">
         {props.children}
