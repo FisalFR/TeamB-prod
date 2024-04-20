@@ -1,4 +1,4 @@
-import AnimatedSVG from "../components/login/HeroImage.tsx";
+import AnimatedSVG from "../components/mazeLineComponent.tsx";
 
 import React, {useState} from 'react';
 import Carousel from "../components/Carousel";
@@ -8,8 +8,8 @@ import image3 from '../assets/Carousel/security.svg';
 import image4 from '../assets/Carousel/map.svg';
 import background from '../assets/Hero_Image/brighams_hero.jpg';
 import {useEffect} from "react";
-import ShinyButton from "../components/button/ShinyButton.tsx";
-import Button from "../components/button/Button.tsx";
+import ShinyButton from "../components/ShinyButton.tsx";
+import Button from "../components/Button.tsx";
 import { motion } from "framer-motion";
 import {ButtonMovingBorder} from "../components/aceternity/moving-border.tsx";
 export function LoginPage() {
@@ -30,7 +30,7 @@ export function LoginPage() {
             image: { src: image4, alt: 'Description of image 1' },
             text: {
                 title: "Map",
-                description: "We're excited to introduce our new Pathfinding Feature—now you can navigate to your destination in the hospital at your own convenience!",
+                description: "Now you can navigate to your destination in the hospital at your own convenience!",
                 callToAction: "Click here to explore the map!",
                 route: "/map"
             }
@@ -39,7 +39,7 @@ export function LoginPage() {
             image: { src: image1, alt: 'Description of image 2' },
             text: {
                 title: "Gift Delivery",
-                description: "We're excited to introduce our new Gift Delivery Service—now you can send thoughtful presents directly to your loved ones in the hospital, right from our website!",
+                description: "Now you can send thoughtful presents directly to your loved ones in the hospital, right from our website!",
                 callToAction: "Click here to make a gift request!",
                 route: "/giftdelivery"
             }
@@ -48,7 +48,7 @@ export function LoginPage() {
             image: { src: image2, alt: 'Description of image 3' },
             text: {
                 title: "Interpreter Request",
-                description: "We are thrilled to launch our new Interpreter Request Feature—making language assistance easily accessible to all our patients directly through our website!",
+                description: "Make language assistance easy! Accessible to all our patients directly through our website!",
                 callToAction: "Click here to request an interpreter!",
                 route: "/interpreter",
             }
@@ -57,7 +57,7 @@ export function LoginPage() {
             image: { src: image3, alt: 'Description of image 4' },
             text: {
                 title: "Security Request",
-                description: "We're pleased to announce our enhanced Security Request Feature—allowing you to request help or assistance at anytime through our website.",
+                description: "Request help or assistance at anytime through our website.",
                 callToAction: "Click here to make a security request!",
                 route: "/security",
             }
@@ -146,6 +146,14 @@ export function LoginPage() {
                             Click Here To Navigate!
                         </ShinyButton>
                     </div>
+                    <div className="centerContent w-3/5 h-60 justify-center">
+                        <div
+                            className=" h-full hover:cursor-pointer hover:scale-105 transition-transform duration-300 centerContent"
+                            onMouseEnter={() => setIsHovered(false)}
+                            onMouseLeave={() => setIsHovered(true)}>
+                            <Carousel content={content} autoPlay={isHovered} interval={4000}/>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -154,17 +162,9 @@ export function LoginPage() {
                 <AnimatedSVG/>
             </div>
 
-            <div className=" justify-center">
-                <div
-                    className=" hover:cursor-pointer hover:scale-105 transition-transform duration-300"
-                     onMouseEnter={() => setIsHovered(false)}
-                     onMouseLeave={() => setIsHovered(true)}>
-                    <Carousel content={content} autoPlay={isHovered} interval={4000}/>
-                </div>
-            </div>
+
         </div>
     );
-
 
 
 }

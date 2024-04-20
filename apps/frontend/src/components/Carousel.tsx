@@ -22,14 +22,14 @@ const Carousel = ({ content, autoPlay, interval }) => {
         }
     }
     return (
-        <div className=" pl-10 select-none bg-opacity-30 bg-black rounded  ">
+        <div className="w-full h-full select-none bg-opacity-30 bg-black rounded  ">
             {content.map((item, index) => (
                 <div key={index}
-                     className={`flex items-center space-x-4 ${currentIndex === index ? 'flex' : 'hidden'}`}
+                     className={`flex justify-center items-center space-x-4 ${currentIndex === index ? 'flex' : 'hidden'}`}
                      style={{ height: '100%' }}
                      onClick={() => loginGuest({ path: item.text.route })}>
                     <div className="w-1/2">
-                        <h4 className="pb-3 text-xl font-bold text-white">
+                        <h4 className="py-3 text-xl font-bold text-white">
                             <span className="outlined-text">{item.text.title}</span>
                         </h4>
                         <p className="text-white text-left ">
