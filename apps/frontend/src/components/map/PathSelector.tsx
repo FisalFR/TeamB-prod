@@ -6,6 +6,7 @@ import dotsInverse from "../../assets/from_to_icons/circles_from_to_inverse.svg"
 import destinationInverse from "../../assets/from_to_icons/icon_to_inverse.svg";
 import star from "../../assets/Star.svg";
 import Node from "../../../../../packages/common/src/node";
+import arrow from "../../assets/from_to_icons/arrow.svg";
 import {motion, AnimatePresence} from 'framer-motion';
 
 export function PathSelector(props: {
@@ -21,9 +22,11 @@ export function PathSelector(props: {
     selectedEndOption?: string
 }) {
     const [isVisible, setIsVisible] = useState(false);
+    const [pointToFeature, setPointToFeature] = useState(true);
 
     const toggleVisibility = () => {
         setIsVisible(!isVisible);
+        setPointToFeature(false);
     };
 
     const variants = {
@@ -85,7 +88,7 @@ export function PathSelector(props: {
             ease: "circInOut",
             times: [0, 0.25, 0.5, 0.75, 1],
             repeat: Infinity,
-            repeatDelay: 10,
+            repeatDelay: 8,
             delay: delay
         }),
         transitionDot: (delay: number) => ({
@@ -93,16 +96,31 @@ export function PathSelector(props: {
             ease: "circInOut",
             times: [0, 0.2, 0.4, 0.6, 0.8],
             repeat: Infinity,
-            repeatDelay: 10.2,
+            repeatDelay: 8.2,
             delay: delay,
         })
     };
 
+    const arrowAnimation = {
+        animate: {
+            scale: [1, 1.2, 1]
+        },
+        transition: {
+            duration: 1,
+            ease: "easeInOut",
+            times: [0, 0.5, 1],
+            repeat: Infinity
+        },
+    };
+
     return (
-        <div className="absolute top-7 flex flex-row-reverse items-center rounded-r-xl h-[180px]">
+        <div className="absolute top-7 flex flex-row-reverse items-center rounded-r-xl h-[172px]">
+            <div className={"h-full pl-4 items-center flex flex-col justify-around"}>
+                <motion.img animate={pointToFeature ? arrowAnimation.animate : {opacity: 0}} transition={pointToFeature ? arrowAnimation.transition : {duration: 0.5}} src={arrow} alt="arrow"/>
+            </div>
             <motion.button
                 onClick={toggleVisibility}
-                className={"h-[164px] px-3 pt-3 pb-2 bg-deep-blue items-center rounded-r-xl flex flex-col justify-around ring-4 " + (isVisible ? "ring-gold-yellow" : "ring-deep-blue")}>
+                className={"h-[164px] ml-1 px-3 pt-3 pb-2 bg-deep-blue items-center rounded-r-xl flex flex-col justify-around ring-4 " + (isVisible ? "ring-gold-yellow" : "ring-deep-blue")}>
                 <motion.img animate={ImgAnimation.animateFrom} transition={ImgAnimation.transitionFromDest(0)}
                             src={fromIconInverse} alt="fromIconInverse"/>
                 <motion.img animate={ImgAnimation.animateDot} transition={ImgAnimation.transitionDot(0.8)}
@@ -122,43 +140,43 @@ export function PathSelector(props: {
                     variants={animateBG}
                     className="w-full bg-white">
                     <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    variants={variants}
-                    className="grid grid-cols-1 grid-rows-3 h-fit justify-items-center items-center p-2">
-                    <Select label="" id="nodeStartSelect" options={props.nodes.map((node) => {
-                        return node.nodeID;
-                    })}
-                            display={props.nodes.map((node) => {
-                                return node.longName;
-                            })}
-                            onChange={props.handleStartChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}
-                            defaultOption={props.selectedStartOption !== undefined ? props.selectedStartOption : "Select your start location"}/>
-                    <div
-                        className="w-full flex flex-row justify-center rounded-br-xl rounded-bl-0 font-OpenSans items-center font-bold text-bone-white">
-                        <div className="divide-x divide-solid py-2.5 flex flex-row divide-deep-blue">
-                            <AlgorithmButtons px="px-8" onClick={props.onClick}
-                                              isActive={props.selectedAlgo === "Astar"}>
-                                A <img src={star} alt="A Star Icon" height="15" width="15"/>
-                            </AlgorithmButtons>
-                            <AlgorithmButtons px="px-8" onClick={props.onClick1}
-                                              isActive={props.selectedAlgo === "BFS"}> BFS </AlgorithmButtons>
-                            <AlgorithmButtons px="px-8" onClick={props.onClick2}
-                                              isActive={props.selectedAlgo === "DFS"}> DFS </AlgorithmButtons>
-                            <AlgorithmButtons px="px-8" onClick={props.onClick3}
-                                              isActive={props.selectedAlgo === "Dijkstra"}> DIJKSTRA </AlgorithmButtons>
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        variants={variants}
+                        className="grid grid-cols-1 grid-rows-3 h-fit justify-items-center items-center p-2">
+                        <Select label="" id="nodeStartSelect" options={props.nodes.map((node) => {
+                            return node.nodeID;
+                        })}
+                                display={props.nodes.map((node) => {
+                                    return node.longName;
+                                })}
+                                onChange={props.handleStartChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}
+                                defaultOption={props.selectedStartOption !== undefined ? props.selectedStartOption : "Select your start location"}/>
+                        <div
+                            className="w-full flex flex-row justify-center rounded-br-xl rounded-bl-0 font-OpenSans items-center font-bold text-bone-white">
+                            <div className="divide-x divide-solid py-2.5 flex flex-row divide-deep-blue">
+                                <AlgorithmButtons px="px-8" onClick={props.onClick}
+                                                  isActive={props.selectedAlgo === "Astar"}>
+                                    A <img src={star} alt="A Star Icon" height="15" width="15"/>
+                                </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={props.onClick1}
+                                                  isActive={props.selectedAlgo === "BFS"}> BFS </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={props.onClick2}
+                                                  isActive={props.selectedAlgo === "DFS"}> DFS </AlgorithmButtons>
+                                <AlgorithmButtons px="px-8" onClick={props.onClick3}
+                                                  isActive={props.selectedAlgo === "Dijkstra"}> DIJKSTRA </AlgorithmButtons>
+                            </div>
                         </div>
-                    </div>
-                    <Select label="" id="nodeEndSelect" options={props.nodes.map((node) => {
-                        return node.nodeID;
-                    })}
-                            display={props.nodes.map((node) => {
-                                return node.longName;
-                            })}
-                            onChange={props.handleEndChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}
-                            defaultOption={props.selectedEndOption !== undefined ? props.selectedEndOption : "Select your end location"}/>
-                </motion.div>
+                        <Select label="" id="nodeEndSelect" options={props.nodes.map((node) => {
+                            return node.nodeID;
+                        })}
+                                display={props.nodes.map((node) => {
+                                    return node.longName;
+                                })}
+                                onChange={props.handleEndChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}
+                                defaultOption={props.selectedEndOption !== undefined ? props.selectedEndOption : "Select your end location"}/>
+                    </motion.div>
                 </motion.div>)}
             </AnimatePresence>
         </div>
