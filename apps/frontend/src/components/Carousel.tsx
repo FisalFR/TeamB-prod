@@ -28,11 +28,11 @@ const Carousel = ({ content, autoPlay, interval }) => {
                      className={`flex justify-center items-center space-x-4 ${currentIndex === index ? 'flex' : 'hidden'}`}
                      style={{ height: '100%' }}
                      onClick={() => loginGuest({ path: item.text.route })}>
-                    <div className="w-1/2">
-                        <h4 className="py-3 text-xl font-bold text-white">
+                    <div className="">
+                        <h4 className="py-3 text-xl font-bold text-white underline">
                             <span className="outlined-text">{item.text.title}</span>
                         </h4>
-                        <p className="text-white text-left ">
+                        <p className="text-white text-left font-Colfax pl-10">
                             <p className="outlined-text ">{item.text.description}</p>
                         </p>
                         <p className="mt-4 pb-3 hover:cursor-pointer text-white font-bold"
