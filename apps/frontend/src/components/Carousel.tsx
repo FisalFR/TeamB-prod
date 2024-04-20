@@ -22,28 +22,28 @@ const Carousel = ({ content, autoPlay, interval }) => {
         }
     }
     return (
-        <div className="pr-4 relative w-full select-none bg-transparent">
+        <div className=" pl-10 select-none bg-opacity-30 bg-black rounded  ">
             {content.map((item, index) => (
                 <div key={index}
                      className={`flex items-center space-x-4 ${currentIndex === index ? 'flex' : 'hidden'}`}
                      style={{ height: '100%' }}
                      onClick={() => loginGuest({ path: item.text.route })}>
                     <div className="w-1/2">
-                        <h4 className="text-xl font-bold text-black">
+                        <h4 className="pb-3 text-xl font-bold text-white">
                             <span className="outlined-text">{item.text.title}</span>
                         </h4>
-                        <p className="text-black">
-                            <span className="outlined-text">{item.text.description}</span>
+                        <p className="text-white text-left ">
+                            <p className="outlined-text ">{item.text.description}</p>
                         </p>
-                        <p className="mt-4 hover:cursor-pointer text-deep-blue font-bold"
+                        <p className="mt-4 pb-3 hover:cursor-pointer text-white font-bold"
                            onClick={(e) => {
                                e.stopPropagation(); // Prevents triggering the outer div's onClick
                                loginGuest({ path: item.text.route });
                            }}>
-                            <span className="outlined-text">{item.text.callToAction}</span>
+                            <span className=" outlined-text">{item.text.callToAction}</span>
                         </p>
                     </div>
-                    <img src={item.image.src} alt={item.image.alt} className="w-1/2 deep object-cover" />
+                    <img src={item.image.src} alt={item.image.alt} className=" deep object-cover rounded" />
                 </div>
             ))}
         </div>
