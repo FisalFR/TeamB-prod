@@ -2,10 +2,10 @@ import AnimatedSVG from "../components/HeroImage.tsx";
 
 import React, {useState} from 'react';
 import Carousel from "../components/Carousel";
-import image1 from '../assets/Carousel/GiftDelivery.jpg';
-import image2 from '../assets/Carousel/InterpreterRequest.jpg';
-import image3 from '../assets/Carousel/security.jpg';
-import image4 from '../assets/Carousel/Map.png';
+import image1 from '../assets/Carousel/gift.svg';
+import image2 from '../assets/Carousel/language.svg';
+import image3 from '../assets/Carousel/security.svg';
+import image4 from '../assets/Carousel/map.svg';
 import background from '../assets/Hero_Image/brighams_hero.jpg';
 import {useEffect} from "react";
 export function LoginPage() {
@@ -27,7 +27,7 @@ export function LoginPage() {
             text: {
                 title: "Map",
                 description: "We're excited to introduce our new Pathfinding Feature—now you can navigate to your destination in the hospital at your own convenience!",
-                callToAction: "Click here explore the map!",
+                callToAction: "Click here to explore the map!",
                 route: "/map"
             }
         },
@@ -44,7 +44,7 @@ export function LoginPage() {
             image: { src: image2, alt: 'Description of image 3' },
             text: {
                 title: "Interpreter Request",
-                description: "We are thrilled to launch our new Interpreter Request feature—making language assistance easily accessible to all our patients directly through our website!",
+                description: "We are thrilled to launch our new Interpreter Request Feature—making language assistance easily accessible to all our patients directly through our website!",
                 callToAction: "Click here to request an interpreter!",
                 route: "/interpreter",
             }
@@ -53,7 +53,7 @@ export function LoginPage() {
             image: { src: image3, alt: 'Description of image 4' },
             text: {
                 title: "Security Request",
-                description: "We're pleased to announce our enhanced security request feature, allowing you to request for help at anytime through our website.",
+                description: "We're pleased to announce our enhanced Security Request Feature—allowing you to request help or assistance at anytime through our website.",
                 callToAction: "Click here to make a security request!",
                 route: "/security",
             }
@@ -77,22 +77,26 @@ const style = {
     return (
         <div className="z-0 top-0 left-0 h-full grid grid-cols-2" style={style}>
             <div className="m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col">
-                <h1 className="font-HeadlandOne text-4xl text-white mb-2">Navigate Seamlessly</h1>
-                <p className="pl-10 text-left text-xl font-bold text-white">
+                <h1 className="pl-10 font-HeadlandOne text-7xl text-deep-blue mb-2" style={{whiteSpace: 'nowrap'}} >Navigate Seamlessly</h1>
+                <p className=" pl-10 text-wrap text-left text-xl font-bold text-white"
+                  >
                     Find your room in Brigham & Women's with ease.
-                    With pathfinding locate your destination in the smallest steps. Never get lost, no wasted time, get there stress free.
+                    With pathfinding locate your destination in
+                    the smallest steps. Never get lost, no wasted time,
+                    get there stress free.
                 </p>
-                <a href="/map" className="hover:animate-none text-4xl hover:cursor-pointer hover:text-4xl hover:text-deep-blue hover:font-bold pb-5">
+                {/* <a href="/map" className="hover:animate-none text-4xl hover:cursor-pointer hover:text-4xl hover:text-deep-blue hover:font-bold pb-5">
                     Click here to navigate!
-                </a>
+                </a>*/}
             </div>
 
             <div className="pt-20 z-20">
                 <AnimatedSVG/>
             </div>
 
-            <div className="flex justify-center">
-                <div className="overflow-hidden bg-transparent shadow-md rounded-lg border-none hover:cursor-pointer hover:scale-105 transition-transform duration-300"
+            <div className=" justify-center">
+                <div
+                    className=" hover:cursor-pointer hover:scale-105 transition-transform duration-300"
                      onMouseEnter={() => setIsHovered(false)}
                      onMouseLeave={() => setIsHovered(true)}>
                     <Carousel content={content} autoPlay={isHovered} interval={4000}/>
