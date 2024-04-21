@@ -115,6 +115,7 @@ function GiftDelivery() {
     }
 
     function changeCart(item: string, quantity: number, image: string) {
+        console.log(quantity);
         const newCart = [];
         let foundItem = false;
         const roundedCost = (Math.round(quantity * itemCosts[item] * 100))/100;
@@ -451,17 +452,17 @@ function GiftDelivery() {
 
                                 </div>
 
-                                <div className="flex w-96 h-fit">
+                                <div className="flex w-96 max-h-[700px] h-fit">
                                     <div
-                                        className="bg-white rounded-3xl w-full object-cover overflow-hidden h-full shadow-xl px-4 pb-4">
+                                        className="bg-white rounded-3xl w-full object-cover  h-full shadow-xl px-4 pb-4">
 
                                         <h2 className="font-extrabold text-3xl font-OpenSans text-graphite w-full py-2 border-rounded border-b-4
-                                            border-graphite pt-10">
+                                            border-graphite pt-10 ">
                                             Cart
                                         </h2>
 
                                         <div
-                                            className="text-xl text-Ash-black text-bold min-h-96 w-full h-4/5 overflow-y-scroll py-5">
+                                            className="text-xl text-Ash-black text-bold min-h-96 w-full max-h-72 overflow-y-scroll py-5">
                                             {createCart()}
                                         </div>
                                         <div
