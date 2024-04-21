@@ -134,8 +134,7 @@ export function MapEditor(){
 
 
     const nodeEdits = useRef<NodeType[]>([]);
-    const nodeAdds = useRef<NodeType[]>([]);
-    const nodeDeletes = useRef<string[]>([]);
+    const nodeAddDeletes = useRef<{node: NodeType, action: string}[]>([]);
 
     const nodeStrings: string[] = [];
     for (let i = 0; i < nodes.length; i++) {
@@ -189,14 +188,14 @@ export function MapEditor(){
         };
         nodes.push(newNode);
         nodeMap.set(newNode.nodeID, newNode);
-        nodeAdds.current.push(newNode);
+        nodeAddDeletes.current.push({node: newNode, action: "add"});
         setReplaceThis(replaceThis+1);
     }
     function deleteNode() {
         const spliceInd = nodes.indexOf(currentNode);
         removeAllNeighbors(currentNode);
         nodes.splice(spliceInd, 1);
-        nodeDeletes.current.push(currentNode.nodeID);
+        nodeAddDeletes.current.push({node: currentNode, action: "delete"});
         setReplaceThis(replaceThis+1);
 
     }
@@ -210,7 +209,7 @@ export function MapEditor(){
             }
         });
         for (let i = 0; i < spliceInd.length; i++) {
-            deleteEdge(spliceInd[i]);
+            deleteEdge(spliceInd[i]-i);
         }
         //deleteEdge(spliceInd);
         //edgeList.splice(spliceInd, 1);
@@ -279,6 +278,17 @@ export function MapEditor(){
     }
 
     function handleSubmit() {
+        //loop for handling everything in nodeAddDelete - Add and delete nodes in the same order as user
+        for (let i = 0; i < nodeAddDeletes.current.length; i++) {
+            if (nodeAddDeletes.current[i].action == "add") {
+                //add nodeAddDeletes.current[i].node
+            }
+            if (nodeAddDeletes.current[i].action == "delete") {
+                //delete nodeAddDeletes.current[i].node
+            }
+        }
+
+
         //submit editNodes and editEdges to the database
         axios.post("/api/csvManager/editOneNode",currentNode,{
             headers: {
