@@ -48,7 +48,7 @@ export function LoginPage() {
             image: { src: image2, alt: 'Description of image 3' },
             text: {
                 title: "Interpreter Request",
-                description: "We are thrilled to launch our new Interpreter Request Feature—making language assistance easily accessible directly through our website! Such as ASL, Español, and more!",
+                description: "We are thrilled to launch our new Interpreter Request Feature—making language assistance easily accessible directly through our website!",
                 callToAction: "Click here to request an interpreter!",
                 route: "/interpreter",
             }
@@ -145,15 +145,11 @@ export function LoginPage() {
                     {/*<ShinyButton>*/}
                     {/*    Click Here To Navigate!*/}
                     {/*</ShinyButton>*/}
-                    <div className="">
-                        <div className=" justify-center ">
-                            <div
-                                className="  hover:cursor-pointer hover:scale-105 transition-transform duration-300 centerContent "
-                                onMouseEnter={() => setIsHovered(false)}
-                                onMouseLeave={() => setIsHovered(true)}>
-                                <Carousel content={content} autoPlay={isHovered} interval={4000}/>
-                            </div>
-                        </div>
+                    <div
+                        className="  hover:cursor-pointer hover:scale-105 transition-transform duration-300"
+                        onMouseEnter={() => setIsHovered(false)}
+                        onMouseLeave={() => setIsHovered(true)}>
+                        <Carousel content={content} autoPlay={isHovered} interval={4000}/>
                     </div>
 
                 </div>
