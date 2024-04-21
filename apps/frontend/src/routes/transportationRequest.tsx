@@ -119,6 +119,7 @@ export function TransportationRequestPage() {
                                 <div>
                                     <p className={"text-left font-bold"}>How will the patient be transported?</p>
                                     <div className="border-deep-blue border-solid border-2 rounded w-fit">
+                                        {/*TODO Fix dropdown to not be locations*/}
                                         <Dropdown options={locationOptions} placeholder={"Transport Type"}
                                                   name={"TransportDropdown"}
                                                   id={"dropdown2"} value={cleared}
