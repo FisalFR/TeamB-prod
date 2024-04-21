@@ -39,7 +39,7 @@ export function LoginPage() {
             image: { src: image1, alt: 'Description of image 2' },
             text: {
                 title: "Gift Delivery",
-                description: "We're excited to introduce our new Gift Delivery Service—now you can send thoughtful presents directly to your loved ones in the hospital!",
+                description: "We're excited to introduce our new Gift Delivery Service—now you can send thoughtful presents directly to your loved ones in the hospital! Such as flowers, balloons, and more!",
                 callToAction: "Click here to make a gift request!",
                 route: "/giftdelivery"
             }
@@ -48,7 +48,7 @@ export function LoginPage() {
             image: { src: image2, alt: 'Description of image 3' },
             text: {
                 title: "Interpreter Request",
-                description: "We are thrilled to launch our new Interpreter Request Feature—making language assistance easily accessible directly through our website!",
+                description: "We are thrilled to launch our new Interpreter Request Feature—making language assistance easily accessible directly through our website! Such as ASL, Español, and more!",
                 callToAction: "Click here to request an interpreter!",
                 route: "/interpreter",
             }
@@ -81,8 +81,8 @@ export function LoginPage() {
     return (
         <div className="z-0 top-0 left-0 h-full grid grid-cols-2 content-center" style={style}>
             <div className="m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col w-10/12">
-                <h1 className="font-OpenSans  font-bold text-7xl text-white text-left mb-2" style={{whiteSpace: 'nowrap'}} >Navigate Seamlessly</h1>
-                <p className="pl-8  text-center text-xl font-extralight text-white"
+                <h1 className="font-OpenSans  font-bold text-7xl text-white text-center mb-2" style={{whiteSpace: 'nowrap'}} >Navigate Seamlessly</h1>
+                <p className="  text-center text-xl font-light text-white"
                   >
                     Find your room in Brigham & Women's Hospital with ease.
 

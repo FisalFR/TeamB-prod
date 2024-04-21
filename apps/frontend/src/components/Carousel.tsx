@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import HandleLogin from "./handleLogin.tsx";
+import { motion } from 'framer-motion';
 
 const Carousel = ({ content, autoPlay, interval }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,28 +23,28 @@ const Carousel = ({ content, autoPlay, interval }) => {
         }
     }
     return (
-        <div className="w-full h-full select-none bg-opacity-30 bg-black rounded  ">
+        <div className="w-8/12 h-4/5 select-none bg-opacity-35 bg-black rounded ">
             {content.map((item, index) => (
                 <div key={index}
-                     className={`flex justify-center items-center space-x-1 ${currentIndex === index ? 'flex' : 'hidden'}`}
+                     className={`flex justify-center items-center ${currentIndex === index ? 'flex' : 'hidden'}`}
                      style={{ height: '100%' }}
                      onClick={() => loginGuest({ path: item.text.route })}>
-                    <div className="">
-                        <h4 className="py-3 text-xl font-bold text-white underline">
+                    <div className=" justify-items-center ">
+                        <h4 className="text-xl font-semibold text-white">
                             <span className="outlined-text">{item.text.title}</span>
                         </h4>
-                        <p className="text-white text-left font-Colfax pl-10">
-                            <p className="outlined-text ">{item.text.description}</p>
-                        </p>
-                        <p className="pt-3 pb-3 hover:cursor-pointer text-white font-bold justify-center text-center"
-                           onClick={(e) => {
-                               e.stopPropagation(); // Prevents triggering the outer div's onClick
-                               loginGuest({ path: item.text.route });
-                           }}>
-                            <span className=" outlined-text">{item.text.callToAction}</span>
+                        <p className="outlined-text text-left text-white font-extralight pl-5">
+                            {item.text.description}
                         </p>
                     </div>
-                    <img src={item.image.src} alt={item.image.alt} className="pr-6 deep object-cover rounded" />
+                        <motion.img src={item.image.src} alt={item.image.alt} animate={{scale: [1.0, 0.95]}}
+                                    transition={{
+                                        duration: 0.4,
+                                        repeat: Infinity,
+                                        repeatType: "reverse",
+                                        ease: "easeInOut",
+                                    }}/>
+
                 </div>
             ))}
         </div>
