@@ -43,35 +43,21 @@ model edges {
   endNode     nodes  @relation(name: "endNode", fields: [endNodeID], references: [nodeID])
 }
 
-model users {
-  username  String     @id
-  password  String
-  firstName String
-  lastName  String
-  gender    String
-  type      String
-  patients  patient[]  @relation(name: "patientUsernameID")
-  employees employee[] @relation(name: "employeeUsernameID")
-}
-
-model patient {
-  patientUsername   String @id
-  reasonToStay      String
-  patientUsernameID users  @relation(name: "patientUsernameID", fields: [patientUsername], references: [username])
-}
-
 model employee {
-  employeeUsername   String        @id
-  salary             Int
-  employeeUsernameID users         @relation(name: "employeeUsernameID", fields: [employeeUsername], references: [username])
-  interpreters       interpreter[] @relation(name: "interpreterUsernameID")
+  employeeEmail String        @id
+  firstName     String
+  lastName      String
+  salary        Int
+  gender        String
+  type          String
+  interpreters  interpreter[] @relation(name: "interpreterUsernameID")
 }
 
 model interpreter {
   interpreterUsername   String   @id
   language              String
   native                Boolean
-  interpreterUsernameID employee @relation(name: "interpreterUsernameID", fields: [interpreterUsername], references: [employeeUsername])
+  interpreterUsernameID employee @relation(name: "interpreterUsernameID", fields: [interpreterUsername], references: [employeeEmail])
 }
 
 model forms {
