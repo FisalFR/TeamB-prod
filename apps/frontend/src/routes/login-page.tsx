@@ -145,7 +145,7 @@ export function LoginPage() {
                     {/*<ShinyButton>*/}
                     {/*    Click Here To Navigate!*/}
                     {/*</ShinyButton>*/}
-                    <div className="pl-10   " >
+                    <div className="">
                         <div className=" justify-center ">
                             <div
                                 className="  hover:cursor-pointer hover:scale-105 transition-transform duration-300 centerContent "

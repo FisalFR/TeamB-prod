@@ -25,7 +25,7 @@ const Carousel = ({ content, autoPlay, interval }) => {
         <div className="w-full h-full select-none bg-opacity-30 bg-black rounded  ">
             {content.map((item, index) => (
                 <div key={index}
-                     className={`flex justify-center items-center space-x-4 ${currentIndex === index ? 'flex' : 'hidden'}`}
+                     className={`flex justify-center items-center space-x-1 ${currentIndex === index ? 'flex' : 'hidden'}`}
                      style={{ height: '100%' }}
                      onClick={() => loginGuest({ path: item.text.route })}>
                     <div className="">
@@ -35,7 +35,7 @@ const Carousel = ({ content, autoPlay, interval }) => {
                         <p className="text-white text-left font-Colfax pl-10">
                             <p className="outlined-text ">{item.text.description}</p>
                         </p>
-                        <p className="mt-4 pb-3 hover:cursor-pointer text-white font-bold"
+                        <p className="pt-3 pb-3 hover:cursor-pointer text-white font-bold justify-center text-center"
                            onClick={(e) => {
                                e.stopPropagation(); // Prevents triggering the outer div's onClick
                                loginGuest({ path: item.text.route });
@@ -43,7 +43,7 @@ const Carousel = ({ content, autoPlay, interval }) => {
                             <span className=" outlined-text">{item.text.callToAction}</span>
                         </p>
                     </div>
-                    <img src={item.image.src} alt={item.image.alt} className=" deep object-cover rounded" />
+                    <img src={item.image.src} alt={item.image.alt} className="pr-6 deep object-cover rounded" />
                 </div>
             ))}
         </div>
