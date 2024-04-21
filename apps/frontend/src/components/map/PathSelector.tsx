@@ -68,7 +68,7 @@ export function PathSelector(props: {
                     </motion.button>
                 }
                 bodyChildren={
-                    <motion.div className={"grid grid-cols-1 grid-rows-3 justify-items-center items-center p-2"}>
+                    <motion.div className={"grid grid-cols-1 grid-rows-3 justify-items-center items-center"}>
                         <Select label="" id="nodeStartSelect" options={props.nodes.map((node) => {
                             return node.nodeID;
                         })}

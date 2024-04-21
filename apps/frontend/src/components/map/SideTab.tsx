@@ -81,7 +81,7 @@ export function SideTab(props: {height: string, yPos: string, arrow: boolean, ta
                 onClick={toggleVisibility}
                 animate={isVisible ? {borderColor: "rgb(246 189 56)"} : {borderColor: "#012D5A"}}
                 transition={{duration: 0.6}}
-                className={"h-full px-3 bg-deep-blue rounded-r-xl border-4 border-deep-blue"}>
+                className={"h-full w-14 px-3 bg-deep-blue rounded-r-xl border-4 border-deep-blue"}>
                 {props.tabChildren}
             </motion.button>
             <AnimatePresence>
@@ -95,7 +95,8 @@ export function SideTab(props: {height: string, yPos: string, arrow: boolean, ta
                         initial="hidden"
                         animate="visible"
                         exit="exit"
-                        variants={variants}>
+                        variants={variants}
+                        className={"p-2"}>
                         {props.bodyChildren}
                     </motion.div>
                 </motion.div>)}

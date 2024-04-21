@@ -5,11 +5,11 @@ export function PathDirections(){
     return (
         <SideTab height={"h-[172px]"} yPos={"top-56"} arrow={false}
             tabChildren={
-                <motion.button className={"w-[24px]"}>
+                <motion.button>
                     <b style={{color: "white"}}>|<br/>V</b>
                 </motion.button>}
             bodyChildren={
-                <motion.div className={"p-4"}>
+                <motion.div>
                     <h1>PATH<br/>DIRECTIONS</h1>
                 </motion.div>
             }>
