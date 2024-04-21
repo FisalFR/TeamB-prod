@@ -3,16 +3,11 @@ import { motion } from "framer-motion";
 import plus from "../assets/plus.svg";
 import minus from "../assets/minus.svg";
 
-export default function NumberInput( props:{min:string, max:string, width:string, height:string, default:string, onChange:(e: number) => void;}){
+export default function NumberInput( props:{min:string, max:string, width:string, height:string, buttonColor:string, default:string, onChange:(e: number) => void;}){
 const [value,setValue] = React.useState(0);
 //const quantity = document.getElementById("quantity") as HTMLInputElement;
     const buttonStyle = {
-        width: 40,
         backgroundSize: "cover",
-        color: "black",
-        textAlign: "right",
-        fontsize: 25,
-        lineHeight: "50px", // Should match the height for vertical alignment
         cursor: "pointer",
     };
     const PlusSvg = <img src={plus} alt="Plus" className={"w-5"} />;
@@ -36,19 +31,21 @@ const [value,setValue] = React.useState(0);
     }
 
     return(
-        <div className="flex flex-row  h-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:outline-none justify-center justify-items-center ">
-            <motion.button onClick={increment} children={""} style={buttonStyle}
-                           className="centerContent bg-gray-400 rounded-lg"
-                           whileHover={{scale: 1.1}}
-                           whileTap={{scale: 0.9}}>
-            {PlusSvg}</motion.button>
-            <input type="number" value={value} id="quantity" name="quantity" min={props.min} max={props.max} defaultValue={props.default} onChange={handleChange}
-                   className={` ${props.width} ${props.height}   text-3xl text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}/>
+        <div
+            className="flex flex-row  h-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:outline-none justify-center justify-items-center ">
             <motion.button onClick={decrement} children={""} style={buttonStyle}
                            whileHover={{scale: 1.1}}
                            whileTap={{scale: 0.9}}
-                            className={"centerContent bg-gray-400 rounded-lg"}>
-                            {MinusSvg}</motion.button>
+                           className={`${props.buttonColor} centerContent  rounded-lg ${props.width}`}>
+                {MinusSvg}</motion.button>
+            <input type="number" value={value} id="quantity" name="quantity" min={props.min} max={props.max}
+                   defaultValue={props.default} onChange={handleChange}
+                   className={` ${props.width} ${props.height}   text-3xl text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}/>
+            <motion.button onClick={increment} children={""} style={buttonStyle}
+                           className={`${props.buttonColor} centerContent  rounded-lg ${props.width}`}
+                           whileHover={{scale: 1.1}}
+                           whileTap={{scale: 0.9}}>
+                {PlusSvg}</motion.button>
         </div>
 
 
@@ -57,9 +54,10 @@ const [value,setValue] = React.useState(0);
 
 }
 NumberInput.defaultProps = {
-    min:-Infinity,
-    max:Infinity,
-    default:0,
-    width:"w-10",
-    height:"h-10"
+    min: -Infinity,
+    max: Infinity,
+    default: 0,
+    width: "w-40",
+    height: "h-10",
+    buttonColor:"bg-gray-300"
 };
