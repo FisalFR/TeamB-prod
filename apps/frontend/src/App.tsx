@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider, Outlet, useNavigate} from "react-r
 import MaintenancePage from "./routes/MaintenancePage";
 import Map from "./routes/map";
 import LoginPage from "./routes/login-page";
-import NavigationBar from "./components/NavigationBar";
 import LanguageInterpreter from "./routes/language-interpreter-page";
 import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
 import CsvManager from "./routes/csv-manager.tsx";
@@ -14,9 +13,12 @@ import Sanitation from "./routes/sanitation-page.tsx";
 import Database from "./routes/Database.tsx";
 import {Auth0Provider} from "@auth0/auth0-react";
 import SecurityPage from "./routes/SecurityRequest.tsx";
+import TransportationRequestPage from "./routes/transportationRequest.tsx";
 
 import GiftDelivery from "./routes/gift-delivery.tsx";
 import MapEditor from "./routes/map-editor.tsx";
+import NavigationBar from "./components/NavigationBar.tsx";
+import {Authenticate} from "./components/authenticate.tsx";
 
 function App() {
 
@@ -42,15 +44,15 @@ function App() {
                         },
                         {
                             path: "maintenance",
-                            element: <MaintenancePage/>
+                            element:<Authenticate component={MaintenancePage}/>
                         },
                         {
                             path:"interpreter",
-                            element: <LanguageInterpreter/>
+                            element: <Authenticate component={LanguageInterpreter}/>
                         },
                         {
                             path:"csvManager",
-                            element: <CsvManager/>
+                            element: <Authenticate component= {CsvManager}/>
                         },
                         {
                            path:"/logs",
@@ -58,27 +60,31 @@ function App() {
                        },
                         {
                             path:"medicineRequest",
-                            element:<MedicineRequest/>
+                            element:<Authenticate component={MedicineRequest}/>
                         },
                         {
                             path:"/database",
-                            element:<Database/>,
+                            element:<Authenticate component={Database}/>,
                         },
                         {
                           path: "/sanitation",
-                          element: <Sanitation/>
+                          element: <Authenticate component= {Sanitation}/>
                         },
                         {
                             path: "/security",
-                            element: <SecurityPage/>
+                            element: <Authenticate component= {SecurityPage}/>
                         },
                         {
                             path:"/giftdelivery",
-                            element:<GiftDelivery/>,
+                            element:<Authenticate component={GiftDelivery}/>,
                         },
                         {
                             path:"/mapEditor",
-                            element:<MapEditor/>,
+                            element: <Authenticate component={MapEditor}/>,
+                        },
+                        {
+                            path:"/transport",
+                            element:<Authenticate component={TransportationRequestPage}/>
                         },
 
             ],
@@ -92,6 +98,8 @@ function App() {
 
     function Root() {
         const navigate = useNavigate();
+
+
         return (
             <Auth0Provider
                 useRefreshTokens
@@ -109,11 +117,12 @@ function App() {
 
 
             >
-            <div className="w-full h-full bs-scroll ...">
+
+                <div className="w-full h-full bs-scroll ...">
                 <NavigationBar/>
 
-
                 <Outlet/>
+
             </div>
             </Auth0Provider>
         );

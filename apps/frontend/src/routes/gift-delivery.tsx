@@ -257,7 +257,7 @@ function GiftDelivery() {
                                         </div>
                                         <div className="">
                                             <p className={"text-left font-bold"}>What is the priority?</p>
-                                            <div className="border-deep-blue border-solid border-2 w-full">
+                                            <div className="border-solid border-deep-blue border-2 rounded w-full">
                                                 <RadioButton value={"Low"} name={"priority"} id={"priority1"}
                                                              state={request.priority}
                                                              onChange={handlePriorityInput} required={true}

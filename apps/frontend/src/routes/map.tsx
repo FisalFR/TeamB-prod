@@ -15,16 +15,11 @@ import FloorSelector from "../components/map/FloorSelector.tsx";
 import {PathSelector} from "../components/map/PathSelector.tsx";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
 import useNodes from "../hooks/useNodes.ts";
+import ToggleNodes from "../components/map/ToggleNodes.tsx";
 
 
 
 export function Map(){
-    // interface NodeData {
-    //     [key: string]: {
-    //         id: string;
-    //         coords: number[];
-    //     };
-    // }
 
     interface FloorMap {
         [key: string]: Node[][];
@@ -38,14 +33,11 @@ export function Map(){
     const MinusSvg = <img src={minus} alt="Minus" className={"w-5"} />;
 
     const [showPath, setShowPath] = useState(false);
+    const [showNodes, setShowNodes] = useState(false);
 
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
     const [algo, setAlgo] = useState<string>("Astar");
     const [selectedAlgo, setSelectedAlgo] = useState<string | null>("Astar");
-
-
-    // const [mapPoints, setMapPoints] = useState(["Error accessing map points"]);
-    // const [nodeData, setNodeData] = useState<NodeData>({});
     const {nodes,nodeMap} = useNodes();
     const [floorMap, setFloorMap] = useState<FloorMap>({});
     const [pathNodes, setPathNodes] = useState<Node[]>([{
@@ -103,22 +95,6 @@ export function Map(){
         findPath(request.startNode, e.target.value);
     }
 
-    // useEffect( () => {
-    //     axios.get("/api/pathfinding/halls").then((response) => {
-    //         // const nodeStrings = [];
-    //         // const tempNodeData: NodeData = {};
-    //         // for (let i = 0; i < response.data.length; i++) {
-    //             // nodeStrings.push(response.data[i].longName);
-    //             // tempNodeData[response.data[i].longName as keyof NodeData] = {id: response.data[i].nodeID, coords: [response.data[i].xcoord, response.data[i].ycoord]};
-    //         // }
-    //         // setMapPoints(nodeStrings);
-    //         // setNodeData(tempNodeData);
-    //
-    //         setPathNodes([response.data[0], response.data[response.data.length-1]]);
-    //         // setShowPath(false);
-    //     });
-    // }, []);
-
     useEffect(() => {
         if(request.startNode && request.endNode) {
             findPath(request.startNode, request.endNode);
@@ -157,9 +133,11 @@ export function Map(){
                                 pathNodes={pathNodes}
                                 images={floorImages as Record<string, string>}
                                 onClickCircle={onClickCircle}
-                                allNodes ={nodes}/>
+                                allNodes ={nodes}
+                                showNodes = {showNodes}/>
                 </TransformComponent>
-                <PathSelector nodes={nodes}
+                <ToggleNodes onClick={() => setShowNodes(!showNodes) } isOn={showNodes}/>
+                <PathSelector nodes={nodes.filter((node) =>  !node.longName.includes("Hall"))}
                               handleStartChange={handleStartChange}
                               handleEndChange={handleEndChange}
                               selectedStartOption={request.startNode !== "" ? nodeMap.get(request.startNode)?.longName : undefined}

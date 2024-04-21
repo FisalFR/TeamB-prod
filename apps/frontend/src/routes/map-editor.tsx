@@ -6,8 +6,6 @@ import l3map from "../assets/floors/03_thethirdfloor.png";
 import plus from "../assets/plus.svg";
 import minus from "../assets/minus.svg";
 import React, {useEffect, useRef, useState} from "react";
-// import axios from "axios";
-// import {startEndNodes} from "common/src/pathfinding.ts";
 import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
@@ -37,8 +35,6 @@ export function MapEditor(){
     };
 
     const [currentNode, setCurrentNode] = useState(placeholderNode);
-
-
     const PlusSvg = <img src={plus} alt="Plus" className={"w-5"} />;
     const MinusSvg = <img src={minus} alt="Minus" className={"w-5"} />;
 
@@ -51,12 +47,6 @@ export function MapEditor(){
     }
 
 
-
-
-    // const [zoom, setZoom] = useState(0.56);
-    // const [showPath, setShowPath] = useState(false);
-
-    // const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
     interface FloorImages {
         [key: string]: string;
     }
@@ -68,18 +58,9 @@ export function MapEditor(){
         "3": l3map
     };
 
-    // const divRef = useRef<HTMLDivElement>(null);
+
 
     const [currentFloor, setCurrentFloor] = useState("2");
-    // function zoomIn() {
-    //     setZoom(prevZoom => Math.min(prevZoom * 1.2, 1.0)); // Increase zoom level, max 1.0
-    // }
-    //
-    // function zoomOut() {
-    //     setZoom(prevZoom => Math.max(prevZoom * 0.8, 0.56)); // Decrease zoom level, min 0.4
-    // }
-
-    //const [dragCount, setDragCount] = useState(0);
     const [replaceThis, setReplaceThis] = useState(0);
 
     const dragNodeID: React.MutableRefObject<string> = useRef("");
@@ -146,7 +127,7 @@ export function MapEditor(){
         nodeStrings.push(nodes[i].nodeID);
     }
 
-    const [editNodes, setEditNodes] = useState(useNodes().nodes);
+    const [editNodes, setEditNodes] = useState<Node[]>([]);
     useEffect(() => setEditNodes(nodes), [nodes]);
 
     const [editEdges, setEditEdges] = useState(useEdges().edges);
@@ -253,48 +234,38 @@ export function MapEditor(){
             return (
                 <>
                     <p>Node ID: {currentNode.nodeID}</p>
-                    <div>
+                    <div className={"grid grid-cols-[auto_auto] gap-1"}>
                         <label htmlFor="longname">Long Name: </label>
                         <input value={autofillByDrag("longName")} id="longname"
                                onChange={(e) => {
                                    handleInput("longName", e);
-                               }} className = "border-deep-blue border-2 rounded"></input>
-                    </div>
-                    <div>
+                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
                         <label htmlFor="shortname">Short Name: </label>
                         <input value={autofillByDrag("shortName")} id="shortname"
                                onChange={(e) => {
                                    handleInput("shortName", e);
-                               }} className = "border-deep-blue border-2 rounded"></input>
-                    </div>
-                    <div>
+                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
                         <label htmlFor="building">Building: </label>
                         <input value={autofillByDrag("building")} id="building"
                                onChange={(e) => {
                                    handleInput("building", e);
-                               }} className = "border-deep-blue border-2 rounded"></input>
-                    </div>
-                    <p>Floor: {currentNode.floor}</p>
-                    <div>
+                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
+                    <p>Floor: {currentNode.floor}</p><div></div>
                         <label htmlFor="nodetype">Type: </label>
                         <input value={autofillByDrag("nodeType")} id="nodetype"
                                onChange={(e) => {
                                    handleInput("nodeType", e);
-                               }} maxLength={4} className = "border-deep-blue border-2 rounded"></input>
-                    </div>
-                    <div>
+                               }} maxLength={4} className = "border-deep-blue border-2 rounded flex-grow"></input>
                         <label htmlFor="xcoord">X Coordinate: </label>
                         <input type="number" value={autofillByDrag("xcoord")} id="longname"
                                onChange={(e) => {
                                    handleInput("xcoord", e);
-                               }} className = "border-deep-blue border-2 rounded"></input>
-                    </div>
-                    <div>
+                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
                         <label htmlFor="ycoord">Y Coordinate: </label>
                         <input type="number" value={autofillByDrag("ycoord")} id="longname"
                                onChange={(e) => {
                                    handleInput("ycoord", e);
-                               }} className = "border-deep-blue border-2 rounded"></input>
+                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
                     </div>
                     <p>Neighbors:</p>
                     <div className="flex flex-row gap-3 flex-wrap">
@@ -346,8 +317,6 @@ export function MapEditor(){
     }
 
     function handleSubmit() {
-        console.log(editEdgesID);
-        console.log(addedEdges);
         //submit editNodes and editEdges to the database
         axios.post("/api/csvManager/editOneNode",currentNode,{
             headers: {
