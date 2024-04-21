@@ -58,6 +58,9 @@ export function TransportationRequestPage() {
     function handlePriorityInput(e: ChangeEvent<HTMLInputElement>): void {
         setRequest({...request, priority: e.target.value});
     }
+    function handleTransportInput(e: ChangeEvent<HTMLInputElement>): void {
+        setRequest({...request, transport: e.target.value});
+    }
     function handleLocationInput(str: string): void {
         setCleared(false);
         setRequest({...request, location: str});
@@ -71,10 +74,7 @@ export function TransportationRequestPage() {
     function handleAddressInput(e: ChangeEvent<HTMLInputElement>): void{
         setRequest({...request, address:e.target.value});
     }
-    function handleTransportInput(str: string): void {
-        setCleared(false);
-        setRequest({...request, transport: str});
-    }
+
 
     function handleNewSubmission(): void {
         setSubmittedWindowVisibility({formScreen: "block", submittedScreen: "hidden"});
@@ -88,7 +88,7 @@ export function TransportationRequestPage() {
                 <img src={transportPic} alt="transport Picture" className="w-screen opacity-65 absolute h-72"/>
                 <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-40 bottom-0 margin-auto">
                     <div className={submittedWindowVisibility.formScreen}>
-                        <div className=" flex flex-col bg-light-white my-10 p-10 px-20 rounded-3xl w-auto relative">
+                        <div className=" flex flex-col bg-light-white my-10 p-10 px-20 rounded-3xl max-w-[850px] relative">
                             <div className="flex flex-col">
                                 <h1 className="text-3xl font-HeadlandOne py-4"> Welcome to the External Patient
                                     Transportation page! </h1>
@@ -98,7 +98,7 @@ export function TransportationRequestPage() {
                             <br/>
                             <form ref={formRef} onSubmit={e => {
                                 e.preventDefault();
-                            }} className="flex flex-col justify-center relative w-[700px]">
+                            }} className="">
                                 <div className="flex justify-between">
                                     <div className="flex flex-col">
                                         <p className="font-bold">Employee Name</p>
@@ -121,12 +121,19 @@ export function TransportationRequestPage() {
                                 <div className="flex justify-between">
                                     <div>
                                         <p className={"text-left font-bold"}>How will the patient be transported?</p>
-                                        <div className="border-deep-blue border-solid border-2 rounded w-fit">
-                                            {/*TODO Fix dropdown to not be locations*/}
-                                            <Dropdown options={locationOptions} placeholder={"Transport Type"}
-                                                      name={"TransportDropdown"}
-                                                      id={"dropdown2"} value={cleared}
-                                                      setInput={handleTransportInput} required={true} width={"w-80"}/>
+                                        <div className={"w-80 border-solid border-deep-blue border-2 rounded"}>
+                                            <RadioButton value={"Ambulance"} name={"transport"} id={"transport1"}
+                                                         state={request.transport}
+                                                         onChange={handleTransportInput} required={true} width={"w-80"}/>
+                                            <RadioButton value={"Helicopter"} name={"transport"} id={"priority2"}
+                                                         state={request.transport}
+                                                         onChange={handleTransportInput} required={true} width={"w-80"}/>
+                                            <RadioButton value={"Friends/Family/Uber"} name={"priority"} id={"priority3"}
+                                                         state={request.transport}
+                                                         onChange={handleTransportInput} required={true} width={"w-80"}/>
+                                            <RadioButton value={"Non-Emergency Accessible Van"} name={"priority"} id={"priority4"}
+                                                         state={request.transport}
+                                                         onChange={handleTransportInput} required={true} width={"w-80"}/>
                                         </div>
                                     </div>
                                     <div>
@@ -167,8 +174,9 @@ export function TransportationRequestPage() {
                                 </div>
                                 <br/>
                                 <div className={"formButtons flex gap-4 my-4"}>
-                                    <Button onClick={handleSubmit} children={"Submit"}/>
                                     <Button onClick={handleClear} children={"Clear"}/>
+                                    <Button onClick={handleSubmit} children={"Submit"}/>
+
                                 </div>
 
                             </form>
