@@ -5,6 +5,7 @@ import {TransportationRequest} from "common/src/transportationRequest.ts";
 import Dropdown from "../components/dropdown.tsx";
 import axios from "axios";
 import Button from "../components/Button.tsx";
+import Transport from "../assests/transport-pic.jpg";
 
 export function TransportationRequestPage() {
     const [request, setRequest] = useState<TransportationRequest>({
@@ -83,6 +84,10 @@ export function TransportationRequestPage() {
 
     return (
         <>
+            <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
+                <img src={Transport} alt="Picture of gurny on ambulance" className="w-srcren opacity-65 absolute">
+                    </img>
+            </div>
             <div className=" flex flex-col justify-center">
                 <div className={submittedWindowVisibility.formScreen}>
                     <div className=" flex flex-col bg-light-white my-10 p-10 px-20 rounded-3xl w-auto relative">
