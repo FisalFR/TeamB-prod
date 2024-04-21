@@ -23,13 +23,13 @@ const Carousel = ({ content, autoPlay, interval }) => {
         }
     }
     return (
-        <div className="w-8/12 h-4/5 select-none bg-opacity-35 bg-black rounded ">
+        <div className="w-7/12 select-none bg-opacity-35 bg-black rounded ">
             {content.map((item, index) => (
                 <div key={index}
                      className={`flex justify-center items-center ${currentIndex === index ? 'flex' : 'hidden'}`}
                      style={{ height: '100%' }}
                      onClick={() => loginGuest({ path: item.text.route })}>
-                    <div className=" justify-items-center ">
+                    <div className=" justify-items-center py-3 ">
                         <h4 className="text-xl font-semibold text-white">
                             <span className="outlined-text">{item.text.title}</span>
                         </h4>
@@ -37,7 +37,7 @@ const Carousel = ({ content, autoPlay, interval }) => {
                             {item.text.description}
                         </p>
                     </div>
-                        <motion.img src={item.image.src} alt={item.image.alt} animate={{scale: [1.0, 0.95]}}
+                        <motion.img src={item.image.src} alt={item.image.alt} animate={{scale: [0.92, 0.95]}} className={"size-1/4 p-2"}
                                     transition={{
                                         duration: 0.4,
                                         repeat: Infinity,

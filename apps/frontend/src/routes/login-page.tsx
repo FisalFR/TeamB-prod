@@ -39,7 +39,7 @@ export function LoginPage() {
             image: { src: image1, alt: 'Description of image 2' },
             text: {
                 title: "Gift Delivery",
-                description: "We're excited to introduce our new Gift Delivery Service—now you can send thoughtful presents directly to your loved ones in the hospital! Such as flowers, balloons, and more!",
+                description: "We're excited to introduce our new Gift Delivery Service—now you can send thoughtful presents directly to your loved ones in the hospital!",
                 callToAction: "Click here to make a gift request!",
                 route: "/giftdelivery"
             }
