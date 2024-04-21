@@ -23,6 +23,7 @@ export function MedicineRequest(){
     const [cleared, setCleared] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
 
+    const [employeeOptions, setEmployeeOptions] = useState<string[]>([]);
     const [locationOptions, setLocationOptions] = useState<string[]>([]);
     const medicineOptions: string[] = ["Tylenol", "Ibuprofen", "Nyquill"];
 
@@ -33,6 +34,16 @@ export function MedicineRequest(){
                 locationOptionsStrings.push(response.data[i].longName);
             }
             setLocationOptions(locationOptionsStrings);
+        });
+    }, []);
+
+    useEffect(() => {
+        axios.get("/api/employee/").then((response) => {
+            const employeeNames: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                employeeNames.push(response.data[i].firstName);
+            }
+            setEmployeeOptions(employeeNames);
         });
     }, []);
 
@@ -66,9 +77,6 @@ export function MedicineRequest(){
     }
 
 
-    function handleNameInput(e: ChangeEvent<HTMLInputElement>): void{
-        setRequest({...request, employeeName: e.target.value});
-    }
 
     function handlePriorityInput(e: ChangeEvent<HTMLInputElement>): void {
         setRequest({...request, priority: e.target.value});
@@ -82,6 +90,11 @@ export function MedicineRequest(){
     function handleMedicineInput(str: string): void {
         setCleared(false);
         setRequest({...request, medicine: str});
+    }
+
+    function handleEmployeeInput(str: string): void {
+        setCleared(false);
+        setRequest({...request, employeeName: str});
     }
 
     // function handleUrgentCheck(e: ChangeEvent<HTMLInputElement>): void {
@@ -122,12 +135,15 @@ export function MedicineRequest(){
                     }}>
                         <div className="formTest  my-10 gap-24">
                             <div>
-                                <p className={"text-left font-bold"}>Employee Name</p>
-                                <input type="text" required
-                                       onChange={handleNameInput} value={request.employeeName}
-                                       placeholder={"Name"}
-                                       className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-100"}/>
+                                <p className={"text-left font-bold"}>Employee Name:</p>
 
+                                <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                    <Dropdown options={employeeOptions} placeholder={"Employee Name"}
+                                              name={"employeeDropdown"}
+                                              id={"employeeName"} value={cleared}
+                                              setInput={handleEmployeeInput} required={true}
+                                              width={"w-100"}/>
+                                </div>
                                 <br/>
 
 
@@ -177,7 +193,8 @@ export function MedicineRequest(){
                                             <p className={"text-left font-bold"}>Quantity</p>
                                             <input
                                                 className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-50"}
-                                                type="number" required min={1} value={request.quantity} defaultValue={1} onChange={handleQuantityInput}/>
+                                                type="number" required min={1} value={request.quantity} defaultValue={1}
+                                                onChange={handleQuantityInput}/>
                                         </div>
                                     </div>
 
