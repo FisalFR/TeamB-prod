@@ -58,9 +58,7 @@ function pathTurn(path:Node[],index:number){
 export default function genInstructions(path:Node[]){
     let index = 1;
     const instructions:Instruction[] =[];
-    let placeHolder:Instruction;
-    placeHolder.type = "Start";
-    placeHolder.content = "Starting from "+path[0].shortName;
+    const placeHolder:Instruction = {type:"Start",content: "Starting from "+path[0].shortName};
     instructions.push(placeHolder);
     let amtIntersections = 0;
     while (index < path.length-1){

@@ -16,6 +16,7 @@ import {PathSelector} from "../components/map/PathSelector.tsx";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
 import useNodes from "../hooks/useNodes.ts";
 import ToggleNodes from "../components/map/ToggleNodes.tsx";
+import PathInstructions from "../components/map/pathInstructions.tsx";
 
 
 
@@ -123,29 +124,31 @@ export function Map(){
 
     return (
         <div className="fixed">
+
+
             <TransformWrapper limitToBounds={true} disablePadding={true}
                               initialScale={0.38}
                               minScale={0.38}
                               maxScale={1.28}>
-                <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)"}}>
+                <TransformComponent wrapperStyle={{width: screen.width, height: "calc(100vh - 55px)"}}>
                     <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor={currentFloor}
                                 showPath={showPath} floormap={floorMap as Record<string, Node[][]>}
                                 pathNodes={pathNodes}
                                 images={floorImages as Record<string, string>}
                                 onClickCircle={onClickCircle}
-                                allNodes ={nodes}
-                                showNodes = {showNodes}/>
+                                allNodes={nodes}
+                                showNodes={showNodes}/>
                 </TransformComponent>
-                <ToggleNodes onClick={() => setShowNodes(!showNodes) } isOn={showNodes}/>
-                <PathSelector nodes={nodes.filter((node) =>  !node.longName.includes("Hall"))}
+                <ToggleNodes onClick={() => setShowNodes(!showNodes)} isOn={showNodes}/>
+                <PathSelector nodes={nodes.filter((node) => !node.longName.includes("Hall"))}
                               handleStartChange={handleStartChange}
                               handleEndChange={handleEndChange}
                               selectedStartOption={request.startNode !== "" ? nodeMap.get(request.startNode)?.longName : undefined}
                               selectedEndOption={request.endNode !== "" ? nodeMap.get(request.endNode)?.longName : undefined}
                               onClick={() => {
-                    setAlgo("Astar");
-                    setSelectedAlgo("Astar");
-                }} selectedAlgo={selectedAlgo} onClick1={() => {
+                                  setAlgo("Astar");
+                                  setSelectedAlgo("Astar");
+                              }} selectedAlgo={selectedAlgo} onClick1={() => {
                     setAlgo("BFS");
                     setSelectedAlgo("BFS");
                 }} onClick2={() => {
@@ -154,7 +157,8 @@ export function Map(){
                 }} onClick3={() => {
                     setAlgo("Dijkstra");
                     setSelectedAlgo("Dijkstra");
-                }} />
+                }}/>
+
                 <FloorSelector
                     onClick1={() => setCurrentFloor("L2")}
                     onClick2={() => setCurrentFloor("L1")}
@@ -163,8 +167,13 @@ export function Map(){
                     onClick5={() => setCurrentFloor("3")}
                     currentFloor={currentFloor}
                 />
+                <div>
+                    FUCK HTML
+                <PathInstructions Path={pathNodes}/>
+                    </div>
                 <ZoomControls/>
             </TransformWrapper>
+
         </div>
     );
 }
