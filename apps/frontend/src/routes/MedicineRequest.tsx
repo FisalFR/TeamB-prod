@@ -4,7 +4,7 @@ import Button from "../components/Button.tsx";
 import RadioButton from "../components/RadioButton.tsx";
 import Dropdown from "../components/dropdown.tsx";
 import axios from "axios";
-import medicinePic from "../assets/serviceRequestBanners/Two-technicians-robotic-arm_1200x628.jpg";
+import medicinePic from "../assets/serviceRequestBanners/medicine.png";
 
 export function MedicineRequest(){
     const [request, setRequest] = useState<MedicineRequestType>({
@@ -112,7 +112,7 @@ export function MedicineRequest(){
         <>
             <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
             <img src={medicinePic} alt="medicine Picture" className="w-screen opacity-65 absolute"/>
-            <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-80 bottom-0 margin-auto">
+            <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-100 bottom-0 margin-auto">
                 <div className={submittedWindowVisibility.formScreen}>
                     <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
                         <h1 className={"text-3xl font-HeadlandOne pt-2 pb-4"}>Medicine Delivery Request</h1>

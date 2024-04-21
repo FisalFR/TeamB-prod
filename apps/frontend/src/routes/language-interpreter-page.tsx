@@ -4,7 +4,7 @@ import Dropdown from "../components/dropdown.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
 import RadioButton from "../components/RadioButton.tsx";
-import interpreterPic from "../assets/serviceRequestBanners/interpreterFinal.jpg";
+import interpreterPic from "../assets/serviceRequestBanners/interpreter.jpg";
 
 function LanguageInterpreter(){
     const [request, setRequest] = useState<LanguageInterpreterTypes>(
@@ -118,7 +118,7 @@ function LanguageInterpreter(){
         <>
             <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
             <img src={interpreterPic} alt="language interpreter Picture" className="w-screen opacity-65 absolute h-80"/>
-            <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-50 bottom-0 margin-auto">
+            <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-80 bottom-0 margin-auto">
 
                 <div className="interpreterContent px-50">
                     <div className={submittedWindowVisibility.requestScreen}>

@@ -4,7 +4,7 @@ import axios from "axios";
 import Dropdown from "../components/dropdown.tsx";
 import RadioButton from "../components/RadioButton.tsx";
 import Button from "../components/Button.tsx";
-import securityPic from "../assets/serviceRequestBanners/1597845859-54284-hospital_security.jpg";
+import securityPic from "../assets/serviceRequestBanners/security.jpg";
 
 export function SecurityPage() {
     const [request, setRequest] = useState<SecurityRequest>({
