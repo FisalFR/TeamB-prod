@@ -1,39 +1,8 @@
-import PathfindingStrategy from "./PathfindingStrategy.ts";
 import PriorityQueue from "../PriorityQueue.ts";
 import Node from "../node.ts";
+import TemplatePathfindingStrategy from "./TemplatePathfindingStrategy.ts";
 
-class AStarStrategy implements PathfindingStrategy {
-
-    execute(startNode: Node, endNode: Node): Node[] {
-        const frontier: PriorityQueue<Node> = new PriorityQueue<Node>();
-        frontier.insert(startNode, 0);
-        const cameFrom = new Map();
-        const costSoFar: Map<Node, number> = new Map();
-        cameFrom.set(startNode, null);
-        costSoFar.set(startNode, 0);
-
-        while (!frontier.isEmpty()) {
-            const current = frontier.pop()!;
-            if (current.nodeID == endNode.nodeID) {
-                break;
-            }
-            for (const next of current.neighbors) {
-                const newCost = costSoFar.get(current)! + 1;
-                if (!costSoFar.has(next) || newCost < costSoFar.get(next)!) {
-                    costSoFar.set(next, newCost);
-                    const priority = newCost + this.heuristic(endNode, next, current);
-                    frontier.insert(next, priority);
-                    cameFrom.set(next, current);
-                }
-            }
-        }
-        if (cameFrom.has(endNode)) {
-            return this.reconstructPath(cameFrom, startNode, endNode);
-        }
-        else {
-            return [];
-        }
-    }
+class AStarStrategy extends TemplatePathfindingStrategy {
 
     heuristic(endNode: Node, nextNode: Node, currentNode:Node): number {
         const endFloor: number  = this.convertFloor(endNode.floor);
@@ -43,6 +12,7 @@ class AStarStrategy implements PathfindingStrategy {
         const DistToElevQ: number = Math.sqrt((1825 -nextNode.ycoord) ** 2 + (1751 - nextNode.xcoord) ** 2);
         const floorDifference = Math.abs(endFloor - nextFloor);
 
+        // If I'm not in the same building as the end node, and across the bridge, prioritize the bridge
         if ((nextNode.building !== endNode.building) && (endNode.building === "Shapiro" || endNode.building === "BTM") ){
             if((nextFloor === 1 && endFloor == 1) && endNode.building === "Shapiro"){
                 return EuclideanDistance/2;
@@ -53,8 +23,13 @@ class AStarStrategy implements PathfindingStrategy {
             if(nextFloor === 4){
                 return EuclideanDistance/2;
             }
+        } else if ((currentNode.building === "BTM") && (nextNode.building !== endNode.building) && (endFloor <3)){
+            if(nextFloor === 4){
+                return EuclideanDistance/2;
+            }
         }
 
+        // If the end ndoe is in L1 Shapiro and we're in Shapiro, prioritize Elevator Q
         if (endNode.building === "Shapiro" && nextNode.building === "Shapiro" && endNode.floor === "L1"){
             if(nextNode.nodeType === "ELEV" && nextNode.longName.includes("Elevator Q")){
                 return 0;
@@ -65,6 +40,7 @@ class AStarStrategy implements PathfindingStrategy {
             }
         }
 
+        // If the node is in the Tower, and we're not in the right floor, get to Elevator L
         if(endNode.building === "Tower" && endFloor !== nextFloor) {
             if (nextNode.nodeType === "ELEV" && nextNode.shortName.includes("Elevator L")) {
                 return 0;
@@ -139,16 +115,6 @@ class AStarStrategy implements PathfindingStrategy {
         }
         return result;
 
-    }
-
-    reconstructPath(cameFrom: Map<Node, Node>, startNode: Node, endNode: Node) {
-        const path = [];
-        while (endNode != startNode) {
-            path.push(endNode);
-            endNode = cameFrom.get(endNode);
-        }
-        path.push(startNode);
-        return path.reverse();
     }
 
 
