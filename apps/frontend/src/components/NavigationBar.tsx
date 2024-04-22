@@ -24,6 +24,7 @@ export function NavigationBar() {
             ["/medicineRequest", "Medicine"],
             ["/sanitation", "Sanitation"],
             ["/security", "Security"],
+            ["/internalTransport", "Internal Transport"],
             ["/transport", "Transportation"],
             ["/giftDelivery", "Gift Delivery"],
         ];
