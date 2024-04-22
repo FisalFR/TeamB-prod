@@ -4,6 +4,7 @@ import Button from "../components/Button.tsx";
 import RadioButton from "../components/RadioButton.tsx";
 import Dropdown from "../components/dropdown.tsx";
 import axios from "axios";
+import medicinePic from "../assets/serviceRequestBanners/medicine.png";
 
 export function MedicineRequest(){
     const [request, setRequest] = useState<MedicineRequestType>({
@@ -122,12 +123,13 @@ export function MedicineRequest(){
 
     return(
         <>
-
-        <div className="centerContent flex flex-col">
-            <div className={submittedWindowVisibility.formScreen}>
-                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                    <h1 className={"text-3xl font-HeadlandOne pt-2 pb-4"}>Medicine Delivery Request</h1>
-                    <p>Fill out the form below to schedule a medicine delivery</p>
+            <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
+            <img src={medicinePic} alt="medicine Picture" className="w-screen opacity-65 absolute"/>
+            <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-100 bottom-0 margin-auto">
+                <div className={submittedWindowVisibility.formScreen}>
+                    <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
+                        <h1 className={"text-3xl font-HeadlandOne pt-2 pb-4"}>Medicine Delivery Request</h1>
+                        <p>Fill out the form below to schedule a medicine delivery</p>
 
 
                     <form ref={formRef} onSubmit={e => {
@@ -147,45 +149,45 @@ export function MedicineRequest(){
                                 <br/>
 
 
-                                <p className={"text-left font-bold "}>What is the priority of this request?</p>
-                                <div className={"border-solid border-deep-blue border-2 rounded"}>
-                                    <RadioButton value={"Low"} name={"priority"} id={"priority1"}
-                                                 state={request.priority}
-                                                 onChange={handlePriorityInput} required={true} width={"w-100"}/>
-                                    <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
-                                                 state={request.priority}
-                                                 onChange={handlePriorityInput} required={true} width={"w-100"}/>
-                                    <RadioButton value={"High"} name={"priority"} id={"priority3"}
-                                                 state={request.priority}
-                                                 onChange={handlePriorityInput} required={true} width={"w-100"}/>
-                                    <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
-                                                 state={request.priority}
-                                                 onChange={handlePriorityInput} required={true} width={"w-100"}/>
-                                </div>
+                                    <p className={"text-left font-bold "}>What is the priority of this request?</p>
+                                    <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                        <RadioButton value={"Low"} name={"priority"} id={"priority1"}
+                                                     state={request.priority}
+                                                     onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                                        <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
+                                                     state={request.priority}
+                                                     onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                                        <RadioButton value={"High"} name={"priority"} id={"priority3"}
+                                                     state={request.priority}
+                                                     onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                                        <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
+                                                     state={request.priority}
+                                                     onChange={handlePriorityInput} required={true} width={"w-100"}/>
+                                    </div>
 
-                                <br/>
+                                    <br/>
 
-                                <p className={"text-left font-bold"}>Destination of Delivery?</p>
-                                <div className={"border-solid border-deep-blue border-2 rounded"}>
-                                    <Dropdown options={locationOptions} placeholder={"Location"}
-                                              name={"locationDropdown"}
-                                              id={"dropdown1"} value={cleared}
-                                              setInput={handleLocationInput} required={true}
-                                              width={"w-100"}/>
-                                </div>
+                                    <p className={"text-left font-bold"}>Destination of Delivery?</p>
+                                    <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                        <Dropdown options={locationOptions} placeholder={"Location"}
+                                                  name={"locationDropdown"}
+                                                  id={"dropdown1"} value={cleared}
+                                                  setInput={handleLocationInput} required={true}
+                                                  width={"w-100"}/>
+                                    </div>
 
-                                <br/>
+                                    <br/>
 
-                                <div className="grid grid-cols-2 space-x-3 flex-auto">
-                                    <div>
-                                        <p className={"text-left font-bold "}>Medication</p>
-                                        <div className={"border-solid border-deep-blue border-2 rounded w-50"}>
-                                            <Dropdown options={medicineOptions} placeholder={"Medicine"}
-                                                      name={"medicineDropdown"}
-                                                      id={"dropdown2"} value={cleared}
-                                                      setInput={handleMedicineInput} required={true}
-                                                      width={"w-48"}/>
-                                        </div>
+                                    <div className="grid grid-cols-2 space-x-3 flex-auto">
+                                        <div>
+                                            <p className={"text-left font-bold "}>Medication</p>
+                                            <div className={"border-solid border-deep-blue border-2 rounded w-50"}>
+                                                <Dropdown options={medicineOptions} placeholder={"Medicine"}
+                                                          name={"medicineDropdown"}
+                                                          id={"dropdown2"} value={cleared}
+                                                          setInput={handleMedicineInput} required={true}
+                                                          width={"w-48"}/>
+                                            </div>
 
                                     </div>
                                     <div>
@@ -198,67 +200,69 @@ export function MedicineRequest(){
                                         </div>
                                     </div>
 
+                                    </div>
+
+
+                                    <br/>
+
+                                    <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Additional
+                                        Comments</label>
+                                    <textarea id={"feedback"}
+                                              className={"w-full max-w-full h-40 max-h-40   p-1 border-solid border-deep-blue border-2 rounded"}
+                                              onChange={handleFeedbackInput}
+                                              value={request.additionalComments} required={true}
+                                              placeholder="Enter detailed description here..."/><br/>
+
+                                    <br/>
                                 </div>
-
-
-                                <br/>
-
-                                <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Additional
-                                    Comments</label>
-                                <textarea id={"feedback"}
-                                          className={"w-full max-w-full h-40 max-h-40   p-1 border-solid border-deep-blue border-2 rounded"}
-                                          onChange={handleFeedbackInput}
-                                          value={request.additionalComments} required={true}
-                                          placeholder="Enter detailed description here..."/><br/>
-
-                                <br/>
                             </div>
-                        </div>
 
-                        <div className={"formButtons flex-auto object-center space-x-5 pb-16"}>
-                            <Button onClick={handleSubmit} children={"Submit"} px={"px-8"}/>
-                            <Button onClick={handleClear} children={"Clear"}/>
-                        </div>
+                            <div className={"formButtons flex-auto object-center space-x-5 pb-16"}>
+                                <Button onClick={handleSubmit} children={"Submit"} px={"px-8"}/>
+                                <Button onClick={handleClear} children={"Clear"}/>
+                            </div>
 
-                    </form>
-                </div>
-            </div>
-
-
-            <div className={submittedWindowVisibility.submittedScreen}>
-                <div className="pt-32">
-                    <div className="p-6 bg-white rounded-2xl">
-                        <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
-                        <Button onClick={handleNewSubmission} children="Submit a new request"/>
-                    </div>
-
-                    <div className={"text-left"}>
-                        <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
-                        <p className={"font-bold"}>Employee Name:</p>
-                        <p className={""}>{request.employeeName}</p>
-
-                        <p className={"font-bold"}>Priority Level:</p>
-                        <p className={""}>{request.priority}</p>
-
-                        <p className={"font-bold"}>Delivery Location:</p>
-                        <p className={""}>{request.location}</p>
-
-                        <p className={"font-bold"}>Medicine Requested:</p>
-                        <p className={""}>{request.medicine}</p>
-
-                        <p className={"font-bold"}>Amount of Medicine:</p>
-                        <p className={""}>{request.quantity}</p>
-
-                        <p className={"font-bold"}>Additional Comments:</p>
-                        <p className={""}>{request.additionalComments}</p>
+                        </form>
                     </div>
                 </div>
 
+
+                <div className={submittedWindowVisibility.submittedScreen}>
+                    <div className="pt-32">
+                        <div className="p-6 bg-white rounded-2xl">
+                            <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+                            <Button onClick={handleNewSubmission} children="Submit a new request"/>
+                        </div>
+
+                        <div className={"text-left"}>
+                            <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form
+                                Submission:</h3>
+                            <p className={"font-bold"}>Employee Name:</p>
+                            <p className={""}>{request.employeeName}</p>
+
+                            <p className={"font-bold"}>Priority Level:</p>
+                            <p className={""}>{request.priority}</p>
+
+                            <p className={"font-bold"}>Delivery Location:</p>
+                            <p className={""}>{request.location}</p>
+
+                            <p className={"font-bold"}>Medicine Requested:</p>
+                            <p className={""}>{request.medicine}</p>
+
+                            <p className={"font-bold"}>Amount of Medicine:</p>
+                            <p className={""}>{request.quantity}</p>
+
+                            <p className={"font-bold"}>Additional Comments:</p>
+                            <p className={""}>{request.additionalComments}</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <p className={"font-HeadlandOne text-deep-blue"}>Created by Mo and Colin</p>
+                </div>
             </div>
-            <div>
-                <p className={"font-HeadlandOne text-deep-blue"}>Created by Mo and Colin</p>
             </div>
-        </div>
         </>
     );
 
