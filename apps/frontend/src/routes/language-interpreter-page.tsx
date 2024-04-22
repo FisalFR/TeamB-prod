@@ -79,6 +79,18 @@ function LanguageInterpreter(){
         });
     }, []);
 
+    const [employeeOptions, setEmployeeOptions] = useState<string[]>([]);
+    useEffect(() => {
+        axios.get("/api/employee/").then((response) => {
+            const employeeNames: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                employeeNames.push(response.data[i].firstName);
+            }
+            setEmployeeOptions(employeeNames);
+        });
+    }, []);
+
+
 
     function handleClearLanguage(e: { preventDefault: () => void; }): void {
         e.preventDefault();
@@ -107,8 +119,9 @@ function LanguageInterpreter(){
     function handlePriorityInput(e: ChangeEvent<HTMLInputElement>): void {
         setRequest({...request, priority: e.target.value});
     }
-    function handleNameInput(e: ChangeEvent<HTMLInputElement>): void{
-        setRequest({...request, employeeName: e.target.value});
+    function handleEmployeeInput(str: string): void {
+        setCleared(false);
+        setRequest({...request, employeeName: str});
     }
     function handleFeedbackInput(e: ChangeEvent<HTMLTextAreaElement>): void {
         setRequest({...request, feedback: e.target.value});
@@ -161,29 +174,30 @@ function LanguageInterpreter(){
                                 </p>
                                 <br/>
 
-                                <form ref={formRef} onSubmit={e => {
-                                    e.preventDefault();
-                                }} className="flex flex-col w-full justify-around">
-                                    <div>
-                                        <p className={"text-left font-bold"}>Employee Name</p>
-                                        <input type="text" required
-                                               onChange={handleNameInput} value={request.employeeName}
-                                               placeholder={"Name"}
-                                               className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-100"}/>
+                            <form ref={formRef} onSubmit={e => {
+                                e.preventDefault();
+                            }} className="flex flex-col w-full justify-around">
+                                    <p className={"text-left font-bold"}>Employee Name</p>
+                                    <div className={"border-solid border-deep-blue border-2 rounded w-fit"}>
+                                        <Dropdown options={employeeOptions} placeholder={"Employee Name"}
+                                                  name={"employeeDropdown"}
+                                                  id={"employeeName"} value={cleared}
+                                                  setInput={handleEmployeeInput} required={true}
+                                                  width={"w-100"}/>
                                     </div>
-                                    <br/>
-                                    <div className="flex flex-row justify-between">
-                                        <div>
-                                            <label className="float-left font-bold"> What language do you need an
-                                                interpreter for?</label>
-                                            <br/>
-                                            <div
-                                                className=" float-left border-solid border-deep-blue border-2 rounded">
-                                                <Dropdown options={languages} placeholder={"Languages"}
-                                                          name={"languagesDropdown"}
-                                                          id={"dropdown2"} value={cleared}
-                                                          setInput={handleLanguageInput} required={true}
-                                                          width={"w-100"}/>
+                                <br/>
+                                <div className="flex flex-row justify-between">
+                                    <div>
+                                        <label className="float-left font-bold"> What language do you need an
+                                            interpreter for?</label>
+                                        <br/>
+                                        <div
+                                            className=" float-left border-solid border-deep-blue border-2 rounded">
+                                        <Dropdown options={languages} placeholder={"Languages"}
+                                                      name={"languagesDropdown"}
+                                                      id={"dropdown2"} value={cleared}
+                                                      setInput={handleLanguageInput} required={true}
+                                                      width={"w-100"}/>
 
                                             </div>
                                         </div>

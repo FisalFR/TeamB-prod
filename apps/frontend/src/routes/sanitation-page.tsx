@@ -27,6 +27,18 @@ function Sanitation() {
             setLocationOptions(locationOptionsStrings);
         });
     }, []);
+
+    const [employeeOptions, setEmployeeOptions] = useState<string[]>([]);
+    useEffect(() => {
+        axios.get("/api/employee/").then((response) => {
+            const employeeNames: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                employeeNames.push(response.data[i].firstName);
+            }
+            setEmployeeOptions(employeeNames);
+        });
+    }, []);
+
     function handleSubmit(e: { preventDefault: () => void; }) {
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
@@ -47,8 +59,9 @@ function Sanitation() {
         setCleared(true);
     }
 
-    function handleName(e: ChangeEvent<HTMLInputElement>): void {
-        setRequest({...request, employeeName: e.target.value});
+    function handleEmployeeInput(str: string): void {
+        setCleared(false);
+        setRequest({...request, employeeName: str});
     }
     function handleInput(e: ChangeEvent<HTMLInputElement>): void {
         setRequest({...request, [e.target.name]: e.target.value});
@@ -80,86 +93,96 @@ function Sanitation() {
                         <h1 className={"text-3xl font-HeadlandOne py-4"}>Welcome to the Sanitation page!</h1>
                         <p>Fill out the form below to report an issue and make a sanitation request.</p>
 
-                        <form ref={formRef} onSubmit={e => {
-                            e.preventDefault();
-                        }}>
-                            <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
-                                <div>
-                                    <p className={"text-left font-bold"}>Employee Name:</p>
+                    <form ref={formRef} onSubmit={e => {
+                        e.preventDefault();
+                    }}>
+                        <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
+                            <div>
+                                <p className={"text-left font-bold"}>Employee Name:</p>
+                                <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                    <Dropdown options={employeeOptions} placeholder={"Employee Name"}
+                                              name={"employeeDropdown"}
+                                              id={"employeeName"} value={cleared}
+                                              setInput={handleEmployeeInput} required={true}
+                                              width={"w-100"}/>
+                                </div>
 
-                                       {/* <Dropdown options={employeeNameOptions} placeholder={"Employee Name"}
-                                                  name={"employeeNameDropdown"}
-                                                  id={"dropdownEmployeeName"} value={cleared}
-                                                  setInput={(str: string) => setRequest({...request, employeeName: str})}
-                                                  required={true}/>*/}
-                                        <input className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 w-72 h-9"}
-                                       type="text" placeholder="Name" onChange={handleName} value={request.employeeName} />
-
-                                    <br/>
-                                    <p className={"text-left font-bold"}>What kind of service?</p>
-                                    <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
-                                        <RadioButton value={"Bed Cleaning"} name={"serviceType"} id={"serviceType1"}
-                                                     state={request.serviceType}
-                                                     onChange={handleInput} required={true}/>
-                                        <RadioButton value={"Toilet Cleaning"} name={"serviceType"} id={"serviceType2"}
-                                                     state={request.serviceType}
-                                                     onChange={handleInput} required={true}/>
-                                        <RadioButton value={"General Sanitation"} name={"serviceType"} id={"serviceType3"}
-                                                     state={request.serviceType}
-                                                     onChange={handleInput} required={true}/>
-                                    </div>
-                                    <br/>
-                                    <p className={"text-left font-bold"}>Priority</p>
-                                    <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
-                                        <RadioButton value={"Low"} name={"priority"} id={"priority1"}
-                                                     state={request.priority}
-                                                     onChange={handleInput} required={true}/>
-                                        <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
-                                                     state={request.priority}
-                                                     onChange={handleInput} required={true}/>
-                                        <RadioButton value={"High"} name={"priority"} id={"priority3"}
-                                                     state={request.priority}
-                                                     onChange={handleInput} required={true}/>
-                                        <RadioButton value={"Emergency"} name={"priority"} id={"priority3"}
-                                                     state={request.priority}
-                                                     onChange={handleInput} required={true}/>
-                                    </div>
+                                <br/>
+                                <p className={"text-left font-bold"}>What kind of service?</p>
+                                <div className="border-solid border-deep-blue border-2 rounded overflow-hidden w-full">
+                                    <RadioButton value={"Bed Cleaning"} name={"serviceType"} id={"serviceType1"}
+                                                 state={request.serviceType}
+                                                 onChange={handleInput} required={true}
+                                                 width={"w-full"}/>
+                                    <RadioButton value={"Toilet Cleaning"} name={"serviceType"} id={"serviceType2"}
+                                                 state={request.serviceType}
+                                                 onChange={handleInput} required={true}
+                                                 width={"w-full"}/>
+                                    <RadioButton value={"General Sanitation"} name={"serviceType"} id={"serviceType3"}
+                                                 state={request.serviceType}
+                                                 onChange={handleInput} required={true}
+                                                 width={"w-full"}/>
+                                </div>
+                                <br/>
+                                <p className={"text-left font-bold"}>Priority</p>
+                                <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
+                                    <RadioButton value={"Low"} name={"priority"} id={"priority1"}
+                                                 state={request.priority}
+                                                 onChange={handleInput} required={true}
+                                                 width={"w-full"}/>
+                                    <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
+                                                 state={request.priority}
+                                                 onChange={handleInput} required={true}
+                                                 width={"w-full"}/>
+                                    <RadioButton value={"High"} name={"priority"} id={"priority3"}
+                                                 state={request.priority}
+                                                 onChange={handleInput} required={true}
+                                                 width={"w-full"}/>
+                                    <RadioButton value={"Emergency"} name={"priority"} id={"priority3"}
+                                                 state={request.priority}
+                                                 onChange={handleInput} required={true}
+                                                 width={"w-full"}/>
+                                </div>
 
                                 </div>
 
                                 <div>
 
 
-                                    <p className={"text-left font-bold"}>What location is this issue in?</p>
-                                    <div className="border-solid border-deep-blue border-2 rounded ">
-                                        <Dropdown options={locationOptions} placeholder={"Location"}
-                                                  name={"locationDropdown"}
-                                                  id={"dropdown1"} value={cleared}
-                                                  setInput={handleLocationInput} required={true}/>
-                                    </div>
-                                    <br/>
-                                    <p className={"text-left font-bold"}>Contaminant</p>
-                                    <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
-                                        <RadioButton value={"Biological Fluids"} name={"contaminant"} id={"contaminant1"}
-                                                     state={request.contaminant}
-                                                     onChange={handleInput} required={true}/>
-                                        <RadioButton value={"Waste Stains"} name={"contaminant"} id={"contaminant2"}
-                                                     state={request.contaminant}
-                                                     onChange={handleInput} required={true}/>
-                                        <RadioButton value={"Dust and Debris"} name={"contaminant"} id={"contaminant3"}
-                                                     state={request.contaminant}
-                                                     onChange={handleInput} required={true}/>
-                                    </div>
-                                    <br/>
-                                    <label htmlFor={"additionalComments"} className={"flex w-full text-left font-bold"}>Additional
-                                        Comments</label>
-                                    <textarea id={"additionalComments"}
-                                              className={"w-full max-w-full h-40 max-h-40 p-1 border-solid border-deep-blue border-2 rounded"}
-                                              onChange={handleAdditionalComments}
-                                              value={request.additionalComments} required={false}
-                                              placeholder="Enter detailed description here..."/>
+                                <p className={"text-left font-bold"}>What location is this issue in?</p>
+                                <div className="border-solid border-deep-blue border-2 rounded ">
+                                    <Dropdown options={locationOptions} placeholder={"Location"}
+                                              name={"locationDropdown"}
+                                              id={"dropdown1"} value={cleared}
+                                              setInput={handleLocationInput} required={true}
+                                              width={"w-100"}/>
                                 </div>
+                                <br/>
+                                <p className={"text-left font-bold"}>Contaminant</p>
+                                <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
+                                    <RadioButton value={"Biological Fluids"} name={"contaminant"} id={"contaminant1"}
+                                                 state={request.contaminant}
+                                                 onChange={handleInput} required={true}
+                                                 width={"w-full"}/>
+                                    <RadioButton value={"Waste Stains"} name={"contaminant"} id={"contaminant2"}
+                                                 state={request.contaminant}
+                                                 onChange={handleInput} required={true}
+                                                 width={"w-full"}/>
+                                    <RadioButton value={"Dust and Debris"} name={"contaminant"} id={"contaminant3"}
+                                                 state={request.contaminant}
+                                                 onChange={handleInput} required={true}
+                                                 width={"w-full"}/>
+                                </div>
+                                <br/>
+                                <label htmlFor={"additionalComments"} className={"flex w-full text-left font-bold"}>Additional
+                                    Comments</label>
+                                <textarea id={"additionalComments"}
+                                          className={"w-full max-w-full h-40 max-h-40 p-1 border-solid border-deep-blue border-2 rounded"}
+                                          onChange={handleAdditionalComments}
+                                          value={request.additionalComments} required={false}
+                                          placeholder="Enter detailed description here..."/>
                             </div>
+                        </div>
 
 
                             <div className={"formButtons flex gap-4 my-4"}>

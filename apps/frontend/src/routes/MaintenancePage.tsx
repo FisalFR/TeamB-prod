@@ -28,6 +28,16 @@ export function MaintenancePage() {
             });
     }, []);
 
+    const [employeeOptions, setEmployeeOptions] = useState<string[]>([]);
+    useEffect(() => {
+        axios.get("/api/employee/").then((response) => {
+            const employeeNames: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                employeeNames.push(response.data[i].firstName);
+            }
+            setEmployeeOptions(employeeNames);
+        });
+    }, []);
 
 
     function handleSubmit(e: { preventDefault: () => void; }) {
@@ -53,8 +63,9 @@ export function MaintenancePage() {
 
     }
 
-    function handleNameInput(e: ChangeEvent<HTMLInputElement>): void{
-        setRequest({...request, employeeName: e.target.value});
+    function handleEmployeeInput(str: string): void {
+        setCleared(false);
+        setRequest({...request, employeeName: str});
     }
     function handleIssueInput(e: ChangeEvent<HTMLInputElement>): void {
         setRequest({...request, issue: e.target.value});
@@ -89,37 +100,34 @@ export function MaintenancePage() {
                             <h1 className={"text-3xl font-HeadlandOne py-4"}>Welcome to the Maintenance page!</h1>
                             <p>Fill out the form below to report an issue and make a maintenance request.</p>
 
-                            <form ref={formRef} onSubmit={e => {
-                                e.preventDefault();
-                            }}>
-                                <div className="formTest w-full my-10 grid grid-cols-2 gap-12 ">
-                                    <div className="flex flex-col w-fit">
-                                        <p className={"text-left font-bold"}>Employee Name</p>
-                                        <input type="text" required
-                                               onChange={handleNameInput} value={request.employeeName}
-                                               placeholder={"Name"}
-                                               className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-[5px] w-full"}/>
-                                        <br/>
+                    <form ref={formRef} onSubmit={e => {
+                        e.preventDefault();
+                    }}>
+                        <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
+                            <div className="flex flex-col max-w-fit">
+                                <p className={"text-left font-bold"}>Employee Name</p>
+                                <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                    <Dropdown options={employeeOptions} placeholder={"Employee Name"}
+                                              name={"employeeDropdown"}
+                                              id={"employeeName"} value={cleared}
+                                              setInput={handleEmployeeInput} required={true}
+                                              width={"w-80"}/>
+                                </div>
+                                <br/>
 
-                                        <div>
-                                            <p className={"text-left font-bold"}>What kind of issue?</p>
-                                            <div className="border-deep-blue border-solid border-2 rounded w-full">
-                                                <RadioButton value={"Elevator"} name={"issue"} id={"issue1"}
-                                                             state={request.issue}
-                                                             onChange={handleIssueInput} required={true}
-                                                             width={"w-80"}/>
-                                                <RadioButton value={"Power"} name={"issue"} id={"issue2"}
-                                                             state={request.issue}
-                                                             onChange={handleIssueInput} required={true}
-                                                             width={"w-80"}/>
-                                                <RadioButton value={"Plumbing"} name={"issue"} id={"issue3"}
-                                                             state={request.issue}
-                                                             onChange={handleIssueInput} required={true}
-                                                             width={"w-80"}/>
-                                                <RadioButton value={"Repair"} name={"issue"} id={"issue4"}
-                                                             state={request.issue}
-                                                             onChange={handleIssueInput} required={true}
-                                                             width={"w-80"}/>
+                                <div>
+                                    <p className={"text-left font-bold w-80"}>What kind of issue?</p>
+                                    <div className="border-deep-blue border-solid border-2 rounded w-fit">
+                                        <RadioButton value={"Elevator"} name={"issue"} id={"issue1"}
+                                                     state={request.issue}
+                                                     onChange={handleIssueInput} required={true} width={"w-80"}/>
+                                        <RadioButton value={"Power"} name={"issue"} id={"issue2"} state={request.issue}
+                                                     onChange={handleIssueInput} required={true} width={"w-80"}/>
+                                        <RadioButton value={"Plumbing"} name={"issue"} id={"issue3"}
+                                                     state={request.issue}
+                                                     onChange={handleIssueInput} required={true} width={"w-80"}/>
+                                        <RadioButton value={"Repair"} name={"issue"} id={"issue4"} state={request.issue}
+                                                     onChange={handleIssueInput} required={true} width={"w-80"}/>
 
                                             </div>
 
