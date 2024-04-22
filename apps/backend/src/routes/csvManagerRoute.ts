@@ -453,10 +453,29 @@ router.post("/addDeleteNodes", async (req, res) => {
       console.log(addedNode);
     }
     if (importedAddDeletes[i].action == "delete") {
-      console.log(importedAddDeletes[i].node.nodeID);
+      const attachedEdges = await client.edges.findMany({
+        where: {
+          OR: [
+            {
+              startNodeID: importedAddDeletes[i].node.nodeID,
+            },
+            {
+              endNodeID: importedAddDeletes[i].node.nodeID,
+            },
+          ],
+        },
+      });
+      const edgeIDs = attachedEdges.map((edge) => edge.edgeID);
+      await client.edges.deleteMany({
+        where: {
+          edgeID: {
+            in: edgeIDs, // Using 'in' operator to match multiple edgeIDs
+          },
+        },
+      });
       const deletedNode = await client.nodes.delete({
         where: {
-          nodeID: importedAddDeletes[i].node.nodeID,
+          nodeID: importedAddDeletes[i].node.nodeID.toString(),
         },
       });
       console.log(deletedNode);
