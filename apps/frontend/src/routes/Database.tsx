@@ -19,7 +19,7 @@ function LogBook() {
         priority: ""
     });
     const [cleared, setCleared] = useState(false);
-    const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
+    const [staffTypeOptions, setEmployeeOptions] = useState<string[]>([]);
     const [formIDOptions, setFormID] = useState<string[]>([]);
     const [requestTypeOptions, setRequestOptions] = useState<string[]>([]);
     const [statusTypeOptions, setTypeOptions] = useState<string[]>([]);
@@ -44,6 +44,7 @@ function LogBook() {
             const priorityStrings = [];
             const statusStrings = [];
             const createdByStrings = [];
+            const assignedByStrings = [];
             for (let i = 0; i < response.data.length; i++) {
                 formIDStrings.push(response.data[i].formID);
                 requestStrings.push(response.data[i].type);
@@ -51,7 +52,7 @@ function LogBook() {
                 statusStrings.push(response.data[i].status);
                 priorityStrings.push(response.data[i].priority);
                 createdByStrings.push(response.data[i].employeeName);
-
+                assignedByStrings.push(response.data[i].assignee);
             }
             setFormID(formIDStrings);
             setRequestOptions(removeDups(requestStrings));
@@ -59,6 +60,7 @@ function LogBook() {
             setTypeOptions(removeDups(statusStrings));
             setPriority(removeDups(priorityStrings));
             setCreatedBy(removeDups(createdByStrings));
+            setEmployeeOptions(removeDups(assignedByStrings));
             setDataUpdated(false);
         });
     }, [dataUpdated]);
@@ -79,6 +81,8 @@ function LogBook() {
         const statusStrings = reversedData.map((item: formType) => item.status);
         const priorityStrings = reversedData.map((item: formType) => item.priority);
         const createdStrings = reversedData.map((item: formType) => item.employeeName);
+        const assignedStrings = reversedData.map((item: formType) => item.assignee);
+
 
         setFormID(formIDStrings);
         setRequestOptions(removeDups(typeStrings));
@@ -86,6 +90,8 @@ function LogBook() {
         setTypeOptions(removeDups(statusStrings));
         setPriority(removeDups(priorityStrings));
         setCreatedBy(removeDups(createdStrings));
+        setEmployeeOptions(removeDups(assignedStrings));
+
     });
     }, [request]);
 

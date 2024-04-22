@@ -57,7 +57,16 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
     const[information, setInformation] = useState<string[]>([]);
     const emptyDate: Date = new Date();
 
-
+    const [employeeOptions, setEmployeeOptions] = useState<string[]>([]);
+    useEffect(() => {
+        axios.get("/api/employee/").then((response) => {
+            const employeeNames: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                employeeNames.push(response.data[i].firstName);
+            }
+            setEmployeeOptions(employeeNames);
+        });
+    }, []);
     async function handleRowClick(request){
         setOpen(true);
         const test: fullServiceFormType ={
@@ -149,7 +158,6 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
     const [submitted, setSubmit] = useState<number>(0);
     const [cleared, setCleared] = useState(false);
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
-    const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
     const [assignment, setAssignment] = useState<FormType>({
         formID: "",
         type: "",
@@ -260,7 +268,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                                       setInput={handleStatusAssignment} required={true}
                                       rounded={"rounded-md"}/>
                             <p className={"text-left font-bold"}>Assigned Staff</p>
-                            <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"} name={"staffAssignment"}
+                            <Dropdown options={employeeOptions} placeholder={"Assigned Staff"} name={"staffAssignment"}
                                       id={"dropdown6"} value={cleared}
                                       setInput={handleStaffAssignment} required={true}
                                       rounded={"rounded-md"}/>
