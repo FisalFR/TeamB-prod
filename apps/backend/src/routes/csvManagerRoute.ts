@@ -140,6 +140,13 @@ router.post("/delete", async (req, res) => {
         },
       });
       break;
+    case "Transportation":
+      await client.transportationRequests.delete({
+        where: {
+          transportationRequest: formType.formID,
+        },
+      });
+      break;
   }
   const updateUser = await client.forms.delete({
     where: {

@@ -2,7 +2,7 @@ import PathfindingStrategy from "./PathfindingStrategy.ts";
 import Node from "../node.ts";
 import Queue from "../Queue.ts";
 
-class BFSStrategy implements  PathfindingStrategy {
+class BFSStrategy extends  PathfindingStrategy {
     execute(startNode: Node, endNode: Node): Node[] {
         const frontier: Queue<Node> = new Queue<Node>();
         frontier.enqueue(startNode);
