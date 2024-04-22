@@ -81,70 +81,25 @@ export function LoginPage() {
     return (
         <div className="z-0 top-0 left-0 h-full grid grid-cols-2 content-center" style={style}>
             <div className="m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col w-10/12">
-                <h1 className="font-OpenSans  font-bold text-7xl text-white text-center mb-2" style={{whiteSpace: 'nowrap'}} >Navigate Seamlessly</h1>
-                <p className="  text-center text-xl font-light text-white"
+                <h1 className="font-OpenSans  font-bold text-[5rem] text-white text-center mb-2" style={{whiteSpace: 'nowrap'}} >Navigate Seamlessly</h1>
+                <p className="  text-center text-2xl font-light text-white"
                   >
                     Find your room in Brigham & Women's Hospital with ease.
 
                 </p>
                 <div className={"flex flex-col gap-10 centerContent pt-5"}>
-                    {/*<motion.div className="pt-5 flex centerContent gap-2 flex-col"*/}
-                    {/*            animate={{scale: [1.0, 1.05]}}*/}
-                    {/*            transition={{*/}
-                    {/*                duration: 0.4,*/}
-                    {/*                repeat: Infinity,*/}
-                    {/*                repeatType: "reverse",*/}
-                    {/*            }}>*/}
-
-                    {/*    <Button>*/}
-                    {/*        <a href="/map"*/}
-                    {/*           className=" font-OpenSans font-bold text-white text-xl hover:cursor-pointer hover:text-white hover:font-extrabold pb-5">*/}
-                    {/*            Click here to navigate!*/}
-                    {/*        </a>*/}
-                    {/*    </Button>*/}
-
-                    {/*    <ButtonMovingBorder*/}
-                    {/*        borderRadius="0.3rem"*/}
-                    {/*        className="bg-deep-blue text-white border-neutral-200"*/}
-                    {/*        containerClassName={"p-[2px] w-60"}*/}
-                    {/*    >*/}
-                    {/*        <a href="/map"*/}
-                    {/*           className=" font-OpenSans font-bold text-white text-xl hover:cursor-pointer hover:text-white">*/}
-                    {/*            Click here to navigate!*/}
-                    {/*        </a>*/}
-                    {/*    </ButtonMovingBorder>*/}
-
-
-                    {/*</motion.div>*/}
-                    {/*<button*/}
-                    {/*    className="relative inline-flex h-12 overflow-hidden rounded p-[2px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"*/}
-                    {/*>*/}
-                    {/*<span*/}
-                    {/*    className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#F6BD38_0%,#FFFFFF_50%,#F6BD38_100%)]"/>*/}
-                    {/*    <span*/}
-                    {/*        className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded bg-deep-blue px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">*/}
-                    {/*    <a href="/map"*/}
-                    {/*       className=" font-OpenSans font-bold text-white text-xl hover:cursor-pointer hover:text-white">*/}
-                    {/*        Click here to navigate!*/}
-                    {/*    </a></span>*/}
-                    {/*</button>*/}
                     <div onClick={() => window.location.href = '/map'}>
-
-
                     <ButtonMovingBorder
                         borderRadius="0.3rem"
-                        className="bg-deep-blue text-white border-neutral-200"
-                        containerClassName={"p-[2px] w-60"}
+                        className=" text-white bg-deep-blue border-neutral-200 border-2"
+                        containerClassName={"p-[3px] w-[500px]"}
                     >
                         <a href="/map"
                            className=" font-OpenSans font-bold text-white text-xl hover:cursor-pointer hover:text-white">
-                            Click here to navigate!
+                            Click Here To Navigate!
                         </a>
                     </ButtonMovingBorder>
                     </div>
-                    {/*<ShinyButton>*/}
-                    {/*    Click Here To Navigate!*/}
-                    {/*</ShinyButton>*/}
                     <div
                         className="  hover:cursor-pointer hover:scale-105 transition-transform duration-300"
                         onMouseEnter={() => setIsHovered(false)}

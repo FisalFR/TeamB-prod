@@ -26,19 +26,19 @@ const Carousel = ({ content, autoPlay, interval }) => {
         <div className="bg-opacity-35 bg-black rounded w-fit">
             {content.map((item, index) => (
                 <div key={index}
-                     className={`${currentIndex === index ? 'w-fit flex flex-row' : 'hidden'}`}
-                     style={{height: '100%'}}
+                     className={`${currentIndex === index ? ' flex flex-auto' : 'hidden '}`}
+                     // style={{height: '100%'}}
                      onClick={() => loginGuest({path: item.text.route})}>
-                    <div className="flex flex-col w-5/12">
-                        <h4 className="text-xl font-semibold text-white">
+                    <div className="w-[400px] p-2">
+                        <h4 className="font-semibold text-white text-2xl">
                             <span className="outlined-text">{item.text.title}</span>
                         </h4>
-                        <p className="outlined-text text-center text-white font-extralight text-balance">
+                        <p className="outlined-text text-center text-white font-extralight text-xl">
                             {item.text.description}
                         </p>
                     </div>
                     <motion.img src={item.image.src} alt={item.image.alt} animate={{scale: [0.92, 0.95]}}
-                                className={"size-32 pr-2"}
+                                className={"size-40 pr-2"}
                                 transition={{
                                     duration: 0.4,
                                     repeat: Infinity,
