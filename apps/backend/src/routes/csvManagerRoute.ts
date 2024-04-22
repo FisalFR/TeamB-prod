@@ -13,6 +13,8 @@ import employee from "common/src/employee";
 import { formFilter } from "../formFunctions";
 import edgeType from "common/src/EdgeType";
 import employeeFunctions from "../employeeFunctions";
+import nodeType from "common/src/NodeType";
+import nodeAddOrDelete from "common/src/nodeAddOrDelete";
 
 router.use(fileUpload());
 
@@ -405,6 +407,58 @@ router.post("/editOneNode", async (req, res) => {
     },
   });
   return res.json(updatedNode);
+});
+
+router.post("/editManyNodes", async (req, res) => {
+  const importedNodes: NodeType[] = req.body;
+  const updatedNodes: NodeType[] = [];
+  for (let i = 0; i < importedNodes.length; i++) {
+    const updatedNode = await client.nodes.update({
+      where: {
+        nodeID: importedNodes[i].nodeID,
+      },
+      data: {
+        xcoord: importedNodes[i].xcoord,
+        ycoord: importedNodes[i].ycoord,
+        building: importedNodes[i].building,
+        floor: importedNodes[i].floor,
+        nodeType: importedNodes[i].nodeType,
+        longName: importedNodes[i].longName,
+        shortName: importedNodes[i].shortName,
+      },
+    });
+    updatedNodes.push(updatedNode);
+  }
+  return res.json(updatedNodes);
+});
+
+router.post("/addDeleteNodes", async (req, res) => {
+  const importedAddDeletes: nodeAddOrDelete[] = req.body;
+  //loop for handling everything in nodeAddDelete - Add and delete nodes in the same order as user
+  for (let i = 0; i < importedAddDeletes.length; i++) {
+    if (importedAddDeletes[i].action == "add") {
+      await client.nodes.create({
+        data: {
+          nodeID: importedAddDeletes[i].node.nodeID,
+          xcoord: importedAddDeletes[i].node.xcoord,
+          ycoord: importedAddDeletes[i].node.ycoord,
+          building: importedAddDeletes[i].node.building,
+          floor: importedAddDeletes[i].node.floor,
+          nodeType: importedAddDeletes[i].node.nodeType,
+          longName: importedAddDeletes[i].node.longName,
+          shortName: importedAddDeletes[i].node.shortName,
+        },
+      });
+    }
+    if (importedAddDeletes[i].action == "delete") {
+      await client.nodes.delete({
+        where: {
+          nodeID: importedAddDeletes[i].node.nodeID,
+        },
+      });
+    }
+  }
+  return res.json("Successful add/delete");
 });
 
 router.post("/addManyEdge", async (req, res) => {

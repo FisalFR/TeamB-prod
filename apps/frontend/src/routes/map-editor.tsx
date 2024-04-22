@@ -17,6 +17,7 @@ import axios from "axios";
 import EdgeType from "common/src/EdgeType.ts";
 import NodeForm from "../components/map/NodeForm.tsx";
 import NodeType from "common/src/NodeType.ts";
+//import nodeType from "common/src/NodeType.ts";
 
 export function MapEditor(){
 
@@ -98,9 +99,14 @@ export function MapEditor(){
         }
     }
     function endDrag() {
+        const nodeChanged = nodeMap.get(dragNodeID.current);
+        if (nodeChanged != undefined) {
+            if (!nodeEdits.current.includes(nodeChanged)) {
+                nodeEdits.current.push(nodeChanged);
+            }
+        }
         dragNodeID.current = "";
         setDragging(false);
-
 
     }
 
@@ -196,6 +202,10 @@ export function MapEditor(){
         removeAllNeighbors(currentNode);
         nodes.splice(spliceInd, 1);
         nodeAddDeletes.current.push({node: currentNode, action: "delete"});
+        if (nodeEdits.current.includes(currentNode)) {
+            const editSpliceInd = nodeEdits.current.indexOf(currentNode);
+            nodeEdits.current.splice(editSpliceInd, 1);
+        }
         setReplaceThis(replaceThis+1);
 
     }
@@ -278,46 +288,41 @@ export function MapEditor(){
     }
 
     function handleSubmit() {
-        //loop for handling everything in nodeAddDelete - Add and delete nodes in the same order as user
-        for (let i = 0; i < nodeAddDeletes.current.length; i++) {
-            if (nodeAddDeletes.current[i].action == "add") {
-                //add nodeAddDeletes.current[i].node
-            }
-            if (nodeAddDeletes.current[i].action == "delete") {
-                //delete nodeAddDeletes.current[i].node
-            }
-        }
-
-
-        //submit editNodes and editEdges to the database
-        axios.post("/api/csvManager/editOneNode",currentNode,{
+        axios.post("/api/csvManager/addDeleteNodes",nodeAddDeletes,{
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            const toDelete = getDeletedEdges();
-            //This should add all the edges and delete all the edges and one go
-            if(addedEdges.length > 0){
-            axios.post("/api/csvManager/addManyEdge", addedEdges, {
+
+            //submit nodeEdits (list of nodes that have been edited) and editEdges to the database
+            axios.post("/api/csvManager/editManyNodes",nodeEdits,{
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then( () => {
-                resetEdges();
-                // alert("Add Success");
-            });
-            }
-            if(toDelete.length > 0){
-                axios.post("/api/csvManager/deleteManyEdge", toDelete, {
+            }).then((response) => {
+                const toDelete = getDeletedEdges();
+                //This should add all the edges and delete all the edges and one go
+                if(addedEdges.length > 0){
+                axios.post("/api/csvManager/addManyEdge", addedEdges, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 }).then( () => {
-                    // alert("Delete Success");
+                    resetEdges();
+                    // alert("Add Success");
                 });
-            console.log(response);
-    }});
-    }
+                }
+                if(toDelete.length > 0){
+                    axios.post("/api/csvManager/deleteManyEdge", toDelete, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then( () => {
+                        // alert("Delete Success");
+                    });
+                console.log(response);
+        }});
+    });
 
     const resetEdges = () => {
         setAddedEdges([]);
