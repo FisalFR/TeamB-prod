@@ -258,12 +258,12 @@ export function MapEditor(){
         setReplaceThis(replaceThis+1);
     }
     function deleteEdge(spliceInd: number) {
-        edges.splice(spliceInd, 1);
         if (addedEdges.includes(edges[spliceInd])) {
             const addSplice = addedEdges.indexOf(edges[spliceInd]);
             addedEdges.splice(addSplice, 1);
         }
         deletedEdges.push(edges[spliceInd]);
+        edges.splice(spliceInd, 1);
         setReplaceThis(replaceThis+1);
     }
 
