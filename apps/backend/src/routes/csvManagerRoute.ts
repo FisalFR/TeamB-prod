@@ -13,7 +13,6 @@ import employee from "common/src/employee";
 import { formFilter } from "../formFunctions";
 import edgeType from "common/src/EdgeType";
 import employeeFunctions from "../employeeFunctions";
-import nodeType from "common/src/NodeType";
 import nodeAddOrDelete from "common/src/nodeAddOrDelete";
 
 router.use(fileUpload());
@@ -436,12 +435,14 @@ router.post("/addDeleteNodes", async (req, res) => {
   const importedAddDeletes: nodeAddOrDelete[] = req.body;
   //loop for handling everything in nodeAddDelete - Add and delete nodes in the same order as user
   for (let i = 0; i < importedAddDeletes.length; i++) {
+    console.log("here" + i);
     if (importedAddDeletes[i].action == "add") {
-      await client.nodes.create({
+      console.log(importedAddDeletes[i].node.nodeID);
+      const addedNode = await client.nodes.create({
         data: {
           nodeID: importedAddDeletes[i].node.nodeID,
-          xcoord: importedAddDeletes[i].node.xcoord,
-          ycoord: importedAddDeletes[i].node.ycoord,
+          xcoord: parseFloat(importedAddDeletes[i].node.xcoord.toString()),
+          ycoord: parseFloat(importedAddDeletes[i].node.ycoord.toString()),
           building: importedAddDeletes[i].node.building,
           floor: importedAddDeletes[i].node.floor,
           nodeType: importedAddDeletes[i].node.nodeType,
@@ -449,13 +450,16 @@ router.post("/addDeleteNodes", async (req, res) => {
           shortName: importedAddDeletes[i].node.shortName,
         },
       });
+      console.log(addedNode);
     }
     if (importedAddDeletes[i].action == "delete") {
-      await client.nodes.delete({
+      console.log(importedAddDeletes[i].node.nodeID);
+      const deletedNode = await client.nodes.delete({
         where: {
           nodeID: importedAddDeletes[i].node.nodeID,
         },
       });
+      console.log(deletedNode);
     }
   }
   return res.json("Successful add/delete");

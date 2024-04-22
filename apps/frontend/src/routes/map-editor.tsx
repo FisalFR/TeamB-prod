@@ -17,6 +17,7 @@ import axios from "axios";
 import EdgeType from "common/src/EdgeType.ts";
 import NodeForm from "../components/map/NodeForm.tsx";
 import NodeType from "common/src/NodeType.ts";
+import nodeAddOrDelete from "common/src/nodeAddOrDelete.ts";
 //import nodeType from "common/src/NodeType.ts";
 
 export function MapEditor(){
@@ -140,7 +141,7 @@ export function MapEditor(){
 
 
     const nodeEdits = useRef<NodeType[]>([]);
-    const nodeAddDeletes = useRef<{node: NodeType, action: string}[]>([]);
+    const nodeAddDeletes = useRef<nodeAddOrDelete[]>([]);
 
     const nodeStrings: string[] = [];
     for (let i = 0; i < nodes.length; i++) {
@@ -288,14 +289,15 @@ export function MapEditor(){
     }
 
     function handleSubmit() {
-        axios.post("/api/csvManager/addDeleteNodes",nodeAddDeletes,{
+        //alert(nodeAddDeletes.current.length);
+        axios.post("/api/csvManager/addDeleteNodes",nodeAddDeletes.current,{
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then(() => {
 
             //submit nodeEdits (list of nodes that have been edited) and editEdges to the database
-            axios.post("/api/csvManager/editManyNodes",nodeEdits,{
+            axios.post("/api/csvManager/editManyNodes",nodeEdits.current,{
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -395,7 +397,7 @@ export function MapEditor(){
                     </div>
 
                     <div className="centerContent w-full p-5 bottom-0 sticky bg-white">
-                        <Button onClick={handleSubmit}>Submit Node Edit</Button>
+                        <Button onClick={handleSubmit}>Submit Changes</Button>
                     </div>
                 </div>
                 <FloorSelector
