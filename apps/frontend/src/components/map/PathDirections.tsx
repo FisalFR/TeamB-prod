@@ -1,17 +1,16 @@
-import { motion } from "framer-motion";
 import {SideTab} from "./SideTab.tsx";
 
 export function PathDirections(){
     return (
         <SideTab height={"h-[172px]"} yPos={"top-56"} arrow={false}
             tabChildren={
-                <motion.button>
+                <div>
                     <b style={{color: "white"}}>PD</b>
-                </motion.button>}
+                </div>}
             bodyChildren={
-                <motion.div>
+                <div>
                     <h1 style={{color: "#012D5A"}}>PATH<br/>DIRECTIONS</h1>
-                </motion.div>
-            }>
-        </SideTab>);
+                </div>
+        }/>
+    );
 }

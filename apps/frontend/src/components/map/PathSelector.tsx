@@ -54,7 +54,7 @@ export function PathSelector(props: {
     return (
             <SideTab height={"h-[172px]"} yPos={"top-8"} arrow={true}
                 tabChildren={
-                    <motion.button className={"h-full flex flex-col items-center justify-around pt-3 pb-2"}>
+                    <div className={"h-full flex flex-col items-center justify-around pt-3 pb-2"}>
                         <motion.img animate={ImgAnimation.animateFrom} transition={ImgAnimation.transitionFromDest(0)}
                                     src={fromIconInverse} alt="fromIconInverse"/>
                         <motion.img animate={ImgAnimation.animateDot} transition={ImgAnimation.transitionDot(0.8)}
@@ -65,10 +65,10 @@ export function PathSelector(props: {
                                     src={dotsInverse} alt="dotsInverse3"/>
                         <motion.img animate={ImgAnimation.animateDest} transition={ImgAnimation.transitionFromDest(2.6)}
                                     src={destinationInverse} alt="destinationInverse"/>
-                    </motion.button>
+                    </div>
                 }
                 bodyChildren={
-                    <motion.div className={"grid grid-cols-1 grid-rows-3 justify-items-center items-center"}>
+                    <div className={"grid grid-cols-1 grid-rows-3 justify-items-center items-center"}>
                         <Select label="" id="nodeStartSelect" options={props.nodes.map((node) => {
                             return node.nodeID;
                         })}
@@ -100,7 +100,7 @@ export function PathSelector(props: {
                                 })}
                                 onChange={props.handleEndChange as (e: React.ChangeEvent<HTMLSelectElement>) => void}
                                 defaultOption={props.selectedEndOption !== undefined ? props.selectedEndOption : "Select your end location"}/>
-                    </motion.div>
+                    </div>
                 }>
             </SideTab>
     );
