@@ -4,12 +4,13 @@ import user_icon from "../assets/user_icon.svg";
 import HandleLogin from "./handleLogin.tsx";
 
 import HandleLogout from "./handleLogout.tsx";
+import {useAuth0} from "@auth0/auth0-react";
 
 export function LoginNavigationBar() {
     const useLogout = HandleLogout();
     const redirectUri = "/map";
   /// const useLogin = () => HandleLogin({path:redirectUri});
-
+    const {isAuthenticated,isLoading} = useAuth0();
 
     {
         return (
@@ -21,7 +22,7 @@ export function LoginNavigationBar() {
                     <img onClick={useLogout} className="hover:cursor-pointer h-3/6 self-center px-4" src={bwhLogo}
                          alt="Brighams Logo White"></img>
                  <br/>
-                    <div onClick={() => HandleLogin({path:redirectUri})}  className="self-center hover:cursor-pointer pl-20">
+                    <div onClick={() => HandleLogin({path:redirectUri,auth:isAuthenticated,load:isLoading})}  className="self-center hover:cursor-pointer pl-20">
                         <p  className="py-1 relative group font-OpenSans items-center font-bold text-bone-white">
                             <img className="inline" src={user_icon} alt="Username icon" height="20" width="20"/><a className="inline pl-2 pb-3">LOGIN</a>
                             <span

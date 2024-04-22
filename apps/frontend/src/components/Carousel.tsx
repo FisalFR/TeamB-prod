@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import HandleLogin from "./handleLogin.tsx";
 import { motion } from 'framer-motion';
+import {useAuth0} from "@auth0/auth0-react";
 
 const Carousel = ({ content, autoPlay, interval }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const {isAuthenticated,isLoading} = useAuth0();
 
     useEffect(() => {
         if (autoPlay) {
@@ -19,7 +21,7 @@ const Carousel = ({ content, autoPlay, interval }) => {
             return window.location.href = `${window.location.origin.concat('/map')}`;
         }
         else{
-            return HandleLogin({path:props.path});
+            return HandleLogin({path:props.path,auth:isAuthenticated,load:isLoading});
         }
     }
     return (
