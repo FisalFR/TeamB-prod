@@ -7,7 +7,7 @@ class AStarStrategy extends TemplatePathfindingStrategy {
     heuristic(endNode: Node, nextNode: Node, currentNode:Node): number {
         const endFloor: number  = this.convertFloor(endNode.floor);
         const nextFloor: number = this.convertFloor(nextNode.floor);
-        const EuclideanDistance = Math.sqrt((endNode.ycoord - nextNode.ycoord) ** 2 + (endNode.xcoord - nextNode.xcoord) ** 2);
+        const EuclideanDistance = Math.sqrt((endNode.ycoord - nextNode.ycoord) ** 2 + (endNode.xcoord - nextNode.xcoord) ** 2 + ((endFloor - nextFloor) * 100) ** 2);
         const DistToElevL: number = Math.sqrt((924 -nextNode.ycoord) ** 2 + (1785 - nextNode.xcoord) ** 2);
         const DistToElevQ: number = Math.sqrt((1825 -nextNode.ycoord) ** 2 + (1751 - nextNode.xcoord) ** 2);
         const floorDifference = Math.abs(endFloor - nextFloor);
@@ -41,22 +41,22 @@ class AStarStrategy extends TemplatePathfindingStrategy {
             }
         }
 
-        if(endNode.building === "Tower" && endNode.floor ==="3" && currentNode.floor === "3"){
-            if (nextFloor === 4){
-                return 0;
-            }
-        }
-
-        // If the node is in the Tower, and we're not in the right floor, get to Elevator L
-        if(endNode.building === "Tower" && endNode.floor !== currentNode.floor) {
-            if (nextNode.nodeType === "ELEV" && nextNode.shortName.includes("Elevator L")) {
-                return 0;
-            } else if (nextNode.nodeType === "ELEV" && !nextNode.shortName.includes("Elevator L")) {
-                return 10000;
-            } else {
-                return DistToElevL;
-            }
-        }
+        // if(endNode.building === "Tower" && endNode.floor ==="3" && currentNode.floor === "3"){
+        //     if (nextFloor === 4){
+        //         return 0;
+        //     }
+        // }
+        //
+        // // If the node is in the Tower, and we're not in the right floor, get to Elevator L
+        // if(endNode.building === "Tower" && endNode.floor !== currentNode.floor) {
+        //     if (nextNode.nodeType === "ELEV" && nextNode.shortName.includes("Elevator L")) {
+        //         return 0;
+        //     } else if (nextNode.nodeType === "ELEV" && !nextNode.shortName.includes("Elevator L")) {
+        //         return 10000;
+        //     } else {
+        //         return DistToElevL;
+        //     }
+        // }
 
         // If we approach an ELEVATOR, prioritize if we're on the wrong floor
         // Otherwise,  DON'T TAKE THE ELEVATOR
@@ -99,6 +99,7 @@ class AStarStrategy extends TemplatePathfindingStrategy {
         return EuclideanDistance+ 10;
 
     }
+
 
     convertFloor(floor: string): number {
         let result: number = 0;
