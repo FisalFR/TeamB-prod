@@ -1108,6 +1108,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@faststore/components@npm:^3.0.39":
+  version: 3.0.39
+  resolution: "@faststore/components@npm:3.0.39"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 3056336f42012d657d5e74ee7ba78dc274a1a9bae3a292f761bad13d486e840bcec075c9acb52ec77d435b2496018cc1c52cd8af90f93539ae5b6a72f6638907
+  languageName: node
+  linkType: hard
+
+"@faststore/ui@npm:^3.0.39":
+  version: 3.0.39
+  resolution: "@faststore/ui@npm:3.0.39"
+  dependencies:
+    "@faststore/components": "npm:^3.0.39"
+    include-media: "npm:^1.4.10"
+    modern-normalize: "npm:^1.1.0"
+    react-swipeable: "npm:^7.0.0"
+    tabbable: "npm:^5.2.1"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 2e766736b7f17ec1321fb9c768c8d8bf2144b73ce0767f27bc6b523be75df121fa6aa0e56f2f592dfc3e750805de6a3c231d6973e8357456c03670b9331713c1
+  languageName: node
+  linkType: hard
+
 "@floating-ui/core@npm:^1.0.0":
   version: 1.6.0
   resolution: "@floating-ui/core@npm:1.6.0"
@@ -5313,6 +5339,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"include-media@npm:^1.4.10":
+  version: 1.4.10
+  resolution: "include-media@npm:1.4.10"
+  checksum: dcdf23cf5b11730f3cf4f9bfbc225f17e64fde635a3ea0bc09d79ad0dcec203a2a1fb473a4b336fdcfe1086417119548dfaf8d5ac5001cfcfefbca82ab8a0c3c
+  languageName: node
+  linkType: hard
+
 "indent-string@npm:^4.0.0":
   version: 4.0.0
   resolution: "indent-string@npm:4.0.0"
@@ -6051,6 +6084,13 @@ __metadata:
     pkg-types: "npm:^1.0.3"
     ufo: "npm:^1.3.2"
   checksum: 00b4c355236eb3d0294106f208718db486f6e34e28bbb7f6965bd9d6237db338e566f2e13489fbf8bfa9b1337c0f2568d4aeac1840f9963054c91881acc974a9
+  languageName: node
+  linkType: hard
+
+"modern-normalize@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "modern-normalize@npm:1.1.0"
+  checksum: edfd40650bd7250eb4761651886a02ca3c524effca41b9832932eab9ccf9f2cfa7e5da8491c7c8bc2d58e1696e5e765adebeaf90cd9d3376444bd6bc0b0f2c99
   languageName: node
   linkType: hard
 
@@ -7293,6 +7333,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-swipeable@npm:^7.0.0":
+  version: 7.0.1
+  resolution: "react-swipeable@npm:7.0.1"
+  peerDependencies:
+    react: ^16.8.3 || ^17 || ^18
+  checksum: b4aa3e8222e34d53f98df80075bdd7a034b33e733952844931a520158c49a892e53fdd497e53ee0f74c502eec21db3d6c9dbc97e251881c2032fe7fd5a0145c8
+  languageName: node
+  linkType: hard
+
 "react-table@npm:^7.8.0":
   version: 7.8.0
   resolution: "react-table@npm:7.8.0"
@@ -7898,6 +7947,7 @@ __metadata:
     "@atlaskit/datetime-picker": "npm:^13.3.2"
     "@auth0/auth0-react": "npm:^2.2.4"
     "@auth0/auth0-spa-js": "npm:^2.1.3"
+    "@faststore/ui": "npm:^3.0.39"
     "@types/express-fileupload": "npm:^1.5.0"
     "@types/react": "npm:^18.0.37"
     "@types/react-dom": "npm:^18.0.11"
@@ -8249,6 +8299,13 @@ __metadata:
   dependencies:
     svg.js: "npm:^2.6.5"
   checksum: 357e759ffb405b7ac97f50d161f1bfeb8fb145288fe0b34fc32a0347538b74cf92ef0c2cff8fe4a2acfccbd8ff10ec5ba852071400559623629ce97b56e4c8e9
+  languageName: node
+  linkType: hard
+
+"tabbable@npm:^5.2.1":
+  version: 5.3.3
+  resolution: "tabbable@npm:5.3.3"
+  checksum: 5da150c9ac7aaed95f901623214794ffac9472a86009a1762c7b436249d33b157b7d86d93610986090d0fb1ef152f5dec2c201552e0b67ca895ba00c145a51c5
   languageName: node
   linkType: hard
 

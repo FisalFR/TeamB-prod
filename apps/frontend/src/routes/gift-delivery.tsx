@@ -25,7 +25,7 @@ import RadioButton from "../components/RadioButton.tsx";
 import {DatePicker} from '@atlaskit/datetime-picker';
 import backward from "../assets/backward.svg";
 import cartIMG from "../assets/cart.svg";
-
+import QuantityPicker from "../components/QuantityPicker.tsx";
 
 //this is a commit just for mo :)
 function GiftDelivery() {
@@ -153,18 +153,20 @@ function GiftDelivery() {
             return <p>There are no items in your cart</p>;
         return cart.map((item) =>
             <div className="flex flex-col pt-2">
-                <p className={"bg-gray-200 shadow-lg"}>
+                <p className={"bg-gray-200 shadow-lg rounded-lg"}>
                     <div className={"flex flex-row gap-4"}>
-                        <img src={item.image} alt={item.name} className="w-20 h-20 border-2 border-gray-200"/>
+                        <img src={item.image} alt={item.name} className="w-20 h-20 border-2 border-gray-200 rounded-lg p-1"/>
                         <p className={"text-left pt-2 text-xs font-bold"}>{item.name}
                             <div className="flex flex-row justify-center gap-x-36 pt-4">
-                                <p>{item.quantity} </p>
+                                {/*<p>{item.quantity} </p>*/}
+                                <QuantityPicker min={0} max={10} initialValue={item.quantity} onQuantityChange={(newQuantity) => {
+                                    changeCart(item.name, newQuantity, item.image);
+                                }}/>
                                 <p> ${item.cost.toFixed(2)}</p>
                             </div>
                         </p>
                     </div>
                 </p>
-
             </div>);
     };
 
