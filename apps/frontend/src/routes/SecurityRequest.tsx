@@ -34,6 +34,17 @@ export function SecurityPage() {
         });
     }, []);
 
+    const [employeeOptions, setEmployeeOptions] = useState<string[]>([]);
+    useEffect(() => {
+        axios.get("/api/employee/").then((response) => {
+            const employeeNames: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                employeeNames.push(response.data[i].firstName);
+            }
+            setEmployeeOptions(employeeNames);
+        });
+    }, []);
+
         function handleSubmit(e: { preventDefault: () => void; }) {
             (formRef.current as HTMLFormElement).requestSubmit();
             e.preventDefault();
@@ -56,10 +67,10 @@ export function SecurityPage() {
             setCleared(true);
         }
 
-    function handleNameInput(e: ChangeEvent<HTMLInputElement>): void {
-        setRequest({...request, employeeName: e.target.value});
+    function handleEmployeeInput(str: string): void {
+        setCleared(false);
+        setRequest({...request, employeeName: str});
     }
-
 
     function handleAdditionalInfoInput(e: ChangeEvent<HTMLTextAreaElement>): void {
         setRequest({...request, additionalInfo: e.target.value});
@@ -98,12 +109,12 @@ export function SecurityPage() {
                             <div>
                                 <div>
                                     <p className={"text-left font-bold"}>Employee Name</p>
-                                    <div className="border-deep-blue border-solid border-2 rounded w-full">
-                                        <input
-                                            className={"border-solid border-deep-blue overflow-hidden flex items-start p-[5px] w-full"}
-                                            onChange={handleNameInput}
-                                            value={request.employeeName}
-                                            placeholder={"Name"}/>
+                                    <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                        <Dropdown options={employeeOptions} placeholder={"Employee Name"}
+                                                  name={"employeeDropdown"}
+                                                  id={"employeeName"} value={cleared}
+                                                  setInput={handleEmployeeInput} required={true}
+                                                  width={"w-100"}/>
                                     </div>
                                 </div>
 

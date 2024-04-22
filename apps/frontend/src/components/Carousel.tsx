@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import HandleLogin from "./handleLogin.tsx";
+import { motion } from 'framer-motion';
 
 const Carousel = ({ content, autoPlay, interval }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,31 +16,42 @@ const Carousel = ({ content, autoPlay, interval }) => {
 
     function loginGuest(props:{path:string}){
         if((props.path) === ("/map")){
-           return window.location.href = `${window.location.origin.concat('/map')}`;
+            return window.location.href = `${window.location.origin.concat('/map')}`;
         }
         else{
             return HandleLogin({path:props.path});
         }
     }
     return (
-        <div className=" pr-4 relative w-full select-none">
+        <div className="bg-opacity-35 bg-black rounded w-fit">
             {content.map((item, index) => (
-                <div onClick={() => loginGuest({path:item.text.route})} key={index} className={`flex items-center space-x-4 ${currentIndex === index ? 'flex' : 'hidden'}`} style={{ height: '100%' }}>
-                    <img src={item.image.src} alt={item.image.alt} className="w-1/2 h-1/2 object-cover" />
-                    <div className="w-1/2 h-1/2 p-lg">
-                        <h4 className="text-xl font-bold">{item.text.title}</h4>
-                        <p>{item.text.description}</p>
-
-                            <p onClick={() => loginGuest({path:item.text.route})}
-                               className="mt-4 hover:cursor-pointer text-deep-blue">
-                                {item.text.callToAction}
-                            </p>
+                <div key={index}
+                     className={`${currentIndex === index ? ' flex flex-auto' : 'hidden '}`}
+                     // style={{height: '100%'}}
+                     onClick={() => loginGuest({path: item.text.route})}>
+                    <div className="w-[400px] p-2">
+                        <h4 className="font-semibold text-white text-2xl">
+                            <span className="outlined-text">{item.text.title}</span>
+                        </h4>
+                        <p className="outlined-text text-center text-white font-extralight text-xl">
+                            {item.text.description}
+                        </p>
                     </div>
-                </div>
+                    <motion.img src={item.image.src} alt={item.image.alt} animate={{scale: [0.92, 0.95]}}
+                                className={"size-40 pr-2"}
+                                transition={{
+                                    duration: 0.4,
+                                    repeat: Infinity,
+                                    repeatType: "reverse",
+                                    ease: "easeInOut",
+                                }}/>
 
+                </div>
             ))}
         </div>
     );
+
+
 };
 
 export default Carousel;
