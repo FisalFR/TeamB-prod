@@ -14,7 +14,7 @@ const Carousel = ({ content, autoPlay, interval }) => {
         }
     }, [autoPlay, interval, content.length]);
 
-    function loginGuest(props:{path:string}){
+    function LoginGuest(props:{path:string}){
         if((props.path) === ("/map")){
             return window.location.href = `${window.location.origin.concat('/map')}`;
         }
@@ -28,7 +28,7 @@ const Carousel = ({ content, autoPlay, interval }) => {
                 <div key={index}
                      className={`${currentIndex === index ? ' flex flex-auto' : 'hidden '}`}
                      // style={{height: '100%'}}
-                     onClick={() => loginGuest({path: item.text.route})}>
+                     onClick={() => LoginGuest({path: item.text.route})}>
                     <div className="w-[400px] p-2">
                         <h4 className="font-semibold text-white text-2xl">
                             <span className="outlined-text">{item.text.title}</span>

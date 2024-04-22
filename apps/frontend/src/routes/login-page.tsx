@@ -12,6 +12,8 @@ import {useEffect} from "react";
 // import Button from "../components/Button.tsx";
 // import { motion } from "framer-motion";
 import {ButtonMovingBorder} from "../components/aceternity/moving-border.tsx";
+//import auth0 from "../contexts/auth0-client.ts";
+//import {useAuth0} from "@auth0/auth0-react";
 export function LoginPage() {
 
     useEffect(() => {
@@ -76,8 +78,8 @@ export function LoginPage() {
     };
 
 
-
-
+  //  const isAuthenticated = useAuth0();
+  //  console.log(isAuthenticated.isAuthenticated);
     return (
         <div className="z-0 top-0 left-0 h-full grid grid-cols-2 content-center" style={style}>
             <div className="m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col w-10/12">

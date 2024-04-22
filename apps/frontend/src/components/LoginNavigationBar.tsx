@@ -1,13 +1,15 @@
 import bwhLogo from "../assets/bwh-logo-white.svg";
 
 import user_icon from "../assets/user_icon.svg";
-import {HandleLogin} from "./handleLogin.tsx";
+import HandleLogin from "./handleLogin.tsx";
 
 import HandleLogout from "./handleLogout.tsx";
 
 export function LoginNavigationBar() {
     const useLogout = HandleLogout();
     const redirectUri = "/map";
+  /// const useLogin = () => HandleLogin({path:redirectUri});
+
 
     {
         return (

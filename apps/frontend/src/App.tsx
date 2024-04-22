@@ -5,7 +5,7 @@ import MaintenancePage from "./routes/MaintenancePage";
 import Map from "./routes/map";
 import LoginPage from "./routes/login-page";
 import LanguageInterpreter from "./routes/language-interpreter-page";
-import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
+//import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
 import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
 import MedicineRequest from "./routes/MedicineRequest.tsx";
@@ -25,18 +25,19 @@ function App() {
     const router = createBrowserRouter([
         {
             path: "/",
+            element: <Root/>,
             children: [
                 {
                     path: "/",
                     element:
                         <div className ="h-full overflow-hidden">
-                            <LoginNavigationBar/>
+                            {/*<LoginNavigationBar/>*/}
                             <LoginPage/>
                         </div>
                 },
                 {
              path: "",
-                    element: <Root/>,
+
                     children: [
                         {
                             path: "map",
