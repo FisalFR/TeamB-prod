@@ -138,7 +138,7 @@ export function TransportationRequestPage() {
                                         <p className={"text-left font-bold"}>How will the patient be transported?</p>
                                         <div>
                                             <select onChange={handleTransportInput} className="w-80 border-solid border-deep-blue border-2 p-[5px] rounded" name="transportation">
-                                                <option value={"placeholder"}>Select Mode of Transport</option>
+                                                <option value={"placeholder"} className="text-slate-500" >Select Mode of Transport</option>
                                                 <option value={"Ambulance"} state={request.transport}>Ambulance</option>
                                                 <option value={"Helicopter"}>Helicopter</option>
                                                 <option value={"Friends/Family/Uber"}>Friends/Family/Rideshare</option>
