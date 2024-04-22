@@ -81,24 +81,26 @@ export function LoginPage() {
     return (
         <div className="z-0 top-0 left-0 h-full grid grid-cols-2 content-center" style={style}>
             <div className="m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col w-10/12">
-                <h1 className="font-OpenSans  font-bold text-[5rem] text-white text-center mb-2" style={{whiteSpace: 'nowrap'}} >Navigate Seamlessly</h1>
+
+                <h1 className="font-OpenSans  font-bold text-[5rem] text-white text-center mb-2"
+                    style={{whiteSpace: 'nowrap'}}>Navigate Seamlessly</h1>
                 <p className="  text-center text-2xl font-light text-white"
-                  >
+                >
                     Find your room in Brigham & Women's Hospital with ease.
 
                 </p>
                 <div className={"flex flex-col gap-10 centerContent pt-5"}>
                     <div onClick={() => window.location.href = '/map'}>
-                    <ButtonMovingBorder
-                        borderRadius="0.3rem"
-                        className=" text-white bg-deep-blue border-neutral-200 border-2"
-                        containerClassName={"p-[3px] w-[500px]"}
-                    >
-                        <a href="/map"
-                           className=" font-OpenSans font-bold text-white text-xl hover:cursor-pointer hover:text-white">
-                            Click Here To Navigate!
-                        </a>
-                    </ButtonMovingBorder>
+                        <ButtonMovingBorder
+                            borderRadius="0.3rem"
+                            className=" text-white bg-deep-blue border-neutral-200 border-2"
+                            containerClassName={"p-[3px] w-[500px]"}
+                        >
+                            <a href="/map"
+                               className=" font-OpenSans font-bold text-white text-xl hover:cursor-pointer hover:text-white">
+                                Click Here To Navigate!
+                            </a>
+                        </ButtonMovingBorder>
                     </div>
                     <div
                         className="  hover:cursor-pointer hover:scale-105 transition-transform duration-300"
@@ -107,6 +109,13 @@ export function LoginPage() {
                         <Carousel content={content} autoPlay={isHovered} interval={4000}/>
                     </div>
 
+                    <p className={"top-20 font-OpenSans fixed text-white font-extralight text-balance"}>
+                        This website is a term project exercise for WPI CS 3733 Software
+                        Engineering <p>
+                        (Prof. Wong) and is not to be confused with the actual Brigham & Women’s
+                        Hospital website.
+                    </p>
+                    </p>
                 </div>
 
             </div>
