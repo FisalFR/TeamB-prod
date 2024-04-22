@@ -29,7 +29,7 @@ function App() {
                 {
                     path: "/",
                     element:
-                        <div>
+                        <div className ="h-full overflow-hidden">
                             <LoginNavigationBar/>
                             <LoginPage/>
                         </div>
