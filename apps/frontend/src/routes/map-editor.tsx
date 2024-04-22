@@ -292,7 +292,7 @@ export function MapEditor(){
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then((response) => {
+        }).then(() => {
 
             //submit nodeEdits (list of nodes that have been edited) and editEdges to the database
             axios.post("/api/csvManager/editManyNodes",nodeEdits,{
@@ -322,7 +322,7 @@ export function MapEditor(){
                     });
                 console.log(response);
         }});
-    });
+    });}
 
     const resetEdges = () => {
         setAddedEdges([]);
