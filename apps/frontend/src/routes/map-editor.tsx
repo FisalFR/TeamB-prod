@@ -355,6 +355,42 @@ export function MapEditor(){
         return "hidden";
     }
 
+    function createChanges() {
+        if ((nodeEdits.current.length == 0) && (nodeAddDeletes.current.length == 0)) {
+            return (
+                <>
+                    <p>Any node edits, adds, or deletes will be displayed here.</p>
+                </>
+            );
+        }
+        return (
+            <>
+                <h3 className="font-bold text-lg">Adds/Deletes: </h3>
+                <div className= "grid grid-cols-2 w-full">
+                    {createAddDeletes()}
+                </div>
+
+                <h3 className="font-bold text-lg">Edits: </h3>
+                {createEdits()}
+            </>
+        );
+    }
+    function createAddDeletes() {
+        return nodeAddDeletes.current.map((change) =>
+            <>
+                <p>{change.node.nodeID}</p>
+                <p>{change.action.toUpperCase()}</p>
+            </>
+        );
+    }
+    function createEdits() {
+        return nodeEdits.current.map((change) =>
+            <>
+                <p>{change.nodeID}</p>
+            </>
+        );
+    }
+
     return (
         <div className="relative">
             <TransformWrapper disabled={dragging} disablePadding={true} limitToBounds={true}>
@@ -407,19 +443,25 @@ export function MapEditor(){
                         <br/>
                         <h3 className="font-bold text-lg">Currently Editing: </h3>
                         {nodeEditor()}
-                        <div className = {deleteBtnVisibility()}>
+                        <div className={deleteBtnVisibility()}>
                             <Button onClick={deleteNode}>Delete Node</Button>
                         </div>
                     </div>
 
-                    <div className="p-6 flex flex-col gap-2">
+                    <div className="p-6 flex flex-col gap-2 w-full">
                         <h2 className="font-HeadlandOne text-[24px]">Add Node</h2>
 
                         <NodeForm node={currentNode} keyLabels={nodeLabels}
                                   disabled={[]} handleInput={handleAddInput} value={autofillByDrag} nodeList={nodes}
-                                  edgeList={edges} nodeMap={nodeMap} currentNode={addNode.current} nodeStrings={nodeStrings}
+                                  edgeList={edges} nodeMap={nodeMap} currentNode={addNode.current}
+                                  nodeStrings={nodeStrings}
                                   autofill={false} addEdge={addEdge} deleteEdge={deleteEdge}/>
                         <Button onClick={addNewNode}>Add Node</Button>
+                    </div>
+
+                    <div className="p-6 flex flex-col gap-2 w-full">
+                        <h2 className="font-HeadlandOne text-[24px]">Changes</h2>
+                        {createChanges()}
                     </div>
 
                     <div className="centerContent w-full p-5 bottom-0 sticky bg-white">
