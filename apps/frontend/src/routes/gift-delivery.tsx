@@ -157,12 +157,12 @@ function GiftDelivery() {
                     <div className={"flex flex-row gap-4"}>
                         <img src={item.image} alt={item.name} className="w-20 h-20 border-2 border-gray-200 rounded-lg p-1"/>
                         <p className={"text-left pt-2 text-xs font-bold"}>{item.name}
-                            <div className="flex flex-row justify-center gap-x-36 pt-4">
+                            <div className="flex flex-row justify-center gap-x-32 pt-4">
                                 {/*<p>{item.quantity} </p>*/}
                                 <QuantityPicker min={0} max={10} initialValue={item.quantity} onQuantityChange={(newQuantity) => {
                                     changeCart(item.name, newQuantity, item.image);
                                 }}/>
-                                <p> ${item.cost.toFixed(2)}</p>
+                                <p className={"pt-2"}> ${item.cost.toFixed(2)}</p>
                             </div>
                         </p>
                     </div>
