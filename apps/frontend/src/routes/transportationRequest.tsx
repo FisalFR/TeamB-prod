@@ -35,6 +35,17 @@ export function TransportationRequestPage() {
         });
     }, []);
 
+    const [employeeOptions, setEmployeeOptions] = useState<string[]>([]);
+    useEffect(() => {
+        axios.get("/api/employee/").then((response) => {
+            const employeeNames: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                employeeNames.push(response.data[i].firstName);
+            }
+            setEmployeeOptions(employeeNames);
+        });
+    }, []);
+
     function handleSubmit(e: { preventDefault: () => void; }) {
         (formRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
@@ -68,8 +79,9 @@ export function TransportationRequestPage() {
     function handleFeedbackInput(e: ChangeEvent<HTMLTextAreaElement>): void {
         setRequest({...request, feedback: e.target.value});
     }
-    function handleNameInput(e: ChangeEvent<HTMLInputElement>): void{
-        setRequest({...request, employeeName: e.target.value});
+    function handleEmployeeInput(str: string): void {
+        setCleared(false);
+        setRequest({...request, employeeName: str});
     }
     function handleAddressInput(e: ChangeEvent<HTMLInputElement>): void{
         setRequest({...request, address:e.target.value});
@@ -102,10 +114,13 @@ export function TransportationRequestPage() {
                                 <div className="flex justify-between">
                                     <div className="flex flex-col">
                                         <p className=" text-left font-bold">Employee Name</p>
-                                        <input type="text" required
-                                               placeholder={"Name"}
-                                               onChange={handleNameInput} value={request.employeeName}
-                                               className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-[5px] w-80"}/>
+                                        <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                            <Dropdown options={employeeOptions} placeholder={"Employee Name"}
+                                                      name={"employeeDropdown"}
+                                                      id={"employeeName"} value={cleared}
+                                                      setInput={handleEmployeeInput} required={true}
+                                                      width={"w-80"}/>
+                                        </div>
                                     </div>
                                     <div className="flex flex-col ">
                                         <p className={"text-left font-bold"}>What room is the patient in?</p>
@@ -129,18 +144,6 @@ export function TransportationRequestPage() {
                                                 <option value={"Friends/Family/Uber"}>Friends/Family/Rideshare</option>
                                                 <option value={"Non-Emergency Accessible Van"}>Non-Emergency Accessible Van</option>
                                             </select>
-                                            {/*<RadioButton value={"Ambulance"} name={"transport"} id={"transport1"}*/}
-                                            {/*             state={request.transport}*/}
-                                            {/*             onChange={handleTransportInput} required={true} width={"w-80"}/>*/}
-                                            {/*<RadioButton value={"Helicopter"} name={"transport"} id={"priority2"}*/}
-                                            {/*             state={request.transport}*/}
-                                            {/*             onChange={handleTransportInput} required={true} width={"w-80"}/>*/}
-                                            {/*<RadioButton value={"Friends/Family/Uber"} name={"priority"} id={"priority3"}*/}
-                                            {/*             state={request.transport}*/}
-                                            {/*             onChange={handleTransportInput} required={true} width={"w-80"}/>*/}
-                                            {/*<RadioButton value={"Non-Emergency Accessible Van"} name={"priority"} id={"priority4"}*/}
-                                            {/*             state={request.transport}*/}
-                                            {/*             onChange={handleTransportInput} required={true} width={"w-80"}/>*/}
                                         </div>
                                     </div>
                                     <div>
