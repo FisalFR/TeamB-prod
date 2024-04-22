@@ -158,7 +158,6 @@ function GiftDelivery() {
                         <img src={item.image} alt={item.name} className="w-20 h-20 border-2 border-gray-200 rounded-lg p-1"/>
                         <p className={"text-left pt-2 text-xs font-bold"}>{item.name}
                             <div className="flex flex-row justify-center gap-x-32 pt-4">
-                                {/*<p>{item.quantity} </p>*/}
                                 <QuantityPicker min={0} max={10} initialValue={item.quantity} onQuantityChange={(newQuantity) => {
                                     changeCart(item.name, newQuantity, item.image);
                                 }}/>
@@ -251,15 +250,15 @@ function GiftDelivery() {
                                 <br/>
                                 <div className="flex flex-row gap-10 w-full overflow-scroll">
                                     <ShopCard image={Tulip} cost={3.99} name="Tulip" altName="Single Tulip"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, Tulip)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, Tulip)} cart={cart} />
                                     <ShopCard image={Rose} cost={5.99} name="Rose" altName="Single Rose"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, Rose)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, Rose)} cart={cart} />
                                     <ShopCard image={tulipBouquet} cost={21.99} name="Bouquet of Tulips"
                                               altName="Bouquet of Tulips"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, tulipBouquet)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, tulipBouquet)} cart={cart} />
                                     <ShopCard image={roseBouquet} cost={29.99} name="Bouquet of Roses"
                                               altName="Bouquet of Roses"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, roseBouquet)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, roseBouquet)} cart={cart}/>
                                 </div>
                                 <br/><br/>
 
@@ -271,14 +270,14 @@ function GiftDelivery() {
                                 <br/>
                                 <div className="flex flex-row gap-10 w-full overflow-scroll">
                                     <ShopCard image={teddyBear} cost={5.99} name="Teddy Bear" altName="Teddy Bear"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, teddyBear)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, teddyBear)} cart={cart} />
                                     <ShopCard image={greenDino} cost={10.99} name="Green Dinosaur"
                                               altName="Green Dinosaur"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, greenDino)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, greenDino)} cart={cart}/>
                                     <ShopCard image={pinkDino} cost={10.99} name="Pink Dinosaur" altName="Pink Dinosaur"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, pinkDino)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, pinkDino)} cart={cart}/>
                                     <ShopCard image={heart} cost={3.99} name="Heart" altName="Heart"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, heart)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, heart)} cart={cart}/>
                                 </div>
                                 <br/><br/>
 
@@ -291,16 +290,16 @@ function GiftDelivery() {
                                 <div className="flex flex-row gap-10 w-full overflow-scroll">
                                     <ShopCard image={gwsBalloon} cost={3.99} name="Get Well Soon Balloon"
                                               altName="Get Well Soon Balloon"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, gwsBalloon)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, gwsBalloon)} cart={cart}/>
                                     <ShopCard image={heartBalloon} cost={3.99} name="Red Heart Balloon"
                                               altName="Red Heart Balloon"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, heartBalloon)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, heartBalloon)} cart={cart}/>
                                     <ShopCard image={rainbow} cost={3.99} name="Rainbow Balloon"
                                               altName="Rainbow Balloon"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, rainbow)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, rainbow)} cart={cart}/>
                                     <ShopCard image={sunshine} cost={3.99} name="Happy Sunshine Balloon"
                                               altName="Smiling Sunshine Balloon"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, sunshine)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, sunshine)} cart={cart}/>
                                 </div>
                                 <br/><br/>
 
@@ -313,15 +312,15 @@ function GiftDelivery() {
                                 <div className="flex flex-row gap-10 w-full overflow-x-scroll h-fit">
                                     <ShopCard image={chocolates} cost={5.99} name="Assorted Chocolate Bundle"
                                               altName="Assorted Chocolates"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, chocolates)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, chocolates)} cart={cart}/>
                                     <ShopCard image={heartlollipop} cost={3.99} name="Heart-Shaped Lollipop"
                                               altName="Heart-Shaped Lollipops"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, heartlollipop)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, heartlollipop)} cart={cart}/>
                                     <ShopCard image={sourPatchKids} cost={5.99} name="Sour Patch Kids"
                                               altName="Sour Patch Kids"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, sourPatchKids)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, sourPatchKids)} cart={cart}/>
                                     <ShopCard image={caramels} cost={9.99} name="Caramel Tray" altName="Caramel Tray"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, caramels)} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, caramels)} cart={cart}/>
                                 </div>
                                 <br/><br/>
                             </form>

@@ -1,7 +1,14 @@
 import NumberInput from "./NumberInput.tsx";
+import {giftItem} from "common/src/giftItem.ts";
 
-function ShopCard(props:{image: string, name: string, cost: number, altName: string, changeCart:(item: string, quantity: number) => void;}) {
+function ShopCard(props:{image: string, name: string, cost: number, altName: string, changeCart:(item: string, quantity: number) => void, cart: giftItem[];}) {
 
+    const cart: giftItem[] = props.cart;
+    // Find the item in the cart
+    const item = cart.find(item => item.name === props.name);
+
+    // If the item is found, get its quantity. Otherwise, default to 0.
+    const quantity = item ? item.quantity : 0;
 
     function changeQuantity(quantity: number) { // Adjust the parameter type
         if (!isNaN(quantity)) {
@@ -25,7 +32,7 @@ function ShopCard(props:{image: string, name: string, cost: number, altName: str
                 {/*<input type="number" id="quantity" name="quantity" min="0" max="10" className="w-full h-12 px-4 py-2 rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:outline-none" onChange={changeQuantity}*/}
                 {/*       defaultValue={0}></input> <br/>*/}
                 <label htmlFor="quantity" className="text-deep-blue pb-5">Quantity: </label>
-                <NumberInput min="0" max="10" onChange={changeQuantity} defaultValue={0}></NumberInput> <br/>
+                <NumberInput min="0" max="10" onChange={changeQuantity} value={quantity }></NumberInput> <br/>
             </div>
         </div>
     );
