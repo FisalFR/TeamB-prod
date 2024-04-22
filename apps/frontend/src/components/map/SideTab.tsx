@@ -72,14 +72,14 @@ export function SideTab(props: {height: string, yPos: string, arrow: boolean, ta
 
     return (
         <div className={"absolute flex flex-row-reverse items-center rounded-r-xl " + props.height + " " + props.yPos}>
-            <div className={"h-full pl-4 items-center flex flex-col justify-around " + (props.arrow ? "" : "opacity-0")}>
+            {props.arrow && <div className={"h-full pl-4 items-center flex flex-col justify-around"}>
                 <motion.img animate={showArrow ? arrowAnimation.animate : {opacity: 0}}
                             transition={showArrow ? arrowAnimation.transition : {duration: 0.6}} src={arrow}
                             alt="arrow"/>
-            </div>
+            </div>}
             <motion.button
                 onClick={toggleVisibility}
-                animate={isVisible ? {borderColor: "rgb(246 189 56)"} : {borderColor: "#012D5A"}}
+                animate={isVisible ? {borderColor: "#F6BD38"} : {borderColor: "#012D5A"}}
                 transition={{duration: 0.6}}
                 className={"h-full w-14 px-3 bg-deep-blue rounded-r-xl border-4 border-deep-blue"}>
                 {props.tabChildren}
@@ -102,5 +102,5 @@ export function SideTab(props: {height: string, yPos: string, arrow: boolean, ta
                 </motion.div>)}
             </AnimatePresence>
         </div>
-);
+    );
 }
