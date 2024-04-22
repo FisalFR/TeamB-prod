@@ -6,6 +6,7 @@ import {fullServiceFormType} from "common/src/fullServiceForm.ts";
 import {FormType} from "common/src/FormType.ts";
 import Dropdown from "./dropdown.tsx";
 import LongButton from "./LongButton.tsx";
+import Button from "./Button.tsx";
 
 
 
@@ -14,7 +15,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
 
     function createTableHeader(){
         return props.headings.map((heading) =>
-            <th className="border-collapse p-2 border-solid border-t-[0px] border-[1px] border-deep-blue bg-deep-blue text-bone-white">
+            <th className="border-collapse p-2 border-solid border-t-[0px] border-[1px] border-deep-blue bg-graphite text-bone-white">
                 {heading}
             </th>
 
@@ -38,13 +39,34 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
 
         );}
 
+    function BoldBeforeColon({text}) {
+        if (!text){
+            return "";
+            }
+        const [label, value] = text.split(':');
+        return (
+            <p>
+                <b>{label}:</b>{value}
+            </p>
+        );
+    }
+
 
     const [open, setOpen] = useState<boolean>(false);
     const [openDelete, setOpenDelete] = useState<boolean>(false);
     const[information, setInformation] = useState<string[]>([]);
     const emptyDate: Date = new Date();
 
-
+    const [employeeOptions, setEmployeeOptions] = useState<string[]>([]);
+    useEffect(() => {
+        axios.get("/api/employee/").then((response) => {
+            const employeeNames: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                employeeNames.push(response.data[i].firstName);
+            }
+            setEmployeeOptions(employeeNames);
+        });
+    }, []);
     async function handleRowClick(request){
         setOpen(true);
         const test: fullServiceFormType ={
@@ -96,7 +118,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                         break;
                     } case "Security": {
                         newInformation.push("Request: " + response.data.securityRequests[0].request);
-                        newInformation.push("Number of Personnel Required: " + response.data.securityRequests[0].quantity);
+                        newInformation.push("Personnel #: " + response.data.securityRequests[0].quantity);
                         newInformation.push("Additional Comments: " + response.data.securityRequests[0].additionalInfo);
                         break;
                     } case "Medicine": {
@@ -136,7 +158,6 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
     const [submitted, setSubmit] = useState<number>(0);
     const [cleared, setCleared] = useState(false);
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
-    const staffTypeOptions: string[] = ["Mo", "Colin", "Jade", "Theresa", "Jeremy"];
     const [assignment, setAssignment] = useState<FormType>({
         formID: "",
         type: "",
@@ -211,52 +232,57 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             <tbody>
             {createTableRows()}
             <Modal open={open} onClose={() => setOpen(false) }>
-                <div className="flex flex-row gap-8 p-12 w-fit ">
+                <div className="flex flex-row items-center gap-8 p-12 w-fit ">
                     <div>
-                        <h1 className="text-3xl">Information</h1>
-                        <ul className="item-start justify-start leading-8 max-w-100">
-                            <li>FormID: {assignment.formID}</li>
-                            <li>Type: {assignment.type}</li>
-                            <li>Status: {assignment.status}</li>
-                            <li>Priority: {assignment.priority}</li>
-                            <li>Assignee: {assignment.assignee}</li>
-                            <li>Created By: {assignment.employeeName}</li>
-                            <li>{information[6]}</li>
-                            <li>{information[7]}</li>
-                            <li>{information[8]}</li>
-                            <li>{information[9]}</li>
-                            <li>{information[10]}</li>
-                            <li>{information[11]}</li>
-                            <li>{information[12]}</li>
-                            <li>Location: {assignment.location}</li>
-                            <li>Date Created: {assignment.dateCreated.toString()}</li>
+                        <h1 className="text-3xl font-OpenSans font-extrabold border-b border-b-4 border-deep-blue">Information</h1>
+                        <ul className="pt-5 flex flex-col items-start leading-8 max-w-100">
+                            <li><b>FormID:</b> {assignment.formID}</li>
+                            <li><b>Type:</b> {assignment.type}</li>
+                            <li><b>Status:</b> {assignment.status}</li>
+                            <li><b>Priority:</b> {assignment.priority}</li>
+                            <li><b>Assignee:</b> {assignment.assignee}</li>
+                            <li><b>Created By:</b> {assignment.employeeName}</li>
+                            <li> <BoldBeforeColon text ={information[6]}/> </li>
+                            <li> <BoldBeforeColon text ={information[7]}/> </li>
+                            <li> <BoldBeforeColon text ={information[8]}/> </li>
+                            <li> <BoldBeforeColon text ={information[9]}/> </li>
+                            <li> <BoldBeforeColon text ={information[10]}/> </li>
+                            <li> <BoldBeforeColon text ={information[11]}/> </li>
+                            <li> <BoldBeforeColon text ={information[12]}/> </li>
+                            <li><b> Location: </b> {assignment.location}</li>
+                            <li><b> Date Created: </b> {assignment.dateCreated.toString()}</li>
                         </ul>
                     </div>
-                    <div className="rounded-2xl bg-deep-blue bg-opacity-5">
+                    <div>
+                    <div className="relative rounded-2xl bg-blue-200 h-fit shadow-lg">
                         <form ref={formRef} onSubmit={e => {
                             e.preventDefault();
                         }}
-                              className="w-[22vw]  flex flex-col items-start p-3 gap-4 pl-5">
-                            <h2 className={"font-extrabold text-2xl font-HeadlandOne flex items-start"}>Assign Staff
+                              className="w-[22vw] flex flex-col items-start p-3 gap-4 pl-5">
+                            <h2 className={"font-extrabold text-2xl font-OpenSans flex items-start"}>Assign Staff
                                 Request</h2>
                             <p className={"text-left font-bold"}>Request Status</p>
                             <Dropdown options={statusTypeOptions} placeholder={"Choose Status"}
                                       name={"statusAssignment"}
                                       id={"dropdown5"} value={cleared}
-                                      setInput={handleStatusAssignment} required={true}/>
+                                      setInput={handleStatusAssignment} required={true}
+                                      rounded={"rounded-md"}/>
                             <p className={"text-left font-bold"}>Assigned Staff</p>
-                            <Dropdown options={staffTypeOptions} placeholder={"Assigned Staff"} name={"staffAssignment"}
+                            <Dropdown options={employeeOptions} placeholder={"Assigned Staff"} name={"staffAssignment"}
                                       id={"dropdown6"} value={cleared}
-                                      setInput={handleStaffAssignment} required={true}/>
-                            <div className={"flex flex-col pt-8 pb-4 pr-4 w-full"}>
-                                <LongButton onClick={handleSubmit} children={"Submit"}/>
+                                      setInput={handleStaffAssignment} required={true}
+                                      rounded={"rounded-md"}/>
+                            <div className={"flex flex-row pt-2 pb-1 w-full"}>
+                                <Button onClick={handleSubmit} children={"Submit"} rounded={"rounded-lg"}/>
                             </div>
                         </form>
-                        <div className={"flex flex-col p-3 gap-4 pl-5 pb-4 pr-7 w-full "}>
-                            <LongButton onClick={firstDelete} children={"Delete Request"}/>
+                        <div className="absolute bottom-[17px] left-[185px]">
+                            <Button onClick={firstDelete} children={"Delete"} rounded={"rounded-lg"}/>
+                        </div>
+
                         </div>
                         <Modal open={openDelete} onClose={() => setOpenDelete(false)}>
-                            <div className="flex flex-col gap-4">
+                            <div className="space-y-2">
                                 <h1 className="text-2xl">Are you sure?</h1>
                                 <LongButton onClick={handleDelete} children={"Delete Request"}/>
                             </div>

@@ -27,12 +27,12 @@ class writeEdge {
     const edgesData = await prisma.edges.findMany();
 
     //creates the header row in the csv file
-    const headersEdges = ["startNodeID", "endNodeID"];
+    const headersEdges = ["edgeID", "startNodeID", "endNodeID"];
 
     // create the rows for the csv file
     let finalEdgesString = headersEdges.join(",") + "\n";
     edgesData.forEach((edge) => {
-      const row = [edge.startNodeID, edge.endNodeID];
+      const row = [edge.edgeID, edge.startNodeID, edge.endNodeID];
       finalEdgesString += row.join(",") + "\n";
     });
     // use fs to write to the csv file

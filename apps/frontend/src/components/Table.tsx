@@ -6,12 +6,12 @@
 
 
 
-function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: string[]}) {
+function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: string[], px:string, py:string}) {
 
 
     function createTableHeader(){
         return props.headings.map((heading) =>
-            <th className="border-collapse p-2 border-solid border-t-[0px] border-[1px] border-deep-blue bg-deep-blue text-bone-white">
+            <th className={`border-collapse ${props.px} ${props.py} border-solid border-t-[0px] border-[1px] border-deep-blue bg-deep-blue text-bone-white bg-graphite`}>
                 {heading}
             </th>
 
@@ -33,7 +33,7 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
         );}
 
     return(
-        <table className="overflow-scroll border-collapse p-6 border-solid border-[1px] border-t-[0px] border-deep-blue w-full bg-white">
+        <table className="overflow-scroll border-collapse p-6 border-solid border-[1px] border-t-[0px] border-deep-blue w-full bg-white table-auto">
             <thead className="sticky top-0">
             {createTableHeader()}
             </thead>
@@ -45,3 +45,8 @@ function Table(props:{data: NonNullable<unknown>[]; headings: string[], keys: st
 }
 
 export default Table;
+
+Table.defaultProps = {
+    px:"px-2",
+    py:"py-2"
+};
