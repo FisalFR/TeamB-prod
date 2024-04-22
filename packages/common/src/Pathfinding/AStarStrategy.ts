@@ -11,6 +11,7 @@ class AStarStrategy extends TemplatePathfindingStrategy {
         const DistToElevL: number = Math.sqrt((924 -nextNode.ycoord) ** 2 + (1785 - nextNode.xcoord) ** 2);
         const DistToElevQ: number = Math.sqrt((1825 -nextNode.ycoord) ** 2 + (1751 - nextNode.xcoord) ** 2);
         const floorDifference = Math.abs(endFloor - nextFloor);
+        let finalCost = EuclideanDistance;
 
         // If I'm not in the same building as the end node, and across the bridge, prioritize the bridge
         if ((nextNode.building !== endNode.building) && (endNode.building === "Shapiro" || endNode.building === "BTM") ){
@@ -40,8 +41,14 @@ class AStarStrategy extends TemplatePathfindingStrategy {
             }
         }
 
+        if(endNode.building === "Tower" && endNode.floor ==="3" && currentNode.floor === "3"){
+            if (nextFloor === 4){
+                return 0;
+            }
+        }
+
         // If the node is in the Tower, and we're not in the right floor, get to Elevator L
-        if(endNode.building === "Tower" && endFloor !== nextFloor) {
+        if(endNode.building === "Tower" && endNode.floor !== currentNode.floor) {
             if (nextNode.nodeType === "ELEV" && nextNode.shortName.includes("Elevator L")) {
                 return 0;
             } else if (nextNode.nodeType === "ELEV" && !nextNode.shortName.includes("Elevator L")) {
@@ -84,7 +91,7 @@ class AStarStrategy extends TemplatePathfindingStrategy {
         }
 
         if (endFloor === nextFloor){
-            return EuclideanDistance + 10;
+            return EuclideanDistance;
         } else if (endFloor !== nextFloor){
             return EuclideanDistance + 10000;
         }
