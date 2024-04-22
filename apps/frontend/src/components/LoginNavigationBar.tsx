@@ -9,7 +9,6 @@ import {useAuth0} from "@auth0/auth0-react";
 export function LoginNavigationBar() {
     const useLogout = HandleLogout();
     const redirectUri = "/map";
-  /// const useLogin = () => HandleLogin({path:redirectUri});
     const {isAuthenticated,isLoading} = useAuth0();
 
     {
