@@ -30,7 +30,7 @@ function App() {
                     path: "/",
                     element:
                         <div className ="h-full overflow-hidden">
-                            {/*<LoginNavigationBar/>*/}
+
                             <LoginPage/>
                         </div>
                 },
