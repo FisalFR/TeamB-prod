@@ -9,6 +9,7 @@
   font-family: 'Open Sans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+    /*SHINY BUTTON STUFF*/
     --radial-gradient-background: 246, 189, 56;
     --solid-color-background: 1, 45, 90;
     --overlay-color: 246, 189, 56;
@@ -37,6 +38,7 @@ h1 {
   line-height: 1.1;
 }
 
+/*SHINY BUTTON*/
 .radial-gradient {
     background: radial-gradient(
             circle at 50% 0%,
@@ -77,80 +79,4 @@ h1 {
     mask-composite: exclude;
     -webkit-mask-composite: xor;
 }
-
-.fancy {
-    --offset: 3px;
-    background: rgb(1, 45, 90);
-    border-radius: 10px;
-    position: relative;
-    height: 75px;
-    width: 400px;
-    max-width: 100%;
-    overflow: hidden;
-}
-
-/* Conic gradient */
-.fancy::before {
-    content: '';
-    background: conic-gradient(transparent 270deg, white, transparent);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    aspect-ratio: 1;
-    width: 100%;
-    animation: rotate 2s linear infinite;
-}
-
-/* Overlay */
-.fancy::after {
-    content: '';
-    background: inherit;
-    border-radius: inherit;
-    position: absolute;
-    inset: var(--offset);
-    height: calc(100% - 2 * var(--offset));
-    width: calc(100% - 2 * var(--offset));
-}
-
-.fancy a {
-    background: transparent;
-    color: white;
-    font-size: 1.5rem;
-    position: absolute;
-    inset: 0;
-    z-index: 10;
-    padding: 1.5rem;
-}
-
-@keyframes rotate {
-    from {
-        transform: translate(-50%, -50%) scale(1.4) rotate(0turn);
-    }
-
-    to {
-        transform: translate(-50%, -50%) scale(1.4) rotate(1turn);
-    }
-}
-
-/*
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}*/
+/*END SHINY BUTTON*/
