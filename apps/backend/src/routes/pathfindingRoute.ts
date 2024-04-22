@@ -10,6 +10,7 @@ import AStarStrategy from "common/src/Pathfinding/AStarStrategy";
 import BFSStrategy from "common/src/Pathfinding/BFSStrategy";
 import DFSStrategy from "common/src/Pathfinding/DFSStrategy";
 import DijkstraStrategy from "common/src/Pathfinding/DijkstraStrategy";
+import PathfindingStrategy from "common/src/Pathfinding/PathfindingStrategy";
 // import {stringify, parse} from 'flatted';
 
 const router: Router = express.Router();
@@ -37,25 +38,26 @@ router.post("/", async (req, res) => {
   const node2: Node = finalPath.nodeMap.get(pathfinding.endNode)!;
 
   let path: Node[] = [];
+  let strategy: PathfindingStrategy;
   let nodeCoords: number[][] = [];
   switch (algorithm) {
     case "Astar":
-      finalPath.setStrategy(new AStarStrategy());
+      strategy = new AStarStrategy();
       break;
     case "BFS":
-      finalPath.setStrategy(new BFSStrategy());
+      strategy = new BFSStrategy();
       break;
     case "DFS":
-      finalPath.setStrategy(new DFSStrategy());
+      strategy = new DFSStrategy();
       break;
     case "Dijkstra":
-      finalPath.setStrategy(new DijkstraStrategy());
+      strategy = new DijkstraStrategy();
       break;
     default:
       return res.status(400).send({ error: "Invalid algorithm" });
   }
 
-  path = finalPath.findPath(node1, node2);
+  path = strategy.execute(node1, node2);
   nodeCoords = finalPath.findPath(node1, node2).map((node) => {
     return [node.xcoord, node.ycoord];
   });
