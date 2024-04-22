@@ -184,20 +184,38 @@ export function MapEditor(){
         setReplaceThis(replaceThis+1);
     }
     function addNewNode() {
-        const newNode: NodeType = {
-            nodeID: addNode.current["nodeID"],
-            xcoord: addNode.current["xcoord"],
-            ycoord: addNode.current["ycoord"],
-            floor: addNode.current["floor"],
-            building: addNode.current["building"],
-            nodeType: addNode.current["nodeType"],
-            longName: addNode.current["longName"],
-            shortName: addNode.current["shortName"]
-        };
-        nodes.push(newNode);
-        nodeMap.set(newNode.nodeID, newNode);
-        nodeAddDeletes.current.push({node: newNode, action: "add"});
-        setReplaceThis(replaceThis+1);
+        if (!nodes.find(x => x.nodeID === addNode.current.nodeID)) {
+            const newNode: NodeType = {
+                nodeID: addNode.current["nodeID"],
+                xcoord: addNode.current["xcoord"],
+                ycoord: addNode.current["ycoord"],
+                floor: addNode.current["floor"],
+                building: addNode.current["building"],
+                nodeType: addNode.current["nodeType"],
+                longName: addNode.current["longName"],
+                shortName: addNode.current["shortName"]
+            };
+            let valid = true;
+            for (const [key] of Object.entries(newNode)) {
+                if (newNode[key] == "") {
+                    valid = false;
+                }
+            }
+            if (valid) {
+                nodes.push(newNode);
+                nodeMap.set(newNode.nodeID, newNode);
+                nodeAddDeletes.current.push({node: newNode, action: "add"});
+                setReplaceThis(replaceThis+1);
+            }
+            else {
+                alert("All fields must be filled to add a node");
+            }
+
+        }
+        else {
+            alert("A node with this ID already exists");
+        }
+
     }
     function deleteNode() {
         const spliceInd = nodes.indexOf(currentNode);
@@ -239,12 +257,15 @@ export function MapEditor(){
         }
         setReplaceThis(replaceThis+1);
     }
+
+    const [selectedNode, setSelectedNode] = useState("");
     function editNode(e) {
         const editing = nodeMap.get(e.target.value);
         if (editing != undefined) {
             setCurrentNode(editing);
             setCurrentFloor(editing.floor);
             setChangeElement("");
+            setSelectedNode(editing.nodeID);
         }
     }
 
@@ -272,7 +293,7 @@ export function MapEditor(){
             return (
                 <>
                     {<NodeForm node={currentNode} keyLabels={nodeLabels}
-                               disabled={["nodeID", "floor"]} handleInput={handleInput} value={autofillByDrag} nodeList={nodes}
+                               disabled={["nodeID"]} handleInput={handleInput} value={autofillByDrag} nodeList={nodes}
                                edgeList={edges} nodeMap={nodeMap} currentNode={currentNode} nodeStrings={nodeStrings}
                                autofill={true} addEdge={addEdge} deleteEdge={deleteEdge}/>}
                 </>
@@ -281,23 +302,6 @@ export function MapEditor(){
             return (<p>Select node from dropdown or click node on map to edit.</p>);
         }
     }
-
-    //const originalEdges = useEdges().edges;
-
-    //const [editEdgesID, setEditEdgesID] = useState(useEdgesID().edges);
-
-    /*function getDeletedEdges() {
-        const toDelete = [];
-        for (let i = 0; i < originalEdges.length; i++) {
-            if (!editEdgesID.includes(originalEdges[i].edgeID)) {
-                toDelete.push(originalEdges[i]);
-            }
-        }
-        if(toDelete.length === originalEdges.length){
-            return [];
-        }
-        return toDelete;
-    }*/
 
     function handleSubmit() {
         //alert(nodeAddDeletes.current.length);
@@ -313,7 +317,6 @@ export function MapEditor(){
                     'Content-Type': 'application/json'
                 }
             }).then((response) => {
-                //const toDelete = getDeletedEdges();
                 //This should add all the edges and delete all the edges and one go
                 if(addedEdges.length > 0){
                     axios.post("/api/csvManager/addManyEdge", addedEdges, {
@@ -334,14 +337,23 @@ export function MapEditor(){
                         // alert("Delete Success");
                     });
                 console.log(response);
+
+                nodeAddDeletes.current = [];
+                nodeEdits.current = [];
         }});
     });}
 
     const resetEdges = () => {
         setAddedEdges([]);
         setDeletedEdges([]);
-        //setEditEdgesID([]); // Reset editEdgesID
     };
+
+    function deleteBtnVisibility(): string {
+        if (currentNode.nodeID != "") {
+            return "block";
+        }
+        return "hidden";
+    }
 
     return (
         <div className="relative">
@@ -391,11 +403,13 @@ export function MapEditor(){
                         <Select defaultOption="Select node to edit" options={nodeStrings} id="pickEditNode"
                                 onChange={(e) => {
                                     editNode(e);
-                                }} label="Edit Node: "/>
+                                }} label="Edit Node: " reset={currentNode.nodeID != selectedNode}/>
                         <br/>
                         <h3 className="font-bold text-lg">Currently Editing: </h3>
                         {nodeEditor()}
-                        <Button onClick={deleteNode}>Delete Node</Button>
+                        <div className = {deleteBtnVisibility()}>
+                            <Button onClick={deleteNode}>Delete Node</Button>
+                        </div>
                     </div>
 
                     <div className="p-6 flex flex-col gap-2">

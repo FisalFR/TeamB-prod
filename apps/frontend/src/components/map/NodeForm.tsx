@@ -43,10 +43,6 @@ function NodeForm(props:{node: NodeType,
                     endNodeID: addNode,
                     edgeID: editNode.nodeID + "_" + addNode
                 };
-                //newEdges.push(newEdge);
-                //setEditEdges(newEdges);
-                //addedEdges.push(newEdge);
-                // console.log(setAddedEdges);
                 props.addEdge(newEdge);
 
                 setReplaceThis(replaceThis+1);
@@ -65,9 +61,6 @@ function NodeForm(props:{node: NodeType,
             }
         });
         props.deleteEdge(spliceInd);
-        //edgeList.splice(spliceInd, 1);
-        //setEditEdges(newEdges);
-        //setEditEdgesID(newEdges.map(edge => edge.edgeID));
         setReplaceThis(replaceThis+1);
     }
 
@@ -98,36 +91,56 @@ function NodeForm(props:{node: NodeType,
 
     }
 
-    return (
-        <>
-            <div className={"grid grid-cols-[auto_auto] gap-1"}>
-                {createInputs()}
-            </div>
-            <p>Neighbors:</p>
-            <div className="flex flex-row gap-3 flex-wrap">
-                {
-                    getNeighbors(props.currentNode).map((neighbor: NodeType) => {
-                        return (
-                            <div className="bg-deep-blue rounded-2xl font-bold text-white p-2">
-                                {neighbor.nodeID}
-                                <button className="pl-2" onClick={() => {
-                                    removeNeighbor(props.currentNode, neighbor);
-                                }}>X
-                                </button>
-                            </div>
-                        );
-                    })
-                }
-            </div>
+    function createNeighborEdit() {
+        if (props.autofill) {
+            return (
+                <>
+                    <p>Neighbors:</p>
+                    <div className="flex flex-row gap-3 flex-wrap">
+                        {
+                            getNeighbors(props.currentNode).map((neighbor: NodeType) => {
+                                return (
+                                    <div className="bg-deep-blue rounded-2xl font-bold text-white p-2">
+                                        {neighbor.nodeID}
+                                        <button className="pl-2" onClick={() => {
+                                            removeNeighbor(props.currentNode, neighbor);
+                                        }}>X
+                                        </button>
+                                    </div>
+                                );
+                            })
+                        }
+                    </div>
 
-            <span className="flex flex-row items-center gap-5">
+                    <span className="flex flex-row items-center gap-5">
                     <Select defaultOption="Select node" options={props.nodeStrings} id="addNeighbor"
                             onChange={(e: React.ChangeEvent) => {
                                 setNeighbor(e);
                             }} label="Add Neighbor: "/>
                     <button className="bg-deep-blue rounded-2xl px-2 py-1 font-bold text-white"
-                            onClick={() => {addNeighbor(props.currentNode, neighborToAdd);}}>Add</button>
+                            onClick={() => {
+                                addNeighbor(props.currentNode, neighborToAdd);
+                            }}>Add</button>
                     </span>
+                </>
+            );
+        }
+        return (
+            <>
+                <p>Create node to add and edit neighbors.</p>
+            </>
+        );
+
+    }
+
+    return (
+        <>
+            <div className={"grid grid-cols-[auto_auto] gap-1"}>
+                {createInputs()}
+            </div>
+            <div>
+                {createNeighborEdit()}
+            </div>
         </>
     );
 }
