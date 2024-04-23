@@ -1,9 +1,10 @@
 import Node from 'common/src/node.ts';
 import {Instruction} from 'common/src/instruction.ts';
 const distThresh = 90;
+const nearThresh = 3;
 const turnThresh = Math.PI / 2.5;
 // const backTrackThresh = Math.PI/2.5;
-const tooShort = 4;
+const tooShort = 5.5;
 const endRange = 150;
 const pix2meters = .05;
 
@@ -48,8 +49,11 @@ function angleDiff(angle1:number, angle2:number):number {
 function pathTurn(path:Node[],index:number):[string,number]{
     let offset=1;
 
-    if (path[index-1].nodeType == "ELEV"){
+    if (path[index].nodeType == "ELEV"){
         return ["Elevator",index];
+    }
+    else if (path[index].nodeType == "STAI"){
+        return ["Stairs",index];
     }
     if (dist(path[index],path[path.length-1])<endRange)
         return ["End",index];
@@ -88,8 +92,8 @@ export default function genInstructions(path:Node[],nodemap: Map<string,Node>, e
     let content = `Starting from ${path[0].shortName}`;
         for (const neighbor of edgeMap.get(path[3].nodeID)!){
             const compNode = nodemap.get(neighbor)!;
-            if (compNode.nodeType != "HALL"){
-                content=`Starting from ${path[0].shortName}, turn towards ${compNode.longName}`;
+            if (compNode.nodeType != "HALL" && compNode.nodeType != "ELEV" && compNode.nodeType != "STAI" && compNode.nodeType != "WALK"){
+                content=`Starting from ${path[0].shortName}, turn towards ${compNode.shortName}`;
                 break;}}
 
         instructions.push({type:`Start`,content:content});
@@ -106,19 +110,28 @@ export default function genInstructions(path:Node[],nodemap: Map<string,Node>, e
             // if (amtIntersections == 0){
             if (dist(prevTurn,path[index])*pix2meters > tooShort){
                 content=`Walk ${Math.round(dist(prevTurn,path[index])*pix2meters)} meters and take a ${turn} turn.`;
-                // for (const neighbor of path[index].neighbors){
-                //     if (neighbor.nodeType != "HALL"){
-                //         content=`Walk ${Math.round(dist(prevTurn,path[index])*pix2meters)} meters until you read ${neighbor.longName}and take a ${turn} turn.` ;
-                //     break;}
-                //
-                // }
+                for (const neighbor of edgeMap.get(path[3].nodeID)!){
+                    const compNode = nodemap.get(neighbor)!;
+                    if (compNode.nodeType != "HALL" && compNode.nodeType != "ELEV" && compNode.nodeType != "STAI" && compNode.nodeType != "WALK" && dist(path[index],compNode)*pix2meters<nearThresh){
+                        content=`Walk ${Math.round(dist(prevTurn,path[index])*pix2meters)} meters to ${compNode.shortName} and take a ${turn} turn.`;
+                        break;}}
 
 
                  instructions.push({type:turn,content:content});
             prevTurn=path[index];}
         }
-        else if (turn=="Elevator" && path[index+1].nodeType=="ELEV"){
-            instructions.push({type:turn,content:`Take the elevator up to floor ${path[index+1].floor}`});
+        else if ((turn=="Elevator" || turn =="Stair") && path[index].floor!=path[index+1].floor){
+            let ogfloor = parseInt(path[index].floor);
+            if (path[index].floor == "L1")
+                ogfloor = -1;
+            else if (path[index].floor == "L2")
+                ogfloor = -2;
+            let newfloor = parseInt(path[index].floor);
+            if (path[index].floor == "L1")
+                newfloor = -1;
+            else if (path[index].floor == "L2")
+                newfloor = -2;
+            instructions.push({type:turn,content:`Take the ${turn.toLowerCase()} ${newfloor>=ogfloor?`up`:`down`} to floor ${path[index+1].floor}`});
         }
         // else if (detectBranch(angle(path[index-1],path[index]),path[index],path[index]))
         //         amtIntersections++;
