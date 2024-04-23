@@ -4,13 +4,19 @@ import axios from "axios";
 import EdgeType from "common/src/EdgeType.ts";
 export function useEdges() {
     const [edges, setEdges] = useState<EdgeType[]>([]);
+
+    function reload() {
+        axios.get("/api/edges/").then((response) => {
+            setEdges(response.data);
+        });
+    }
     useEffect( () => {
         axios.get("/api/edges/").then((response) => {
             setEdges(response.data);
         });
     }, []);
 
-    return {edges:edges};
+    return {edges:edges, reloadEdges: reload};
 }
 
 export function useEdgesID() {

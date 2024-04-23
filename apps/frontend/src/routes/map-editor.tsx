@@ -136,9 +136,8 @@ export function MapEditor(){
         return ([Math.round(x), Math.round(y)]);
     }
 
-    const {nodes,nodeMap} = useNodes();
-    const {edges} = useEdges();
-
+    const {nodes,nodeMap, reloadNodes} = useNodes();
+    const {edges, reloadEdges} = useEdges();
 
     const nodeEdits = useRef<NodeType[]>([]);
     const nodeAddDeletes = useRef<nodeAddOrDelete[]>([]);
@@ -241,10 +240,6 @@ export function MapEditor(){
         for (let i = 0; i < spliceInd.length; i++) {
             deleteEdge(spliceInd[i]-i);
         }
-        //deleteEdge(spliceInd);
-        //edgeList.splice(spliceInd, 1);
-        //setEditEdges(newEdges);
-        //setEditEdgesID(newEdges.map(edge => edge.edgeID));
         setReplaceThis(replaceThis+1);
     }
     function handleInput(element: string, e) {
@@ -272,7 +267,7 @@ export function MapEditor(){
     function addEdge(edge: EdgeType) {
         edges.push(edge);
         if (deletedEdges.includes(edge)) {
-            const deleteSplice = deletedEdges.indexOf(edges[spliceInd]);
+            const deleteSplice = deletedEdges.indexOf(edge);
             deletedEdges.splice(deleteSplice, 1);
         }
         addedEdges.push(edge);
@@ -340,8 +335,24 @@ export function MapEditor(){
 
                 nodeAddDeletes.current = [];
                 nodeEdits.current = [];
+                setCurrentNode(placeholderNode);
         }});
     });}
+
+    function handleClear() {
+        nodeAddDeletes.current = [];
+        nodeEdits.current = [];
+        setCurrentNode(placeholderNode);
+        resetEdges();
+        setCurrentNode(placeholderNode);
+
+        nodes.splice(0,nodes.length);
+        edges.splice(0,edges.length);
+        nodeMap.clear();
+
+        reloadNodes();
+        reloadEdges();
+    }
 
     const resetEdges = () => {
         setAddedEdges([]);
@@ -464,8 +475,9 @@ export function MapEditor(){
                         {createChanges()}
                     </div>
 
-                    <div className="centerContent w-full p-5 bottom-0 sticky bg-white">
+                    <div className="centerContent w-full p-5 bottom-0 sticky bg-white gap-5">
                         <Button onClick={handleSubmit}>Submit Changes</Button>
+                        <Button onClick={handleClear}>Clear Changes</Button>
                     </div>
                 </div>
                 <FloorSelector

@@ -8,6 +8,16 @@ export function useNodes() {
     const [nodes, setNodes] = useState<NodeType[]>([]);
     const [nodeMap, setNodeMap] = useState<Map<string, NodeType>>(new Map<string, NodeType>());
     // const [edges,setEdges] = useState<Edge[]>([]);
+    function reload() {
+        axios.get("/api/pathfinding/nodemap").then((response) => {
+            setNodes(response.data.nodeList);
+            const nodeMap = new Map<string, NodeType>();
+            for (let i = 0; i < response.data.nodeList.length; i++) {
+                nodeMap.set(response.data.nodeList[i].nodeID, response.data.nodeList[i]);
+            }
+            setNodeMap(nodeMap);
+        });
+    }
     useEffect( () => {
         axios.get("/api/pathfinding/nodemap").then((response) => {
             setNodes(response.data.nodeList);
@@ -19,7 +29,7 @@ export function useNodes() {
         });
     }, []);
     nodes.sort((a, b) => a.longName.localeCompare(b.longName));
-    return {nodes:nodes,nodeMap:nodeMap};
+    return {nodes:nodes,nodeMap:nodeMap,reloadNodes: reload};
 }
 
 export default useNodes;
