@@ -8,10 +8,9 @@ import image3 from '../assets/Carousel/security.svg';
 import image4 from '../assets/Carousel/map.svg';
 import background from '../assets/Hero_Image/brighams_hero.jpg';
 import {useEffect} from "react";
-// import ShinyButton from "../components/ShinyButton.tsx";
-// import Button from "../components/Button.tsx";
-// import { motion } from "framer-motion";
+
 import {ButtonMovingBorder} from "../components/aceternity/moving-border.tsx";
+
 export function LoginPage() {
 
     useEffect(() => {
@@ -74,7 +73,6 @@ export function LoginPage() {
         left: 0,
         height: '100%',
     };
-
 
 
 

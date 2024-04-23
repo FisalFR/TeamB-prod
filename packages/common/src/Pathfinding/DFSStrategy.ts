@@ -2,7 +2,7 @@ import PathfindingStrategy from "./PathfindingStrategy.ts";
 import Stack from "../Stack.ts";
 import Node from "../node.ts";
 
-class DFSStrategy implements PathfindingStrategy {
+class DFSStrategy extends PathfindingStrategy {
     execute(startNode: Node, endNode: Node): Node[] {
         const frontier: Stack<Node> = new Stack<Node>();
         frontier.push(startNode);
