@@ -1,12 +1,14 @@
 import Node from "common/src/node.ts";
 import React from "react";
-import genInstructions from "backend/src/directionTools.ts";
+import genInstructions from "../../directionTools.ts";
+import useNodes from "../../hooks/useNodes.ts";
+import useEdges from "../../hooks/useEdges.ts";
 
-function PathInstructions(props: { Path: Node[] }) {
+ function PathInstructions(props: { Path: Node[]}) {
 
     return (
         <div>
-            {genInstructions(props.Path).map(instruction => (
+            { genInstructions(props.Path, useNodes().nodeMap,useEdges().edgeMap).map(instruction => (
                 <div>
                     {instruction.type} {instruction.content}
                 </div>

@@ -35,7 +35,7 @@ export function Map(){
 
     const [showPath, setShowPath] = useState(false);
     const [showNodes, setShowNodes] = useState(false);
-
+    //
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
     const [algo, setAlgo] = useState<string>("Astar");
     const [selectedAlgo, setSelectedAlgo] = useState<string | null>("Astar");
@@ -124,7 +124,10 @@ export function Map(){
 
     return (
         <div className="fixed">
-
+            <div>
+                FUCK HTML
+                <PathInstructions Path={pathNodes} NodeMap={nodeMap}/>
+            </div>
 
             <TransformWrapper limitToBounds={true} disablePadding={true}
                               initialScale={0.38}
@@ -167,10 +170,7 @@ export function Map(){
                     onClick5={() => setCurrentFloor("3")}
                     currentFloor={currentFloor}
                 />
-                <div>
-                    FUCK HTML
-                <PathInstructions Path={pathNodes}/>
-                    </div>
+
                 <ZoomControls/>
             </TransformWrapper>
 
