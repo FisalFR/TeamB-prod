@@ -24,7 +24,7 @@ export function InternalTransportationRequestPage() {
     //const [TransportOptions, setTransportOptions] = useState<string[]>([]);
     const [cleared, setCleared] = useState(false);
     useEffect(() => {
-        axios.get("/api/maintenance/location").then((response) => {
+        axios.get("/api/internalTransport/location").then((response) => {
             const locationOptionsStrings: string[] = [];
             for (let i = 0; i < response.data.length; i++) {
                 locationOptionsStrings.push(response.data[i].longName);
@@ -58,9 +58,7 @@ export function InternalTransportationRequestPage() {
     }
     function handleClear(e: { preventDefault: () => void; }): void {
         e.preventDefault();
-        // TODO figure out how to reset dropdown menu from https://thewebdev.info/2021/02/06/how-to-programmatically-clear-or-reset-a-react-select-dropdown/
-        setRequest({feedback: "", employeeName: "", startlocation: "", endlocation: "",priority: ""});
-        // use resetActive from Dropdown?
+        setRequest({feedback: "", employeeName: "", startlocation: "", endlocation: "", priority: ""});
         setCleared(true);
     }
     function handlePriorityInput(e: ChangeEvent<HTMLInputElement>): void {
@@ -134,7 +132,7 @@ export function InternalTransportationRequestPage() {
                                                 <div className="border-deep-blue border-solid border-2 rounded w-fit">
                                                     <Dropdown options={locationOptions} placeholder={"Location"}
                                                               name={"locationDropdown"}
-                                                              id={"dropdown1"} value={cleared}
+                                                              id={"dropdown2"} value={cleared}
                                                               setInput={handleEndLocationInput} required={true}
                                                               width={"w-80"}/>
                                                 </div>
@@ -201,7 +199,7 @@ export function InternalTransportationRequestPage() {
                                 <p className={"font-bold"}>What location would the patient like to go?</p>
                                 <p className={""}>{request.endlocation}</p>
 
-                                <p className={"font-bold"}>Priorty:</p>
+                                <p className={"font-bold"}>Priority:</p>
                                 <p className={""}>{request.priority}</p>
 
                                 <p className={"font-bold"}>Additional Feedback</p>
