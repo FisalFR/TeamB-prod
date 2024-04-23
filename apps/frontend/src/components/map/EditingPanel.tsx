@@ -1,15 +1,42 @@
 import React, {ReactNode, useState} from "react";
 import { motion, AnimatePresence} from "framer-motion";
 import pencilSVG from "../../assets/pencil.svg";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+type tab = {
+    name: string;
+    content: ReactNode;
+};
 
 export function EditingPanel(props: { children: ReactNode }) {
     const [contentVisibility, setContentVisibility] = useState(false);
     const pencil = <img src={pencilSVG} alt="pencil icon" className={"w-20 h-20 rotate-[225deg] invert scale-75"}/>;
-    const tabs: string[] = ["Edit", "Add", "Submit"]; // TODO consider if we want to list changes in a separate tab
-        const editContent: string = "Content for the edit tab.";
-        const addContent: string = "Content for the add tab.";
-        const submitContent: string = "Content for the submit tab.";
+
+    const editTab: tab = {
+        name: "Edit",
+        content: "Content for the edit tab.",
+    };
+    const addTab: tab = {
+        name: "Add",
+        content: "Content for the add tab.",
+    };
+    const submitTab: tab = {
+        name: "Submit",
+        content: "Content for the submit tab.",
+    };
+
+    const tabs: tab[] = [editTab, addTab, submitTab];
+    // TODO how to employ a useState without knowing what children I will have
     const [selectedTab, setSelectedTab] = useState(tabs[0]);
+
+    function cn(...args: ClassValue[]) {
+        return twMerge(clsx(args));
+    }
+
+    function handleToggleVisibility() {
+        setContentVisibility(prevState => !prevState);
+    }
 
     // const variants = {
     //     closed: {opacity: "0%"},
@@ -22,32 +49,33 @@ export function EditingPanel(props: { children: ReactNode }) {
 
     function panel() {
         return (
-            <div className="window">
-                <nav>
-                    <ul>
-                        {tabs.map((item) => (
+            <div className="flex flex-col">
+                <nav className={"flex h-8 rounded-b-none"}>
+                    <ul className={"flex w-full list-none p-0 m-0"}>
+                        {tabs.map((option: tab) => (
                             <li
-                                key={item}
-                                className={item === selectedTab ? "selected" : ""}
-                                onClick={() => setSelectedTab(item)}
+                                key={option.name}
+                                className={cn("flex w-full list-none h-6 p-2.5 m-0 font-OpenSans text-lg rounded-t relative justify-between items-center cursor-pointer", option === selectedTab ? "selected bg-gray-100" : "bg-bone-white")}
+                                onClick={() => setSelectedTab(option)}
                             >
-                                {`${item}`}
-                                {item === selectedTab ? (
-                                    <motion.div className="underline" layoutId="underline"/>
+                                {`${option.name}`}
+                                {option === selectedTab ? (
+                                    <motion.div className="underline absolute inset-px h-px bg-deep-blue" layoutId="underline"/>
                                 ) : null}
                             </li>
                         ))}
                     </ul>
                 </nav>
-                <main>
+                <main className={"flex font-OpenSans text-md"}>
                     <AnimatePresence mode="wait">
                         <motion.div
-                            key={selectedTab ? selectedTab : "empty"}
+                            key={selectedTab ? selectedTab.name : "empty"}
                             initial={{y: 10, opacity: 0}}
                             animate={{y: 0, opacity: 1}}
                             exit={{y: -10, opacity: 0}}
                             transition={{duration: 0.2}}
                         >
+                            {selectedTab.content}
                             {props.children}
                         </motion.div>
                     </AnimatePresence>
@@ -65,15 +93,11 @@ export function EditingPanel(props: { children: ReactNode }) {
             //     </div>
             // </motion.button>
         );
-    };
-
-    function handleToggleVisibility() {
-        setContentVisibility(prevState => !prevState);
-    };
+    }
 
     return (
-        <div className={"absolute top-5 right-5 p-1"}>
-            <motion.button className={"closedPopout button bg-deep-blue rounded-full"}
+        <div className={"absolute top-5 right-5 p-1 flex flex-row-reverse gap-10"}>
+            <motion.button className={"closedPopout button bg-deep-blue rounded-full flex"}
                            onClick={handleToggleVisibility}
                            whileHover={{scale: 1.1}}
                            whileTap={{scale: 0.9}}>
@@ -84,4 +108,4 @@ export function EditingPanel(props: { children: ReactNode }) {
             {contentVisibility && panel()}
         </div>
     );
-};
+}

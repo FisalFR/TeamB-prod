@@ -420,7 +420,7 @@ export function MapEditor(){
                     currentFloor={currentFloor}
                 />
                 <ZoomControls></ZoomControls>
-                <EditingPanel children={"Hello how are you today?"}></EditingPanel>
+                <EditingPanel children={""}></EditingPanel> {/*children={"Hello how are you today?"}*/}
             </TransformWrapper>
         </div>
 
