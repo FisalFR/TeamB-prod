@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {NavLink} from "./NavLink.tsx";
-
+import {AnimatePresence, motion} from "framer-motion";
 
 //props:
 // 2D array text with link
@@ -15,12 +15,14 @@ import {NavLink} from "./NavLink.tsx";
         setIsSeen(false);
      };
      function createDropdown(){
-         return props.dropdownLinks.map((link) =>
-             <div className="centerContent py-1">
+         return props.dropdownLinks.map((link, index) =>
+             <motion.div className="centerContent py-1 opacity-0"
+                         animate={{opacity: 1, transition: {duration: 0.05 * props.dropdownLinks.length, delay: 0.025 * index, ease: "backOut"}}}
+                         exit={{opacity: 0, transition: {duration: 0.05, delay: 0.025 * (props.dropdownLinks.length - index - 1), ease: "backOut"}}}>
              <NavLink href={link[0]}>
                  {link[1]}
              </NavLink>
-             </div>
+             </motion.div>
 
          );}
     return(
@@ -32,13 +34,16 @@ import {NavLink} from "./NavLink.tsx";
                     {props.mainLink[1]}
                 </NavLink>
             </div>
-            {isSeen && (
-                <div className= "bg-deep-blue absolute w-full z-10">
+            <AnimatePresence>
+                {isSeen && <motion.div className="bg-deep-blue absolute w-full z-10 h-0"
+                            animate={{height: "fit-content"}}
+                            transition={{duration: 0.1 * props.dropdownLinks.length, ease: "backOut"}}
+                            exit={{height: 0}}>
                     {createDropdown()}
-                </div>
-            )}
-
+                </motion.div>}
+            </AnimatePresence>
         </div>
     );
-}
+ }
+
 export default NavDropDown;
