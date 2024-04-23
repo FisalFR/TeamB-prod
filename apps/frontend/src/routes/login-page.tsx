@@ -2,11 +2,27 @@ import AnimatedSVG from "../components/HeroImage.tsx";
 
 import React, {useState} from 'react';
 import Carousel from "../components/Carousel";
-import image1 from '../assets/Carousel/GiftDelivery.jpg';
-import image2 from '../assets/Carousel/InterpreterRequest.jpg';
-import image3 from '../assets/Carousel/security.jpg';
-import image4 from '../assets/Carousel/mapPathfinding.png';
+import image1 from '../assets/Carousel/gift.svg';
+import image2 from '../assets/Carousel/language.svg';
+import image3 from '../assets/Carousel/security.svg';
+import image4 from '../assets/Carousel/map.svg';
+import background from '../assets/Hero_Image/brighams_hero.jpg';
+import {useEffect} from "react";
+
+import {ButtonMovingBorder} from "../components/aceternity/moving-border.tsx";
+
 export function LoginPage() {
+
+    useEffect(() => {
+        // Disable scrolling on the body element
+        document.body.style.overflow = 'hidden';
+
+        // Reset overflow when the component unmounts
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []); // Empty dependency array ensures this runs on mount and unmount only
+
     const [isHovered,setIsHovered] = useState(true);
     const content = [
         {
@@ -14,7 +30,7 @@ export function LoginPage() {
             text: {
                 title: "Map",
                 description: "We're excited to introduce our new Pathfinding Feature—now you can navigate to your destination in the hospital at your own convenience!",
-                callToAction: "Click here explore the map!",
+                callToAction: "Click here to explore the map!",
                 route: "/map"
             }
         },
@@ -22,7 +38,7 @@ export function LoginPage() {
             image: { src: image1, alt: 'Description of image 2' },
             text: {
                 title: "Gift Delivery",
-                description: "We're excited to introduce our new Gift Delivery Service—now you can send thoughtful presents directly to your loved ones in the hospital, right from our website!",
+                description: "We're excited to introduce our new Gift Delivery Service—now you can send thoughtful presents directly to your loved ones in the hospital!",
                 callToAction: "Click here to make a gift request!",
                 route: "/giftdelivery"
             }
@@ -31,7 +47,7 @@ export function LoginPage() {
             image: { src: image2, alt: 'Description of image 3' },
             text: {
                 title: "Interpreter Request",
-                description: "We are thrilled to launch our new Interpreter Request feature—making language assistance easily accessible to all our patients directly through our website!",
+                description: "We are thrilled to launch our new Interpreter Request Feature—making language assistance easily accessible directly through our website!",
                 callToAction: "Click here to request an interpreter!",
                 route: "/interpreter",
             }
@@ -40,45 +56,73 @@ export function LoginPage() {
             image: { src: image3, alt: 'Description of image 4' },
             text: {
                 title: "Security Request",
-                description: "We're pleased to announce our enhanced security request feature, allowing you to request for help at anytime through our website.",
+                description: "We're pleased to announce our enhanced Security Request Feature—allowing you to request help or assistance at anytime through our website.",
                 callToAction: "Click here to make a security request!",
                 route: "/security",
             }
         }
     ];
 
+    const style = {
+        backgroundImage: `linear-gradient(to bottom , rgba(21,155,211), rgba(1,45,90,0.3), rgba(1, 45, 90, 1)),url(${background})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        zIndex: 0,
+        top: 0,
+        left: 0,
+        height: '100%',
+    };
 
 
 
     return (
-        <div className='w-full flex justify-between px-10 pt-20 '>
-            <div className="flex flex-col items-center w-1/2 h-full">
-                <AnimatedSVG/>
-            </div>
-            <div className="w-1/2 flex flex-col">
-                <div className="text-center pb-5 rounded mx-auto animate-scale-in-ver-top">
-                    <h1 className="font-bold font-HeadlandOne text-6xl text-deep-blue-900 mb-2">Navigate
-                        Seamlessly</h1>
-                    <p className="text-left text-xl py-6">Find your room in Brigham & Women's with ease. With pathfinding
-                        locate your
-                        destination in the smallest steps. Never get lost, no wasted time, get there stress free.</p>
+        <div className="z-0 top-0 left-0 h-full grid grid-cols-2 content-center" style={style}>
+            <div className="m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col w-10/12">
 
-                    {<a href={"/map"}
-                       className=" hover:animate-none text-4xl hover:cursor-pointer hover:text-4xl hover:text-deep-blue hover:font-bold pb-5 ">
-                        Click here to navigate!</a>}
-                </div>
-                <div className="flex justify-center">
+                <h1 className="font-OpenSans  font-bold text text-white text-center mb-2 text-7xl text-nowrap "
+                    >Navigate Seamlessly</h1>
+                <p className="  text-center text-2xl font-light text-white"
+                >
+                    Find your room in Brigham & Women's Hospital with ease.
 
+                </p>
+                <div className={"flex flex-col gap-10 centerContent pt-5"}>
+                    <div onClick={() => window.location.href = '/map'}>
+                        <ButtonMovingBorder
+                            borderRadius="0.3rem"
+                            className=" text-white bg-deep-blue border-neutral-200 border-2"
+                            containerClassName={"p-[3px] w-[500px]"}
+                        >
+                            <a href="/map"
+                               className=" font-OpenSans font-bold text-white text-xl hover:cursor-pointer hover:text-white">
+                                Click Here To Navigate!
+                            </a>
+                        </ButtonMovingBorder>
+                    </div>
                     <div
-                        className=" overflow-hidden bg-white outline-1 shadow-md rounded-lg border border-deep-blue-900 hover:cursor-pointer hover:scale-105 transition-transform duration-300"
+                        className="  hover:cursor-pointer hover:scale-105 transition-transform duration-300"
                         onMouseEnter={() => setIsHovered(false)}
                         onMouseLeave={() => setIsHovered(true)}>
-
                         <Carousel content={content} autoPlay={isHovered} interval={4000}/>
-
                     </div>
+
+                    <p className={"top-20 font-OpenSans fixed text-white font-extralight text-balance"}>
+                            This website is a term project exercise for WPI CS 3733 Software
+                            Engineering <p>
+                            (Prof. Wong) and is not to be confused with the actual Brigham & Women’s
+                            Hospital website.
+                    </p>
+                    </p>
                 </div>
+
             </div>
+
+            <div className=" z-20">
+                <AnimatedSVG/>
+            </div>
+
+
         </div>
     );
 
