@@ -177,7 +177,7 @@ function LogBook() {
 
         title:{
             text: "Form Distribution",
-            align: 'middle',
+            align: 'left',
             margin: 10,
             offsetX: 0,
             offsetY: 0,
