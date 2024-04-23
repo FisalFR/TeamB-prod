@@ -5,10 +5,11 @@ import useNodes from "../../hooks/useNodes.ts";
 import useEdges from "../../hooks/useEdges.ts";
 
  function PathInstructions(props: { Path: Node[]}) {
-
+    const {nodeMap} = useNodes();
+    const {edgeMap} = useEdges();
     return (
         <div>
-            { genInstructions(props.Path, useNodes().nodeMap,useEdges().edgeMap).map(instruction => (
+            { genInstructions(props.Path, nodeMap,edgeMap ).map(instruction => (
                 <div>
                     {instruction.type} {instruction.content}
                 </div>

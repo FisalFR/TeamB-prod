@@ -86,7 +86,6 @@ export default function genInstructions(path:Node[],nodemap: Map<string,Node>, e
     }
     let index = 1;
     let content = `Starting from ${path[0].shortName}`;
-    console.log(nodemap.get(path[3].nodeID!)!);
         for (const neighbor of edgeMap.get(path[3].nodeID)!){
             const compNode = nodemap.get(neighbor)!;
             if (compNode.nodeType != "HALL"){
@@ -107,12 +106,12 @@ export default function genInstructions(path:Node[],nodemap: Map<string,Node>, e
             // if (amtIntersections == 0){
             if (dist(prevTurn,path[index])*pix2meters > tooShort){
                 content=`Walk ${Math.round(dist(prevTurn,path[index])*pix2meters)} meters and take a ${turn} turn.`;
-                for (const neighbor of path[index].neighbors){
-                    if (neighbor.nodeType != "HALL"){
-                        content=`Walk ${Math.round(dist(prevTurn,path[index])*pix2meters)} meters until you read ${neighbor.longName}and take a ${turn} turn.` ;
-                    break;}
-
-                }
+                // for (const neighbor of path[index].neighbors){
+                //     if (neighbor.nodeType != "HALL"){
+                //         content=`Walk ${Math.round(dist(prevTurn,path[index])*pix2meters)} meters until you read ${neighbor.longName}and take a ${turn} turn.` ;
+                //     break;}
+                //
+                // }
 
 
                  instructions.push({type:turn,content:content});

@@ -4,25 +4,31 @@ import axios from "axios";
 import EdgeType from "common/src/EdgeType.ts";
 export function useEdges() {
     const [edges, setEdges] = useState<EdgeType[]>([]);
-    const [edgeMap, setEdgeMap] = useState<Map<string,string[]>>(new Map());
-    useEffect( () => {
+    const [edgeMap, setEdgeMap] = useState<Map<string, string[]>>(new Map());
+    useEffect(() => {
         axios.get("/api/edges/").then((response) => {
-            const edges:EdgeType[] = response.data;
+            const edges: EdgeType[] = response.data;
             setEdges(edges);
-            const newEdgeMap = edgeMap;
-            edges.forEach((edge:EdgeType) => {
-                const Start = newEdgeMap.get(edge.startNodeID)!;
+            const newEdgeMap: Map<string, string[]> = new Map();
+            edges.forEach((edge: EdgeType) => {
+                let Start = newEdgeMap.get(edge.startNodeID);
+                if (Start == undefined)
+                    Start = [];
                 Start.push(edge.endNodeID);
-                const End = newEdgeMap.get(edge.endNodeID)!;
-                Start.push(edge.startNodeID);
-                newEdgeMap.set(edge.startNodeID,Start);
-                newEdgeMap.set(edge.endNodeID,End);
+                newEdgeMap.set(edge.startNodeID, Start);
+                let End = newEdgeMap.get(edge.startNodeID);
+                if (End == undefined)
+                    End = [];
+                End.push(edge.startNodeID);
+                newEdgeMap.set(edge.endNodeID, End);
             });
             setEdgeMap(newEdgeMap);
         });
-    }, [edgeMap]);
 
-    return {edges:edges,edgeMap:edgeMap};
+
+    }, []);
+
+    return {edges: edges, edgeMap: edgeMap};
 }
 
 export function useEdgesID() {
