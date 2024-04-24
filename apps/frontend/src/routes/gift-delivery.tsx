@@ -373,10 +373,10 @@ function GiftDelivery() {
                                                        className="w-full border-solid border-gray-200 border-2 rounded p-2"
                                                        onChange={handleInput}></input><br/>
                                             </div>
-                                            <div className={"flex flex-col"}>
+                                            <div className={"flex flex-col text-left"}>
                                                 <div>
                                                     <label htmlFor="message"
-                                                           className="font-OpenSans text-md font-bold text-Ash-black ">
+                                                           className="font-OpenSans text-md font-bold text-left text-Ash-black ">
                                                         Pick a Date: </label>
 
                                                     <DatePicker
@@ -456,9 +456,9 @@ function GiftDelivery() {
                                                 </div>
                                             </div>
 
-                                            <div className="w-full h-full text-le">
+                                            <div className="w-full h-full text-left">
                                                 <label htmlFor="message"
-                                                       className=" font-OpenSans text-md font-bold text-Ash-black ">
+                                                       className=" font-OpenSans text-md  font-bold text-Ash-black ">
                                                     Send a Message: </label>
                                                 <textarea id="message" name="message" rows={4}
                                                           cols={40}
