@@ -214,10 +214,23 @@ function GiftDelivery() {
 
 
     return (
+
         <div className="overflow-hidden ">
+            <div className={submittedWindowVisibility.formScreen}>
+            <div
+                className=" rounded-3xl right-12  top-20 fixed "> {/*Entire Cart Page*/}
+                <Button onClick={handleCartScreen} color={"bg-deep-blue"} px={"px-10"} py={"py-3"}>
+                    <div className="flex items-center">
+                        <span className="mr-2">{totalItems()}</span>
+                        {CartSVG}
+                    </div>
+                </Button>
+            </div>
+            </div>
             {/*<div className=" right-5 fixed top-20 text-2xl text-center text-Ash-black text-bold ">*/}
             {/*    <Button onClick={scrollToTop} children={"Go to Cart"} px={"px-9"} py={"py-4"}/>*/}
             {/*</div>*/}
+
             <div className="centerContent ">
 
                 <div className="w-5/6">
@@ -231,15 +244,6 @@ function GiftDelivery() {
                                 e.preventDefault();
                             }}>
                                 <br/><br/>
-                                <div
-                                    className="mb-4 px-28 py-20 rounded-3xl right-12 absolute top-12"> {/*Entire Cart Page*/}
-                                    <Button onClick={handleCartScreen} color={"bg-deep-blue"} px={"px-3"} py={"py-3"}>
-                                        <div className="flex items-center">
-                                            <span className="mr-2">{totalItems()}</span>
-                                            {CartSVG}
-                                        </div>
-                                    </Button>
-                                </div>
 
 
                                 <br/><br/>
@@ -250,15 +254,19 @@ function GiftDelivery() {
                                 <br/>
                                 <div className="flex flex-row gap-10 w-full overflow-scroll">
                                     <ShopCard image={Tulip} cost={3.99} name="Tulip" altName="Single Tulip"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, Tulip)} cart={cart} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, Tulip)}
+                                              cart={cart}/>
                                     <ShopCard image={Rose} cost={5.99} name="Rose" altName="Single Rose"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, Rose)} cart={cart} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, Rose)}
+                                              cart={cart}/>
                                     <ShopCard image={tulipBouquet} cost={21.99} name="Bouquet of Tulips"
                                               altName="Bouquet of Tulips"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, tulipBouquet)} cart={cart} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, tulipBouquet)}
+                                              cart={cart}/>
                                     <ShopCard image={roseBouquet} cost={29.99} name="Bouquet of Roses"
                                               altName="Bouquet of Roses"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, roseBouquet)} cart={cart}/>
+                                              changeCart={(item, quantity) => changeCart(item, quantity, roseBouquet)}
+                                              cart={cart}/>
                                 </div>
                                 <br/><br/>
 
@@ -270,14 +278,18 @@ function GiftDelivery() {
                                 <br/>
                                 <div className="flex flex-row gap-10 w-full overflow-scroll">
                                     <ShopCard image={teddyBear} cost={5.99} name="Teddy Bear" altName="Teddy Bear"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, teddyBear)} cart={cart} />
+                                              changeCart={(item, quantity) => changeCart(item, quantity, teddyBear)}
+                                              cart={cart}/>
                                     <ShopCard image={greenDino} cost={10.99} name="Green Dinosaur"
                                               altName="Green Dinosaur"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, greenDino)} cart={cart}/>
+                                              changeCart={(item, quantity) => changeCart(item, quantity, greenDino)}
+                                              cart={cart}/>
                                     <ShopCard image={pinkDino} cost={10.99} name="Pink Dinosaur" altName="Pink Dinosaur"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, pinkDino)} cart={cart}/>
+                                              changeCart={(item, quantity) => changeCart(item, quantity, pinkDino)}
+                                              cart={cart}/>
                                     <ShopCard image={heart} cost={3.99} name="Heart" altName="Heart"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, heart)} cart={cart}/>
+                                              changeCart={(item, quantity) => changeCart(item, quantity, heart)}
+                                              cart={cart}/>
                                 </div>
                                 <br/><br/>
 
@@ -290,16 +302,20 @@ function GiftDelivery() {
                                 <div className="flex flex-row gap-10 w-full overflow-scroll">
                                     <ShopCard image={gwsBalloon} cost={3.99} name="Get Well Soon Balloon"
                                               altName="Get Well Soon Balloon"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, gwsBalloon)} cart={cart}/>
+                                              changeCart={(item, quantity) => changeCart(item, quantity, gwsBalloon)}
+                                              cart={cart}/>
                                     <ShopCard image={heartBalloon} cost={3.99} name="Red Heart Balloon"
                                               altName="Red Heart Balloon"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, heartBalloon)} cart={cart}/>
+                                              changeCart={(item, quantity) => changeCart(item, quantity, heartBalloon)}
+                                              cart={cart}/>
                                     <ShopCard image={rainbow} cost={3.99} name="Rainbow Balloon"
                                               altName="Rainbow Balloon"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, rainbow)} cart={cart}/>
+                                              changeCart={(item, quantity) => changeCart(item, quantity, rainbow)}
+                                              cart={cart}/>
                                     <ShopCard image={sunshine} cost={3.99} name="Happy Sunshine Balloon"
                                               altName="Smiling Sunshine Balloon"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, sunshine)} cart={cart}/>
+                                              changeCart={(item, quantity) => changeCart(item, quantity, sunshine)}
+                                              cart={cart}/>
                                 </div>
                                 <br/><br/>
 
@@ -312,15 +328,19 @@ function GiftDelivery() {
                                 <div className="flex flex-row gap-10 w-full overflow-x-scroll h-fit">
                                     <ShopCard image={chocolates} cost={5.99} name="Assorted Chocolate Bundle"
                                               altName="Assorted Chocolates"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, chocolates)} cart={cart}/>
+                                              changeCart={(item, quantity) => changeCart(item, quantity, chocolates)}
+                                              cart={cart}/>
                                     <ShopCard image={heartlollipop} cost={3.99} name="Heart-Shaped Lollipop"
                                               altName="Heart-Shaped Lollipops"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, heartlollipop)} cart={cart}/>
+                                              changeCart={(item, quantity) => changeCart(item, quantity, heartlollipop)}
+                                              cart={cart}/>
                                     <ShopCard image={sourPatchKids} cost={5.99} name="Sour Patch Kids"
                                               altName="Sour Patch Kids"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, sourPatchKids)} cart={cart}/>
+                                              changeCart={(item, quantity) => changeCart(item, quantity, sourPatchKids)}
+                                              cart={cart}/>
                                     <ShopCard image={caramels} cost={9.99} name="Caramel Tray" altName="Caramel Tray"
-                                              changeCart={(item, quantity) => changeCart(item, quantity, caramels)} cart={cart}/>
+                                              changeCart={(item, quantity) => changeCart(item, quantity, caramels)}
+                                              cart={cart}/>
                                 </div>
                                 <br/><br/>
                             </form>
@@ -329,8 +349,8 @@ function GiftDelivery() {
                     <div className={submittedWindowVisibility.cartScreen}>
                         <div
                             className="centerContent"> {/*Entire Cart Page*/}
-                            <div className = "absolute top-[70px] left-[20px]">
-                                <Button onClick={handleBackbutton} color={"bg-deep-blue"}  px={"px-3"} py={"py-3"} >
+                            <div className="absolute top-[70px] left-[20px]">
+                                <Button onClick={handleBackbutton} color={"bg-deep-blue"} px={"px-3"} py={"py-3"}>
                                     {BackwardSVG}
                                 </Button>
                             </div>
@@ -463,7 +483,7 @@ function GiftDelivery() {
                                         </h2>
 
                                         <div
-                                            className="text-xl text-Ash-black text-bold min-h-96 w-full max-h-72 overflow-y-scroll py-5">
+                                            className="text-xl text-Ash-black text-bold min-h-96 w-full max-h-72 overflow-y-scroll-auto py-5">
                                             {createCart()}
                                         </div>
                                         <div
