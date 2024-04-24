@@ -85,13 +85,14 @@ export default function genInstructions(path: Node[], nodemap: Map<string, NodeT
     }
     let index = 0;
     instructions.push({type: "Star",content:`Starting from ${path[0].shortName}`});
+    if (path[3]){
     const temp = edgeMap.get(path[3].nodeID);
     if (path.length>4 && (temp != undefined))
         for (const neighbor of temp){
             const compNode = nodemap.get(neighbor);
             if (compNode && compNode.nodeType != "HALL" && compNode.nodeType != "ELEV" && compNode.nodeType != "STAI" && compNode.nodeType != "WALK" && dist(path[3],compNode)*pix2meters<nearThresh){
                 instructions.push({type:"Right",content:`Turn towards ${compNode.shortName}`});
-                break;}}
+                break;}}}
 
     //let amtIntersections = 0;
     let prevTurn = path[0];
