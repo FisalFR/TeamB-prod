@@ -24,8 +24,8 @@ export function NavigationBar() {
             ["/medicineRequest", "Medicine"],
             ["/sanitation", "Sanitation"],
             ["/security", "Security"],
-            ["/internalTransport", "Internal Transport"],
-            ["/transport", "Transportation"],
+            ["/internalTransport", "Int. Transport"],
+            ["/transport", "Ext. Transport"],
             ["/giftDelivery", "Gift Delivery"],
         ];
         const adminDropdownList = [
