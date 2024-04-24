@@ -99,6 +99,7 @@ class AStarStrategy extends TemplatePathfindingStrategy {
     heuristic(endNode: Node, nextNode: Node, currentNode: Node): number {
         const endFloor: number  = this.convertFloor(endNode.floor);
         const nextFloor: number = this.convertFloor(nextNode.floor);
+        const currentFloor: number = this.convertFloor(currentNode.floor);
         let finalCost = 1000;
         if (endFloor === nextFloor) {
             const ManhattanDistance  =+ Math.abs(endNode.ycoord - nextNode.ycoord) + Math.abs(endNode.xcoord - nextNode.xcoord);
@@ -113,24 +114,10 @@ class AStarStrategy extends TemplatePathfindingStrategy {
                finalCost += 1000000000000000000000000;
            }
 
-        // If I'm not in the same building as the end node, and across the bridge, prioritize the bridge
-        //     if ((nextNode.building !== endNode.building) && (endNode.building === "Shapiro" || endNode.building === "BTM") ){
-        //         if((nextFloor === 1 && endFloor == 1) && endNode.building === "Shapiro"){
-        //             return finalCost - 1000;
-        //         } else if(nextFloor === 4 || (nextFloor === 4 && endNode.building === "BTM")){
-        //             return finalCost - 1000;
-        //         } else if(nextFloor !==4){
-        //             return 100000000000000000000;
-        //         }
-        //     } else if ((currentNode.building === "Shapiro" || currentNode.building === "BTM") && (nextNode.building !== endNode.building) && (endFloor >=3)){
-        //         if(nextFloor === 4){
-        //             return finalCost - 1000;
-        //         }
-        //     } else if ((currentNode.building === "BTM") && (nextNode.building !== endNode.building) && (endFloor <3)){
-        //         if(nextFloor === 4){
-        //             return finalCost - 1000;
-        //         }
-        //     }
+        // Add a penalty if the next node's floor is different from both the current node's floor and the end node's floor
+        if (nextFloor !== currentFloor && nextFloor !== endFloor) {
+            finalCost += 1000000000000000000000000;
+        }
 
         return finalCost;
 
