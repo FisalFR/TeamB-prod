@@ -99,13 +99,13 @@ class AStarStrategy extends TemplatePathfindingStrategy {
     heuristic(endNode: Node, nextNode: Node, currentNode: Node): number {
         const endFloor: number  = this.convertFloor(endNode.floor);
         const nextFloor: number = this.convertFloor(nextNode.floor);
-        let finalCost;
+        let finalCost = 1000;
         if (endFloor === nextFloor) {
-            const ManhattanDistance = Math.abs(endNode.ycoord - nextNode.ycoord) + Math.abs(endNode.xcoord - nextNode.xcoord);
+            const ManhattanDistance  =+ Math.abs(endNode.ycoord - nextNode.ycoord) + Math.abs(endNode.xcoord - nextNode.xcoord);
             finalCost = ManhattanDistance;
         } else {
             // Use Euclidean distance for nodes on different floors
-            const EuclideanDistance = Math.sqrt(((endNode.ycoord - nextNode.ycoord) ** 2) + ((endNode.xcoord - nextNode.xcoord) ** 2)) + (((endFloor-nextFloor) * 100)**2);
+            const EuclideanDistance =+ Math.sqrt(((endNode.ycoord - nextNode.ycoord) ** 2) + ((endNode.xcoord - nextNode.xcoord) ** 2)) + (((endFloor-nextFloor) * 100)**2);
             finalCost = EuclideanDistance;
         }
 
@@ -116,19 +116,19 @@ class AStarStrategy extends TemplatePathfindingStrategy {
         // If I'm not in the same building as the end node, and across the bridge, prioritize the bridge
             if ((nextNode.building !== endNode.building) && (endNode.building === "Shapiro" || endNode.building === "BTM") ){
                 if((nextFloor === 1 && endFloor == 1) && endNode.building === "Shapiro"){
-                    return finalCost/100000;
+                    return finalCost - 1000;
                 } else if(nextFloor === 4 || (nextFloor === 4 && endNode.building === "BTM")){
-                    return finalCost/100000;
+                    return finalCost - 1000;
                 } else if(nextFloor !==4){
                     return 100000000000000000000;
                 }
             } else if ((currentNode.building === "Shapiro" || currentNode.building === "BTM") && (nextNode.building !== endNode.building) && (endFloor >=3)){
                 if(nextFloor === 4){
-                    return finalCost/100000;
+                    return finalCost - 1000;
                 }
             } else if ((currentNode.building === "BTM") && (nextNode.building !== endNode.building) && (endFloor <3)){
                 if(nextFloor === 4){
-                    return finalCost/100000;
+                    return finalCost - 1000;
                 }
             }
 
