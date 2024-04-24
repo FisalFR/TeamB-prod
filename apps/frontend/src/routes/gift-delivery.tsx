@@ -483,7 +483,7 @@ function GiftDelivery() {
                                         </h2>
 
                                         <div
-                                            className="text-xl text-Ash-black text-bold min-h-96 w-full max-h-72 overflow-y-scroll py-5">
+                                            className="text-xl text-Ash-black text-bold min-h-96 w-full max-h-72 overflow-y-scroll-auto py-5">
                                             {createCart()}
                                         </div>
                                         <div
