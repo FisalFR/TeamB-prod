@@ -1,4 +1,5 @@
 import {maintenances, languageInterpreterRequests, medicineRequests, sanitationRequests, securityRequests, giftRequests, transportationRequests} from "database";
+import {internalTransportationRequest} from "./internalTransportationRequest.ts";
 
 export type fullServiceFormType = {
     formID: string
@@ -16,4 +17,5 @@ export type fullServiceFormType = {
     securityRequests?: securityRequests[]
     giftRequests?: giftRequests[]
     transportationRequests?: transportationRequests[]
+    internalTransportationRequests?: internalTransportationRequest[]
 }

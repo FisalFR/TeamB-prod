@@ -45,7 +45,8 @@ router.post("/filter", async (req, res) => {
     whereCondition.formID = { search: formType.formID };
   }
   if (formType.type !== "") {
-    whereCondition.type = { search: formType.type };
+    const escapedType = formType.type.replace(/\s/g, "\\ ");
+    whereCondition.type = { search: `"${escapedType}"` };
   }
   if (formType.location !== "") {
     const escapedLocation = formType.location.replace(/\s/g, "\\ ");
@@ -144,6 +145,13 @@ router.post("/delete", async (req, res) => {
       await client.transportationRequests.delete({
         where: {
           transportationRequest: formType.formID,
+        },
+      });
+      break;
+    case "Internal Transport":
+      await client.internalTransportationRequests.delete({
+        where: {
+          internalTransportationRequest: formType.formID,
         },
       });
       break;
