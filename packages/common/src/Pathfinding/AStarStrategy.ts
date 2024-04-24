@@ -99,32 +99,40 @@ class AStarStrategy extends TemplatePathfindingStrategy {
     heuristic(endNode: Node, nextNode: Node, currentNode: Node): number {
         const endFloor: number  = this.convertFloor(endNode.floor);
         const nextFloor: number = this.convertFloor(nextNode.floor);
-        const EuclideanDistance = Math.sqrt((endNode.ycoord - nextNode.ycoord) ** 2 + (endNode.xcoord - nextNode.xcoord) ** 2) + (((endFloor-nextFloor) * 100)**2);
-        // const DistToElevL: number = Math.sqrt((924 -nextNode.ycoord) ** 2 + (1785 - nextNode.xcoord) ** 2);
-        const DistToElevQ: number = Math.sqrt((1825 -nextNode.ycoord) ** 2 + (1751 - nextNode.xcoord) ** 2);
-        const floorDifference = Math.abs(endFloor - nextFloor);
-        // let finalCost = EuclideanDistance;
+        let finalCost;
+        if (endFloor === nextFloor) {
+            const ManhattanDistance = Math.abs(endNode.ycoord - nextNode.ycoord) + Math.abs(endNode.xcoord - nextNode.xcoord);
+            finalCost = ManhattanDistance;
+        } else {
+            // Use Euclidean distance for nodes on different floors
+            const EuclideanDistance = Math.sqrt(((endNode.ycoord - nextNode.ycoord) ** 2) + ((endNode.xcoord - nextNode.xcoord) ** 2)) + (((endFloor-nextFloor) * 100)**2);
+            finalCost = EuclideanDistance;
+        }
+
+           if(nextNode.nodeType === "ELEV" || nextNode.nodeType === "STAI"){
+               finalCost += 1000000000000000000000000;
+           }
 
         // If I'm not in the same building as the end node, and across the bridge, prioritize the bridge
             if ((nextNode.building !== endNode.building) && (endNode.building === "Shapiro" || endNode.building === "BTM") ){
                 if((nextFloor === 1 && endFloor == 1) && endNode.building === "Shapiro"){
-                    return EuclideanDistance/100000;
+                    return finalCost/100000;
                 } else if(nextFloor === 4 || (nextFloor === 4 && endNode.building === "BTM")){
-                    return EuclideanDistance/100000;
+                    return finalCost/100000;
                 } else if(nextFloor !==4){
                     return 100000000000000000000;
                 }
             } else if ((currentNode.building === "Shapiro" || currentNode.building === "BTM") && (nextNode.building !== endNode.building) && (endFloor >=3)){
                 if(nextFloor === 4){
-                    return EuclideanDistance/100000;
+                    return finalCost/100000;
                 }
             } else if ((currentNode.building === "BTM") && (nextNode.building !== endNode.building) && (endFloor <3)){
                 if(nextFloor === 4){
-                    return EuclideanDistance/100000;
+                    return finalCost/100000;
                 }
             }
 
-        return EuclideanDistance;
+        return finalCost;
 
     }
 
