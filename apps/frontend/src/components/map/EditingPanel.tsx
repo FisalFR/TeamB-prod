@@ -11,7 +11,7 @@ type TabProps = {
 
 export const TabContent:React.FunctionComponent<TabProps> = (props:TabProps) => {
     return (
-        <div className={"bg-white px-2"}>
+        <div className={"bg-white px-2 w-96"}>
             {props.children}
         </div>
     );
@@ -21,7 +21,7 @@ export function EditingPanel(props: { children: Array<ReactElement<TabProps>> | 
     const [contentVisibility, setContentVisibility] = useState(false);
     const pencil = <img src={pencilSVG} alt="pencil icon" className={"w-20 h-20 rotate-[225deg] invert scale-75"}/>;
 
-    const [selectedTabName, setSelectedTabName] = useState<string>("");
+    const [selectedTabName, setSelectedTabName] = useState<string>("Edit");
 
     function cn(...args: ClassValue[]) {
         return twMerge(clsx(args));
@@ -37,20 +37,20 @@ export function EditingPanel(props: { children: Array<ReactElement<TabProps>> | 
 
     function panel() {
         return (
-            <div className="flex flex-col">
-                <nav className={"flex h-8 rounded-b-none"}>
+            <div className="flex flex-col w-96 rounded-b-2xl overflow-hidden">
+                <nav className={"flex h-8 rounded-b-none w-96"}>
                     <ul className={"flex w-full list-none p-0 m-0"}>
                         {/* conditionally render multiple tabs if they exist, or a single tab if that is the only one*/}
                         {Array.isArray(props.children) ? (
                             props.children.map((child: React.ReactElement<TabProps>) => (
                                 <li
                                     key={child.props.name}
-                                    className={cn("flex w-full list-none h-6 p-2.5 m-0 font-OpenSans text-lg rounded-t relative justify-between items-center cursor-pointer", child.props.name === selectedTabName ? "selected bg-gray-100" : "bg-bone-white")}
+                                    className={cn("flex w-full flex-col font-OpenSans text-lg rounded-t-2xl relative cursor-pointer", child.props.name === selectedTabName ? "selected bg-gray-100" : "bg-bone-white")}
                                     onClick={() => setSelectedTabName(child.props.name)}
                                 >
                                     {child.props.name}
                                     {child.props.name === selectedTabName ? (
-                                        <motion.div className="underline absolute inset-px h-px bg-deep-blue" layoutId="underline"/>
+                                        <motion.div className="inset-px h-2 bg-deep-blue" layoutId="underline"/>
                                     ) : null}
                                 </li>
                             ))
@@ -77,7 +77,7 @@ export function EditingPanel(props: { children: Array<ReactElement<TabProps>> | 
                         }
                     </ul>
                 </nav>
-                <main className={"flex font-OpenSans text-md"}>
+                <main className={"flex font-OpenSans text-md max-h-[600px] overflow-y-auto overflow-x-hidden"}>
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={selectedTabName ? selectedTabName : "empty"}
@@ -106,7 +106,7 @@ export function EditingPanel(props: { children: Array<ReactElement<TabProps>> | 
 
     return (
         <div className={"absolute top-5 right-5 p-1 flex flex-row-reverse gap-10"}>
-            <motion.button className={"closedPopout button bg-deep-blue rounded-full flex"}
+            <motion.button className={"closedPopout button bg-deep-blue rounded-full h-fit"}
                            onClick={handleToggleVisibility}
                            whileHover={{scale: 1.1}}
                            whileTap={{scale: 0.9}}>

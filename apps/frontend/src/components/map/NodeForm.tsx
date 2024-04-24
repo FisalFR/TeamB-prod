@@ -135,10 +135,10 @@ function NodeForm(props:{node: NodeType,
 
     return (
         <>
-            <div className={"grid grid-cols-[auto_auto] gap-1"}>
+            <div className={"grid grid-cols-[auto_auto] gap-1 justify-items-start"}>
                 {createInputs()}
             </div>
-            <div>
+            <div className="justify-items-start text-left flex flex-col gap-3 pb-5">
                 {createNeighborEdit()}
             </div>
         </>

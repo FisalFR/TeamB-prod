@@ -205,7 +205,9 @@ export function MapEditor(){
                 nodes.push(newNode);
                 nodeMap.set(newNode.nodeID, newNode);
                 nodeAddDeletes.current.push({node: newNode, action: "add"});
+                setCurrentFloor(newNode.floor);
                 setReplaceThis(replaceThis+1);
+
             }
             else {
                 alert("All fields must be filled to add a node");
