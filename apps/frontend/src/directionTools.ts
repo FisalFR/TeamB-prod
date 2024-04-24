@@ -1,5 +1,6 @@
 import Node from 'common/src/node.ts';
 import {Instruction} from 'common/src/instruction.ts';
+import NodeType from "common/src/NodeType.ts";
 const distThresh = 40;
 const nearThresh = 3;
 const turnThresh = Math.PI / 2.1;
@@ -74,7 +75,7 @@ function pathTurn(path:Node[],index:number):[string,number]{
 
 
 
-export default function genInstructions(path:Node[],nodemap: Map<string,Node>, edgeMap:Map<string,string[]>):Instruction[]{
+export default function genInstructions(path: Node[], nodemap: Map<string, NodeType>, edgeMap: Map<string, string[]>):Instruction[]{
     const instructions:Instruction[] =[];
     if ((path.length < 2))
         return [];
@@ -84,9 +85,10 @@ export default function genInstructions(path:Node[],nodemap: Map<string,Node>, e
     }
     let index = 0;
     instructions.push({type: "Star",content:`Starting from ${path[0].shortName}`});
+    if (path.length>4)
         for (const neighbor of edgeMap.get(path[3].nodeID)!){
-            const compNode = nodemap.get(neighbor)!;
-
+            const compNode = nodemap.get(neighbor);
+            if (compNode)
             if (compNode.nodeType != "HALL" && compNode.nodeType != "ELEV" && compNode.nodeType != "STAI" && compNode.nodeType != "WALK" && dist(path[3],compNode)*pix2meters<nearThresh){
                 instructions.push({type:"Right",content:`Turn towards ${compNode.shortName}`});
                 break;}}
@@ -134,7 +136,8 @@ export default function genInstructions(path:Node[],nodemap: Map<string,Node>, e
             else  direction='down';
             content=(`Take the ${path[index].nodeType=="ELEV"?"elevator":"stairs"} ${direction} to floor ${path[index+1].floor}`);
             for (const neighbor of edgeMap.get(path[index+3].nodeID)!){
-                const compNode = nodemap.get(neighbor)!;
+                const compNode = nodemap.get(neighbor);
+                if (compNode)
                 if (compNode.nodeType != "HALL" && compNode.nodeType != "ELEV" && compNode.nodeType != "STAI" && compNode.nodeType != "WALK" && dist(path[index],compNode)*pix2meters<nearThresh){
                     content=`Take the ${path[index].nodeType=="ELEV"?"elevator":"stairs"} ${newfloor>ogfloor?`up`:`down`} to floor ${path[index+2].floor} and turn towards ${compNode.shortName}.`;
                     break;}}

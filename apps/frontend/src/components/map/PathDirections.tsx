@@ -31,8 +31,8 @@ function icon(image: string) {
 }
 
 export default function PathDirections(props: { Path: Node[] }) {
-    const { nodeMap } = useNodes();
-    const { edgeMap } = useEdges();
+    const {nodeMap} = useNodes();
+    const {edgeMap} =  useEdges();
     return (
         <SideTab
             height={"h-[250px]"}
