@@ -19,6 +19,8 @@ import MapEditor from "./routes/map-editor.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
 import {Authenticate} from "./components/authenticate.tsx";
 import InternalTransportationRequestPage from "./routes/internal-transport-page.tsx";
+import RequestLanding from "./routes/requestLanding.tsx";
+
 
 function App() {
 
@@ -91,6 +93,10 @@ function App() {
                             path:"/internalTransport",
                             element:<Authenticate component={InternalTransportationRequestPage}/>
                         },
+                        {
+                            path:"/request",
+                            element:<Authenticate component={RequestLanding}/>
+                        }
 
             ],
         },
