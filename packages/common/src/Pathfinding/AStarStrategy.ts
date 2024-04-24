@@ -106,17 +106,22 @@ class AStarStrategy extends TemplatePathfindingStrategy {
             finalCost = ManhattanDistance;
         } else {
             // Use Euclidean distance for nodes on different floors
-            const EuclideanDistance =+ Math.sqrt(((endNode.ycoord - nextNode.ycoord) ** 2) + ((endNode.xcoord - nextNode.xcoord) ** 2)) + (((endFloor-nextFloor) * 10000)**2);
+            const EuclideanDistance =+ Math.sqrt(((endNode.ycoord - nextNode.ycoord) ** 2) + ((endNode.xcoord - nextNode.xcoord) ** 2)) + (((endFloor-nextFloor) * 10000000)**2);
             finalCost = EuclideanDistance;
         }
 
-           if(nextNode.nodeType === "ELEV" || nextNode.nodeType === "STAI"){
-               finalCost += 1000000000000000000000000;
-           }
+       if(nextNode.nodeType === "ELEV" || nextNode.nodeType === "STAI"){
+           finalCost += 1000000;
+       }
 
         // Add a penalty if the next node's floor is different from both the current node's floor and the end node's floor
         if (nextFloor !== currentFloor && nextFloor !== endFloor) {
-            finalCost += 1000000000000000000000000;
+            finalCost += 1000000;
+        }
+
+        // Add a penalty if the next node's floor is higher than the current node's floor but lower than the end node's floor, or vice versa
+        if ((nextFloor > currentFloor && nextFloor < endFloor) || (nextFloor < currentFloor && nextFloor > endFloor)) {
+            finalCost += 1000000;
         }
 
         return finalCost;
