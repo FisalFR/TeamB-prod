@@ -61,21 +61,22 @@ model interpreter {
 }
 
 model forms {
-  formID                 String                        @id
-  status                 String
-  type                   String
-  assignee               String
-  dateCreated            DateTime                      @default(now())
-  location               String
-  priority               String
-  employeeName           String
-  languageRequests       languageInterpreterRequests[] @relation(name: "languageRequestID")
-  maintenanceRequests    maintenances[]                @relation(name: "maintenanceRequestID")
-  medicineRequests       medicineRequests[]            @relation(name: "medicineRequestID")
-  sanitationRequests     sanitationRequests[]          @relation(name: "sanitationRequestID")
-  securityRequests       securityRequests[]            @relation(name: "securityRequestID")
-  giftRequests           giftRequests[]                @relation(name: "giftRequestID")
-  transportationRequests transportationRequests[]      @relation(name: "transportationID")
+  formID                         String                           @id
+  status                         String
+  type                           String
+  assignee                       String
+  dateCreated                    DateTime                         @default(now())
+  location                       String
+  priority                       String
+  employeeName                   String
+  languageRequests               languageInterpreterRequests[]    @relation(name: "languageRequestID")
+  maintenanceRequests            maintenances[]                   @relation(name: "maintenanceRequestID")
+  medicineRequests               medicineRequests[]               @relation(name: "medicineRequestID")
+  sanitationRequests             sanitationRequests[]             @relation(name: "sanitationRequestID")
+  securityRequests               securityRequests[]               @relation(name: "securityRequestID")
+  giftRequests                   giftRequests[]                   @relation(name: "giftRequestID")
+  transportationRequests         transportationRequests[]         @relation(name: "transportationID")
+  internalTransportationRequests internalTransportationRequests[] @relation(name: "internalTransportationID")
 }
 
 model languageInterpreterRequests {
@@ -141,4 +142,11 @@ model transportationRequests {
   transport               String
   feedback                String
   transportationRequestID forms  @relation(name: "transportationID", fields: [transportationRequest], references: [formID])
+}
+
+model internalTransportationRequests {
+  internalTransportationRequest   String @id
+  endlocation                     String
+  feedback                        String
+  internalTransportationRequestID forms  @relation(name: "internalTransportationID", fields: [internalTransportationRequest], references: [formID])
 }
