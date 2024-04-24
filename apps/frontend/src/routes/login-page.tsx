@@ -56,7 +56,7 @@ export function LoginPage() {
             image: { src: image3, alt: 'Description of image 4' },
             text: {
                 title: "Security Request",
-                description: "We're pleased to announce our enhanced Security Request Feature—allowing you to request help or assistance at anytime through our website.",
+                description: "We're pleased to announce our enhanced Security Request Feature—allowing you to request assistance at anytime through our website.",
                 callToAction: "Click here to make a security request!",
                 route: "/security",
             }
@@ -77,17 +77,23 @@ export function LoginPage() {
 
 
     return (
-        <div className="z-0 top-0 left-0 h-full grid grid-cols-2 content-center" style={style}>
-            <div className="m-auto text-center rounded mx-auto animate-scale-in-ver-top flex-col w-10/12">
+        <div className="z-0 top-0 left-0 h-full grid grid-cols-[800px_minMax(100px,_1fr)] content-center" style={style}>
 
+            <div className="relative m-auto text-center h-screen centerContent rounded mx-auto animate-scale-in-ver-top flex-col w-10/12">
+
+                <p className={"absolute top-5 font-OpenSans text-white font-extralight"}>
+                    This website is a term project exercise for WPI CS 3733 Software
+                    Engineering (Prof. Wong) and is not to be confused with the actual Brigham & Women’s Hospital website.
+                </p>
                 <h1 className="font-OpenSans  font-bold text text-white text-center mb-2 text-7xl text-nowrap "
-                    >Navigate Seamlessly</h1>
+                >Navigate Seamlessly</h1>
                 <p className="  text-center text-2xl font-light text-white"
                 >
                     Find your room in Brigham & Women's Hospital with ease.
 
                 </p>
                 <div className={"flex flex-col gap-10 centerContent pt-5"}>
+
                     <div onClick={() => window.location.href = '/map'}>
                         <ButtonMovingBorder
                             borderRadius="0.3rem"
@@ -107,13 +113,7 @@ export function LoginPage() {
                         <Carousel content={content} autoPlay={isHovered} interval={4000}/>
                     </div>
 
-                    <p className={"top-20 font-OpenSans fixed text-white font-extralight text-balance"}>
-                            This website is a term project exercise for WPI CS 3733 Software
-                            Engineering <p>
-                            (Prof. Wong) and is not to be confused with the actual Brigham & Women’s
-                            Hospital website.
-                    </p>
-                    </p>
+
                 </div>
 
             </div>
