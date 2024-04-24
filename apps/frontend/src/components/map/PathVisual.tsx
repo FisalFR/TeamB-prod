@@ -5,7 +5,11 @@ import IconTo from '../../assets/from_to_icons/icon_to.svg';
 import React, {useRef} from "react";
 
 function PathVisual(props: {width: number; height: number;
-    showPath: boolean; floormap: Map<string, Node[][]>; pathNodes: Node[]; images: Map<string, string>; currentFloor: string; onClickCircle: (Node: Node) => void; allNodes: Node[]; showNodes: boolean}) {
+    showPath: boolean; floormap: Map<string, Node[][]>;
+    pathNodes: Node[]; images: Map<string, string>;
+    currentFloor: string; onClickCircle: (Node: Node) => void;
+    allNodes: Node[]; showNodes: boolean;
+    onChangeFloor: (floor: string) => void;}) {
     let startCoord: number[] = [];
     let endCoord: number[] = [];
     if (props.pathNodes[0] != null) {
@@ -70,7 +74,8 @@ function PathVisual(props: {width: number; height: number;
                             return node.floor === props.currentFloor && !node.longName.includes("Hall");
                         }).map((node) => {
                             return <>
-                                <motion.circle  cx={node.xcoord} cy={node.ycoord}
+                                <circle  className={"hover:cursor-pointer"}
+                                                cx={node.xcoord} cy={node.ycoord}
                                                r={12} // smaller visible circle
                                                fill= "#FFFFFF"
                                                 stroke= "#012D5A"
@@ -150,12 +155,19 @@ function PathVisual(props: {width: number; height: number;
             );
         } else {
             nodePos = props.pathNodes.findIndex((node) => node.nodeID == start.nodeID);
-            returnDivs.push(<svg>
-                    <circle cx={start.xcoord + (props.pathNodes[nodePos-1].floor.length-1)*12 + 16} cy={start.ycoord - 16}
+            returnDivs.push(
+                <svg>
+                    <motion.circle cx={start.xcoord + (props.pathNodes[nodePos-1].floor.length-1)*12 + 16} cy={start.ycoord - 16}
                             r={36} fill="#F6BD38"
-                            key={JSON.stringify(startCoord[0] + startCoord[1])}/>
+                            key={JSON.stringify(startCoord[0] + startCoord[1])}
+                            onClick={() => props.onChangeFloor(props.pathNodes[nodePos-1].floor)}
+                            className={"hover: cursor-pointer"}
+                            whileHover={{scale: 1.1}}
+                            whileTap={{scale: 0.9}}
+                    />
                     <text x={start.xcoord} y={start.ycoord} key={JSON.stringify(startCoord[0] + startCoord[1] + "text")}
-                          className="text-5xl font-bold fill-deep-blue font-OpenSans">
+                          className="text-5xl font-bold fill-deep-blue font-OpenSans hover: cursor-pointer"
+                          onClick={() => props.onChangeFloor(props.pathNodes[nodePos-1].floor)}>
                         {props.pathNodes[nodePos - 1].floor}</text>
                 </svg>
             );
@@ -171,10 +183,16 @@ function PathVisual(props: {width: number; height: number;
             nodePos = props.pathNodes.findIndex((node) => node.nodeID == end.nodeID);
             returnDivs.push(
                 <svg>
-                    <circle cx={end.xcoord + (props.pathNodes[nodePos + 1].floor.length - 1)*12 + 16} cy={end.ycoord - 16} r={36} fill="#012D5A"
-                            key={JSON.stringify(endCoord[0] + endCoord[1])}/>
+                    <motion.circle cx={end.xcoord + (props.pathNodes[nodePos + 1].floor.length - 1)*12 + 16} cy={end.ycoord - 16} r={36} fill="#012D5A"
+                            key={JSON.stringify(endCoord[0] + endCoord[1])}
+                            onClick={() => props.onChangeFloor(props.pathNodes[nodePos+1].floor)}
+                            className={"hover: cursor-pointer"}
+                                   whileHover={{scale: 1.1}}
+                                   whileTap={{scale: 0.9}}
+                    />
                     <text x={end.xcoord} y={end.ycoord} key={JSON.stringify(endCoord[0] + endCoord[1] + "text")}
-                          className="text-5xl font-bold fill-gold-yellow font-OpenSans ">
+                          className="text-5xl font-bold fill-gold-yellow font-OpenSans hover: cursor-pointer"
+                          onClick={() => props.onChangeFloor(props.pathNodes[nodePos+1].floor)}>
                         {props.pathNodes[nodePos + 1].floor}</text>
                 </svg>
             );

@@ -85,6 +85,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
             giftRequests: [],
             medicine: [],
             transportationRequests: [],
+            internalTransportationRequests: [],
         };
         try {
             const response = await axios.post("/api/csvManager/filterForms", test,{
@@ -147,6 +148,11 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                         newInformation.push("Transportation Method: " + response.data.transportationRequests[0].transport);
                         newInformation.push("Destination: " + response.data.transportationRequests[0].address);
                         newInformation.push("Additional Comments: " + response.data.transportationRequests[0].feedback);
+                        break;
+                    } case "Internal Transport":{
+                        newInformation.push("End Location: " + response.data.internalTransportationRequests[0].endlocation);
+                        newInformation.push("Additional Comments: " + response.data.internalTransportationRequests[0].feedback);
+                        break;
                     }
                 }
                 setInformation(newInformation);

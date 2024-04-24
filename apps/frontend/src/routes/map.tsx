@@ -13,6 +13,7 @@ import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import {PathSelector} from "../components/map/PathSelector.tsx";
+ import PathDirections from "../components/map/PathDirections.tsx";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
 import useNodes from "../hooks/useNodes.ts";
 import ToggleNodes from "../components/map/ToggleNodes.tsx";
@@ -95,6 +96,10 @@ export function Map(){
         findPath(request.startNode, e.target.value);
     }
 
+    function handleChangeFloor(floor: string) {
+        setCurrentFloor(floor);
+    }
+
     useEffect(() => {
         if(request.startNode && request.endNode) {
             findPath(request.startNode, request.endNode);
@@ -122,19 +127,22 @@ export function Map(){
 
 
     return (
-        <div className="fixed">
+        <div className="relative">
             <TransformWrapper limitToBounds={true} disablePadding={true}
-                              initialScale={0.38}
-                              minScale={0.38}
-                              maxScale={1.28}>
-                <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)"}}>
+                              initialScale={0.384}
+                              minScale={0.384}
+                              maxScale={1.28}
+            >
+
+                <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)", position: "fixed"}}>
                     <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor={currentFloor}
                                 showPath={showPath} floormap={floorMap as Record<string, Node[][]>}
                                 pathNodes={pathNodes}
                                 images={floorImages as Record<string, string>}
                                 onClickCircle={onClickCircle}
                                 allNodes ={nodes}
-                                showNodes = {showNodes}/>
+                                showNodes = {showNodes}
+                                onChangeFloor = {handleChangeFloor}/>
                 </TransformComponent>
                 <ToggleNodes onClick={() => setShowNodes(!showNodes) } isOn={showNodes}/>
                 <PathSelector nodes={nodes.filter((node) =>  !node.longName.includes("Hall"))}
@@ -155,12 +163,13 @@ export function Map(){
                     setAlgo("Dijkstra");
                     setSelectedAlgo("Dijkstra");
                 }} />
+                {<PathDirections Path = {pathNodes}/>}
                 <FloorSelector
-                    onClick1={() => setCurrentFloor("L2")}
-                    onClick2={() => setCurrentFloor("L1")}
-                    onClick3={() => setCurrentFloor("1")}
-                    onClick4={() => setCurrentFloor("2")}
-                    onClick5={() => setCurrentFloor("3")}
+                    onClick1={() => handleChangeFloor("L2")}
+                    onClick2={() => handleChangeFloor("L1")}
+                    onClick3={() => handleChangeFloor("1")}
+                    onClick4={() => handleChangeFloor("2")}
+                    onClick5={() => handleChangeFloor("3")}
                     currentFloor={currentFloor}
                 />
                 <ZoomControls/>
