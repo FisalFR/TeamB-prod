@@ -1,10 +1,10 @@
 import React, {useRef, useState, ChangeEvent, useEffect} from "react";
 import {MedicineRequestType} from "common/src/MedicineRequestType.ts";
-import Button from "../components/Button.tsx";
-import RadioButton from "../components/input-components/RadioButton.tsx";
-import Dropdown from "../components/input-components/dropdown.tsx";
+import Button from "../../components/Button.tsx";
+import RadioButton from "../../components/input-components/RadioButton.tsx";
+import Dropdown from "../../components/input-components/dropdown.tsx";
 import axios from "axios";
-import medicinePic from "../assets/serviceRequestBanners/medicine.png";
+import medicinePic from "../../assets/serviceRequestBanners/medicine.png";
 
 export function MedicineRequest(){
     const [request, setRequest] = useState<MedicineRequestType>({
