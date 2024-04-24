@@ -16,11 +16,9 @@ import Select from "../components/Select.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
 import EdgeType from "common/src/EdgeType.ts";
-import {EditingPanel} from "../components/map/EditingPanel.tsx";
+import {EditingPanel, TabContent} from "../components/map/EditingPanel.tsx";
 
 export function MapEditor(){
-
-
     const [dragging, setDragging] = useState(false);
 
     const placeholderNode = {
@@ -420,12 +418,18 @@ export function MapEditor(){
                     currentFloor={currentFloor}
                 />
                 <ZoomControls></ZoomControls>
-                <EditingPanel children={""}></EditingPanel> {/*children={"Hello how are you today?"}*/}
+                <EditingPanel>
+                    <TabContent name={"test"}>
+                        Trial run!
+                    </TabContent>
+                    <TabContent name={"test2"}>
+                        Trial run!
+                    </TabContent>
+                </EditingPanel>
             </TransformWrapper>
         </div>
 
-    )
-        ;
+    );
 }
 
 export default MapEditor;
