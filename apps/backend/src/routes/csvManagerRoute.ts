@@ -528,4 +528,41 @@ router.get("/countEmployee", async function (req: Request, res: Response) {
   res.status(200).json(employeeCount);
 });
 
+router.get("/countMaintenances", async function (req: Request, res: Response) {
+  const maintenanceCount = await client.maintenances.count();
+  res.status(200).json(maintenanceCount);
+});
+
+router.get("/countLanguage", async function (req: Request, res: Response) {
+  const languageCount = await client.languageInterpreterRequests.count();
+  res.status(200).json(languageCount);
+});
+
+router.get("/countMedicine", async function (req: Request, res: Response) {
+  const medicineCount = await client.medicineRequests.count();
+  res.status(200).json(medicineCount);
+});
+
+router.get("/countSanitation", async function (req: Request, res: Response) {
+  const sanitationCount = await client.sanitationRequests.count();
+  res.status(200).json(sanitationCount);
+});
+
+router.get("/countSecurity", async function (req: Request, res: Response) {
+  const securityCount = await client.securityRequests.count();
+  res.status(200).json(securityCount);
+});
+
+router.get("/countGift", async function (req: Request, res: Response) {
+  const giftCount = await client.giftRequests.count();
+  res.status(200).json(giftCount);
+});
+
+router.get(
+  "/countTransportation",
+  async function (req: Request, res: Response) {
+    const transportationCount = await client.transportationRequests.count();
+    res.status(200).json(transportationCount);
+  },
+);
 export default router;
