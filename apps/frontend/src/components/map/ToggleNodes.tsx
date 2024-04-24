@@ -6,7 +6,7 @@ function ToggleNodes( props: {
     isOn?: boolean;
 }){
     return (
-        <div className="absolute top-5 right-10 h-fit rounded-xl">
+        <div className="absolute top-5 right-7 h-fit rounded-xl">
             <Button
                 onClick={props.onClick ? props.onClick : () => {}}
                 px="px-5"

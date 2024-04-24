@@ -35,7 +35,7 @@ export default function PathDirections(props: { Path: Node[] }) {
     const { edgeMap } = useEdges();
     return (
         <SideTab
-            height={"h-[250px]"}
+            height={"h-[300px]"}
             yPos={"top-56"}
             arrow={false}
             tabChildren={
@@ -47,7 +47,7 @@ export default function PathDirections(props: { Path: Node[] }) {
                 <div>
                     <div style={{fontWeight: "bold", color: "#012D5A"}}>DIRECTIONS</div>
                     <div className="bg-deep-blue h-0.5"/>
-                    <div className="h-[200px] overflow-y-scroll overflow-hidden w-[416px] divide-y">
+                    <div className="h-[250px] overflow-y-scroll overflow-hidden w-[416px] divide-y">
                         {genInstructions(props.Path, nodeMap, edgeMap).map(instruction => (
                             <div className="flex flex-col text-sm/[17px] gap-36">
                                 <div className="flex flex-row py-3">

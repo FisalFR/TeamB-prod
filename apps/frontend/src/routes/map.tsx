@@ -144,6 +144,7 @@ export function Map(){
                                 showNodes = {showNodes}
                                 onChangeFloor = {handleChangeFloor}/>
                 </TransformComponent>
+
                 <ToggleNodes onClick={() => setShowNodes(!showNodes) } isOn={showNodes}/>
                 <PathSelector nodes={nodes.filter((node) =>  !node.longName.includes("Hall"))}
                               handleStartChange={handleStartChange}
