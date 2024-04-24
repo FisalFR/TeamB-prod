@@ -573,4 +573,13 @@ router.get(
     res.status(200).json(transportationCount);
   },
 );
+
+router.get(
+  "/countInternalTransportation",
+  async function (req: Request, res: Response) {
+    const internalTransportationCount =
+      await client.internalTransportationRequests.count();
+    res.status(200).json(internalTransportationCount);
+  },
+);
 export default router;
