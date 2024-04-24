@@ -4,9 +4,17 @@ import axios from "axios";
 import {forms} from "database/.prisma/client";
 import HoverTable from "../components/hoverTable.tsx";
 import formType from "common/src/FormType.ts";
+import pieGraph from "../assets/pie.svg";
+import bar from "../assets/bar.svg";
+import Button from "../components/Button.tsx";
+import Modal from "../components/Modal.tsx";
+import Chart from "react-apexcharts";
+
+
+
 function LogBook() {
-
-
+    const PieSVG = <img src={pieGraph} alt="pie" className={"w-5"} />;
+    const GraphSVG = <img src={bar} alt="pie" className={"w-5"} />;
     const emptyDate: Date = new Date();
     const [form, setForm] = useState([]);
     const [request, setRequest] = useState<forms>({
@@ -27,6 +35,183 @@ function LogBook() {
     const [priorityOptions, setPriority] = useState<string[]>([]);
     const [createdByOptions, setCreatedBy] = useState<string[]>([]);
     const [dataUpdated, setDataUpdated] = useState<boolean>(false);
+
+    const [maintenanceCount, setMaintenanceCount] = useState(0);
+
+    const getMaintenanceCount = () => {
+        axios.get("/api/csvManager/countMaintenances").then((response) => {
+            setMaintenanceCount(response.data);
+        });
+    };
+
+    const [languageCount, setLanguageCount] = useState(0);
+
+    const getLanguageCount = () => {
+        axios.get("/api/csvManager/countLanguage").then((response) => {
+            setLanguageCount(response.data);
+        });
+    };
+
+    const [medicineCount, setMedicineCount] = useState(0);
+
+    const getMedicineCount = () => {
+        axios.get("/api/csvManager/countMedicine").then((response) => {
+            setMedicineCount(response.data);
+        });
+    };
+
+    const [sanitationCount, setSanitationCount] = useState(0);
+
+    const getSantitationCount = () => {
+        axios.get("/api/csvManager/countSanitation").then((response) => {
+            setSanitationCount(response.data);
+        });
+    };
+
+    const [securityCount, setSecurityCount] = useState(0);
+
+    const getSecurityCount = () => {
+        axios.get("/api/csvManager/countSecurity").then((response) => {
+            setSecurityCount(response.data);
+        });
+    };
+
+    const [giftCount, setGiftCount] = useState(0);
+
+    const getGiftCount = () => {
+        axios.get("/api/csvManager/countGift").then((response) => {
+            setGiftCount(response.data);
+        });
+    };
+
+    const [transportationCount, setTransportationCount] = useState(0);
+
+    const getTransportationCount = () => {
+        axios.get("/api/csvManager/countTransportation").then((response) => {
+            setTransportationCount(response.data);
+        });
+    };
+
+    useEffect(() => {
+        getMaintenanceCount();
+        getLanguageCount();
+        getMedicineCount();
+        getSecurityCount();
+        getSantitationCount();
+        getGiftCount();
+        getTransportationCount();
+    }, []);
+
+
+    const state = {
+
+            series: [maintenanceCount, languageCount, medicineCount, sanitationCount, securityCount,
+                giftCount, transportationCount],
+
+        options: {
+            chart: {
+                width: 500,
+                type: 'pie',
+            },
+            title:{
+                text: "Form Distribution",
+                align: 'left',
+                margin: 10,
+                offsetX: -10,
+                offsetY: -10,
+                floating: false,
+                style: {
+                    fontSize: '25px',
+                    fontWeight: '1000',
+                    fontFamily: 'Open Sans',
+                    color: '#263238'
+                }
+            },
+            plotOptions: {
+                pie:
+                    {
+                        startAngle:0,
+                        endAngle: 360,
+                        offsetX: 0,
+
+                        dataLabels:{
+                            offset: 0,
+                        }
+                    },
+                total: {
+                    show: false
+                }
+            },
+            labels: ["Maintenance", "Language", "Medicine", "Sanitation", "Security",
+                "Gift", "Transportation"],
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 500
+                    },
+                }
+            }],
+            legend: {
+                position: 'bottom'
+            }
+        },
+    };
+
+    const barOptions = {
+        chart: {
+            id: "basic-bar"
+        },
+        xaxis: {
+            categories: ["Maintenance", "Language", "Medicine", "Sanitation", "Security",
+                "Gift", "Transportation"]
+        },
+        plotOptions: {
+            bar: {
+                distributed: true,
+                borderRadius: 10,
+            }
+        },
+
+        colors: ['#F0322B', '#F09000', '#F0D600', '#00CEF0', '#00F08D', '#B050F0', '#F050DA'],
+
+        title:{
+            text: "Form Distribution",
+            align: 'left',
+            margin: 10,
+            offsetX: 0,
+            offsetY: 0,
+            floating: false,
+            style: {
+                fontSize: '25px',
+                fontWeight: '1000',
+                fontFamily: 'Open Sans',
+                color: '#263238'
+            }
+        },
+        animations: {
+            enabled: true,
+            easing: 'easeinout', // You can choose 'linear', 'easeout', 'easein', 'easeinout'
+            speed: 800, // Speed of the animation in milliseconds
+            animateGradually: {
+                enabled: true,
+                delay: 150 // Delay in animation
+            },
+            dynamicAnimation: {
+                enabled: true,
+                speed: 200 // Speed of dynamic animation
+            }
+        },
+    };
+
+    const barSeries = [
+        {
+            name: "Count",
+            data: [maintenanceCount, languageCount, medicineCount, sanitationCount, securityCount,
+                giftCount, transportationCount],
+        }
+    ];
+
 
 
     const removeDups = (arr: string[]): string[] => {
@@ -144,6 +329,17 @@ function LogBook() {
         setDataUpdated(true);
     }
 
+    const [open, setOpen] = useState<boolean>(false);
+    function openPie() {
+        setOpen(true);
+        }
+
+    const [openGraph, setOpenGraph] = useState<boolean>(false);
+    function openGraphFunction() {
+        setOpenGraph(true);
+    }
+
+
     return (
             <div className="flex bg-light-white max-h-[92%] overflow-hidden">
                 {/*Form to filter current requests*/}
@@ -233,9 +429,33 @@ function LogBook() {
                                       setInput={handlePriority} required={true}/>
                         </form>
                     </div>
+                    <div className={"space-x-6"}>
+                    <Button onClick={openPie} color={"bg-deep-blue"}  px={"px-3"} py={"py-3"} >
+                        {PieSVG}
+                    </Button>
+                        <Button onClick={openGraphFunction} color={"bg-deep-blue"}  px={"px-3"} py={"py-3"} >
+                            {GraphSVG}
+                        </Button>
+                    </div>
+                    <Modal open={open} onClose={() => setOpen(false) }>
+                        <div className="p-6 shadow-xl">
+                            <Chart options={state.options}
+                                   series={state.series}
+                                   type="pie"
+                                   width={600}
+                            />
+                        </div>
+                    </Modal>
+                    <Modal open={openGraph} onClose={() => setOpenGraph(false) }>
+                        <div className="p-6 shadow-xl">
+                            <Chart options={barOptions}
+                                   series={barSeries}
+                                   type="bar"
+                                   width={600}
+                            />
+                        </div>
+                    </Modal>
                 </div>
-
-                {/*Actual Database Table starts here*/}
                 <div
                     className="border-solid border-b-[1px] border-deep-blue w-full max-h-[50%] overflow-y-auto">
                 <HoverTable data={form}
