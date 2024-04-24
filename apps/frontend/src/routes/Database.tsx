@@ -24,7 +24,8 @@ function LogBook() {
         status: "",
         assignee: "",
         dateCreated: emptyDate,
-        priority: ""
+        priority: "",
+        employeeName: "",
     });
     const [cleared, setCleared] = useState(false);
     const [staffTypeOptions, setEmployeeOptions] = useState<string[]>([]);
@@ -92,6 +93,15 @@ function LogBook() {
         });
     };
 
+    const [internalTransportationCount, setInternalTransportationCount] = useState(0);
+
+    const getInternalTransportationCount = () => {
+        axios.get("/api/csvManager/countInternalTransportation").then((response) => {
+            setInternalTransportationCount(response.data);
+        });
+    };
+
+
     useEffect(() => {
         getMaintenanceCount();
         getLanguageCount();
@@ -100,13 +110,14 @@ function LogBook() {
         getSantitationCount();
         getGiftCount();
         getTransportationCount();
+        getInternalTransportationCount();
     }, []);
 
 
     const state = {
 
             series: [maintenanceCount, languageCount, medicineCount, sanitationCount, securityCount,
-                giftCount, transportationCount],
+                giftCount, transportationCount, internalTransportationCount],
 
         options: {
             chart: {
@@ -124,9 +135,9 @@ function LogBook() {
                     fontSize: '25px',
                     fontWeight: '1000',
                     fontFamily: 'Open Sans',
-                    color: '#263238'
                 }
             },
+            colors: ['#F0322B', '#F09000', '#F0D600', '#00CEF0', '#00F08D', '#B050F0', '#F050DA', '#3F00F5'],
             plotOptions: {
                 pie:
                     {
@@ -143,7 +154,7 @@ function LogBook() {
                 }
             },
             labels: ["Maintenance", "Language", "Medicine", "Sanitation", "Security",
-                "Gift", "Transportation"],
+                "Gift", "Transportation", "Internal Transportation"],
             responsive: [{
                 breakpoint: 480,
                 options: {
@@ -164,7 +175,7 @@ function LogBook() {
         },
         xaxis: {
             categories: ["Maintenance", "Language", "Medicine", "Sanitation", "Security",
-                "Gift", "Transportation"]
+                "Gift", "Transportation", "Internal Transportation"]
         },
         plotOptions: {
             bar: {
@@ -173,7 +184,7 @@ function LogBook() {
             }
         },
 
-        colors: ['#F0322B', '#F09000', '#F0D600', '#00CEF0', '#00F08D', '#B050F0', '#F050DA'],
+        colors: ['#F0322B', '#F09000', '#F0D600', '#00CEF0', '#00F08D', '#B050F0', '#F050DA', '#3F00F5'],
 
         title:{
             text: "Form Distribution",
@@ -208,7 +219,7 @@ function LogBook() {
         {
             name: "Count",
             data: [maintenanceCount, languageCount, medicineCount, sanitationCount, securityCount,
-                giftCount, transportationCount],
+                giftCount, transportationCount, internalTransportationCount],
         }
     ];
 
@@ -246,6 +257,16 @@ function LogBook() {
             setPriority(removeDups(priorityStrings));
             setCreatedBy(removeDups(createdByStrings));
             setEmployeeOptions(removeDups(assignedByStrings));
+            setRequest({
+                formID: "",
+                type: "",
+                location: "",
+                status: "",
+                assignee: "",
+                dateCreated: new Date,
+                priority: "",
+                employeeName: ""});
+            setCleared(true);
             setDataUpdated(false);
         });
     }, [dataUpdated]);
@@ -318,13 +339,15 @@ function LogBook() {
     }
 
     function clearAll(){
-            setRequest({ formID: "",
+            setRequest({
+                formID: "",
                 type: "",
                 location: "",
                 status: "",
                 assignee: "",
                 dateCreated: emptyDate,
-                priority: ""});
+                priority: "",
+                employeeName: ""});
             setCleared(true);
         setDataUpdated(true);
     }
