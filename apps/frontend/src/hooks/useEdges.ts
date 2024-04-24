@@ -5,7 +5,12 @@ import EdgeType from "common/src/EdgeType.ts";
 export function useEdges() {
     const [edges, setEdges] = useState<EdgeType[]>([]);
     const [edgeMap, setEdgeMap] = useState<Map<string, string[]>>(new Map());
-    useEffect(() => {
+    function reload() {
+        axios.get("/api/edges/").then((response) => {
+            setEdges(response.data);
+        });
+    }
+    useEffect( () => {
         axios.get("/api/edges/").then((response) => {
             const edges: EdgeType[] = response.data;
             setEdges(edges);
@@ -28,7 +33,7 @@ export function useEdges() {
 
     }, []);
 
-    return {edges: edges, edgeMap: edgeMap};
+    return {edges:edges, reloadEdges: reload, edgeMap: edgeMap};
 }
 
 export function useEdgesID() {
