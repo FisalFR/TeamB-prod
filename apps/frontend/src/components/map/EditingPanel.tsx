@@ -105,8 +105,8 @@ export function EditingPanel(props: { children: Array<ReactElement<TabProps>> | 
     }
 
     return (
-        <div className={"absolute top-5 right-5 p-1 flex flex-row-reverse gap-10"}>
-            <motion.button className={"closedPopout button bg-deep-blue rounded-full h-fit"}
+        <div className={"absolute top-5 left-5 p-1 flex flex-row gap-8"}>
+            <motion.button className={"closedPopout button bg-deep-blue rounded-full h-fit w-fit"}
                            onClick={handleToggleVisibility}
                            whileHover={{scale: 1.1}}
                            whileTap={{scale: 0.9}}>

@@ -184,8 +184,8 @@ export function TransportationRequestPage() {
                                 </div>
                                 <br/>
                                 <div className={"formButtons flex gap-4 my-4"}>
-                                    <Button onClick={handleClear} children={"Clear"}/>
                                     <Button onClick={handleSubmit} children={"Submit"}/>
+                                    <Button onClick={handleClear} children={"Clear"}/>
 
                                 </div>
 
