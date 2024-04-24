@@ -18,6 +18,7 @@ import GiftDelivery from "./routes/gift-delivery.tsx";
 import MapEditor from "./routes/map-editor.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
 import {Authenticate} from "./components/authenticate.tsx";
+import InternalTransportationRequestPage from "./routes/internal-transport-page.tsx";
 
 function App() {
 
@@ -85,6 +86,10 @@ function App() {
                         {
                             path:"/transport",
                             element:<Authenticate component={TransportationRequestPage}/>
+                        },
+                        {
+                            path:"/internalTransport",
+                            element:<Authenticate component={InternalTransportationRequestPage}/>
                         },
 
             ],
