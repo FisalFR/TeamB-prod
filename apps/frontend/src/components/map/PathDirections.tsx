@@ -33,21 +33,23 @@ export default function PathDirections(props: { Path: Node[] }) {
     const { edgeMap } = useEdges();
     return (
         <SideTab
-            height={"h-[172px]"}
+            height={"h-[250px]"}
             yPos={"top-56"}
             arrow={false}
             tabChildren={<div><b style={{ color: "white" }}>PD</b></div>}
             bodyChildren={
-                <div className="h-[132px] overflow-y-scroll overflow-hidden w-[415px]">
+                <div className="h-[200px] overflow-y-scroll overflow-hidden w-[415px] divide-y">
+                    <b>DIRECTIONS</b>
                     {genInstructions(props.Path, nodeMap, edgeMap).map(instruction => (
                         <div className="flex flex-col text-sm/[17px] gap-36">
                             <div className="flex flex-row py-3">
-                                <div className="object-left w-1/4 px-5">
+                                <div className="object-left w-1/4 px-5 centerContent">
                                     <div className="centerContent">
                                         {icon(instruction.type)}
                                     </div>
                                 </div>
-                                <h1 className="w-3/4 align-middle" style={{ color: "#012D5A", fontSize: 17, textAlign: "left" }}>
+                                <h1 className="w-3/4 align-middle"
+                                    style={{color: "#012D5A", fontSize: 17, textAlign: "left"}}>
                                     {instruction.content}
                                 </h1>
                             </div>

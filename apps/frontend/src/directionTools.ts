@@ -152,7 +152,7 @@ export default function genInstructions(path:Node[],nodemap: Map<string,Node>, e
     const finalDir = pathTurn(path,path.length-2)[0];
     switch (finalDir) {
         case `Forward`:
-        content = `${content} and your destination is at the end of the hallway.`;
+        content = `${content} and your destination is ahead.`;
             instructions.push({type:"Forward",content:content});
         break;
         case `Left`:
