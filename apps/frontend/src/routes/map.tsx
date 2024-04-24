@@ -13,6 +13,7 @@ import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import {PathSelector} from "../components/map/PathSelector.tsx";
+// import {PathDirections} from "../components/map/PathDirections.tsx";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
 import useNodes from "../hooks/useNodes.ts";
 import ToggleNodes from "../components/map/ToggleNodes.tsx";
@@ -162,6 +163,7 @@ export function Map(){
                     setAlgo("Dijkstra");
                     setSelectedAlgo("Dijkstra");
                 }} />
+                {/*<PathDirections/>*/}
                 <FloorSelector
                     onClick1={() => handleChangeFloor("L2")}
                     onClick2={() => handleChangeFloor("L1")}
