@@ -154,7 +154,7 @@ function LogBook() {
                 }
             },
             labels: ["Maintenance", "Language", "Medicine", "Sanitation", "Security",
-                "Gift", "Transportation", "Internal Transportation"],
+                "Gift", "External Transportation", "Internal Transportation"],
             responsive: [{
                 breakpoint: 480,
                 options: {
@@ -175,7 +175,7 @@ function LogBook() {
         },
         xaxis: {
             categories: ["Maintenance", "Language", "Medicine", "Sanitation", "Security",
-                "Gift", "Transportation", "Internal Transportation"]
+                "Gift", "External Transportation", "Internal Transportation"]
         },
         plotOptions: {
             bar: {
