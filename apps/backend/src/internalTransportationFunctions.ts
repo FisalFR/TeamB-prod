@@ -13,7 +13,7 @@ class internalTransportationFunctions {
       data: {
         formID: UUID,
         status: "Unassigned",
-        type: "Transportation",
+        type: "Internal Transport",
         assignee: "",
         location: request.startlocation,
         priority: request.priority,
