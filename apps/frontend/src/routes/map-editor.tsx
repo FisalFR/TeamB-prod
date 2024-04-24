@@ -19,6 +19,7 @@ import NodeForm from "../components/map/NodeForm.tsx";
 import NodeType from "common/src/NodeType.ts";
 import nodeAddOrDelete from "common/src/nodeAddOrDelete.ts";
 //import nodeType from "common/src/NodeType.ts";
+import {EditingPanel, TabContent} from "../components/map/EditingPanel.tsx";
 
 export function MapEditor(){
 
@@ -442,44 +443,47 @@ export function MapEditor(){
                         })}
                     </svg>
                 </TransformComponent>
-                <div
-                    className="absolute gap-1 top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-start text-left w-96 max-h-[350px] overflow-auto">
-                    <div className="p-6 flex flex-col gap-2">
-                        <h2 className="font-HeadlandOne text-[24px]">Edit Nodes</h2>
+                    <EditingPanel>
+                        <TabContent name={"Edit"}>
+                            <div className="p-6 flex flex-col gap-2">
+                                <h2 className="font-HeadlandOne text-[24px]">Edit Nodes</h2>
 
-                        <Select defaultOption="Select node to edit" options={nodeStrings} id="pickEditNode"
-                                onChange={(e) => {
-                                    editNode(e);
-                                }} label="Edit Node: " reset={currentNode.nodeID != selectedNode}/>
-                        <br/>
-                        <h3 className="font-bold text-lg">Currently Editing: </h3>
-                        {nodeEditor()}
-                        <div className={deleteBtnVisibility()}>
-                            <Button onClick={deleteNode}>Delete Node</Button>
-                        </div>
-                    </div>
+                                <Select defaultOption="Select node to edit" options={nodeStrings} id="pickEditNode"
+                                        onChange={(e) => {
+                                            editNode(e);
+                                        }} label="Edit Node: " reset={currentNode.nodeID != selectedNode}/>
+                                <br/>
+                                <h3 className="font-bold text-lg">Currently Editing: </h3>
+                                {nodeEditor()}
+                                <div className={deleteBtnVisibility()}>
+                                    <Button onClick={deleteNode}>Delete Node</Button>
+                                </div>
+                            </div>
+                        </TabContent>
+                        <TabContent name={"Add"}>
+                            <div className="p-6 flex flex-col gap-2 w-full">
+                                <h2 className="font-HeadlandOne text-[24px]">Add Node</h2>
 
-                    <div className="p-6 flex flex-col gap-2 w-full">
-                        <h2 className="font-HeadlandOne text-[24px]">Add Node</h2>
-
-                        <NodeForm node={currentNode} keyLabels={nodeLabels}
-                                  disabled={[]} handleInput={handleAddInput} value={autofillByDrag} nodeList={nodes}
-                                  edgeList={edges} nodeMap={nodeMap} currentNode={addNode.current}
-                                  nodeStrings={nodeStrings}
-                                  autofill={false} addEdge={addEdge} deleteEdge={deleteEdge}/>
-                        <Button onClick={addNewNode}>Add Node</Button>
-                    </div>
-
-                    <div className="p-6 flex flex-col gap-2 w-full">
-                        <h2 className="font-HeadlandOne text-[24px]">Changes</h2>
-                        {createChanges()}
-                    </div>
-
-                    <div className="centerContent w-full p-5 bottom-0 sticky bg-white gap-5">
-                        <Button onClick={handleSubmit}>Submit Changes</Button>
-                        <Button onClick={handleClear}>Clear Changes</Button>
-                    </div>
-                </div>
+                                <NodeForm node={currentNode} keyLabels={nodeLabels}
+                                          disabled={[]} handleInput={handleAddInput} value={autofillByDrag}
+                                          nodeList={nodes}
+                                          edgeList={edges} nodeMap={nodeMap} currentNode={addNode.current}
+                                          nodeStrings={nodeStrings}
+                                          autofill={false} addEdge={addEdge} deleteEdge={deleteEdge}/>
+                                <Button onClick={addNewNode}>Add Node</Button>
+                            </div>
+                        </TabContent>
+                        <TabContent name={"Changes"}>
+                            <div className="p-6 flex flex-col gap-2 w-full">
+                                <h2 className="font-HeadlandOne text-[24px]">Changes</h2>
+                                {createChanges()}
+                            </div>
+                            <div className="centerContent w-full p-5 bottom-0 sticky bg-white gap-5">
+                                <Button onClick={handleSubmit}>Submit Changes</Button>
+                                <Button onClick={handleClear}>Clear Changes</Button>
+                            </div>
+                        </TabContent>
+                    </EditingPanel>
                 <FloorSelector
                     onClick1={() => setCurrentFloor("L2")}
                     onClick2={() => setCurrentFloor("L1")}
