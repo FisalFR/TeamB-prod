@@ -21,7 +21,7 @@ export function SideTab(props: {height: string, yPos: string, arrow: boolean, ta
             width: "auto",
             transition: {
                 width: {duration: 0.2, when: "beforeChildren"},
-                opacity: {duration: 0.2, delay: 0.3, when: "afterChildren"}
+                opacity: {duration: 0.2, delay: 0.4, when: "afterChildren"}
             }
         },
         exit: {
@@ -81,7 +81,7 @@ export function SideTab(props: {height: string, yPos: string, arrow: boolean, ta
                 onClick={toggleVisibility}
                 animate={isVisible ? {borderColor: "#F6BD38"} : {borderColor: "#012D5A"}}
                 transition={{duration: 0.6}}
-                className={"h-full w-14 px-3 bg-deep-blue rounded-r-xl border-4 border-deep-blue"}>
+                className={"h-full w-14 bg-deep-blue rounded-r-xl border-4 border-deep-blue"}>
                 {props.tabChildren}
             </motion.button>
             <AnimatePresence>
