@@ -11,7 +11,7 @@ class transportationFunctions {
       data: {
         formID: UUID,
         status: "Unassigned",
-        type: "Transportation",
+        type: "External Transportation",
         assignee: "",
         location: request.location,
         priority: request.priority,
