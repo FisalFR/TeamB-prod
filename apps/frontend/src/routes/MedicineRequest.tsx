@@ -1,8 +1,8 @@
 import React, {useRef, useState, ChangeEvent, useEffect} from "react";
-import {MedicineRequestType} from "../../../../packages/common/src/MedicineRequestType.ts";
+import {MedicineRequestType} from "common/src/MedicineRequestType.ts";
 import Button from "../components/Button.tsx";
-import RadioButton from "../components/RadioButton.tsx";
-import Dropdown from "../components/dropdown.tsx";
+import RadioButton from "../components/input-components/RadioButton.tsx";
+import Dropdown from "../components/input-components/dropdown.tsx";
 import axios from "axios";
 import medicinePic from "../assets/serviceRequestBanners/medicine.png";
 

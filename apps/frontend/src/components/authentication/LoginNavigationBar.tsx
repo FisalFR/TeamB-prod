@@ -1,6 +1,6 @@
-import bwhLogo from "../assets/bwh-logo-white.svg";
+import bwhLogo from "../../assets/bwh-logo-white.svg";
 
-import user_icon from "../assets/user_icon.svg";
+import user_icon from "../../assets/user_icon.svg";
 import HandleLogin from "./handleLogin.tsx";
 
 import HandleLogout from "./handleLogout.tsx";

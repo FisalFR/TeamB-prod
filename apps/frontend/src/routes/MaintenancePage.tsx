@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 import {MaintenanceRequest} from 'common/src/maintenanceRequest.ts';
-import RadioButton from "../components/RadioButton.tsx";
+import RadioButton from "../components/input-components/RadioButton.tsx";
 import Button from "../components/Button.tsx";
-import Dropdown from "../components/dropdown.tsx";
+import Dropdown from "../components/input-components/dropdown.tsx";
 import axios from "axios";
 import maintenancePic from "../assets/serviceRequestBanners/Two-technicians-robotic-arm_1200x628.jpg";
 

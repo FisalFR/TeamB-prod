@@ -1,8 +1,8 @@
 
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
-import RadioButton from "../components/RadioButton.tsx";
+import RadioButton from "../components/input-components/RadioButton.tsx";
 import {TransportationRequest} from "common/src/transportationRequest.ts";
-import Dropdown from "../components/dropdown.tsx";
+import Dropdown from "../components/input-components/dropdown.tsx";
 import axios from "axios";
 import Button from "../components/Button.tsx";
 import transportPic from "../assets/transport-pic.jpg";

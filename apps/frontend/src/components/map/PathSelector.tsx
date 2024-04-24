@@ -1,6 +1,6 @@
 import React from 'react';
 import {AlgorithmButtons} from "./AlgorithmButtons.tsx";
-import Select from "../Select.tsx";
+import Select from "../input-components/Select.tsx";
 import fromIconInverse from "../../assets/from_to_icons/circle_from_inverse.svg";
 import dotsInverse from "../../assets/from_to_icons/circles_from_to_inverse.svg";
 import destinationInverse from "../../assets/from_to_icons/icon_to_inverse.svg";

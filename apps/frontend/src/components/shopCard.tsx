@@ -1,4 +1,4 @@
-import NumberInput from "./NumberInput.tsx";
+import NumberInput from "./input-components/NumberInput.tsx";
 import {giftItem} from "common/src/giftItem.ts";
 
 function ShopCard(props:{image: string, name: string, cost: number, altName: string, changeCart:(item: string, quantity: number) => void, cart: giftItem[];}) {

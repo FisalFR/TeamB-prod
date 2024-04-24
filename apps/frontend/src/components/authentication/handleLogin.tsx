@@ -1,4 +1,4 @@
-import auth0 from "../contexts/auth0-client.ts";
+import auth0 from "../../contexts/auth0-client.ts";
 
 
 export function HandleLogin(props:{path:string,auth:boolean,load:boolean}) {

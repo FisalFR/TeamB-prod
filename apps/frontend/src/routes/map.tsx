@@ -8,7 +8,7 @@ import minus from "../assets/minus.svg";
 import PathVisual from "../components/map/PathVisual.tsx";
 import React, {useEffect, useState, useCallback, useRef} from "react";
 import axios from "axios";
-import {startEndNodes} from "common/src/pathfinding.ts";
+import {startEndNodes} from "packages/common/src/Pathfinding/pathfinding.ts";
 import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
@@ -115,11 +115,11 @@ export function Map(){
     }
     let ref = useRef(0);
     function onClickCircle(Node: Node) {
-        if(ref.current%2 == 0){
+        if (ref.current % 2 == 0){
             setRequest({...request, startNode: Node.nodeID});
             ref.current++;
         }
-        else{
+        else {
             setRequest({...request, endNode: Node.nodeID});
             ref.current++;
         }

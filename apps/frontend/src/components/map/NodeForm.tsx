@@ -1,4 +1,4 @@
-import Select from "../Select.tsx";
+import Select from "../input-components/Select.tsx";
 import React, {useState} from "react";
 import NodeType from "common/src/NodeType.ts";
 import EdgeType from "common/src/EdgeType.ts";

@@ -11,7 +11,7 @@ import FloorSelector from "../components/map/FloorSelector.tsx";
 import useNodes from "../hooks/useNodes.ts";
 import useEdges from "../hooks/useEdges.ts";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
-import Select from "../components/Select.tsx";
+import Select from "../components/input-components/Select.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
 import EdgeType from "common/src/EdgeType.ts";

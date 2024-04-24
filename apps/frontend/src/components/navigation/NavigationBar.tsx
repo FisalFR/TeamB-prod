@@ -1,10 +1,10 @@
 import {NavLink} from "./NavLink.tsx";
-import bwhLogo from "../assets/bwh-logo-white.svg";
-import NavDropDown from "../components/navDropDown.tsx";
-import user_icon from "../assets/user_icon.svg";
+import bwhLogo from "../../assets/bwh-logo-white.svg";
+import NavDropDown from "./navDropDown.tsx";
+import user_icon from "../../assets/user_icon.svg";
 import {useAuth0} from "@auth0/auth0-react";
-import HandleLogout from "./handleLogout.tsx";
-import LoginNavigationBar from "./LoginNavigationBar.tsx";
+import HandleLogout from "../authentication/handleLogout.tsx";
+import LoginNavigationBar from "../authentication/LoginNavigationBar.tsx";
 
 
 

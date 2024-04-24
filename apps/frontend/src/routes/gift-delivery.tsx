@@ -1,7 +1,7 @@
 import Button from "../components/Button.tsx";
 import ShopCard from "../components/shopCard.tsx";
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
-import {giftItem} from "../../../../packages/common/src/giftItem.ts";
+import {giftItem} from "common/src/giftItem.ts";
 import Tulip from "../assets/Gift_Images/Tulip.jpeg";
 import Rose from "../assets/Gift_Images/Rose.jpeg";
 import tulipBouquet from "../assets/Gift_Images/TulipBouquet2.png";
@@ -20,12 +20,12 @@ import sourPatchKids from "../assets/Gift_Images/sourPatchKids.jpeg";
 import caramels from "../assets/Gift_Images/caramels.jpeg";
 import {giftRequest} from "common/src/giftRequest.ts";
 import axios from "axios";
-import Dropdown from "../components/dropdown.tsx";
-import RadioButton from "../components/RadioButton.tsx";
+import Dropdown from "../components/input-components/dropdown.tsx";
+import RadioButton from "../components/input-components/RadioButton.tsx";
 import {DatePicker} from '@atlaskit/datetime-picker';
 import backward from "../assets/backward.svg";
 import cartIMG from "../assets/cart.svg";
-import QuantityPicker from "../components/QuantityPicker.tsx";
+import QuantityPicker from "../components/input-components/QuantityPicker.tsx";
 
 //this is a commit just for mo :)
 function GiftDelivery() {
@@ -167,7 +167,7 @@ function GiftDelivery() {
                     </div>
                 </p>
             </div>);
-    };
+    }
 
     function handleInput(e: ChangeEvent<HTMLInputElement>) {
         setCleared(false);
@@ -208,8 +208,7 @@ function GiftDelivery() {
     }
 
     function totalItems() {
-        const totalQuantity = cart.map(item => item.quantity).reduce((acc, curr) => acc + curr, 0);
-        return totalQuantity;
+        return cart.map(item => item.quantity).reduce((acc, curr) => acc + curr, 0);
     }
 
 

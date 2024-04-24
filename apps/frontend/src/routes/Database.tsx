@@ -1,4 +1,4 @@
-import Dropdown from "../components/dropdown.tsx";
+import Dropdown from "../components/input-components/dropdown.tsx";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {forms} from "database/.prisma/client";
@@ -7,7 +7,7 @@ import formType from "common/src/FormType.ts";
 import pieGraph from "../assets/pie.svg";
 import bar from "../assets/bar.svg";
 import Button from "../components/Button.tsx";
-import Modal from "../components/Modal.tsx";
+import Modal from "../components/display/Modal.tsx";
 import Chart from "react-apexcharts";
 
 

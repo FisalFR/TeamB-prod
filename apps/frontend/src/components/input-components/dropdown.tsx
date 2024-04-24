@@ -1,6 +1,6 @@
 
 import {ChangeEvent, useRef, useState} from 'react';
-import '../App.css';
+import '../../App.css';
 import {HTMLInputElement} from "happy-dom";
 import {optionWithSearch} from "common/src/optionWithSearch.ts";
 

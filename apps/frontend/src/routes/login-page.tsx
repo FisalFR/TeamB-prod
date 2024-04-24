@@ -1,7 +1,7 @@
-import AnimatedSVG from "../components/HeroImage.tsx";
+import AnimatedSVG from "../components/display/HeroImage.tsx";
 
 import React, {useState} from 'react';
-import Carousel from "../components/Carousel";
+import Carousel from "../components/display/Carousel.tsx";
 import image1 from '../assets/Carousel/gift.svg';
 import image2 from '../assets/Carousel/language.svg';
 import image3 from '../assets/Carousel/security.svg';
