@@ -7,7 +7,7 @@ function ZoomButtons(props: {
     onClick2: () => void,
     minusSvg: React.JSX.Element
 }) {
-    return <div className={"fixed top-96 right-8 flex flex-row bg-deep-blue rounded p-1 gap-1"}>
+    return <div className={"fixed bottom-[330px] right-8 flex flex-row bg-deep-blue rounded p-1 gap-1"}>
 
 
         <motion.button className={""}
