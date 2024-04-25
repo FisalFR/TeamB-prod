@@ -33,6 +33,9 @@ export function NavigationBar() {
             ["/csvManager", "CSV Manager"],
             ["/mapEditor", "Map Editor"],
         ];
+        const userDropdownList =[
+            ["/userProfile", "Profile"],
+        ];
 
         return (
             <div>
@@ -47,19 +50,26 @@ export function NavigationBar() {
                                          alt="Brighams Logo White"></img>
                                     <nav className="uppercase divide-x divide-solid centerContent w-fit justify-self-center">
 
-                                        <NavDropDown mainLink= {["", "Request"]} dropdownLinks={dropdownList}/>
+                                        <NavDropDown onClick={handleLogout} mainLink= {["", "Request"]} dropdownLinks={dropdownList}/>
 
                                         <div className="px-16">
                                             <NavLink href="/map">Map</NavLink>
                                         </div>
 
-                                        <NavDropDown mainLink={["", "Admin"]} dropdownLinks={adminDropdownList}></NavDropDown>
+                                        <NavDropDown onClick={handleLogout} mainLink={["", "Admin"]} dropdownLinks={adminDropdownList}></NavDropDown>
                                     </nav>
                                     <div className="self-center">
                                         <div className="float-end centerContent px-16">
 
-                                            <NavLink onClick={handleLogout}><div className="flex flex-row gap-2">
-                                                <img src={user_icon} alt="Username icon" height="20" width="20"/>LOGOUT</div></NavLink>
+                                            {/*<NavLink onClick={handleLogout}><div className="flex flex-row gap-2">*/}
+
+                                                <NavDropDown onClick={handleLogout}  mainLink={["", "LOGOUT"]} dropdownLinks={userDropdownList}
+
+                                                />
+
+{/*/!**/}
+{/*                                                <img src={user_icon} alt="Username icon" height="20" width="20"/>LOGOUT</div></NavLink>*/}
+{/**!/*/}
                                         </div>
                                     </div>
                                 </div>

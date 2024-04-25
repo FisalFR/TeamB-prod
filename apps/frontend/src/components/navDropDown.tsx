@@ -1,11 +1,11 @@
-import {useState} from "react";
+import {MouseEventHandler, useState} from "react";
 import {NavLink} from "./NavLink.tsx";
 import {AnimatePresence, motion} from "framer-motion";
 
 //props:
 // 2D array text with link
 // main link and  the list of links
- function NavDropDown(props: {mainLink:string[],dropdownLinks:string[][]}){
+ function NavDropDown(props: {onClick:MouseEventHandler, mainLink:string[],dropdownLinks:string[][]}){
 
     const [isSeen, setIsSeen] = useState(false);
      const handleMouseEnter = () => {
@@ -26,10 +26,10 @@ import {AnimatePresence, motion} from "framer-motion";
 
          );}
     return(
-        <div className="w-fit relative" onMouseEnter = {handleMouseEnter}
+        <div  className="w-fit relative" onMouseEnter = {handleMouseEnter}
              onMouseLeave = {handleMouseLeave}>
 
-            <div className="px-16">
+            <div onClick={props.onClick} className="px-16">
                 <NavLink href={props.mainLink[0]}>
                     {props.mainLink[1]}
                 </NavLink>
