@@ -110,6 +110,9 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
         }
         if (search.slice(0, search.length - 1).toLowerCase() === prevSearch.toLowerCase() ||
             search.slice(1, search.length).toLowerCase() === prevSearch.toLowerCase()) {
+            if (search.length === 2) {
+                return filterAndCache(options, -1);
+            }
             return filterAndCache(currentOptions, -1);
         }
         for (let i = 1; i < search.length - 1; i++) {
@@ -191,18 +194,20 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
                 }
             }
 
-            //substitution
-            for (let pos = 1; pos < searchArray.length - 1; pos++) {
-                if (testSearch('substitution', pos)) {
-                    return true;
+            if (searchArray.length > 2) {
+                //substitution
+                for (let pos = 1; pos < searchArray.length - 1; pos++) {
+                    if (testSearch('substitution', pos)) {
+                        return true;
+                    }
                 }
-            }
 
-            //insertion
-            for (let pos = 1; pos < searchArray.length; pos++) {
-                searchArray.splice(pos, 0, ' ');
-                if (testSearch('insertion', pos)) {
-                    return true;
+                //insertion
+                for (let pos = 1; pos < searchArray.length; pos++) {
+                    searchArray.splice(pos, 0, ' ');
+                    if (testSearch('insertion', pos)) {
+                        return true;
+                    }
                 }
             }
         }
