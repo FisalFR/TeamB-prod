@@ -77,7 +77,7 @@ function pathTurn(path:Node[],index:number):[string,number]{
 
 export default function genInstructions(path: Node[], nodemap: Map<string, NodeType>, edgeMap: Map<string, string[]>):Instruction[]{
     const instructions:Instruction[] =[];
-    if (dist(path[0], path[path.length - 1]) < 100 && path.length > 4){
+    if (dist(path[0], path[path.length - 1]) < 100 && path.length < 4){
         instructions.push({type:"End",content:"You are already near your destination"});
         return instructions;
     }
