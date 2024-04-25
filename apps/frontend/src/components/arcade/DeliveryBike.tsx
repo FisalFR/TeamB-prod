@@ -1,5 +1,5 @@
-import Button from "@/components/Button.tsx";
 import HoverDivs from "@/components/arcade/HoverDivs.tsx";
+import ArcadeButton from "@/components/arcade/ArcadeButton.tsx";
 
 function DeliveryBike(props:{x1: number, x2: number,playerX: number, currentLoc: string; hasVase: boolean;
     deliverVase: () => void}) {
@@ -8,7 +8,7 @@ function DeliveryBike(props:{x1: number, x2: number,playerX: number, currentLoc:
         if (props.hasVase) {
             return(
                 <>
-                    <Button onClick={() => props.deliverVase()}>Deliver!</Button>
+                    <ArcadeButton onClick={() => props.deliverVase()}>Deliver!</ArcadeButton>
                 </>
             );
         }

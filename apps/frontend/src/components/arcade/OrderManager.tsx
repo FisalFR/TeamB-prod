@@ -2,16 +2,14 @@ import {useEffect, useRef} from "react";
 import OrderCard from "@/components/arcade/OrderCard.tsx";
 
 function OrderManager(props:{flowers: string[]; orderMax: number; currentTime: number;
-    addOrder: (order: string[]) => void; orders: string[][]}) {
+    addOrder: (order: string[]) => void; orders: string[][]; orderTimes: number[]}) {
 
     const MIN_TIME_BETWEEN_ORDERS = 20;
     const RANDOM_TIME = 5;
     const MAX_ORDERS = 3;
 
-    //const timeBetween = useRef(MIN_TIME_BETWEEN_ORDERS + Math.floor(Math.random()*5));
     const nextTime = useRef(1000);
 
-    //const orders = useRef([]);
 
     useEffect(() => {
         if ((props.currentTime == nextTime.current) && (props.currentTime > 0)) {
@@ -31,9 +29,9 @@ function OrderManager(props:{flowers: string[]; orderMax: number; currentTime: n
     }
 
     function showOrders() {
-        return props.orders.map((order) =>
+        return props.orders.map((order, index) =>
             <>
-                <OrderCard order={order}/>
+                <OrderCard order={order} time={props.orderTimes[index]}/>
             </>
         );
     }

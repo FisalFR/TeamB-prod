@@ -1,11 +1,11 @@
-import Button from "@/components/Button.tsx";
 import HoverDivs from "@/components/arcade/HoverDivs.tsx";
+import ArcadeButton from "@/components/arcade/ArcadeButton.tsx";
 
 function VaseBox(props:{x1: number, x2: number,playerX: number, currentLoc: string; grabVase: () => void; hasVase: boolean}) {
 
     function newButton() {
         if (!props.hasVase) {
-            return (<><Button onClick={() => props.grabVase()}>New Vase</Button></>);
+            return (<><ArcadeButton onClick={() => props.grabVase()}>New Vase</ArcadeButton></>);
         }
     }
 

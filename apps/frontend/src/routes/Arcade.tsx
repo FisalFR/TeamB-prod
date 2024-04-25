@@ -48,8 +48,10 @@ function Arcade() {
     //Order constants
     const FLOWERS = ["Tulip", "Rose"];
     const ORDER_MAX = 4;
+    const ORDER_COMPLETE_TIME = 120;
 
     const orders = useRef([]);
+    const orderTimes = useRef([]);
 
     useEffect(() => {
         //Implementing the setInterval method
@@ -108,6 +110,17 @@ function Arcade() {
                     setPlayerY(START_HEIGHT-MAX_JUMP);
                 }
             }
+
+            if (globalTime%1000 == 0) {
+                orderTimes.current.map((time, index) =>
+                    {
+                        orderTimes.current[index] -= 1;
+                        if (time == 0) {
+                           removeOrder(index);
+                        }
+                    }
+                );
+            }
         }, 40);
 
         //Clearing the interval
@@ -164,6 +177,11 @@ function Arcade() {
 
     function addOrder(order: string[]) {
         orders.current.push(order);
+        orderTimes.current.push(ORDER_COMPLETE_TIME);
+    }
+    function removeOrder(index: number) {
+        orders.current.splice(index,1);
+        orderTimes.current.splice(index,1);
     }
 
     function deliverVase() {
@@ -198,9 +216,11 @@ function Arcade() {
         alert(score);
 
         vase.current.hasVase = false;
+        vase.current.flowers = [];
         setHasVase(false);
 
         orders.current.splice(0,1);
+        orderTimes.current.splice(0,1);
     }
 
 
@@ -216,7 +236,7 @@ function Arcade() {
                      >
                     <img className="absolute bottom-0 left-0" src={LOCATIONS[currentLoc.current].image}></img>
                     <OrderManager orderMax={ORDER_MAX} flowers={FLOWERS} currentTime={globalTime}
-                                  addOrder={addOrder} orders = {orders.current}/>
+                                  addOrder={addOrder} orders = {orders.current} orderTimes={orderTimes.current}/>
 
                     <Plot x1={150} x2={380} playerX={playerX} plot={1} currentLoc={LOCATIONS[currentLoc.current].name}
                           currentTime={globalTime} vase={vase.current} addToVase={addToVase}/>

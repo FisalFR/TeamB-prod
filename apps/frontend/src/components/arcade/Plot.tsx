@@ -1,6 +1,6 @@
 import {useEffect, useRef} from "react";
-import Button from "@/components/Button.tsx";
 import HoverDivs from "@/components/arcade/HoverDivs.tsx";
+import ArcadeButton from "@/components/arcade/ArcadeButton.tsx";
 
 
 function Plot(props:{x1: number, x2: number,playerX: number, plot: number, currentLoc: string, currentTime: number;
@@ -29,7 +29,7 @@ function Plot(props:{x1: number, x2: number,playerX: number, plot: number, curre
     function showFlower() {
         if ((plotStatus.current != "empty") && (!plotStatus.current.includes("Grown"))) {
             const branch = {
-                height: 30 * (props.currentTime/endGrow.current)
+                height: 30 * (1-(endGrow.current-props.currentTime)/GROW_TIME)
             };
             return (
                 <>
@@ -79,13 +79,13 @@ function Plot(props:{x1: number, x2: number,playerX: number, plot: number, curre
     function createButtons() {
         const tossButton =
             <>
-                <Button onClick={() => tossFlower()}>Toss {flower.current}</Button>
+                <ArcadeButton onClick={() => tossFlower()}>Toss {flower.current}</ArcadeButton>
             </>;
         if (plotStatus.current == "empty") {
             return(
                 <>
-                    <Button onClick={() => growFlower("Tulip")}>Plant Tulip</Button>
-                    <Button onClick={() => growFlower("Rose")}>Plant Rose</Button>
+                    <ArcadeButton onClick={() => growFlower("Tulip")}>Plant Tulip</ArcadeButton>
+                    <ArcadeButton onClick={() => growFlower("Rose")}>Plant Rose</ArcadeButton>
                 </>
             );
         }
@@ -93,7 +93,7 @@ function Plot(props:{x1: number, x2: number,playerX: number, plot: number, curre
             if ((props.vase.hasVase) && (props.vase.flowers.length < 4)) {
                 return (
                     <>
-                        <Button onClick={() => pickFlower()}>Add {flower.current} to Vase</Button>
+                        <ArcadeButton onClick={() => pickFlower()}>Add {flower.current} to Vase</ArcadeButton>
                         {tossButton}
                     </>
                 );
