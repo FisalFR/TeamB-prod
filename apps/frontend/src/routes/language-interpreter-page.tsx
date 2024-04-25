@@ -137,8 +137,8 @@ function LanguageInterpreter(){
                     <div className={submittedWindowVisibility.requestScreen}>
 
                         <div className="">
-                            <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                                <h1 className={" text-3xl font-HeadlandOne "}>Language Interpreter Request</h1>
+                            <div className="bg-light-white my-10 p-10 px-20 rounded-3xl shadow-xl">
+                                <h1 className={" text-3xl font-HeadlandOne"}>Language Interpreter Request</h1>
                                 <br/>
                                 <p className="text-left">
                                     Brigham and Women's Hospital is committed to clearly and thoroughly communicating
@@ -250,7 +250,7 @@ function LanguageInterpreter(){
                                     </div>
                                     <div className="formButtons pt-10 flex gap-4 space-x-5">
                                         <Button onClick={handleSubmitLanguage} children={"Submit"}/>
-                                        <Button onClick={handleClearLanguage} children={"Clear"}/>
+                                        <Button onClick={handleClearLanguage} children={"Clear"} color={"bg-transparent border-2 border-deep-blue"} text={"text-deep-blue"}/>
                                     </div>
                                 </form>
                             </div>

@@ -174,7 +174,7 @@ export function InternalTransportationRequestPage() {
                                     </div>
                                     <div className={"formButtons flex gap-4 my-4"}>
                                         <Button onClick={handleSubmit} children={"Submit"}/>
-                                        <Button onClick={handleClear} children={"Clear"}/>
+                                        <Button onClick={handleClear} children={"Clear"} color={"bg-transparent border-2 border-deep-blue"} text={"text-deep-blue"}/>
                                     </div>
                                 </div>
 

@@ -32,6 +32,7 @@ module.exports = {
         'bwh-cyan': '#009CA6',
         'light-white': '#FAFAFA',
         'graphite': '#212121',
+        'delete-button': '#7EBAE6',
       },
       fontFamily: {
         'HeadlandOne': ['Headland One', 'serif'],

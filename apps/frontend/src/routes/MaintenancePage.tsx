@@ -97,7 +97,7 @@ export function MaintenancePage() {
                 <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-50 bottom-0 margin-auto">
                     <div className={submittedWindowVisibility.formScreen}>
                         <div className="bg-light-white my-10 p-10 px-20 rounded-3xl w-auto drop-shadow-xl">
-                            <h1 className={"text-3xl font-HeadlandOne py-4"}>Welcome to the Maintenance page!</h1>
+                            <h1 className={"text-3xl font-extrabold font-HeadlandOne py-4"}>Maintenance Service Request</h1>
                             <p>Fill out the form below to report an issue and make a maintenance request.</p>
 
                     <form ref={formRef} onSubmit={e => {
@@ -190,7 +190,7 @@ export function MaintenancePage() {
 
                                     <div className={"formButtons flex gap-4 my-4"}>
                                         <Button onClick={handleSubmit} children={"Submit"}/>
-                                        <Button onClick={handleClear} children={"Clear"}/>
+                                        <Button onClick={handleClear} children={"Clear"} color={"bg-transparent border-2 border-deep-blue"} text={"text-deep-blue"}/>
                                     </div>
                                 </div>
 
