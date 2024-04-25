@@ -1,16 +1,16 @@
 import express, { Router } from "express";
 import { startEndNodes } from "common/src/Pathfinding/pathfinding";
-import Path from "common/src/pathfinding/Path";
+import Path from "common/src/pathfinding/path";
 //import Parser from common/src/parser";
 import Node from "common/src/node";
 import client from "../bin/database-connection";
 // import writeNode from "../writeNode";
 import { filteringNodes } from "../filteringNodes";
-import AStarStrategy from "common/src/Pathfinding/AStarStrategy";
-import BFSStrategy from "common/src/Pathfinding/BFSStrategy";
-import DFSStrategy from "common/src/Pathfinding/DFSStrategy";
-import DijkstraStrategy from "common/src/Pathfinding/DijkstraStrategy";
-import PathfindingStrategy from "common/src/Pathfinding/PathfindingStrategy";
+import AStarStrategy from "common/src/pathfinding/a-star-strategy";
+import BfsStrategy from "common/src/pathfinding/bfs-strategy";
+import DfsStrategy from "common/src/pathfinding/dfs-strategy";
+import DijkstraStrategy from "common/src/pathfinding/dijkstra-strategy";
+import PathfindingStrategy from "common/src/pathfinding/pathfinding-strategy";
 // import {stringify, parse} from 'flatted';
 
 const router: Router = express.Router();
@@ -45,10 +45,10 @@ router.post("/", async (req, res) => {
       strategy = new AStarStrategy();
       break;
     case "BFS":
-      strategy = new BFSStrategy();
+      strategy = new BfsStrategy();
       break;
     case "DFS":
-      strategy = new DFSStrategy();
+      strategy = new DfsStrategy();
       break;
     case "Dijkstra":
       strategy = new DijkstraStrategy();

@@ -1,6 +1,6 @@
-import PriorityQueue from "../priority-queue.ts";
+// import PriorityQueue from "../priority-queue.ts";
 import Node from "../node.ts";
-import TemplatePathfindingStrategy from "./TemplatePathfindingStrategy.ts";
+import TemplatePathfindingStrategy from "./template-pathfinding-strategy.ts";
 
 class AStarStrategy extends TemplatePathfindingStrategy {
 
@@ -160,8 +160,5 @@ class AStarStrategy extends TemplatePathfindingStrategy {
         return result;
 
     }
-
-
-
 }
 export default AStarStrategy;

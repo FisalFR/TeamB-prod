@@ -1,4 +1,4 @@
-import PathfindingStrategy from "./PathfindingStrategy.ts";
+import PathfindingStrategy from "./pathfinding-strategy.ts";
 import Node from "../node.ts";
 import PriorityQueue from "../priority-queue.ts";
 

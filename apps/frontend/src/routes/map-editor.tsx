@@ -17,7 +17,7 @@ import axios from "axios";
 import EdgeType from "common/src/edge-type.ts";
 import NodeForm from "../components/map/NodeForm.tsx";
 import NodeType from "common/src/node-type.ts";
-import nodeAddOrDelete from "common/src/nodeAddOrDelete.ts";
+import nodeAddOrDelete from "common/src/node-add-or-delete.ts";
 //import nodeType from "common/src/node-type.ts";
 import {EditingPanel, TabContent} from "../components/map/EditingPanel.tsx";
 

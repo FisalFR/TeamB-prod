@@ -13,7 +13,7 @@ import employee from "common/src/service-requests/employee";
 import { formFilter } from "../formFunctions";
 import edgeType from "common/src/edge-type";
 import employeeFunctions from "../employeeFunctions";
-import nodeAddOrDelete from "common/src/nodeAddOrDelete";
+import nodeAddOrDelete from "common/src/node-add-or-delete";
 
 router.use(fileUpload());
 

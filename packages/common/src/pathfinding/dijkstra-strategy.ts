@@ -1,6 +1,6 @@
-import PathfindingStrategy from "./PathfindingStrategy.ts";
+import PathfindingStrategy from "./pathfinding-strategy.ts";
 import Node from "../node.ts";
-import PathfindingTemplate from "./TemplatePathfindingStrategy.ts";
+import PathfindingTemplate from "./template-pathfinding-strategy.ts";
 
 class DijkstraStrategy extends PathfindingTemplate implements  PathfindingStrategy {
     heuristic(endNode: Node, nextNode: Node, currentNode:Node): number {
