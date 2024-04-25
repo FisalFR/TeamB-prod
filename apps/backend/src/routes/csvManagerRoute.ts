@@ -582,4 +582,16 @@ router.get(
     res.status(200).json(internalTransportationCount);
   },
 );
+
+router.post("/countTypePriority", async function (req: Request, res: Response) {
+  const { priority }: { priority: string[] } = req.body;
+  const maintenanceCount = await client.forms.count({
+    where: {
+      type: priority[1],
+      priority: priority[0],
+    },
+  });
+  res.status(200).json(maintenanceCount);
+});
+
 export default router;

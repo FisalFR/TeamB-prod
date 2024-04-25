@@ -103,7 +103,7 @@ export function MaintenancePage() {
                     <form ref={formRef} onSubmit={e => {
                         e.preventDefault();
                     }}>
-                        <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
+                        <div className="formTest w-full my-10 grid grid-cols-2 gap-12 ">
                             <div className="flex flex-col max-w-fit">
                                 <p className={"text-left font-bold"}>Employee Name</p>
                                 <div className={"border-solid border-deep-blue border-2 rounded"}>
