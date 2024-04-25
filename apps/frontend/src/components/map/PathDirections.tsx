@@ -12,6 +12,8 @@ import { motion } from "framer-motion";
 import Button from "../../components/Button.tsx";
 import {Instruction} from "common/src/instruction.ts";
 
+import {toWords} from "number-to-words";
+
 function icon(image: string) {
     switch (image) {
         case "Forward":
@@ -74,11 +76,19 @@ export default function PathDirections(props: { Path: Node[] }) {
     function speak(){
         speech.voice = selectedVoice;
         speech.lang="Spanish";
-        const lontent:Instruction[] = genInstructions(props.Path, nodeMap, edgeMap);
+        const content:Instruction[] = genInstructions(props.Path, nodeMap, edgeMap);
         let ReadIndex = 0;
         const text:string[] = [];
-        for (let i = 0; i < lontent.length; i++) {
-            text.push(lontent[i].content);
+        for (let i = 0; i < content.length; i++) {
+            const numbers = content[i].content.match(/ (\d+) /);
+
+            if (numbers)
+            for (let j = 0; j < numbers.length; j++) {
+            console.log(numbers[j]);
+
+                content[i].content = content[i].content.replace(numbers[j],` ${toWords(numbers[j])} `);
+            }
+            text.push(content[i].content);
         }
         speech.text = text[ReadIndex];
         if (text.length > 0)
