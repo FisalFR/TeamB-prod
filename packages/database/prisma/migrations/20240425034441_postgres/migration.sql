@@ -31,31 +31,15 @@ CREATE TABLE "edges" (
 );
 
 -- CreateTable
-CREATE TABLE "users" (
-    "username" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
+CREATE TABLE "employee" (
+    "employeeEmail" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
+    "salary" INTEGER NOT NULL,
     "gender" TEXT NOT NULL,
     "type" TEXT NOT NULL,
 
-    CONSTRAINT "users_pkey" PRIMARY KEY ("username")
-);
-
--- CreateTable
-CREATE TABLE "patient" (
-    "patientUsername" TEXT NOT NULL,
-    "reasonToStay" TEXT NOT NULL,
-
-    CONSTRAINT "patient_pkey" PRIMARY KEY ("patientUsername")
-);
-
--- CreateTable
-CREATE TABLE "employee" (
-    "employeeUsername" TEXT NOT NULL,
-    "salary" INTEGER NOT NULL,
-
-    CONSTRAINT "employee_pkey" PRIMARY KEY ("employeeUsername")
+    CONSTRAINT "employee_pkey" PRIMARY KEY ("employeeEmail")
 );
 
 -- CreateTable
@@ -75,6 +59,8 @@ CREATE TABLE "forms" (
     "assignee" TEXT NOT NULL,
     "dateCreated" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "location" TEXT NOT NULL,
+    "priority" TEXT NOT NULL,
+    "employeeName" TEXT NOT NULL,
 
     CONSTRAINT "forms_pkey" PRIMARY KEY ("formID")
 );
@@ -83,6 +69,7 @@ CREATE TABLE "forms" (
 CREATE TABLE "languageInterpreterRequests" (
     "languageRequest" TEXT NOT NULL,
     "language" TEXT NOT NULL,
+    "feedback" TEXT NOT NULL,
 
     CONSTRAINT "languageInterpreterRequests_pkey" PRIMARY KEY ("languageRequest")
 );
@@ -91,7 +78,6 @@ CREATE TABLE "languageInterpreterRequests" (
 CREATE TABLE "maintenances" (
     "maintenanceRequest" TEXT NOT NULL,
     "issue" TEXT NOT NULL,
-    "isUrgent" TEXT NOT NULL,
     "feedback" TEXT NOT NULL,
 
     CONSTRAINT "maintenances_pkey" PRIMARY KEY ("maintenanceRequest")
@@ -100,8 +86,6 @@ CREATE TABLE "maintenances" (
 -- CreateTable
 CREATE TABLE "medicineRequests" (
     "medicineRequest" TEXT NOT NULL,
-    "employeeName" TEXT NOT NULL,
-    "priority" TEXT NOT NULL,
     "medicine" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL,
     "additionalComments" TEXT NOT NULL,
@@ -112,8 +96,6 @@ CREATE TABLE "medicineRequests" (
 -- CreateTable
 CREATE TABLE "sanitationRequests" (
     "sanitationRequest" TEXT NOT NULL,
-    "employeeName" TEXT NOT NULL,
-    "priority" TEXT NOT NULL,
     "serviceType" TEXT NOT NULL,
     "contaminant" TEXT NOT NULL,
     "additionalComments" TEXT NOT NULL,
@@ -124,11 +106,9 @@ CREATE TABLE "sanitationRequests" (
 -- CreateTable
 CREATE TABLE "securityRequests" (
     "securityRequest" TEXT NOT NULL,
-    "employeeName" TEXT NOT NULL,
     "request" TEXT NOT NULL,
     "additionalInfo" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL,
-    "priority" TEXT NOT NULL,
 
     CONSTRAINT "securityRequests_pkey" PRIMARY KEY ("securityRequest")
 );
@@ -139,6 +119,7 @@ CREATE TABLE "giftRequests" (
     "receiverName" TEXT NOT NULL,
     "senderName" TEXT NOT NULL,
     "message" TEXT NOT NULL,
+    "date" TEXT NOT NULL,
 
     CONSTRAINT "giftRequests_pkey" PRIMARY KEY ("giftRequest")
 );
@@ -154,6 +135,25 @@ CREATE TABLE "giftItem" (
     CONSTRAINT "giftItem_pkey" PRIMARY KEY ("giftItem")
 );
 
+-- CreateTable
+CREATE TABLE "transportationRequests" (
+    "transportationRequest" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
+    "transport" TEXT NOT NULL,
+    "feedback" TEXT NOT NULL,
+
+    CONSTRAINT "transportationRequests_pkey" PRIMARY KEY ("transportationRequest")
+);
+
+-- CreateTable
+CREATE TABLE "internalTransportationRequests" (
+    "internalTransportationRequest" TEXT NOT NULL,
+    "endlocation" TEXT NOT NULL,
+    "feedback" TEXT NOT NULL,
+
+    CONSTRAINT "internalTransportationRequests_pkey" PRIMARY KEY ("internalTransportationRequest")
+);
+
 -- AddForeignKey
 ALTER TABLE "edges" ADD CONSTRAINT "edges_startNodeID_fkey" FOREIGN KEY ("startNodeID") REFERENCES "nodes"("nodeID") ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -161,13 +161,7 @@ ALTER TABLE "edges" ADD CONSTRAINT "edges_startNodeID_fkey" FOREIGN KEY ("startN
 ALTER TABLE "edges" ADD CONSTRAINT "edges_endNodeID_fkey" FOREIGN KEY ("endNodeID") REFERENCES "nodes"("nodeID") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "patient" ADD CONSTRAINT "patient_patientUsername_fkey" FOREIGN KEY ("patientUsername") REFERENCES "users"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "employee" ADD CONSTRAINT "employee_employeeUsername_fkey" FOREIGN KEY ("employeeUsername") REFERENCES "users"("username") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "interpreter" ADD CONSTRAINT "interpreter_interpreterUsername_fkey" FOREIGN KEY ("interpreterUsername") REFERENCES "employee"("employeeUsername") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "interpreter" ADD CONSTRAINT "interpreter_interpreterUsername_fkey" FOREIGN KEY ("interpreterUsername") REFERENCES "employee"("employeeEmail") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "languageInterpreterRequests" ADD CONSTRAINT "languageInterpreterRequests_languageRequest_fkey" FOREIGN KEY ("languageRequest") REFERENCES "forms"("formID") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -189,3 +183,9 @@ ALTER TABLE "giftRequests" ADD CONSTRAINT "giftRequests_giftRequest_fkey" FOREIG
 
 -- AddForeignKey
 ALTER TABLE "giftItem" ADD CONSTRAINT "giftItem_cart_fkey" FOREIGN KEY ("cart") REFERENCES "giftRequests"("giftRequest") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "transportationRequests" ADD CONSTRAINT "transportationRequests_transportationRequest_fkey" FOREIGN KEY ("transportationRequest") REFERENCES "forms"("formID") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "internalTransportationRequests" ADD CONSTRAINT "internalTransportationRequests_internalTransportationReque_fkey" FOREIGN KEY ("internalTransportationRequest") REFERENCES "forms"("formID") ON DELETE RESTRICT ON UPDATE CASCADE;

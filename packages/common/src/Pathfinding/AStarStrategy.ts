@@ -13,7 +13,7 @@ class AStarStrategy extends TemplatePathfindingStrategy {
 
         // Determine the initial direction if it's not set
         if (this.initialDirection === null) {
-            this.initialDirection = nextFloor > currentFloor ? 'up' : 'down';
+            this.initialDirection = endFloor > currentFloor ? 'up' : 'down';
         }
 
         if (endFloor === nextFloor) {
@@ -26,7 +26,7 @@ class AStarStrategy extends TemplatePathfindingStrategy {
         }
 
         if (nextNode.floor !== currentNode.floor) {
-            finalCost += 1000000000000000000000;
+            finalCost += 10000000000000000000000000;
         }
 
         // if (currentNode.building === "BTM" && currentFloor === 1 && endFloor === 5 && endNode.building !== currentNode.building){
@@ -35,10 +35,10 @@ class AStarStrategy extends TemplatePathfindingStrategy {
         //     }
         // }
 
-        // Add a penalty if the next node's floor is higher than the current node's floor but lower than the end node's floor, or vice versa
-        if ((nextFloor > currentFloor && nextFloor < endFloor) || (nextFloor < currentFloor && nextFloor > endFloor)) {
-            finalCost += 1000000;
-        }
+        // // Add a penalty if the next node's floor is higher than the current node's floor but lower than the end node's floor, or vice versa
+        // if ((nextFloor > currentFloor && nextFloor < endFloor) || (nextFloor < currentFloor && nextFloor > endFloor)) {
+        //     finalCost += 1000000;
+        // }
 
         // Add a penalty if the direction changes
         if ((this.initialDirection === 'up' && nextFloor < currentFloor) || (this.initialDirection === 'down' && nextFloor > currentFloor)) {
