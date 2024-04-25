@@ -26,25 +26,6 @@ function angleDiff(angle1:number, angle2:number):number {
 }
 
 
-// function detectBranch(compAngle:number, branchNode:Node, curNode:Node):boolean  {
-//     let turn = false;
-//     for (const testNode of curNode.neighbors ) {
-//         if (testNode != branchNode && testNode.nodeType == `HALL` ){
-//             if (Math.abs(angleDiff(compAngle + Math.PI, angle(testNode,curNode))) < backTrackThresh || dist(curNode, testNode) < tooShort){
-//                 continue;
-//             }
-//             else if (dist(branchNode, testNode) >  distThresh ){
-//                 turn = true;
-//             }
-//             else if (dist(branchNode, testNode) < distThresh){
-//                 turn = detectBranch(compAngle, branchNode, testNode);
-//             }
-//         }
-//         if (turn)
-//             return turn;
-//     }
-//     return turn;
-// }
 
 function pathTurn(path:Node[],index:number):[string,number]{
     let offset=1;
@@ -56,9 +37,6 @@ function pathTurn(path:Node[],index:number):[string,number]{
     if(index==0){
         return [`Start`,index];}
     while(index+offset < path.length){
-        // const imaginary = path[index];
-        // imaginary.ycoord = path[index].ycoord+Math.sin(angle(path[index-1],path[index]))*dist(path[index],path[index+offset]);
-        // imaginary.xcoord = path[index].xcoord+Math.cos(angle(path[index-1],path[index]))*dist(path[index],path[index+offset]);
         if ( ((dist(path[index], path[index + offset])>distThresh) && dist(path[index], path[index + 1])>minSeg) || (path[index+offset].nodeType=="ELEV" ||  path[index+offset].nodeType=="STAI")){
             const dirDiff = angleDiff(angle(path[index-1],path[index]),angle(path[index+offset-1],path[index+offset]));
             if ( Math.abs(dirDiff )> turnThresh){
@@ -77,6 +55,8 @@ function pathTurn(path:Node[],index:number):[string,number]{
 
 export default function genInstructions(path: Node[], nodemap: Map<string, NodeType>, edgeMap: Map<string, string[]>):Instruction[]{
     const instructions:Instruction[] =[];
+    if (nodemap && edgeMap)
+        instructions.push({type:"End",content:"Navigation Error"});
     if (dist(path[0], path[path.length - 1]) < 100 || path.length < 4){
         instructions.push({type:"End",content:"You are already near your destination"});
         return instructions;
@@ -88,7 +68,6 @@ export default function genInstructions(path: Node[], nodemap: Map<string, NodeT
             if (compNode && compNode?.nodeType != "HALL" && compNode?.nodeType != "ELEV" && compNode?.nodeType != "STAI" && compNode?.nodeType != "WALK" && dist(path[3],compNode)*pix2meters<nearThresh){
                 instructions.push({type:"Right",content:`Turn towards ${compNode.shortName}`});
                 break;}}
-
     //let amtIntersections = 0;
     let prevTurn = path[0];
     let wait = 0;
