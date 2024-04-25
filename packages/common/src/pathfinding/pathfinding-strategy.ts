@@ -1,4 +1,4 @@
-import Node from "../node.ts";
+import Node from "../nodes-and-edges/node.ts";
 
 abstract class  PathfindingStrategy {
     abstract execute(startNode: Node, endNode: Node): Node[];

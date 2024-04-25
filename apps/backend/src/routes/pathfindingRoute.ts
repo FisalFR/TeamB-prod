@@ -2,7 +2,7 @@ import express, { Router } from "express";
 import { startEndNodes } from "common/src/Pathfinding/pathfinding";
 import Path from "common/src/pathfinding/path";
 //import Parser from common/src/parser";
-import Node from "common/src/node";
+import Node from "common/src/nodes-and-edges/node";
 import client from "../bin/database-connection";
 // import writeNode from "../writeNode";
 import { filteringNodes } from "../filteringNodes";

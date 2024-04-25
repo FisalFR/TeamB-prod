@@ -1,5 +1,5 @@
 // import PriorityQueue from "../priority-queue.ts";
-import Node from "../node.ts";
+import Node from "../nodes-and-edges/node.ts";
 import TemplatePathfindingStrategy from "./template-pathfinding-strategy.ts";
 
 class AStarStrategy extends TemplatePathfindingStrategy {

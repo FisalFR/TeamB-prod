@@ -6,14 +6,14 @@ import populateNode from "../populateNode";
 import populateEdge from "../populateEdge";
 import writeNode from "../writeNode";
 import writeEdge from "../writeEdge";
-import NodeType from "common/src/node-type";
-import EdgeType from "common/src/edge-type";
+import NodeType from "common/src/nodes-and-edges/node-type";
+import EdgeType from "common/src/nodes-and-edges/edge-type";
 import FormType from "common/src/form-type";
 import employee from "common/src/service-requests/employee";
 import { formFilter } from "../formFunctions";
-import edgeType from "common/src/edge-type";
+import edgeType from "common/src/nodes-and-edges/edge-type";
 import employeeFunctions from "../employeeFunctions";
-import nodeAddOrDelete from "common/src/node-add-or-delete";
+import nodeAddOrDelete from "common/src/nodes-and-edges/node-add-or-delete";
 
 router.use(fileUpload());
 

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Node from "common/src/node.ts";
+import Node from "common/src/nodes-and-edges/node.ts";
 import CircleFrom from '../../assets/from_to_icons/circle_from.svg';
 import IconTo from '../../assets/from_to_icons/icon_to.svg';
 import React, {useRef} from "react";

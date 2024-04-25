@@ -9,7 +9,7 @@ import PathVisual from "../components/map/PathVisual.tsx";
 import React, {useEffect, useState, useCallback, useRef} from "react";
 import axios from "axios";
 import {startEndNodes} from "common/src/pathfinding/pathfinding.ts";
-import Node from "common/src/node";
+import Node from "common/src/nodes-and-edges/node.ts";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import {PathSelector} from "../components/map/PathSelector.tsx";

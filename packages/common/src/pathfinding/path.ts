@@ -1,6 +1,6 @@
 import PathfindingStrategy from "./pathfinding-strategy.ts";
-import Node from "../node.ts";
-import Edge from "../edge.ts";
+import Node from "../nodes-and-edges/node.ts";
+import Edge from "../nodes-and-edges/edge.ts";
 
 class Path {
   private strategy: PathfindingStrategy;

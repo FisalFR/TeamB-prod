@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 //import Node from "common/src/node.ts";
-import NodeType from "common/src/node-type.ts";
+import NodeType from "common/src/nodes-and-edges/node-type.ts";
 // import Edge from "common/src/edge.ts";
 
 export function useNodes() {

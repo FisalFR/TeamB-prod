@@ -1,5 +1,5 @@
 import PathfindingStrategy from "./pathfinding-strategy.ts";
-import Node from "../node.ts";
+import Node from "../nodes-and-edges/node.ts";
 import PathfindingTemplate from "./template-pathfinding-strategy.ts";
 
 class DijkstraStrategy extends PathfindingTemplate implements  PathfindingStrategy {

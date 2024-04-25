@@ -1,6 +1,6 @@
 import PathfindingStrategy from "./pathfinding-strategy.ts";
 import Stack from "../stack.ts";
-import Node from "../node.ts";
+import Node from "../nodes-and-edges/node.ts";
 
 class DfsStrategy extends PathfindingStrategy {
     execute(startNode: Node, endNode: Node): Node[] {
