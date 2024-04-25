@@ -80,12 +80,11 @@ export default function PathDirections(props: { Path: Node[] }) {
         let ReadIndex = 0;
         const text:string[] = [];
         for (let i = 0; i < content.length; i++) {
-            const numbers = content[i].content.match(/ (\d+) /);
+            const numbers = content[i].content.match(/(\d+)/ );
 
             if (numbers)
             for (let j = 0; j < numbers.length; j++) {
             console.log(numbers[j]);
-
                 content[i].content = content[i].content.replace(numbers[j],` ${toWords(numbers[j])} `);
             }
             text.push(content[i].content);
