@@ -1,13 +1,8 @@
 import express, { Router } from "express";
-import { MedicineRequestType } from "common/src/service-requests/medicine-request-type";
+import { giftRequest } from "common/src/service-requests/gift-request";
 const router: Router = express.Router();
 import client from "../bin/database-connection";
-import medicineFunctions from "../medicineFunctions";
-
-router.get("/", async (req, res) => {
-  const all = await client.medicineRequests.findMany();
-  res.status(200).json(all);
-});
+import giftDeliveryFunctions from "../service-request-functions/gift-delivery-functions";
 
 router.get("/location", async (req, res) => {
   const nodeType = await client.nodes.findMany({
@@ -21,9 +16,9 @@ router.get("/location", async (req, res) => {
 });
 
 router.post("/insert", async (req, res) => {
-  const medicineForm: MedicineRequestType = req.body;
+  const giftDeliveryForm: giftRequest = req.body;
   res.status(200).json({
-    message: await medicineFunctions.medicineInsert(medicineForm),
+    message: await giftDeliveryFunctions.giftDeliveryInsert(giftDeliveryForm),
   });
 });
 

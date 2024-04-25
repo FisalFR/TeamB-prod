@@ -2,19 +2,19 @@ import createError, { HttpError } from "http-errors";
 import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import pathfindingRoute from "./routes/pathfindingRoute";
-import maintenanceRoute from "./routes/maintenanceRoute";
-import languageInterpreterRoute from "./routes/languageInterpreterRoute";
-import csvManagerRoute from "./routes/csvManagerRoute";
-import medicineRoute from "./routes/medicineRoute";
-import sanitationRoute from "./routes/sanitationRoute";
-import securityRoute from "./routes/securityRoute";
-import giftDeliveryRoute from "./routes/giftDeliveryRoute";
-import nodesRouter from "./routes/nodesRoute";
-import edgesRouter from "./routes/edgesRoute";
-import transportationRoute from "./routes/transportationRoute";
-import employeeRoute from "./routes/employeeRoute";
-import internalTransportRoute from "./routes/internalTransportRoute";
+import pathfindingRoute from "./routes/pathfinding-route";
+import maintenanceRoute from "./routes/maintenance-route";
+import languageInterpreterRoute from "./routes/language-interpreter-route";
+import csvManagerRoute from "./routes/csv-manager-route";
+import medicineRoute from "./routes/medicine-route";
+import sanitationRoute from "./routes/sanitation-route";
+import securityRoute from "./routes/security-route";
+import giftDeliveryRoute from "./routes/gift-delivery-route";
+import nodesRouter from "./routes/nodes-route";
+import edgesRouter from "./routes/edges-route";
+import transportationRoute from "./routes/transportation-route";
+import employeeRoute from "./routes/employee-route";
+import internalTransportRoute from "./routes/internal-transport-route";
 
 const app: Express = express(); // Set up the backend
 
@@ -40,6 +40,7 @@ app.use("/api/edges", edgesRouter);
 app.use("/api/pathfinding", pathfindingRoute);
 app.use("/api/maintenance", maintenanceRoute);
 app.use("/api/languageInterpreter", languageInterpreterRoute);
+// TODO rename multi-word routes to follow kebab-case naming conventions
 app.use("/api/csvManager", csvManagerRoute);
 app.use("/api/medicine", medicineRoute);
 app.use("/api/sanitation", sanitationRoute);

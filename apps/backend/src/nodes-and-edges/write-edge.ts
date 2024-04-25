@@ -1,6 +1,6 @@
 import fs from "fs";
-import { PrismaClient } from "../../../packages/database/.prisma/client";
-import client from "./bin/database-connection";
+import { PrismaClient } from "database/.prisma/client";
+import client from "../bin/database-connection";
 const prisma = client;
 
 class writeEdge {

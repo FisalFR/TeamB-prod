@@ -1,4 +1,4 @@
-import client from "./bin/database-connection";
+import client from "../bin/database-connection";
 import NodeType from "common/src/nodes-and-edges/node-type";
 const prisma = client;
 

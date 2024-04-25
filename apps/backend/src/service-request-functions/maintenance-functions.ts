@@ -1,8 +1,8 @@
-import { generateRandomUUIDInteger } from "./randomUUID";
+import { generateRandomUUIDInteger } from "../random-UUID";
 
 const prisma = client;
 import { MaintenanceRequest } from "common/src/service-requests/maintenance-request";
-import client from "./bin/database-connection";
+import client from "../bin/database-connection";
 
 class maintenanceFunctions {
   static async maintenanceInsert(request: MaintenanceRequest) {

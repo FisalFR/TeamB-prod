@@ -1,7 +1,7 @@
-import { generateRandomUUIDInteger } from "./randomUUID";
+import { generateRandomUUIDInteger } from "../random-UUID";
 
 const prisma = client;
-import client from "./bin/database-connection";
+import client from "../bin/database-connection";
 import { TransportationRequest } from "common/src/service-requests/transportation-request";
 
 class transportationFunctions {

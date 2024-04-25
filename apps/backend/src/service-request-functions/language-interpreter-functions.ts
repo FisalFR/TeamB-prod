@@ -1,7 +1,7 @@
 import { LanguageInterpreterTypes } from "common/src/service-requests/language-interpreter-types";
 const prisma = client;
-import client from "./bin/database-connection";
-import { generateRandomUUIDInteger } from "./randomUUID";
+import client from "../bin/database-connection";
+import { generateRandomUUIDInteger } from "../random-UUID";
 
 class languageInterpreterFunctions {
   static async languageInterpreterFinder(loc: string) {

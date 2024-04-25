@@ -3,7 +3,7 @@ import { internalTransportationRequest } from "common/src/service-requests/inter
 const router: Router = express.Router();
 import client from "../bin/database-connection";
 
-import internalTransportationFunctions from "../internalTransportationFunctions";
+import internalTransportationFunctions from "../service-request-functions/internal-transportation-functions";
 
 router.get("/", async (req, res) => {
   const formsWithInternalTransportation = await client.$queryRaw`

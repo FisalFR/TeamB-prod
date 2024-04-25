@@ -1,8 +1,15 @@
 import express, { Router } from "express";
-import { giftRequest } from "common/src/service-requests/gift-request";
+import { SanitationRequest } from "common/src/service-requests/sanitation-request";
+import sanitationFunctions from "../service-request-functions/sanitation-functions";
 const router: Router = express.Router();
 import client from "../bin/database-connection";
-import giftDeliveryFunctions from "../giftDeliveryFunctions";
+
+router.post("/insert", async (req, res) => {
+  const sanitationForm: SanitationRequest = req.body;
+  res.status(200).json({
+    message: await sanitationFunctions.sanitationInsert(sanitationForm),
+  });
+});
 
 router.get("/location", async (req, res) => {
   const nodeType = await client.nodes.findMany({
@@ -13,13 +20,6 @@ router.get("/location", async (req, res) => {
     },
   });
   res.status(200).json(nodeType);
-});
-
-router.post("/insert", async (req, res) => {
-  const giftDeliveryForm: giftRequest = req.body;
-  res.status(200).json({
-    message: await giftDeliveryFunctions.giftDeliveryInsert(giftDeliveryForm),
-  });
 });
 
 export default router;

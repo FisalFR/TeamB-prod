@@ -1,8 +1,8 @@
-import { generateRandomUUIDInteger } from "./randomUUID";
+import { generateRandomUUIDInteger } from "../random-UUID";
 
 const prisma = client;
 import { MedicineRequestType } from "common/src/service-requests/medicine-request-type";
-import client from "./bin/database-connection";
+import client from "../bin/database-connection";
 
 class medicineFunctions {
   static async medicineInsert(request: MedicineRequestType) {

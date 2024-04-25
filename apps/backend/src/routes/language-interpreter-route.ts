@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import { LanguageInterpreterTypes } from "common/src/service-requests/language-interpreter-types";
-import languageInterpreterFunctions from "../languageInterpreterFunctions";
+import languageInterpreterFunctions from "../service-request-functions/language-interpreter-functions";
 import client from "../bin/database-connection";
 const router: Router = express.Router();
 
