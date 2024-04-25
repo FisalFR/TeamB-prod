@@ -22,10 +22,10 @@ import {giftRequest} from "common/src/giftRequest.ts";
 import axios from "axios";
 import Dropdown from "../components/dropdown.tsx";
 import RadioButton from "../components/RadioButton.tsx";
-import {DatePicker} from '@atlaskit/datetime-picker';
 import backward from "../assets/backward.svg";
 import cartIMG from "../assets/cart.svg";
 import QuantityPicker from "../components/QuantityPicker.tsx";
+import Datepicker from '../components/DatePicker.tsx';
 
 //this is a commit just for mo :)
 function GiftDelivery() {
@@ -39,6 +39,7 @@ function GiftDelivery() {
         cartScreen:"hidden"
     });
     const [request, setRequest] = useState<giftRequest>({
+        employeeName: "",
         receiverName:"",
         senderName: "",
         priority:"Low",
@@ -47,7 +48,6 @@ function GiftDelivery() {
         date: new Date().toDateString(),
         cart: []
     });
-    const [isFocused, setIsFocused] = useState(false);
     const BackwardSVG = <img src={backward} alt="backward" className={"w-5"} />;
     const CartSVG = <img src={cartIMG} alt="cart" className={"w-5"} />;
 
@@ -189,13 +189,20 @@ function GiftDelivery() {
         setRequest({...request, priority: e.target.value});
     }
 
+    function handleDateInput(dateString:string): void {
+        console.log(`getting called ${dateString}`);
+        setCleared(false);
+        setRequest({...request, date: dateString});
+    }
+
     // function scrollToTop(): void{
     //     window.scrollTo({ top: 0, behavior: 'smooth' });
     // }
 
     function handleNewSubmission(): void {
 
-        setRequest({ receiverName:"",
+        setRequest({
+            employeeName: "", receiverName:"",
             senderName: "",
             location:"",
             priority:"Low",
@@ -379,18 +386,7 @@ function GiftDelivery() {
                                                            className="font-OpenSans text-md font-bold text-left text-Ash-black ">
                                                         Pick a Date: </label>
 
-                                                    <DatePicker
-                                                        selectProps={{
-                                                            inputId: 'default-date-picker-example',
-                                                            appearance: 'none',
-                                                            className: `w-full border-2 ${isFocused ? 'border-black' : 'border-gray-200'} rounded`,
-                                                            onFocus: () => setIsFocused(true),
-                                                            onBlur: () => setIsFocused(false)
-                                                        }}
-                                                        innerProps={{
-                                                            className: ""
-                                                        }}
-                                                    />
+                                                   <Datepicker date={new Date(request.date)} onChange={(date) => {if(date !== undefined) { handleDateInput(date.toDateString());}}}/>
                                                 </div>
                                             </div>
 
