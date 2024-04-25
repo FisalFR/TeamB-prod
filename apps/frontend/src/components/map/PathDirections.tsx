@@ -30,9 +30,16 @@ function icon(image: string) {
     }
 }
 
+function delay(ms: number): Promise<void> {
+    return new Promise<void>((resolve) => {
+        setTimeout(resolve, ms);
+    });
+}
+
 export default function PathDirections(props: { Path: Node[] }) {
     const {nodeMap} = useNodes();
     const {edgeMap} =  useEdges();
+    delay(50);
     return (
         <SideTab
             height={"h-[250px]"}
