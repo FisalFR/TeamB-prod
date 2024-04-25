@@ -7,17 +7,8 @@ function ZoomButtons(props: {
     onClick2: () => void,
     minusSvg: React.JSX.Element
 }) {
-    return <div className={"fixed bottom-7 right-7 flex flex-col bg-deep-blue rounded p-1 gap-1"}>
+    return <div className={"fixed bottom-[330px] right-8 flex flex-row bg-deep-blue rounded p-1 gap-1"}>
 
-        <motion.button className={""}
-                       onClick={props.onClick1}
-                       whileHover={{scale: 1.1}}
-                       whileTap={{scale: 0.9}}>
-            {props.plusSvg}
-        </motion.button>
-
-        <div className="h-px bg-white"></div>
-        {/* This is the divider */}
 
         <motion.button className={""}
                        onClick={props.onClick2}
@@ -25,6 +16,15 @@ function ZoomButtons(props: {
                        whileTap={{scale: 0.9}}>
             {props.minusSvg}
         </motion.button>
+        {/* This is the divider */}
+        <div className="w-px bg-white"></div>
+        <motion.button className={""}
+                       onClick={props.onClick1}
+                       whileHover={{scale: 1.1}}
+                       whileTap={{scale: 0.9}}>
+            {props.plusSvg}
+        </motion.button>
+
 
     </div>;
 }
