@@ -119,13 +119,13 @@ export default function PathDirections(props: { Path: Node[] }) {
                     <div className="h-full w-full flex items-start justify-center pb-1">
                         <b className="ml-2 w-1/2 text-left" style={{fontWeight: "bold", color: "#012D5A", fontSize: "large"}}>DIRECTIONS</b>
                         <a onClick={speak}
-                           className="mr-7 w-1/2 font-medium text-blue-600 dark:text-blue-500 hover:underline top-[1px] text-right ">Read
+                           className="mr-3 w-1/2 font-medium text-blue-600 dark:text-blue-500 hover:underline top-[1px] text-right ">Read
                             Aloud</a>
 
                     </div>
 
                     <div className="bg-gray-200 h-0.5 w-full"/>
-                    <div className="h-[250px] overflow-y-scroll overflow-hidden w-[416px] divide-y ml-3">
+                    <div className="h-[250px] overflow-y-scroll overflow-hidden w-[403px] divide-y ml-3">
                         {genInstructions(props.Path, nodeMap, edgeMap).map(instruction => (
                             <div className="flex flex-col text-sm/[17px] gap-36">
                                 <div className="flex flex-row py-3">
@@ -134,7 +134,7 @@ export default function PathDirections(props: { Path: Node[] }) {
                                             {icon(instruction.type)}
                                         </div>
                                     </div>
-                                    <h1 className="w-[calc(100%-12.25rem)] align-middle break-normal"
+                                    <h1 className="w-[calc(100%-13rem)] text-center break-normal"
                                         style={{color: "#012D5A", fontSize: 17, textAlign: "left"}}>
                                         {instruction.content}
                                     </h1>
