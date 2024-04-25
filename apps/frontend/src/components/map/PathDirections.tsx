@@ -10,6 +10,7 @@ import star from "../../assets/Star.svg";
 import React from "react";
 import Node from "common/src/node.ts";
 import { motion } from "framer-motion";
+import Button from "../../components/Button.tsx";
 
 function icon(image: string) {
     switch (image) {
@@ -53,6 +54,15 @@ const animatePath = {
     }
 };
 
+const voices = speechSynthesis.getVoices();
+
+const selectedVoice = voices[24];
+const speech = new SpeechSynthesisUtterance();
+speech.text = "Hello, world!";
+speech.voice = selectedVoice;
+function speak(){
+speechSynthesis.speak(speech);}
+
 export default function PathDirections(props: { Path: Node[] }) {
     const { nodeMap } = useNodes();
     const { edgeMap } = useEdges();
@@ -75,6 +85,7 @@ export default function PathDirections(props: { Path: Node[] }) {
             }
             bodyChildren={
                 <div>
+                    <Button onClick={speak} children={"REEE"}/>
                     <div style={{fontWeight: "bold", color: "#012D5A"}}>DIRECTIONS</div>
                     <div className="bg-deep-blue h-0.5"/>
                     <div className="h-[250px] overflow-y-scroll overflow-hidden w-[416px] divide-y">
@@ -86,7 +97,7 @@ export default function PathDirections(props: { Path: Node[] }) {
                                             {icon(instruction.type)}
                                         </div>
                                     </div>
-                                    <h1 className="w-2/3 align-middle"
+                                    <h1 className="w-2/3 align-middle" name=""
                                         style={{color: "#012D5A", fontSize: 17, textAlign: "left"}}>
                                         {instruction.content}
                                     </h1>
