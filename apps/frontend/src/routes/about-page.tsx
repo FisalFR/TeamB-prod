@@ -23,7 +23,7 @@ export function aboutPage(){
             <div className="h-fit bg-deep-blue bg-opacity-60">
                 <img src={heroImage} alt="Hospital Picture" className="h-full w-fit object-cover relative opacity-60"/>
             </div>
-            <div className="absolute my-24 right-0 left-0 top-0 bottom-0 margin-auto">
+            <div className="absolute my-20 right-0 left-0 top-0 bottom-0 margin-auto">
                 <div className="px-32 py-16 pt-4">
                     <div className="bg-bone-white rounded-lg bg-opacity-90">
                         <h1 className="font-OpenSans text-deep-blue pt-10 pb-2 font-bold">About Us </h1>
@@ -101,17 +101,13 @@ export function aboutPage(){
                                 <p> Full-Stack Eng. </p>
                             </div>
                         </div>
-                        <p className="text-deep-blue font-bold text-lg pt-5"> Team Coach: Nick Leslie </p>
-                        <br/>
-                        <p className="font-bold text-deep-blue text-2xl"> Thank you to Professor Wong, Nick Leslie,
-                            Andrew Shinn,
-                            and the entirety of Brigham and Women’s Hospital. </p>
-
+                        <p className="text-deep-blue font-bold text-lg pt-5 "> Team Coach: Nick Leslie </p>
+                        <p className="text-deep-blue font-bold text-lg "> Professor: Wilson Wong </p>
                         <br/>
                     </div>
                 </div>
-
-                <div className="grid grid-cols-2 bg-deep-blue rounded-lg bg-opacity-40">
+                <br/>
+                <div className="grid grid-cols-2 bg-deep-blue bg-opacity-40 h-fit">
                     <div className="grid grid-cols-2">
 
                         <div className=" border-r h-32 mt-12 ">
