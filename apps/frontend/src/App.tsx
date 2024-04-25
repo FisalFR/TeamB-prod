@@ -13,13 +13,13 @@ import Database from "./routes/Database.tsx";
 import {Auth0Provider} from "@auth0/auth0-react";
 import SecurityPage from "./routes/SecurityRequest.tsx";
 import TransportationRequestPage from "./routes/transportationRequest.tsx";
-
 import GiftDelivery from "./routes/gift-delivery.tsx";
 import MapEditor from "./routes/map-editor.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
 import {Authenticate} from "./components/authenticate.tsx";
 import InternalTransportationRequestPage from "./routes/internal-transport-page.tsx";
-import RequestLanding from "./routes/requestLanding.tsx";
+import RequestLanding from "./routes/request-landing.tsx";
+import AdminLanding from "./routes/admin-landing.tsx";
 
 
 function App() {
@@ -96,6 +96,10 @@ function App() {
                         {
                             path:"/request",
                             element:<Authenticate component={RequestLanding}/>
+                        },
+                        {
+                           path:"/admin",
+                           element: <Authenticate component={AdminLanding}/>
                         }
 
             ],
