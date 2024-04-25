@@ -1,5 +1,5 @@
 import client from "./bin/database-connection";
-import employee from "common/src/employee";
+import employee from "common/src/service-requests/employee";
 class employeeFunctions {
   static async employeeInsert(request: employee[]) {
     try {

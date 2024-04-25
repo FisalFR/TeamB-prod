@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { MedicineRequestType } from "common/src/MedicineRequestType";
+import { MedicineRequestType } from "common/src/service-requests/medicine-request-type";
 const router: Router = express.Router();
 import client from "../bin/database-connection";
 import medicineFunctions from "../medicineFunctions";

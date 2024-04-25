@@ -1,7 +1,7 @@
 import { generateRandomUUIDInteger } from "./randomUUID";
 
 const prisma = client;
-import { MedicineRequestType } from "common/src/MedicineRequestType";
+import { MedicineRequestType } from "common/src/service-requests/medicine-request-type";
 import client from "./bin/database-connection";
 
 class medicineFunctions {

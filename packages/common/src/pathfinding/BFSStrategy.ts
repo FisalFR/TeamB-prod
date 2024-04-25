@@ -1,33 +1,33 @@
 import PathfindingStrategy from "./PathfindingStrategy.ts";
-import Stack from "../Stack.ts";
 import Node from "../node.ts";
+import Queue from "../queue.ts";
 
-class DFSStrategy extends PathfindingStrategy {
+class BFSStrategy extends  PathfindingStrategy {
     execute(startNode: Node, endNode: Node): Node[] {
-        const frontier: Stack<Node> = new Stack<Node>();
-        frontier.push(startNode);
+        const frontier: Queue<Node> = new Queue<Node>();
+        frontier.enqueue(startNode);
         const cameFrom = new Map();
         cameFrom.set(startNode, null);
 
         while (!frontier.isEmpty()) {
-            const current = frontier.pop()!;
+            const current = frontier.dequeue()!;
             if (current.nodeID == endNode.nodeID) {
                 break;
             }
             for (const next of current.neighbors) {
                 if (!cameFrom.has(next)) {
-                    frontier.push(next);
+                    frontier.enqueue(next);
                     cameFrom.set(next, current);
                 }
             }
         }
         if (cameFrom.has(endNode)) {
             return this.reconstructPath(cameFrom, startNode, endNode);
-        }
-        else {
+        } else {
             return [];
         }
     }
+
 
     reconstructPath(cameFrom: Map<Node, Node>, startNode: Node, endNode: Node): Node[] {
         const path: Node[] = [];
@@ -40,4 +40,5 @@ class DFSStrategy extends PathfindingStrategy {
         return path;
     }
 }
-export default DFSStrategy;
+
+export default BFSStrategy;

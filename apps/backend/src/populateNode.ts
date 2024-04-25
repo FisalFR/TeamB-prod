@@ -1,5 +1,5 @@
 import client from "./bin/database-connection";
-import NodeType from "common/src/NodeType";
+import NodeType from "common/src/node-type";
 const prisma = client;
 
 class populateNode {

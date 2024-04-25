@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { giftRequest } from "common/src/giftRequest";
+import { giftRequest } from "common/src/service-requests/gift-request";
 const router: Router = express.Router();
 import client from "../bin/database-connection";
 import giftDeliveryFunctions from "../giftDeliveryFunctions";

@@ -1,5 +1,5 @@
 // import maze from "../assets/MazeHero/MazeHero.svg";
-import MazeLineComponent from "./mazeLineComponent.tsx";
+import MazeLineComponent from "./MazeLineComponent.tsx";
 
 export default function HeroImage() {
     return (

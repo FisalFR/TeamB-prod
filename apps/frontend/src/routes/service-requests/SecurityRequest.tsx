@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
-import {SecurityRequest} from "common/src/securityRequest.ts";
+import {SecurityRequest} from "common/src/service-requests/security-request.ts";
 import axios from "axios";
-import Dropdown from "../../components/input-components/dropdown.tsx";
+import Dropdown from "../../components/input-components/Dropdown.tsx";
 import RadioButton from "../../components/input-components/RadioButton.tsx";
 import Button from "../../components/Button.tsx";
 import securityPic from "../../assets/serviceRequestBanners/security.jpg";

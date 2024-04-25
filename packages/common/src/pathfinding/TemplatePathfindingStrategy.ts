@@ -1,6 +1,6 @@
 import PathfindingStrategy from "./PathfindingStrategy.ts";
 import Node from "../node.ts";
-import PriorityQueue from "../PriorityQueue.ts";
+import PriorityQueue from "../priority-queue.ts";
 
 abstract class TemplatePathfindingStrategy extends PathfindingStrategy {
     execute(startNode: Node, endNode: Node): Node[] {

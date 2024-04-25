@@ -2,7 +2,7 @@ import { generateRandomUUIDInteger } from "./randomUUID";
 
 const prisma = client;
 import client from "./bin/database-connection";
-import { SecurityRequest } from "common/src/securityRequest";
+import { SecurityRequest } from "common/src/service-requests/security-request";
 
 class securityFunctions {
   static async securityInsert(request: SecurityRequest) {

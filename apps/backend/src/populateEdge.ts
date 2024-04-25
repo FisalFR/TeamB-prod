@@ -1,5 +1,5 @@
 import client from "./bin/database-connection";
-import EdgeType from "common/src/EdgeType";
+import EdgeType from "common/src/edge-type";
 const prisma = client;
 
 class populateEdge {

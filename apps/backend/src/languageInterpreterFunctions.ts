@@ -1,11 +1,11 @@
-import { languageInterpreterTypes } from "common/src/languageInterpreterTypes";
+import { LanguageInterpreterTypes } from "common/src/service-requests/language-interpreter-types";
 const prisma = client;
 import client from "./bin/database-connection";
 import { generateRandomUUIDInteger } from "./randomUUID";
 
 class languageInterpreterFunctions {
   static async languageInterpreterFinder(loc: string) {
-    const result: object | languageInterpreterTypes =
+    const result: object | LanguageInterpreterTypes =
       await prisma.languageInterpreterRequests.findMany({
         where: {
           location: { search: loc },
@@ -14,7 +14,7 @@ class languageInterpreterFunctions {
     return result;
   }
 
-  static async languageInterpreterInsert(request: languageInterpreterTypes) {
+  static async languageInterpreterInsert(request: LanguageInterpreterTypes) {
     const UUID = generateRandomUUIDInteger();
     await prisma.forms.create({
       data: {

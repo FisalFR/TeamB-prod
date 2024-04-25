@@ -2,7 +2,7 @@ import { generateRandomUUIDInteger } from "./randomUUID";
 
 const prisma = client;
 import client from "./bin/database-connection";
-import { TransportationRequest } from "common/src/transportationRequest";
+import { TransportationRequest } from "common/src/service-requests/transportation-request";
 
 class transportationFunctions {
   static async transportationInsert(request: TransportationRequest) {

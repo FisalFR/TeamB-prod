@@ -2,7 +2,7 @@
 import {ChangeEvent, useRef, useState} from 'react';
 import '../../App.css';
 import {HTMLInputElement} from "happy-dom";
-import {optionWithSearch} from "common/src/optionWithSearch.ts";
+import {optionWithSearch} from "common/src/option-with-search.ts";
 
 function Dropdown(props: { options: string[]; placeholder: string; name: string; id: string; maxHeight: string; setInput:(str: string) => void; value: boolean; required: boolean; width:string; color:string; rounded: string}) {
 

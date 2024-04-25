@@ -2,9 +2,9 @@ import Modal from "./display/Modal.tsx";
 import React, {useEffect, useRef, useState} from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
-import {fullServiceFormType} from "common/src/fullServiceForm.ts";
-import {FormType} from "common/src/FormType.ts";
-import Dropdown from "./input-components/dropdown.tsx";
+import {fullServiceFormType} from "common/src/full-service-form.ts";
+import {FormType} from "common/src/form-type.ts";
+import Dropdown from "./input-components/Dropdown.tsx";
 import LongButton from "./LongButton.tsx";
 import Button from "./Button.tsx";
 

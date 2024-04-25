@@ -1,5 +1,5 @@
 import express, { request, Router } from "express";
-import { MaintenanceRequest } from "common/src/maintenanceRequest";
+import { MaintenanceRequest } from "common/src/service-requests/maintenance-request";
 import maintenanceFunctions from "../maintenanceFunctions";
 const router: Router = express.Router();
 import client from "../bin/database-connection";

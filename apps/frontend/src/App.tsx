@@ -16,8 +16,8 @@ import TransportationRequestPage from "./routes/service-requests/transportationR
 
 import GiftDelivery from "./routes/service-requests/gift-delivery.tsx";
 import MapEditor from "./routes/map-editor.tsx";
-import NavigationBar from "./components/navigation/NavigationBar.tsx";
-import {Authenticate} from "./components/authentication/authenticate.tsx";
+import NavBar from "./components/navigation/NavBar.tsx";
+import {Authenticate} from "./components/authentication/Authenticate.tsx";
 import InternalTransportationRequestPage from "./routes/service-requests/internal-transport-page.tsx";
 
 function App() {
@@ -124,7 +124,7 @@ function App() {
             >
 
                 <div className="w-full h-full bs-scroll ...">
-                <NavigationBar/>
+                <NavBar/>
 
                 <Outlet/>
 

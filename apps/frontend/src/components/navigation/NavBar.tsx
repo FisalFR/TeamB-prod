@@ -1,14 +1,14 @@
 import {NavLink} from "./NavLink.tsx";
 import bwhLogo from "../../assets/bwh-logo-white.svg";
-import NavDropDown from "./navDropDown.tsx";
+import NavDropDown from "./NavDropDown.tsx";
 import user_icon from "../../assets/user_icon.svg";
 import {useAuth0} from "@auth0/auth0-react";
-import HandleLogout from "../authentication/handleLogout.tsx";
+import HandleLogout from "../authentication/HandleLogout.tsx";
 import LoginNavigationBar from "../authentication/LoginNavigationBar.tsx";
 
 
 
-export function NavigationBar() {
+export function NavBar() {
     const {isAuthenticated, isLoading} = useAuth0();
     const handleLogout = HandleLogout();
     const homeRedirect = `${window.location.origin.concat("/")}`;
@@ -102,4 +102,4 @@ export function NavigationBar() {
 }
 
 
-export default NavigationBar;
+export default NavBar;

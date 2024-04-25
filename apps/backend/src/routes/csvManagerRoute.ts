@@ -6,12 +6,12 @@ import populateNode from "../populateNode";
 import populateEdge from "../populateEdge";
 import writeNode from "../writeNode";
 import writeEdge from "../writeEdge";
-import NodeType from "common/src/NodeType";
-import EdgeType from "common/src/EdgeType";
-import FormType from "common/src/FormType";
-import employee from "common/src/employee";
+import NodeType from "common/src/node-type";
+import EdgeType from "common/src/edge-type";
+import FormType from "common/src/form-type";
+import employee from "common/src/service-requests/employee";
 import { formFilter } from "../formFunctions";
-import edgeType from "common/src/EdgeType";
+import edgeType from "common/src/edge-type";
 import employeeFunctions from "../employeeFunctions";
 import nodeAddOrDelete from "common/src/nodeAddOrDelete";
 

@@ -1,4 +1,4 @@
-import NodeType from "./NodeType.ts";
+import NodeType from "./node-type.ts";
 
 export type NodeAddOrDelete = {
     node: NodeType;

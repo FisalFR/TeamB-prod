@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { SanitationRequest } from "common/src/sanitationRequest";
+import { SanitationRequest } from "common/src/service-requests/sanitation-request";
 import sanitationFunctions from "../sanitationFunctions";
 const router: Router = express.Router();
 import client from "../bin/database-connection";

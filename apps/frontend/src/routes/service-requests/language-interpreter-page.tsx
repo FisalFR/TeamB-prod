@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
-import {LanguageInterpreterTypes} from 'common/src/languageInterpreterTypes.ts';
-import Dropdown from "../../components/input-components/dropdown.tsx";
+import {LanguageInterpreterTypes} from 'common/src/service-requests/language-interpreter-types.ts';
+import Dropdown from "../../components/input-components/Dropdown.tsx";
 import Button from "../../components/Button.tsx";
 import axios from "axios";
 import RadioButton from "../../components/input-components/RadioButton.tsx";

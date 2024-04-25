@@ -1,7 +1,7 @@
 import Select from "../input-components/Select.tsx";
 import React, {useState} from "react";
-import NodeType from "common/src/NodeType.ts";
-import EdgeType from "common/src/EdgeType.ts";
+import NodeType from "common/src/node-type.ts";
+import EdgeType from "common/src/edge-type.ts";
 
 function NodeForm(props:{node: NodeType,
     keyLabels:  {nodeID: string, longName: string, shortName: string, building: string, floor: string, xcoord: string, nodeType: string}, disabled: string[],

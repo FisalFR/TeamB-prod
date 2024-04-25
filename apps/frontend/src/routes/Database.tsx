@@ -1,9 +1,9 @@
-import Dropdown from "../components/input-components/dropdown.tsx";
+import Dropdown from "../components/input-components/Dropdown.tsx";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {forms} from "database/.prisma/client";
-import HoverTable from "../components/hoverTable.tsx";
-import formType from "common/src/FormType.ts";
+import HoverTable from "../components/HoverTable.tsx";
+import formType from "common/src/form-type.ts";
 import pieGraph from "../assets/pie.svg";
 import bar from "../assets/bar.svg";
 import Button from "../components/Button.tsx";

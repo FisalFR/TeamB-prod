@@ -2,7 +2,7 @@
 //import React, {useState} from "react";
 //import { motion } from "framer-motion";
 //import axios from "axios";
-//import {fullServiceFormType} from "common/src/fullServiceForm.ts";
+//import {fullServiceFormType} from "common/src/full-service-form.ts";
 
 
 

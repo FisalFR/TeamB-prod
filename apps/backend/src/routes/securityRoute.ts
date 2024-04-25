@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { SecurityRequest } from "common/src/securityRequest";
+import { SecurityRequest } from "common/src/service-requests/security-request";
 import securityFunctions from "../securityFunctions";
 const router: Router = express.Router();
 import client from "../bin/database-connection";

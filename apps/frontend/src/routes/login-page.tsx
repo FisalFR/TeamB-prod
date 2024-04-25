@@ -9,7 +9,7 @@ import image4 from '../assets/Carousel/map.svg';
 import background from '../assets/Hero_Image/brighams_hero.jpg';
 import {useEffect} from "react";
 
-import {ButtonMovingBorder} from "../components/aceternity/moving-border.tsx";
+import {ButtonMovingBorder} from "../components/aceternity/MovingBorder.tsx";
 
 export function LoginPage() {
 

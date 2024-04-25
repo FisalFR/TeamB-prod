@@ -2,7 +2,6 @@ import createError, { HttpError } from "http-errors";
 import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import exampleRouter from "./routes/example.ts";
 import pathfindingRoute from "./routes/pathfindingRoute";
 import maintenanceRoute from "./routes/maintenanceRoute";
 import languageInterpreterRoute from "./routes/languageInterpreterRoute";
@@ -17,7 +16,7 @@ import transportationRoute from "./routes/transportationRoute";
 import employeeRoute from "./routes/employeeRoute";
 import internalTransportRoute from "./routes/internalTransportRoute";
 
-const app: Express = express(); // Setup the backend
+const app: Express = express(); // Set up the backend
 
 // Setup generic middleware
 app.use(
@@ -34,7 +33,6 @@ app.use(cookieParser()); // Cookie parser
 
 // Setup routers. ALL ROUTERS MUST use /api as a start point, or they
 // won't be reached by the default proxy and prod setup
-app.use("/api/high-score", exampleRouter);
 // app.use("/api/nodes", nodesRouter);
 app.use("/api/edges", edgesRouter);
 //TODO: Add "/api/nodes" so that it would just handle with nodes

@@ -1,7 +1,7 @@
 import { generateRandomUUIDInteger } from "./randomUUID";
 
 const prisma = client;
-import { giftRequest } from "common/src/giftRequest";
+import { giftRequest } from "common/src/service-requests/gift-request";
 import client from "./bin/database-connection";
 
 class giftDeliveryFunctions {

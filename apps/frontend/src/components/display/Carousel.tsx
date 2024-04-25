@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import HandleLogin from "../authentication/handleLogin.tsx";
+import HandleLogin from "../authentication/HandleLogin.tsx";
 import { motion } from 'framer-motion';
 import {useAuth0} from "@auth0/auth0-react";
 

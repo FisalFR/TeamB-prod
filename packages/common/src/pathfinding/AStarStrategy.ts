@@ -1,4 +1,4 @@
-import PriorityQueue from "../PriorityQueue.ts";
+import PriorityQueue from "../priority-queue.ts";
 import Node from "../node.ts";
 import TemplatePathfindingStrategy from "./TemplatePathfindingStrategy.ts";
 

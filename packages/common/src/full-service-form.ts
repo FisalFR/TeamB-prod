@@ -1,5 +1,5 @@
 import {maintenances, languageInterpreterRequests, medicineRequests, sanitationRequests, securityRequests, giftRequests, transportationRequests} from "database";
-import {internalTransportationRequest} from "./internalTransportationRequest.ts";
+import {internalTransportationRequest} from "./service-requests/internal-transportation-request.ts";
 
 export type fullServiceFormType = {
     formID: string

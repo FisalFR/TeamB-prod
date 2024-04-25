@@ -1,7 +1,7 @@
 import { generateRandomUUIDInteger } from "./randomUUID";
 
 const prisma = client;
-import { MaintenanceRequest } from "common/src/maintenanceRequest";
+import { MaintenanceRequest } from "common/src/service-requests/maintenance-request";
 import client from "./bin/database-connection";
 
 class maintenanceFunctions {

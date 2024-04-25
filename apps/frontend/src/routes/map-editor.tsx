@@ -14,11 +14,11 @@ import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-
 import Select from "../components/input-components/Select.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
-import EdgeType from "common/src/EdgeType.ts";
+import EdgeType from "common/src/edge-type.ts";
 import NodeForm from "../components/map/NodeForm.tsx";
-import NodeType from "common/src/NodeType.ts";
+import NodeType from "common/src/node-type.ts";
 import nodeAddOrDelete from "common/src/nodeAddOrDelete.ts";
-//import nodeType from "common/src/NodeType.ts";
+//import nodeType from "common/src/node-type.ts";
 import {EditingPanel, TabContent} from "../components/map/EditingPanel.tsx";
 
 export function MapEditor(){

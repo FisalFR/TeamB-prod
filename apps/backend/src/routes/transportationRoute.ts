@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { TransportationRequest } from "common/src/transportationRequest";
+import { TransportationRequest } from "common/src/service-requests/transportation-request";
 const router: Router = express.Router();
 import client from "../bin/database-connection";
 

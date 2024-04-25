@@ -1,8 +1,8 @@
 import express, { Router } from "express";
 import { startEndNodes } from "common/src/Pathfinding/pathfinding";
-import Path from "../../../../packages/common/src/Pathfinding/Path";
-//import Parser from "../../../../packages/common/src/parser";
-import Node from "../../../../packages/common/src/node";
+import Path from "common/src/pathfinding/Path";
+//import Parser from common/src/parser";
+import Node from "common/src/node";
 import client from "../bin/database-connection";
 // import writeNode from "../writeNode";
 import { filteringNodes } from "../filteringNodes";

@@ -1,5 +1,5 @@
 import client from "./bin/database-connection";
-import { fullServiceFormType } from "common/src/fullServiceForm";
+import { fullServiceFormType } from "common/src/full-service-form";
 
 export async function formFilter(id: string, reqType: string) {
   let includeMaintenance = false;

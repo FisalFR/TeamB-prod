@@ -1,4 +1,4 @@
-import {giftItem} from "./giftItem.ts";
+import {giftItem} from "./gift-item.ts";
 
 
 export type giftRequest = {
