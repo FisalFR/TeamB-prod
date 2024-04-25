@@ -7,10 +7,10 @@ import leftArrow from "../../assets/Direction_Icons/LeftArrow.svg";
 import rightArrow from "../../assets/Direction_Icons/RightArrow.svg";
 import elevator from "../../assets/Direction_Icons/Elevator.svg";
 import star from "../../assets/Star.svg";
-import React from "react";
 import Node from "common/src/node.ts";
 import { motion } from "framer-motion";
 import Button from "../../components/Button.tsx";
+import {Instruction} from "common/src/instruction.ts";
 
 function icon(image: string) {
     switch (image) {
@@ -54,18 +54,40 @@ const animatePath = {
     }
 };
 
-const voices = speechSynthesis.getVoices();
 
-const selectedVoice = voices[24];
-const speech = new SpeechSynthesisUtterance();
-speech.text = "Hello, world!";
-speech.voice = selectedVoice;
-function speak(){
-speechSynthesis.speak(speech);}
+
+
+
+
+
 
 export default function PathDirections(props: { Path: Node[] }) {
     const { nodeMap } = useNodes();
     const { edgeMap } = useEdges();
+    const voices = speechSynthesis.getVoices();
+
+    const selectedVoice = voices[18];
+    const speech = new SpeechSynthesisUtterance();
+
+
+
+    function speak(){
+        speech.voice = selectedVoice;
+        speech.lang="Spanish";
+        const lontent:Instruction[] = genInstructions(props.Path, nodeMap, edgeMap);
+        let ReadIndex = 0;
+        const text:string[] = [];
+        for (let i = 0; i < lontent.length; i++) {
+            text.push(lontent[i].content);
+        }
+        speech.text = text[ReadIndex];
+        if (text.length > 0)
+        speechSynthesis.speak(speech);
+        speech.onend = () => {speech.text = text[++ReadIndex];
+            if (ReadIndex<text.length)
+            speechSynthesis.speak(speech);};
+    }
+
     return (
         <SideTab
             height={"h-[300px]"}
@@ -85,7 +107,7 @@ export default function PathDirections(props: { Path: Node[] }) {
             }
             bodyChildren={
                 <div>
-                    <Button onClick={speak} children={"REEE"}/>
+
                     <div style={{fontWeight: "bold", color: "#012D5A"}}>DIRECTIONS</div>
                     <div className="bg-deep-blue h-0.5"/>
                     <div className="h-[250px] overflow-y-scroll overflow-hidden w-[416px] divide-y">
@@ -97,13 +119,14 @@ export default function PathDirections(props: { Path: Node[] }) {
                                             {icon(instruction.type)}
                                         </div>
                                     </div>
-                                    <h1 className="w-2/3 align-middle" name=""
+                                    <h1 className="w-2/3 align-middle"
                                         style={{color: "#012D5A", fontSize: 17, textAlign: "left"}}>
                                         {instruction.content}
                                     </h1>
                                 </div>
                             </div>
                         ))}
+                        <Button onClick={speak} children={"Read Directions Aloud"}/>
                     </div>
                 </div>
             }
