@@ -77,22 +77,17 @@ function pathTurn(path:Node[],index:number):[string,number]{
 
 export default function genInstructions(path: Node[], nodemap: Map<string, NodeType>, edgeMap: Map<string, string[]>):Instruction[]{
     const instructions:Instruction[] =[];
-    if ((path.length < 2))
-        return [];
-    else if (dist(path[0], path[path.length - 1]) < 100){
+    if (dist(path[0], path[path.length - 1]) < 100 && path.length < 4){
         instructions.push({type:"End",content:"You are already near your destination"});
         return instructions;
     }
     let index = 0;
     instructions.push({type: "Star",content:`Starting from ${path[0]?.shortName}`});
-    if (path[3] && path[3]?.nodeID){
-    const temp = edgeMap.get(path[3]?.nodeID);
-    if (path.length>4 && (temp != undefined))
-        for (const neighbor of temp){
+        for (const neighbor of edgeMap.get(path[3].nodeID)!){
             const compNode = nodemap.get(neighbor);
             if (compNode && compNode?.nodeType != "HALL" && compNode?.nodeType != "ELEV" && compNode?.nodeType != "STAI" && compNode?.nodeType != "WALK" && dist(path[3],compNode)*pix2meters<nearThresh){
                 instructions.push({type:"Right",content:`Turn towards ${compNode.shortName}`});
-                break;}}}
+                break;}}
 
     //let amtIntersections = 0;
     let prevTurn = path[0];
