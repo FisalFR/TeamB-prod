@@ -58,17 +58,12 @@ const animatePath = {
 
 
 
-
-
-
-
-
 export default function PathDirections(props: { Path: Node[] }) {
     const { nodeMap } = useNodes();
     const { edgeMap } = useEdges();
     const voices = speechSynthesis.getVoices();
 
-    const selectedVoice = voices[3];
+    const selectedVoice = voices[18];
     const speech = new SpeechSynthesisUtterance();
 
 
