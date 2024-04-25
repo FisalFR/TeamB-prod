@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express, { Request, Response, Router } from "express";
 import fileUpload from "express-fileupload";
 const router: Router = express.Router();
 import client from "../bin/database-connection";
@@ -9,8 +9,11 @@ import writeEdge from "../writeEdge";
 import NodeType from "common/src/NodeType";
 import EdgeType from "common/src/EdgeType";
 import FormType from "common/src/FormType";
+import employee from "common/src/employee";
 import { formFilter } from "../formFunctions";
 import edgeType from "common/src/EdgeType";
+import employeeFunctions from "../employeeFunctions";
+import nodeAddOrDelete from "common/src/nodeAddOrDelete";
 
 router.use(fileUpload());
 
@@ -42,7 +45,8 @@ router.post("/filter", async (req, res) => {
     whereCondition.formID = { search: formType.formID };
   }
   if (formType.type !== "") {
-    whereCondition.type = { search: formType.type };
+    const escapedType = formType.type.replace(/\s/g, "\\ ");
+    whereCondition.type = { search: `"${escapedType}"` };
   }
   if (formType.location !== "") {
     const escapedLocation = formType.location.replace(/\s/g, "\\ ");
@@ -134,6 +138,20 @@ router.post("/delete", async (req, res) => {
       await client.giftRequests.delete({
         where: {
           giftRequest: formType.formID,
+        },
+      });
+      break;
+    case "Transportation":
+      await client.transportationRequests.delete({
+        where: {
+          transportationRequest: formType.formID,
+        },
+      });
+      break;
+    case "Internal Transport":
+      await client.internalTransportationRequests.delete({
+        where: {
+          internalTransportationRequest: formType.formID,
         },
       });
       break;
@@ -270,6 +288,74 @@ router.post("/uploadEdges", async (req, res) => {
   }
 });
 
+router.post("/uploadEmployees", async (req, res) => {
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.send("No files were uploaded.");
+  }
+  const importedEmployeesFile = req.files.importedEmployees;
+
+  if (!Array.isArray(importedEmployeesFile)) {
+    // Resolves type ambiguity to allow the use of importedEmployeeFile.data
+    const employees = importedEmployeesFile.data
+      .toString()
+      .split(/\r?\n/)
+      .map((row: string) => {
+        const values: string[] = row.split(","); // Split the row into values
+        const employeeTest: employee = {
+          employeeEmail: values[0],
+          firstName: values[1],
+          lastName: values[2],
+          salary: parseFloat(values[3]),
+          gender: values[4],
+          type: values[5],
+        };
+        return employeeTest;
+      });
+    if (
+      employees[0].employeeEmail != "employeeEmail" ||
+      employees[0].firstName != "firstName" ||
+      employees[0].lastName != "lastName" ||
+      !isNaN(employees[0].salary) ||
+      employees[0].gender != "gender" ||
+      employees[0].type != "type"
+    ) {
+      return res.send("Invalid employee files. here");
+    }
+
+    try {
+      const filteredEmployees = employees.filter(
+        (employee) =>
+          employee.employeeEmail &&
+          employee.firstName &&
+          employee.lastName &&
+          employee.gender &&
+          employee.type !== "" &&
+          !isNaN(employee.salary),
+      );
+
+      if (employees[employees.length - 1].employeeEmail == "") {
+        employees.pop();
+      }
+
+      if (filteredEmployees.length != employees.length - 1) {
+        return res.send("Invalid employee files.");
+      }
+      client.employee.deleteMany().then(() => {
+        employees.shift();
+        employeeFunctions.employeeInsert(employees).then((isValid) => {
+          if (!isValid) {
+            return res.send("Invalid employee files.");
+          } else {
+            return res.send("Files were uploaded.");
+          }
+        });
+      });
+    } catch (error) {
+      return res.send("No files were uploaded.");
+    }
+  }
+});
+
 router.get("/exportNodes", async (req, res) => {
   const nodeFile = await writeNode.nodeDownload();
   res.setHeader("Content-disposition", "attachment; filename=nodeDataFile.csv");
@@ -277,10 +363,20 @@ router.get("/exportNodes", async (req, res) => {
   res.status(200).send(nodeFile);
 });
 router.get("/exportEdges", async (req, res) => {
-  const nodeFile = await writeEdge.edgeDownload();
+  const edgeFile = await writeEdge.edgeDownload();
   res.setHeader("Content-disposition", "attachment; filename=edgeDataFile.csv");
   res.set("Content-Type", "text/csv");
-  res.status(200).send(nodeFile);
+  res.status(200).send(edgeFile);
+});
+
+router.get("/exportEmployees", async (req, res) => {
+  const employeeFile = await employeeFunctions.employeeDownload();
+  res.setHeader(
+    "Content-disposition",
+    "attachment; filename=employeeDataFile.csv",
+  );
+  res.set("Content-Type", "text/csv");
+  res.status(200).send(employeeFile);
 });
 
 router.post("/filterForms", async (req, res) => {
@@ -327,6 +423,82 @@ router.post("/editOneNode", async (req, res) => {
   return res.json(updatedNode);
 });
 
+router.post("/editManyNodes", async (req, res) => {
+  const importedNodes: NodeType[] = req.body;
+  const updatedNodes: NodeType[] = [];
+  for (let i = 0; i < importedNodes.length; i++) {
+    const updatedNode = await client.nodes.update({
+      where: {
+        nodeID: importedNodes[i].nodeID,
+      },
+      data: {
+        xcoord: importedNodes[i].xcoord,
+        ycoord: importedNodes[i].ycoord,
+        building: importedNodes[i].building,
+        floor: importedNodes[i].floor,
+        nodeType: importedNodes[i].nodeType,
+        longName: importedNodes[i].longName,
+        shortName: importedNodes[i].shortName,
+      },
+    });
+    updatedNodes.push(updatedNode);
+  }
+  return res.json(updatedNodes);
+});
+
+router.post("/addDeleteNodes", async (req, res) => {
+  const importedAddDeletes: nodeAddOrDelete[] = req.body;
+  //loop for handling everything in nodeAddDelete - Add and delete nodes in the same order as user
+  for (let i = 0; i < importedAddDeletes.length; i++) {
+    console.log("here" + i);
+    if (importedAddDeletes[i].action == "add") {
+      console.log(importedAddDeletes[i].node.nodeID);
+      const addedNode = await client.nodes.create({
+        data: {
+          nodeID: importedAddDeletes[i].node.nodeID,
+          xcoord: parseFloat(importedAddDeletes[i].node.xcoord.toString()),
+          ycoord: parseFloat(importedAddDeletes[i].node.ycoord.toString()),
+          building: importedAddDeletes[i].node.building,
+          floor: importedAddDeletes[i].node.floor,
+          nodeType: importedAddDeletes[i].node.nodeType,
+          longName: importedAddDeletes[i].node.longName,
+          shortName: importedAddDeletes[i].node.shortName,
+        },
+      });
+      console.log(addedNode);
+    }
+    if (importedAddDeletes[i].action == "delete") {
+      const attachedEdges = await client.edges.findMany({
+        where: {
+          OR: [
+            {
+              startNodeID: importedAddDeletes[i].node.nodeID,
+            },
+            {
+              endNodeID: importedAddDeletes[i].node.nodeID,
+            },
+          ],
+        },
+      });
+      const edgeIDs = attachedEdges.map((edge) => edge.edgeID);
+      await client.edges.deleteMany({
+        where: {
+          edgeID: {
+            in: edgeIDs, // Using 'in' operator to match multiple edgeIDs
+          },
+        },
+      });
+      const deletedNode = await client.nodes.delete({
+        where: {
+          nodeID: importedAddDeletes[i].node.nodeID.toString(),
+        },
+      });
+      console.log(deletedNode);
+    }
+  }
+  return res.json("Successful add/delete");
+});
+
 router.post("/addManyEdge", async (req, res) => {
   const importedEdge: edgeType[] = req.body;
   const updatedEdge = await client.edges.createMany({
@@ -349,4 +521,65 @@ router.post("/deleteManyEdge", async (req, res) => {
   return res.json(deletedEdges);
 });
 
+router.get("/countNodes", async function (req: Request, res: Response) {
+  const nodeCount = await client.nodes.count();
+  res.status(200).json(nodeCount);
+});
+
+router.get("/countEdges", async function (req: Request, res: Response) {
+  const edgeCount = await client.edges.count();
+  res.status(200).json(edgeCount);
+});
+
+router.get("/countEmployee", async function (req: Request, res: Response) {
+  const employeeCount = await client.employee.count();
+  res.status(200).json(employeeCount);
+});
+
+router.get("/countMaintenances", async function (req: Request, res: Response) {
+  const maintenanceCount = await client.maintenances.count();
+  res.status(200).json(maintenanceCount);
+});
+
+router.get("/countLanguage", async function (req: Request, res: Response) {
+  const languageCount = await client.languageInterpreterRequests.count();
+  res.status(200).json(languageCount);
+});
+
+router.get("/countMedicine", async function (req: Request, res: Response) {
+  const medicineCount = await client.medicineRequests.count();
+  res.status(200).json(medicineCount);
+});
+
+router.get("/countSanitation", async function (req: Request, res: Response) {
+  const sanitationCount = await client.sanitationRequests.count();
+  res.status(200).json(sanitationCount);
+});
+
+router.get("/countSecurity", async function (req: Request, res: Response) {
+  const securityCount = await client.securityRequests.count();
+  res.status(200).json(securityCount);
+});
+
+router.get("/countGift", async function (req: Request, res: Response) {
+  const giftCount = await client.giftRequests.count();
+  res.status(200).json(giftCount);
+});
+
+router.get(
+  "/countTransportation",
+  async function (req: Request, res: Response) {
+    const transportationCount = await client.transportationRequests.count();
+    res.status(200).json(transportationCount);
+  },
+);
+
+router.get(
+  "/countInternalTransportation",
+  async function (req: Request, res: Response) {
+    const internalTransportationCount =
+      await client.internalTransportationRequests.count();
+    res.status(200).json(internalTransportationCount);
+  },
+);
 export default router;

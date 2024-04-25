@@ -6,23 +6,27 @@ import l3map from "../assets/floors/03_thethirdfloor.png";
 import plus from "../assets/plus.svg";
 import minus from "../assets/minus.svg";
 import React, {useEffect, useRef, useState} from "react";
-import Node from "../../../../packages/common/src/node";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import useNodes from "../hooks/useNodes.ts";
-import useEdges, {useEdgesID} from "../hooks/useEdges.ts";
+import useEdges from "../hooks/useEdges.ts";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
 import Select from "../components/Select.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
 import EdgeType from "common/src/EdgeType.ts";
+import NodeForm from "../components/map/NodeForm.tsx";
+import NodeType from "common/src/NodeType.ts";
+import nodeAddOrDelete from "common/src/nodeAddOrDelete.ts";
+//import nodeType from "common/src/NodeType.ts";
+import {EditingPanel, TabContent} from "../components/map/EditingPanel.tsx";
 
 export function MapEditor(){
 
 
     const [dragging, setDragging] = useState(false);
 
-    const placeholderNode = {
+    const placeholderNode: NodeType = {
         nodeID: "",
         xcoord: 0,
         ycoord: 0,
@@ -30,8 +34,17 @@ export function MapEditor(){
         building: "",
         nodeType: "",
         longName: "",
-        shortName: "",
-        neighbors: [],
+        shortName: ""
+    };
+    const nodeLabels = {
+        "nodeID": "Node ID",
+        "longName": "Long Name",
+        "shortName": "Short Name",
+        "building": "Building",
+        "floor": "Floor",
+        "xcoord": "X Coordinate",
+        "ycoord": "Y Coordinate",
+        "nodeType": "Type"
     };
 
     const [currentNode, setCurrentNode] = useState(placeholderNode);
@@ -82,15 +95,20 @@ export function MapEditor(){
                 dragNodeCoordsX.current = coords[0];
                 dragNodeCoordsY.current = coords[1];
                 updateNodes(dragNodeID.current, dragNodeCoordsX.current, dragNodeCoordsY.current);
-                setEditNodes(nodes);
+                //setEditNodes(nodes);
                 setReplaceThis(replaceThis+1);
 
         }
     }
     function endDrag() {
+        const nodeChanged = nodeMap.get(dragNodeID.current);
+        if (nodeChanged != undefined) {
+            if (!nodeEdits.current.includes(nodeChanged)) {
+                nodeEdits.current.push(nodeChanged);
+            }
+        }
         dragNodeID.current = "";
         setDragging(false);
-
 
     }
 
@@ -119,16 +137,17 @@ export function MapEditor(){
         return ([Math.round(x), Math.round(y)]);
     }
 
-    const {nodes,nodeMap} = useNodes();
-    const {edges} = useEdges();
+    const {nodes,nodeMap, reloadNodes} = useNodes();
+    const {edges, reloadEdges} = useEdges();
+
+    const nodeEdits = useRef<NodeType[]>([]);
+    const nodeAddDeletes = useRef<nodeAddOrDelete[]>([]);
 
     const nodeStrings: string[] = [];
     for (let i = 0; i < nodes.length; i++) {
         nodeStrings.push(nodes[i].nodeID);
     }
 
-    const [editNodes, setEditNodes] = useState<Node[]>([]);
-    useEffect(() => setEditNodes(nodes), [nodes]);
 
     const [editEdges, setEditEdges] = useState(useEdges().edges);
     useEffect(() => setEditEdges(edges), [edges]);
@@ -146,152 +165,135 @@ export function MapEditor(){
         return node.ycoord;
     }
 
-    function getNeighbors(node: Node) {
-        const neighbors: Node[] = [];
-        editEdges.map((edge) => {
-            const startNode = nodeMap.get(edge.startNodeID);
-            const endNode = nodeMap.get(edge.endNodeID);
-            if ((node == startNode) && (endNode != undefined)) {
-                neighbors.push(endNode);
-            }
-            if ((node == endNode) && (startNode != undefined)) {
-                neighbors.push(startNode);
-            }
-        });
-        return neighbors;
-    }
-
-    function removeNeighbor(editNode: Node, removeNode: Node) {
-        const newEdges = editEdges;
-        let spliceInd = 0;
-        newEdges.map((edge, index) => {
-            const startNode = nodeMap.get(edge.startNodeID);
-            const endNode = nodeMap.get(edge.endNodeID);
-            if (((startNode == editNode) && (endNode == removeNode)) || ((startNode == removeNode) && (endNode == editNode))) {
-                spliceInd = index;
-            }
-        });
-        newEdges.splice(spliceInd, 1);
-        setEditEdges(newEdges);
-        setEditEdgesID(newEdges.map(edge => edge.edgeID));
-        setReplaceThis(replaceThis+1);
-    }
-
     const [addedEdges, setAddedEdges] = useState<EdgeType[]>([]);
+    const [deletedEdges, setDeletedEdges] = useState<EdgeType[]>([]);
 
-    function addNeighbor(editNode: Node, addNode: string) {
-        const otherNeighbors = getNeighbors(editNode);
-        const adding = nodeMap.get(addNode);
-        if (adding != undefined) {
-            if ((addNode != "Select node") && (!otherNeighbors.includes(adding)) && (adding != currentNode)) {
-                const newEdges = editEdges;
-                const newEdge: EdgeType = {
-                    startNodeID: editNode.nodeID,
-                    endNodeID: addNode,
-                    edgeID: editNode.nodeID + "_" + addNode
-                };
-                newEdges.push(newEdge);
-                setEditEdges(newEdges);
-                addedEdges.push(newEdge);
-                // console.log(setAddedEdges);
-                setReplaceThis(replaceThis+1);
-            }
-        }
-
-    }
 
     const [changeElement, setChangeElement] = useState("");
 
     //handling form elements
-    function autofillByDrag(element: string) {
-        if (dragging || changeElement != element) {
+    function autofillByDrag(element: string, autofill: boolean) {
+        if ((dragging || changeElement != element) && autofill) {
             return currentNode[element];
         }
     }
 
+    const addNode = useRef(placeholderNode);
+    function handleAddInput(element: string, e) {
+        addNode.current[element] = e.target.value;
+        setReplaceThis(replaceThis+1);
+    }
+    function addNewNode() {
+        if (!nodes.find(x => x.nodeID === addNode.current.nodeID)) {
+            const newNode: NodeType = {
+                nodeID: addNode.current["nodeID"],
+                xcoord: addNode.current["xcoord"],
+                ycoord: addNode.current["ycoord"],
+                floor: addNode.current["floor"],
+                building: addNode.current["building"],
+                nodeType: addNode.current["nodeType"],
+                longName: addNode.current["longName"],
+                shortName: addNode.current["shortName"]
+            };
+            let valid = true;
+            for (const [key] of Object.entries(newNode)) {
+                if (newNode[key] == "") {
+                    valid = false;
+                }
+            }
+            if (valid) {
+                nodes.push(newNode);
+                nodeMap.set(newNode.nodeID, newNode);
+                nodeAddDeletes.current.push({node: newNode, action: "add"});
+                setCurrentFloor(newNode.floor);
+                setReplaceThis(replaceThis+1);
+
+            }
+            else {
+                alert("All fields must be filled to add a node");
+            }
+
+        }
+        else {
+            alert("A node with this ID already exists");
+        }
+
+    }
+    function deleteNode() {
+        const spliceInd = nodes.indexOf(currentNode);
+        removeAllNeighbors(currentNode);
+        nodes.splice(spliceInd, 1);
+        nodeAddDeletes.current.push({node: currentNode, action: "delete"});
+        if (nodeEdits.current.includes(currentNode)) {
+            const editSpliceInd = nodeEdits.current.indexOf(currentNode);
+            nodeEdits.current.splice(editSpliceInd, 1);
+        }
+        setReplaceThis(replaceThis+1);
+
+    }
+    function removeAllNeighbors(deleteNode: NodeType) {
+        const spliceInd: number[] = [];
+        edges.map((edge, index) => {
+            const startNode = nodeMap.get(edge.startNodeID);
+            const endNode = nodeMap.get(edge.endNodeID);
+            if ((startNode == deleteNode) || (endNode == deleteNode)) {
+                spliceInd.push(index);
+            }
+        });
+        for (let i = 0; i < spliceInd.length; i++) {
+            deleteEdge(spliceInd[i]-i);
+        }
+        setReplaceThis(replaceThis+1);
+    }
     function handleInput(element: string, e) {
         setChangeElement(element);
         const changeNode = currentNode;
         changeNode[element] = e.target.value;
         setCurrentNode(changeNode);
+        if (!nodeEdits.current.includes(changeNode)) {
+            nodeEdits.current.push(changeNode);
+        }
         setReplaceThis(replaceThis+1);
     }
+
+    const [selectedNode, setSelectedNode] = useState("");
     function editNode(e) {
         const editing = nodeMap.get(e.target.value);
         if (editing != undefined) {
             setCurrentNode(editing);
             setCurrentFloor(editing.floor);
             setChangeElement("");
+            setSelectedNode(editing.nodeID);
         }
     }
-    const [neighborToAdd, setNeighborToAdd] = useState(null);
 
-    function setNeighbor(e) {
-        setNeighborToAdd(e.target.value);
+    function addEdge(edge: EdgeType) {
+        edges.push(edge);
+        if (deletedEdges.includes(edge)) {
+            const deleteSplice = deletedEdges.indexOf(edge);
+            deletedEdges.splice(deleteSplice, 1);
+        }
+        addedEdges.push(edge);
+        setReplaceThis(replaceThis+1);
     }
+    function deleteEdge(spliceInd: number) {
+        if (addedEdges.includes(edges[spliceInd])) {
+            const addSplice = addedEdges.indexOf(edges[spliceInd]);
+            addedEdges.splice(addSplice, 1);
+        }
+        deletedEdges.push(edges[spliceInd]);
+        edges.splice(spliceInd, 1);
+        setReplaceThis(replaceThis+1);
+    }
+
     function nodeEditor() {
         if (currentNode.nodeID != "") {
             return (
                 <>
-                    <p>Node ID: {currentNode.nodeID}</p>
-                    <div className={"grid grid-cols-[auto_auto] gap-1"}>
-                        <label htmlFor="longname">Long Name: </label>
-                        <input value={autofillByDrag("longName")} id="longname"
-                               onChange={(e) => {
-                                   handleInput("longName", e);
-                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
-                        <label htmlFor="shortname">Short Name: </label>
-                        <input value={autofillByDrag("shortName")} id="shortname"
-                               onChange={(e) => {
-                                   handleInput("shortName", e);
-                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
-                        <label htmlFor="building">Building: </label>
-                        <input value={autofillByDrag("building")} id="building"
-                               onChange={(e) => {
-                                   handleInput("building", e);
-                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
-                    <p>Floor: {currentNode.floor}</p><div></div>
-                        <label htmlFor="nodetype">Type: </label>
-                        <input value={autofillByDrag("nodeType")} id="nodetype"
-                               onChange={(e) => {
-                                   handleInput("nodeType", e);
-                               }} maxLength={4} className = "border-deep-blue border-2 rounded flex-grow"></input>
-                        <label htmlFor="xcoord">X Coordinate: </label>
-                        <input type="number" value={autofillByDrag("xcoord")} id="longname"
-                               onChange={(e) => {
-                                   handleInput("xcoord", e);
-                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
-                        <label htmlFor="ycoord">Y Coordinate: </label>
-                        <input type="number" value={autofillByDrag("ycoord")} id="longname"
-                               onChange={(e) => {
-                                   handleInput("ycoord", e);
-                               }} className = "border-deep-blue border-2 rounded flex-grow"></input>
-                    </div>
-                    <p>Neighbors:</p>
-                    <div className="flex flex-row gap-3 flex-wrap">
-                        {
-                            getNeighbors(currentNode).map((neighbor: Node) => {
-                                return (
-                                    <div className="bg-deep-blue rounded-2xl font-bold text-white p-2">
-                                        {neighbor.nodeID}
-                                        <button className="pl-2" onClick={() => {
-                                            removeNeighbor(currentNode, neighbor);
-                                        }}>X
-                                        </button>
-                                    </div>
-                                );
-                            })
-                        }
-                    </div>
-
-                    <span className="flex flex-row items-center gap-5">
-                    <Select defaultOption="Select node" options={nodeStrings} id="addNeighbor"
-                            onChange={(e: React.ChangeEvent) => {
-                                setNeighbor(e);
-                            }} label="Add Neighbor: "/>
-                    <button className="bg-deep-blue rounded-2xl px-2 py-1 font-bold text-white"
-                            onClick={() => {addNeighbor(currentNode, neighborToAdd);}}>Add</button>
-                    </span>
+                    {<NodeForm node={currentNode} keyLabels={nodeLabels}
+                               disabled={["nodeID"]} handleInput={handleInput} value={autofillByDrag} nodeList={nodes}
+                               edgeList={edges} nodeMap={nodeMap} currentNode={currentNode} nodeStrings={nodeStrings}
+                               autofill={true} addEdge={addEdge} deleteEdge={deleteEdge}/>}
                 </>
             );
         } else {
@@ -299,58 +301,109 @@ export function MapEditor(){
         }
     }
 
-    const originalEdges = useEdges().edges;
-
-    const [editEdgesID, setEditEdgesID] = useState(useEdgesID().edges);
-
-    function getDeletedEdges() {
-        const toDelete = [];
-        for (let i = 0; i < originalEdges.length; i++) {
-            if (!editEdgesID.includes(originalEdges[i].edgeID)) {
-                toDelete.push(originalEdges[i]);
-            }
-        }
-        if(toDelete.length === originalEdges.length){
-            return [];
-        }
-        return toDelete;
-    }
-
     function handleSubmit() {
-        //submit editNodes and editEdges to the database
-        axios.post("/api/csvManager/editOneNode",currentNode,{
+        //alert(nodeAddDeletes.current.length);
+        axios.post("/api/csvManager/addDeleteNodes",nodeAddDeletes.current,{
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then((response) => {
-            const toDelete = getDeletedEdges();
-            //This should add all the edges and delete all the edges and one go
-            if(addedEdges.length > 0){
-            axios.post("/api/csvManager/addManyEdge", addedEdges, {
+        }).then(() => {
+
+            //submit nodeEdits (list of nodes that have been edited) and editEdges to the database
+            axios.post("/api/csvManager/editManyNodes",nodeEdits.current,{
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then( () => {
-                resetEdges();
-                // alert("Add Success");
-            });
-            }
-            if(toDelete.length > 0){
-                axios.post("/api/csvManager/deleteManyEdge", toDelete, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then( () => {
-                    // alert("Delete Success");
-                });
-            console.log(response);
-    }});
+            }).then((response) => {
+                //This should add all the edges and delete all the edges and one go
+                if(addedEdges.length > 0){
+                    axios.post("/api/csvManager/addManyEdge", addedEdges, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then( () => {
+                        resetEdges();
+                        // alert("Add Success");
+                    });
+                }
+                if(deletedEdges.length > 0){
+                    axios.post("/api/csvManager/deleteManyEdge", deletedEdges, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then( () => {
+                        // alert("Delete Success");
+                    });
+                console.log(response);
+
+                nodeAddDeletes.current = [];
+                nodeEdits.current = [];
+                setCurrentNode(placeholderNode);
+        }});
+    });}
+
+    function handleClear() {
+        nodeAddDeletes.current = [];
+        nodeEdits.current = [];
+        setCurrentNode(placeholderNode);
+        resetEdges();
+        setCurrentNode(placeholderNode);
+
+        nodes.splice(0,nodes.length);
+        edges.splice(0,edges.length);
+        nodeMap.clear();
+
+        reloadNodes();
+        reloadEdges();
     }
 
     const resetEdges = () => {
         setAddedEdges([]);
-        setEditEdgesID([]); // Reset editEdgesID
+        setDeletedEdges([]);
     };
+
+    function deleteBtnVisibility(): string {
+        if (currentNode.nodeID != "") {
+            return "block";
+        }
+        return "hidden";
+    }
+
+    function createChanges() {
+        if ((nodeEdits.current.length == 0) && (nodeAddDeletes.current.length == 0)) {
+            return (
+                <>
+                    <p>Any node edits, adds, or deletes will be displayed here.</p>
+                </>
+            );
+        }
+        return (
+            <>
+                <h3 className="font-bold text-lg">Adds/Deletes: </h3>
+                <div className= "grid grid-cols-2 w-full">
+                    {createAddDeletes()}
+                </div>
+
+                <h3 className="font-bold text-lg">Edits: </h3>
+                {createEdits()}
+            </>
+        );
+    }
+    function createAddDeletes() {
+        return nodeAddDeletes.current.map((change) =>
+            <>
+                <p>{change.node.nodeID}</p>
+                <p>{change.action.toUpperCase()}</p>
+            </>
+        );
+    }
+    function createEdits() {
+        return nodeEdits.current.map((change) =>
+            <>
+                <p>{change.nodeID}</p>
+            </>
+        );
+    }
 
     return (
         <div className="relative">
@@ -377,7 +430,7 @@ export function MapEditor(){
                                 }
                             }
                         })}
-                        {editNodes.filter(node => {
+                        {nodes.filter(node => {
                             return node.floor === currentFloor;
                         }).map((node) => {
                             return <>
@@ -392,24 +445,47 @@ export function MapEditor(){
                         })}
                     </svg>
                 </TransformComponent>
-                <div
-                    className="absolute gap-1 top-5 left-5 flex flex-col bg-white h-fit rounded-xl items-start text-left w-96 max-h-[350px] overflow-auto">
-                    <div className="p-6 flex flex-col gap-2">
-                        <h2 className="font-HeadlandOne text-[24px]">Edit Nodes</h2>
+                    <EditingPanel>
+                        <TabContent name={"Edit"}>
+                            <div className="p-6 flex flex-col gap-2">
+                                <h2 className="font-HeadlandOne text-[24px]">Edit Nodes</h2>
 
-                        <Select defaultOption="Select node to edit" options={nodeStrings} id="pickEditNode"
-                                onChange={(e) => {
-                                    editNode(e);
-                                }} label="Edit Node: "/>
-                        <br/>
-                        <h3 className="font-bold text-lg">Currently Editing: </h3>
-                        {nodeEditor()}
-                    </div>
+                                <Select defaultOption="Select node to edit" options={nodeStrings} id="pickEditNode"
+                                        onChange={(e) => {
+                                            editNode(e);
+                                        }} label="Edit Node: " reset={currentNode.nodeID != selectedNode}/>
+                                <br/>
+                                <h3 className="font-bold text-lg">Currently Editing: </h3>
+                                {nodeEditor()}
+                                <div className={deleteBtnVisibility()}>
+                                    <Button onClick={deleteNode}>Delete Node</Button>
+                                </div>
+                            </div>
+                        </TabContent>
+                        <TabContent name={"Add"}>
+                            <div className="p-6 flex flex-col gap-2 w-full">
+                                <h2 className="font-HeadlandOne text-[24px]">Add Node</h2>
 
-                    <div className = "centerContent w-full p-5 bottom-0 sticky bg-white">
-                        <Button onClick={handleSubmit}>Submit Node Edit</Button>
-                    </div>
-                </div>
+                                <NodeForm node={currentNode} keyLabels={nodeLabels}
+                                          disabled={[]} handleInput={handleAddInput} value={autofillByDrag}
+                                          nodeList={nodes}
+                                          edgeList={edges} nodeMap={nodeMap} currentNode={addNode.current}
+                                          nodeStrings={nodeStrings}
+                                          autofill={false} addEdge={addEdge} deleteEdge={deleteEdge}/>
+                                <Button onClick={addNewNode}>Add Node</Button>
+                            </div>
+                        </TabContent>
+                        <TabContent name={"Changes"}>
+                            <div className="p-6 flex flex-col gap-2 w-full">
+                                <h2 className="font-HeadlandOne text-[24px]">Changes</h2>
+                                {createChanges()}
+                            </div>
+                            <div className="centerContent w-full p-5 bottom-0 sticky bg-white gap-5">
+                                <Button onClick={handleSubmit}>Submit Changes</Button>
+                                <Button onClick={handleClear}>Clear Changes</Button>
+                            </div>
+                        </TabContent>
+                    </EditingPanel>
                 <FloorSelector
                     onClick1={() => setCurrentFloor("L2")}
                     onClick2={() => setCurrentFloor("L1")}

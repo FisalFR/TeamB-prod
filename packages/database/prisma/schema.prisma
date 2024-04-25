@@ -43,52 +43,40 @@ model edges {
   endNode     nodes  @relation(name: "endNode", fields: [endNodeID], references: [nodeID])
 }
 
-model users {
-  username  String     @id
-  password  String
-  firstName String
-  lastName  String
-  gender    String
-  type      String
-  patients  patient[]  @relation(name: "patientUsernameID")
-  employees employee[] @relation(name: "employeeUsernameID")
-}
-
-model patient {
-  patientUsername   String @id
-  reasonToStay      String
-  patientUsernameID users  @relation(name: "patientUsernameID", fields: [patientUsername], references: [username])
-}
-
 model employee {
-  employeeUsername   String        @id
-  salary             Int
-  employeeUsernameID users         @relation(name: "employeeUsernameID", fields: [employeeUsername], references: [username])
-  interpreters       interpreter[] @relation(name: "interpreterUsernameID")
+  employeeEmail String        @id
+  firstName     String
+  lastName      String
+  salary        Int
+  gender        String
+  type          String
+  interpreters  interpreter[] @relation(name: "interpreterUsernameID")
 }
 
 model interpreter {
   interpreterUsername   String   @id
   language              String
   native                Boolean
-  interpreterUsernameID employee @relation(name: "interpreterUsernameID", fields: [interpreterUsername], references: [employeeUsername])
+  interpreterUsernameID employee @relation(name: "interpreterUsernameID", fields: [interpreterUsername], references: [employeeEmail])
 }
 
 model forms {
-  formID              String                        @id
-  status              String
-  type                String
-  assignee            String
-  dateCreated         DateTime                      @default(now())
-  location            String
-  priority            String
-  employeeName        String
-  languageRequests    languageInterpreterRequests[] @relation(name: "languageRequestID")
-  maintenanceRequests maintenances[]                @relation(name: "maintenanceRequestID")
-  medicineRequests    medicineRequests[]            @relation(name: "medicineRequestID")
-  sanitationRequests  sanitationRequests[]          @relation(name: "sanitationRequestID")
-  securityRequests    securityRequests[]            @relation(name: "securityRequestID")
-  giftRequests        giftRequests[]                @relation(name: "giftRequestID")
+  formID                         String                           @id
+  status                         String
+  type                           String
+  assignee                       String
+  dateCreated                    DateTime                         @default(now())
+  location                       String
+  priority                       String
+  employeeName                   String
+  languageRequests               languageInterpreterRequests[]    @relation(name: "languageRequestID")
+  maintenanceRequests            maintenances[]                   @relation(name: "maintenanceRequestID")
+  medicineRequests               medicineRequests[]               @relation(name: "medicineRequestID")
+  sanitationRequests             sanitationRequests[]             @relation(name: "sanitationRequestID")
+  securityRequests               securityRequests[]               @relation(name: "securityRequestID")
+  giftRequests                   giftRequests[]                   @relation(name: "giftRequestID")
+  transportationRequests         transportationRequests[]         @relation(name: "transportationID")
+  internalTransportationRequests internalTransportationRequests[] @relation(name: "internalTransportationID")
 }
 
 model languageInterpreterRequests {
@@ -146,4 +134,19 @@ model giftItem {
   quantity Int
   cart     String
   cartID   giftRequests @relation(name: "cartID", fields: [cart], references: [giftRequest])
+}
+
+model transportationRequests {
+  transportationRequest   String @id
+  address                 String
+  transport               String
+  feedback                String
+  transportationRequestID forms  @relation(name: "transportationID", fields: [transportationRequest], references: [formID])
+}
+
+model internalTransportationRequests {
+  internalTransportationRequest   String @id
+  endlocation                     String
+  feedback                        String
+  internalTransportationRequestID forms  @relation(name: "internalTransportationID", fields: [internalTransportationRequest], references: [formID])
 }

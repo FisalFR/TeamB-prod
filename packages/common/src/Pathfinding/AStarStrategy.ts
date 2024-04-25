@@ -1,121 +1,54 @@
-import PathfindingStrategy from "./PathfindingStrategy.ts";
 import PriorityQueue from "../PriorityQueue.ts";
 import Node from "../node.ts";
+import TemplatePathfindingStrategy from "./TemplatePathfindingStrategy.ts";
 
-class AStarStrategy implements PathfindingStrategy {
+class AStarStrategy extends TemplatePathfindingStrategy {
+    initialDirection: string | null = null; // Add this line to keep track of the initial direction
 
-    execute(startNode: Node, endNode: Node): Node[] {
-        const frontier: PriorityQueue<Node> = new PriorityQueue<Node>();
-        frontier.insert(startNode, 0);
-        const cameFrom = new Map();
-        const costSoFar: Map<Node, number> = new Map();
-        cameFrom.set(startNode, null);
-        costSoFar.set(startNode, 0);
-
-        while (!frontier.isEmpty()) {
-            const current = frontier.pop()!;
-            if (current.nodeID == endNode.nodeID) {
-                break;
-            }
-            for (const next of current.neighbors) {
-                const newCost = costSoFar.get(current)! + 1;
-                if (!costSoFar.has(next) || newCost < costSoFar.get(next)!) {
-                    costSoFar.set(next, newCost);
-                    const priority = newCost + this.heuristic(endNode, next, current);
-                    frontier.insert(next, priority);
-                    cameFrom.set(next, current);
-                }
-            }
-        }
-        if (cameFrom.has(endNode)) {
-            return this.reconstructPath(cameFrom, startNode, endNode);
-        }
-        else {
-            return [];
-        }
-    }
-
-    heuristic(endNode: Node, nextNode: Node, currentNode:Node): number {
+    heuristic(endNode: Node, nextNode: Node, currentNode: Node): number {
         const endFloor: number  = this.convertFloor(endNode.floor);
         const nextFloor: number = this.convertFloor(nextNode.floor);
-        const EuclideanDistance = Math.sqrt((endNode.ycoord - nextNode.ycoord) ** 2 + (endNode.xcoord - nextNode.xcoord) ** 2);
-        const DistToElevL: number = Math.sqrt((924 -nextNode.ycoord) ** 2 + (1785 - nextNode.xcoord) ** 2);
-        const DistToElevQ: number = Math.sqrt((1825 -nextNode.ycoord) ** 2 + (1751 - nextNode.xcoord) ** 2);
-        const floorDifference = Math.abs(endFloor - nextFloor);
+        const currentFloor: number = this.convertFloor(currentNode.floor);
+        let finalCost = 1000;
 
-        if ((nextNode.building !== endNode.building) && (endNode.building === "Shapiro" || endNode.building === "BTM") ){
-            if((nextFloor === 1 && endFloor == 1) && endNode.building === "Shapiro"){
-                return EuclideanDistance/2;
-            } else if(nextFloor === 4 || (nextFloor === 4 && endNode.building === "BTM")){
-                return EuclideanDistance/2;
-            }
-        } else if ((currentNode.building === "Shapiro" || currentNode.building === "BTM") && (nextNode.building !== endNode.building) && (endFloor >=3)){
-            if(nextFloor === 4){
-                return EuclideanDistance/2;
-            }
+        // Determine the initial direction if it's not set
+        if (this.initialDirection === null) {
+            this.initialDirection = endFloor > currentFloor ? 'up' : 'down';
         }
 
-        if (endNode.building === "Shapiro" && nextNode.building === "Shapiro" && endNode.floor === "L1"){
-            if(nextNode.nodeType === "ELEV" && nextNode.longName.includes("Elevator Q")){
-                return 0;
-            } else if (nextNode.nodeType === "ELEV" && !nextNode.longName.includes("Elevator Q")){
-                return 10000;
-            } else {
-                return DistToElevQ;
-            }
+        if (endFloor === nextFloor) {
+            const ManhattanDistance  =+ Math.abs(endNode.ycoord - nextNode.ycoord) + Math.abs(endNode.xcoord - nextNode.xcoord);
+            finalCost = ManhattanDistance;
+        } else {
+            // Use Euclidean distance for nodes on different floors
+            const EuclideanDistance =+ Math.sqrt(((endNode.ycoord - nextNode.ycoord) ** 2) + ((endNode.xcoord - nextNode.xcoord) ** 2)) + (((endFloor-nextFloor) * 1000)**2);
+            finalCost = EuclideanDistance;
         }
 
-        if(endNode.building === "Tower" && endFloor !== nextFloor) {
-            if (nextNode.nodeType === "ELEV" && nextNode.shortName.includes("Elevator L")) {
-                return 0;
-            } else if (nextNode.nodeType === "ELEV" && !nextNode.shortName.includes("Elevator L")) {
-                return 10000;
-            } else {
-                return DistToElevL;
-            }
+        if (nextNode.floor !== currentNode.floor) {
+            finalCost += 10000000000000000000000000;
         }
 
-        // If we approach an ELEVATOR, prioritize if we're on the wrong floor
-        // Otherwise,  DON'T TAKE THE ELEVATOR
-        if((nextNode.nodeType === "ELEV" && currentNode.nodeType !== "ELEV")){
-            if(nextFloor !== endFloor){
-                return EuclideanDistance - floorDifference;
-            } else if (nextFloor === endFloor){
-                return EuclideanDistance + 10;
-            }
-        } else if ((nextNode.nodeType === "ELEV" && currentNode.nodeType === "ELEV")){
-            if(nextFloor === endFloor){
-                return 0;
-            } else if (nextFloor !== endFloor){
-                return EuclideanDistance + 100000 + (floorDifference * 100);
-            }
+        // if (currentNode.building === "BTM" && currentFloor === 1 && endFloor === 5 && endNode.building !== currentNode.building){
+        //     if (nextFloor === 4){
+        //         return 0;
+        //     }
+        // }
+
+        // // Add a penalty if the next node's floor is higher than the current node's floor but lower than the end node's floor, or vice versa
+        // if ((nextFloor > currentFloor && nextFloor < endFloor) || (nextFloor < currentFloor && nextFloor > endFloor)) {
+        //     finalCost += 1000000;
+        // }
+
+        // Add a penalty if the direction changes
+        if ((this.initialDirection === 'up' && nextFloor < currentFloor) || (this.initialDirection === 'down' && nextFloor > currentFloor)) {
+            finalCost += 100000000000000000000000;
         }
 
-        // If we approach a STAIR, prioritize if we're on the wrong floor
-        // Otherwise,  DON'T TAKE THE STAIRS
-        if((nextNode.nodeType === "STAI" && currentNode.nodeType !== "STAI")){
-            if(nextFloor !== endFloor && floorDifference === 1){
-                return EuclideanDistance - (floorDifference/2);
-            } else if (nextFloor === endFloor){
-                return EuclideanDistance + 10;
-            }
-        } else if ((nextNode.nodeType === "STAI" && currentNode.nodeType === "STAI")){
-            if(nextFloor === endFloor){
-                return 0;
-            } else if (nextFloor !== endFloor){
-                return EuclideanDistance + 100000;
-            }
-        }
-
-        if (endFloor === nextFloor){
-            return EuclideanDistance + 10;
-        } else if (endFloor !== nextFloor){
-            return EuclideanDistance + 10000;
-        }
-
-        return EuclideanDistance+ 10;
+        return finalCost;
 
     }
+
 
     convertFloor(floor: string): number {
         let result: number = 0;
@@ -139,16 +72,6 @@ class AStarStrategy implements PathfindingStrategy {
         }
         return result;
 
-    }
-
-    reconstructPath(cameFrom: Map<Node, Node>, startNode: Node, endNode: Node) {
-        const path = [];
-        while (endNode != startNode) {
-            path.push(endNode);
-            endNode = cameFrom.get(endNode);
-        }
-        path.push(startNode);
-        return path.reverse();
     }
 
 

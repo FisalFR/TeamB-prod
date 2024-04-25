@@ -8,6 +8,8 @@ export async function formFilter(id: string, reqType: string) {
   let includeMedicine = false;
   let includeGift: { include: { cart: boolean } } | boolean = false;
   let includeSecurity = false;
+  let includeTransportation = false;
+  let includeInternalTransportation = false;
 
   switch (reqType) {
     case "Maintenance":
@@ -45,6 +47,16 @@ export async function formFilter(id: string, reqType: string) {
       includeSecurity = true;
       break;
     }
+    case "Transportation": {
+      reqType = "transportationRequests";
+      includeTransportation = true;
+      break;
+    }
+    case "Internal Transport": {
+      reqType = "internalTransportationRequests";
+      includeInternalTransportation = true;
+      break;
+    }
   }
 
   const users: fullServiceFormType = await client.forms.findUnique({
@@ -58,6 +70,8 @@ export async function formFilter(id: string, reqType: string) {
       medicineRequests: includeMedicine,
       giftRequests: includeGift,
       securityRequests: includeSecurity,
+      transportationRequests: includeTransportation,
+      internalTransportationRequests: includeInternalTransportation,
     },
   });
   return users;

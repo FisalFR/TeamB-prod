@@ -5,7 +5,6 @@ import MaintenancePage from "./routes/MaintenancePage";
 import Map from "./routes/map";
 import LoginPage from "./routes/login-page";
 import LanguageInterpreter from "./routes/language-interpreter-page";
-import LoginNavigationBar from "./components/LoginNavigationBar.tsx";
 import CsvManager from "./routes/csv-manager.tsx";
 import LogBook from "./routes/requests-log-page.tsx";
 import MedicineRequest from "./routes/MedicineRequest.tsx";
@@ -13,29 +12,32 @@ import Sanitation from "./routes/sanitation-page.tsx";
 import Database from "./routes/Database.tsx";
 import {Auth0Provider} from "@auth0/auth0-react";
 import SecurityPage from "./routes/SecurityRequest.tsx";
+import TransportationRequestPage from "./routes/transportationRequest.tsx";
 
 import GiftDelivery from "./routes/gift-delivery.tsx";
 import MapEditor from "./routes/map-editor.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
 import {Authenticate} from "./components/authenticate.tsx";
+import InternalTransportationRequestPage from "./routes/internal-transport-page.tsx";
 
 function App() {
 
     const router = createBrowserRouter([
         {
             path: "/",
+            element: <Root/>,
             children: [
                 {
                     path: "/",
                     element:
-                        <div>
-                            <LoginNavigationBar/>
+                        <div className ="h-full overflow-hidden">
+
                             <LoginPage/>
                         </div>
                 },
                 {
              path: "",
-                    element: <Root/>,
+
                     children: [
                         {
                             path: "map",
@@ -80,6 +82,14 @@ function App() {
                         {
                             path:"/mapEditor",
                             element: <Authenticate component={MapEditor}/>,
+                        },
+                        {
+                            path:"/transport",
+                            element:<Authenticate component={TransportationRequestPage}/>
+                        },
+                        {
+                            path:"/internalTransport",
+                            element:<Authenticate component={InternalTransportationRequestPage}/>
                         },
 
             ],

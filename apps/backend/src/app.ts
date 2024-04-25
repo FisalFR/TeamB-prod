@@ -13,6 +13,9 @@ import securityRoute from "./routes/securityRoute";
 import giftDeliveryRoute from "./routes/giftDeliveryRoute";
 import nodesRouter from "./routes/nodesRoute";
 import edgesRouter from "./routes/edgesRoute";
+import transportationRoute from "./routes/transportationRoute";
+import employeeRoute from "./routes/employeeRoute";
+import internalTransportRoute from "./routes/internalTransportRoute";
 
 const app: Express = express(); // Setup the backend
 
@@ -44,6 +47,9 @@ app.use("/api/medicine", medicineRoute);
 app.use("/api/sanitation", sanitationRoute);
 app.use("/api/security", securityRoute);
 app.use("/api/gift", giftDeliveryRoute);
+app.use("/api/transport", transportationRoute);
+app.use("/api/employee", employeeRoute);
+app.use("/api/internalTransport", internalTransportRoute);
 
 app.use("/healthcheck", (req, res) => {
   res.status(200).send();

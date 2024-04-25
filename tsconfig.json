@@ -10,6 +10,7 @@
     "paths": {
       "*": ["apps/frontend/*", "apps/backend/*", "packages/common/*", "packages/database/*"]
     },
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
   }
 }

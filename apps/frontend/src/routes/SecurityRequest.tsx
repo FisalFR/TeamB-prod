@@ -4,6 +4,7 @@ import axios from "axios";
 import Dropdown from "../components/dropdown.tsx";
 import RadioButton from "../components/RadioButton.tsx";
 import Button from "../components/Button.tsx";
+import securityPic from "../assets/serviceRequestBanners/security.jpg";
 
 export function SecurityPage() {
     const [request, setRequest] = useState<SecurityRequest>({
@@ -34,6 +35,17 @@ export function SecurityPage() {
         });
     }, []);
 
+    const [employeeOptions, setEmployeeOptions] = useState<string[]>([]);
+    useEffect(() => {
+        axios.get("/api/employee/").then((response) => {
+            const employeeNames: string[] = [];
+            for (let i = 0; i < response.data.length; i++) {
+                employeeNames.push(response.data[i].firstName);
+            }
+            setEmployeeOptions(employeeNames);
+        });
+    }, []);
+
         function handleSubmit(e: { preventDefault: () => void; }) {
             (formRef.current as HTMLFormElement).requestSubmit();
             e.preventDefault();
@@ -56,10 +68,10 @@ export function SecurityPage() {
             setCleared(true);
         }
 
-    function handleNameInput(e: ChangeEvent<HTMLInputElement>): void {
-        setRequest({...request, employeeName: e.target.value});
+    function handleEmployeeInput(str: string): void {
+        setCleared(false);
+        setRequest({...request, employeeName: str});
     }
-
 
     function handleAdditionalInfoInput(e: ChangeEvent<HTMLTextAreaElement>): void {
         setRequest({...request, additionalInfo: e.target.value});
@@ -85,11 +97,14 @@ export function SecurityPage() {
     }
 
     return (
-        <div className="centerContent flex flex-col">
-            <div className={submittedWindowVisibility.formScreen}>
-                <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                <h1 className={"text-3xl font-HeadlandOne py-4"}>Security Service Request</h1>
-                <p className="pb-8 text-center">Fill out the form below to make a security request.</p>
+        <>
+            <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
+                <img src={securityPic} alt="maintenance Picture" className="w-screen opacity-65 absolute"/>
+                <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-50 bottom-0 margin-auto">
+                <div className={submittedWindowVisibility.formScreen}>
+                        <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
+                        <h1 className={"text-3xl font-HeadlandOne py-4"}>Security Service Request</h1>
+                        <p className="pb-8 text-center">Fill out the form below to make a security request.</p>
 
                 <form ref={formRef} onSubmit={e => {
                     e.preventDefault();
@@ -98,117 +113,119 @@ export function SecurityPage() {
                             <div>
                                 <div>
                                     <p className={"text-left font-bold"}>Employee Name</p>
-                                    <div className="border-deep-blue border-solid border-2 rounded w-full">
+                                    <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                        <Dropdown options={employeeOptions} placeholder={"Employee Name"}
+                                                  name={"employeeDropdown"}
+                                                  id={"employeeName"} value={cleared}
+                                                  setInput={handleEmployeeInput} required={true}
+                                                  width={"w-100"}/>
+                                    </div>
+                                </div>
+
+
+                                        <div className="my-5">
+                                            <p className={"text-left font-bold"}>What is the priority?</p>
+                                            <div className="border-deep-blue border-solid border-2 rounded w-full">
+                                                <RadioButton value={"Low"} name={"priority"} id={"priority1"}
+                                                             state={request.priority}
+                                                             onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                                                <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
+                                                             state={request.priority}
+                                                             onChange={handlePriorityInput} required={true} width={"w-full"} />
+                                                <RadioButton value={"High"} name={"priority"} id={"priority3"}
+                                                             state={request.priority}
+                                                             onChange={handlePriorityInput} required={true} width={"w-full"} />
+                                                <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
+                                                             state={request.priority}
+                                                             onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p className={"text-left font-bold w-full"}>Quantity of Personnel</p>
                                         <input
-                                            className={"border-solid border-deep-blue overflow-hidden flex items-start p-[5px] w-full"}
-                                            onChange={handleNameInput}
-                                            value={request.employeeName}
-                                            placeholder={"Name"}/>
-                                    </div>
-                                </div>
+                                            className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
+                                            type="number" id={"quantity"} value={request.quantity} min='1' required defaultValue={1} onChange={e => handleQuantityInput(e)}/>
 
 
-                                <div className="my-5">
-                                    <p className={"text-left font-bold"}>What is the priority?</p>
-                                    <div className="border-deep-blue border-solid border-2 rounded w-full">
-                                        <RadioButton value={"Low"} name={"priority"} id={"priority1"}
-                                                     state={request.priority}
-                                                     onChange={handlePriorityInput} required={true} width={"w-full"}/>
-                                        <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
-                                                     state={request.priority}
-                                                     onChange={handlePriorityInput} required={true} width={"w-full"} />
-                                        <RadioButton value={"High"} name={"priority"} id={"priority3"}
-                                                     state={request.priority}
-                                                     onChange={handlePriorityInput} required={true} width={"w-full"} />
-                                        <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
-                                                     state={request.priority}
-                                                     onChange={handlePriorityInput} required={true} width={"w-full"}/>
+                                        <br/>
+                                        <div>
+                                            <p className={"text-left font-bold"}>What is the location?</p>
+                                            <div className="border-solid border-deep-blue border-2 rounded w-full mb-3">
+                                                <Dropdown options={locationOptions} placeholder={"Location"}
+                                                          name={"locationDropdown"}
+                                                          id={"dropdown1"} value={cleared}
+                                                          setInput={handleLocationInput} required={true}
+                                                          width={"w-full"}
+                                                />
+                                            </div>
+                                            <br/>
+
+                                        <p className={"flex text-left font-bold w-full"}>What is the reason for the security
+                                            request?</p>
+                                        <div className="border-deep-blue border-solid border-2 w-full">
+                                            <Dropdown
+                                                name="reason"
+                                                id="reason"
+                                                placeholder="Select a reason"
+                                                options={securityOptions}
+                                                value={cleared}
+                                                setInput={(str: string) => setRequest({...request, securityReason: str})}
+                                                required={true}
+                                                width={"w-full"}/>
+                                        </div>
                                     </div>
-                                </div>
+
+                                    </div>
                             </div>
-                            <div>
-                                <p className={"text-left font-bold w-full"}>Quantity of Personnel</p>
-                                <input
-                                    className={"border-solid border-deep-blue border-2 rounded overflow-hidden flex items-start p-2 h-9 w-full"}
-                                    type="number" id={"quantity"} value={request.quantity} min='1' required defaultValue={1} onChange={e => handleQuantityInput(e)}/>
 
-
+                                <p className={"flex w-full text-left font-bold"}>Additional Info</p>
+                                <textarea id={"additionalInfo"}
+                                          className={" w-full w-max-full max-w-full p-[5px] border-deep-blue border-solid border-2 rounded h-20"}
+                                          onChange={handleAdditionalInfoInput}
+                                          value={request.additionalInfo} required={true}
+                                          placeholder="Enter detailed description here..."/>
                                 <br/>
-                                <div>
-                                    <p className={"text-left font-bold"}>What is the location?</p>
-                                    <div className="border-solid border-deep-blue border-2 rounded w-full mb-3">
-                                        <Dropdown options={locationOptions} placeholder={"Location"}
-                                                  name={"locationDropdown"}
-                                                  id={"dropdown1"} value={cleared}
-                                                  setInput={handleLocationInput} required={true}
-                                                  width={"w-full"}
-                                        />
-                                    </div>
-                                    <br/>
-
-                                <p className={"flex text-left font-bold w-full"}>What is the reason for the security
-                                    request?</p>
-                                <div className="border-deep-blue border-solid border-2 w-full">
-                                    <Dropdown
-                                        name="reason"
-                                        id="reason"
-                                        placeholder="Select a reason"
-                                        options={securityOptions}
-                                        value={cleared}
-                                        setInput={(str: string) => setRequest({...request, securityReason: str})}
-                                        required={true}
-                                        width={"w-full"}/>
+                                <div className={"formButtons flex gap-4 my-4"}>
+                                    <Button onClick={handleSubmit} children={"Submit"}/>
+                                    <Button onClick={handleClear} children={"Clear"}/>
                                 </div>
-                            </div>
 
-                            </div>
-                    </div>
-
-                        <p className={"flex w-full text-left font-bold"}>Additional Info</p>
-                        <textarea id={"additionalInfo"}
-                                  className={" w-full w-max-full max-w-full p-[5px] border-deep-blue border-solid border-2 rounded h-20"}
-                                  onChange={handleAdditionalInfoInput}
-                                  value={request.additionalInfo} required={true}
-                                  placeholder="Enter detailed description here..."/>
-                        <br/>
-                        <div className={"formButtons flex gap-4 my-4"}>
-                            <Button onClick={handleSubmit} children={"Submit"}/>
-                            <Button onClick={handleClear} children={"Clear"}/>
+                        </form>
                         </div>
-
-                </form>
-                </div>
-            </div>
-            <div className={submittedWindowVisibility.submittedScreen}>
-                <div className="pt-32">
-                    <div className="p-6 bg-white rounded-2xl">
-                        <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
-                        <Button onClick={handleNewSubmission} children="Submit a new request"/>
                     </div>
-                    <div className={"text-left"}>
-                        <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
-                        <p className={"font-bold"}>Employee Name</p>
-                        <p className={""}>{request.employeeName}</p>
+                    <div className={submittedWindowVisibility.submittedScreen}>
+                        <div className="pt-32">
+                            <div className="p-6 bg-white rounded-2xl">
+                                <p className="font-HeadlandOne p-3 text-xl">Thank you for submitting!</p>
+                                <Button onClick={handleNewSubmission} children="Submit a new request"/>
+                            </div>
+                            <div className={"text-left"}>
+                                <h3 className={"p-3 text-lg text-center font-HeadlandOne mt-3"}>Previous Form Submission:</h3>
+                                <p className={"font-bold"}>Employee Name</p>
+                                <p className={""}>{request.employeeName}</p>
 
-                        <p className={"font-bold"}>What is the location?</p>
-                        <p className={""}>{request.location}</p>
+                                <p className={"font-bold"}>What is the location?</p>
+                                <p className={""}>{request.location}</p>
 
-                        <p className={"font-bold"}>What is the priority?</p>
-                        <p className={""}>{request.priority}</p>
+                                <p className={"font-bold"}>What is the priority?</p>
+                                <p className={""}>{request.priority}</p>
 
-                        <p className={"font-bold"}>What is the security request?</p>
-                    <p className={""}>{request.securityReason}</p>
+                                <p className={"font-bold"}>What is the security request?</p>
+                            <p className={""}>{request.securityReason}</p>
 
-                    <p className={"font-bold"}>How many personnel are required?</p>
-                    <p className={""}>{request.quantity}</p>
+                            <p className={"font-bold"}>How many personnel are required?</p>
+                            <p className={""}>{request.quantity}</p>
 
+                        </div>
+                    </div>
+                    </div>
+                    <div>
+                        <p className={"font-HeadlandOne text-deep-blue"}>Created by Nick and Henry</p>
+                    </div>
                 </div>
             </div>
-            </div>
-            <div>
-                <p className={"font-HeadlandOne text-deep-blue"}>Created by Nick and Henry</p>
-            </div>
-        </div>
+        </>
 
     );
 }
