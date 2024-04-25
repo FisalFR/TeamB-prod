@@ -10,6 +10,7 @@ import background from '../assets/Hero_Image/brighams_hero.jpg';
 import {useEffect} from "react";
 
 import {ButtonMovingBorder} from "../components/aceternity/moving-border.tsx";
+//import {useAuth0} from "@auth0/auth0-react";
 
 export function LoginPage() {
 
@@ -75,6 +76,7 @@ export function LoginPage() {
     };
 
 
+    //const user = useAuth0();
 
     return (
         <div className="z-0 top-0 left-0 h-full grid grid-cols-[800px_minMax(100px,_1fr)] content-center" style={style}>
@@ -85,6 +87,9 @@ export function LoginPage() {
                     This website is a term project exercise for WPI CS 3733 Software
                     Engineering (Prof. Wong) and is not to be confused with the actual Brigham & Women’s Hospital website.
                 </p>
+{/*
+                <p>Welcome {user.user?.name}</p>
+*/}
                 <h1 className="font-OpenSans  font-bold text text-white text-center mb-2 text-7xl text-nowrap "
                 >Navigate Seamlessly</h1>
                 <p className="  text-center text-2xl font-light text-white"
