@@ -159,7 +159,47 @@ function UserProfile(){
         getCount(["High", "Gift"]);
         getCount(["Emergency", "Gift"]);
 
+        getCreatedBy("Colin");
     }, []);
+
+    const [unassignedCount, setUnassignedCount] = useState(0);
+    const [assignedCount, setAssignedCount] = useState(0);
+    const [inProgressCount, setInProgressCount] = useState(0);
+    const [closedCount, setClosedCount] = useState(0);
+
+
+
+    function getCreatedBy(name:string) {
+        const requestData = { name };
+        axios.post("/api/csvManager/countFormUnassigned", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            setUnassignedCount(response.data);
+        });
+        axios.post("/api/csvManager/countFormAssigned", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            setAssignedCount(response.data);
+        });
+        axios.post("/api/csvManager/countFormInProgress", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            setInProgressCount(response.data);
+        });
+        axios.post("/api/csvManager/countFormClosed", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            setClosedCount(response.data);
+        });
+    }
 
     const state = {
         series: [
@@ -468,38 +508,39 @@ function UserProfile(){
         },
     };
 
-    const radial = {
+    const donut = {
         options: {
             chart: {
-                height: 280,
-                type: "radialBar"
+                height: 450,
+                type: "pie"
             },
-            series: [67, 84, 97, 61],
             plotOptions: {
-                radialBar: {
-                    size: '90%',
-                    dataLabels: {
-                        total: {
+                pie: {
+                    donut: {
+                        labels: {
                             show: true,
-                            label: 'TOTAL'
-                        }
+                            total: {
+                                show: true,
+                            },
+                        },
                     },
-                    offsetY: 20,
-                }
-            },
-            legend: {  // Specify legend options
-                show: true, // Show legend
-                position: 'bottom', // Position legend at the bottom
-                horizontalAlign: 'center', // Center legend horizontally
-                markers: {
-                    fillColors: ['#008FFB', '#00E396', '#FEB019', '#FF4560'] // Colors for legend markers
                 },
             },
+            series: [unassignedCount, assignedCount, inProgressCount, closedCount], // Include your actual data along with 0 for "Total"
+            legend: {
+                show: true,
+                position: 'bottom',
+                horizontalAlign: 'center',
+                markers: {
+                    fillColors: ['#008FFB', '#00E396', '#FEB019', '#FF4560'] // Adjust colors accordingly
+                },
+                offsetY: 5,
+            },
             title:{
-                text: "Created By",
+                text: "Request Status",
                 align: 'middle',
                 offsetX: 0,
-                offsetY: 0,
+                offsetY: 5,
                 floating: false,
                 style: {
                     fontSize: '25px',
@@ -508,10 +549,13 @@ function UserProfile(){
                     color: '#263238'
                 }
             },
-            labels: ['TEAM A', 'TEAM B', 'TEAM C', 'TEAM D'],
+            labels: ['Unassigned', 'Assigned', 'InProgress', 'Closed'], // Include labels for each data point and "Total"
+            dataLabels: {
+                enabled: true,
+                dropShadow: false,
+            },
         },
     };
-
 
 
     return (
@@ -522,10 +566,10 @@ function UserProfile(){
             <div className={"flex flex-col space-y-10 mt-4"}>
                 <div className="flex flex-row w-fit h-fit ml-5 space-x-12" id="rangeBar">
                     <div className={"bg-white rounded-xl shadow-xl"}>
-                        <Chart options={radial.options}
-                               series={radial.options.series}
-                               type="radialBar"
-                               height={285}
+                        <Chart options={donut.options}
+                               series={donut.options.series}
+                               type="donut"
+                               height={325}
                                width={300}
                         />
                     </div>

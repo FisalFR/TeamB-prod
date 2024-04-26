@@ -594,4 +594,65 @@ router.post("/countTypePriority", async function (req: Request, res: Response) {
   res.status(200).json(maintenanceCount);
 });
 
+router.post(
+  "/countFormUnassigned",
+  async function (req: Request, res: Response) {
+    const { name }: { name: string } = req.body;
+    const formCount = await client.forms.count({
+      where: {
+        employeeName: name,
+        status: "Unassigned",
+      },
+    });
+    // const totalForms = await totalFormCount(name);
+    res.status(200).json(formCount);
+  },
+);
+
+router.post("/countFormAssigned", async function (req: Request, res: Response) {
+  const { name }: { name: string } = req.body;
+  const formCount = await client.forms.count({
+    where: {
+      employeeName: name,
+      status: "Assigned",
+    },
+  });
+  // const totalForms = await totalFormCount(name);
+  res.status(200).json(formCount);
+});
+
+router.post(
+  "/countFormInProgress",
+  async function (req: Request, res: Response) {
+    const { name }: { name: string } = req.body;
+    const formCount = await client.forms.count({
+      where: {
+        employeeName: name,
+        status: "InProgress",
+      },
+    });
+    // const totalForms = await totalFormCount(name);
+    res.status(200).json(formCount);
+  },
+);
+
+router.post("/countFormClosed", async function (req: Request, res: Response) {
+  const { name }: { name: string } = req.body;
+  const formCount = await client.forms.count({
+    where: {
+      employeeName: name,
+      status: "Closed",
+    },
+  });
+  // const totalForms = await totalFormCount(name);
+  res.status(200).json(formCount);
+});
+async function totalFormCount(name: string) {
+  const totalForms = await client.forms.count({
+    where: {
+      employeeName: name,
+    },
+  });
+  return totalForms;
+}
 export default router;
