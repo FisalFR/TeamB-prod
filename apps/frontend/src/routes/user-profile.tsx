@@ -166,7 +166,10 @@ function UserProfile(){
     const [assignedCount, setAssignedCount] = useState(0);
     const [inProgressCount, setInProgressCount] = useState(0);
     const [closedCount, setClosedCount] = useState(0);
-
+    const [lowCount, setLowCount] = useState(0);
+    const [mediumCount, setMediumCount] = useState(0);
+    const [highCount, setHighCount] = useState(0);
+    const [emergencyCount, setEmergencyCount] = useState(0);
 
 
     function getCreatedBy(name:string) {
@@ -198,6 +201,34 @@ function UserProfile(){
             }
         }).then((response) => {
             setClosedCount(response.data);
+        });
+        axios.post("/api/csvManager/countFormLow", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            setLowCount(response.data);
+        });
+        axios.post("/api/csvManager/countFormMedium", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            setMediumCount(response.data);
+        });
+        axios.post("/api/csvManager/countFormHigh", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            setHighCount(response.data);
+        });
+        axios.post("/api/csvManager/countFormEmergency", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            setEmergencyCount(response.data);
         });
     }
 
@@ -508,7 +539,7 @@ function UserProfile(){
         },
     };
 
-    const donut = {
+    const donutRequest = {
         options: {
             chart: {
                 height: 450,
@@ -557,6 +588,54 @@ function UserProfile(){
         },
     };
 
+    const donutAssignment = {
+        options: {
+            chart: {
+                height: 450,
+                type: "pie"
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true,
+                            },
+                        },
+                    },
+                },
+            },
+            series: [lowCount, mediumCount, highCount, emergencyCount], // Include your actual data along with 0 for "Total"
+            legend: {
+                show: true,
+                position: 'bottom',
+                horizontalAlign: 'center',
+                markers: {
+                    fillColors: ['#008FFB', '#00E396', '#FEB019', '#FF4560'] // Adjust colors accordingly
+                },
+                offsetY: 5,
+            },
+            title:{
+                text: "Assignments (Priority)",
+                align: 'middle',
+                offsetX: 0,
+                offsetY: 5,
+                floating: false,
+                style: {
+                    fontSize: '25px',
+                    fontWeight: '1000',
+                    fontFamily: 'Open Sans',
+                    color: '#263238'
+                }
+            },
+            labels: ['Low', 'Medium', 'High', 'Emergency'], // Include labels for each data point and "Total"
+            dataLabels: {
+                enabled: true,
+                dropShadow: false,
+            },
+        },
+    };
 
     return (
         <div className={"flex flex-row"}>
@@ -566,18 +645,18 @@ function UserProfile(){
             <div className={"flex flex-col space-y-10 mt-4"}>
                 <div className="flex flex-row w-fit h-fit ml-5 space-x-12" id="rangeBar">
                     <div className={"bg-white rounded-xl shadow-xl"}>
-                        <Chart options={donut.options}
-                               series={donut.options.series}
+                        <Chart options={donutRequest.options}
+                               series={donutRequest.options.series}
                                type="donut"
                                height={325}
                                width={300}
                         />
                     </div>
                     <div className={" bg-white rounded-xl shadow-xl "}>
-                    <Chart options={state.options}
-                           series={state.series}
-                           type="bar"
-                           height={285}
+                    <Chart options={donutAssignment.options}
+                           series={donutAssignment.options.series}
+                           type="donut"
+                           height={325}
                            width={300}
                     />
                     </div>
