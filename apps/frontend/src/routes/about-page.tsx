@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 //import defaultPic from "../assets/AboutPagePictures/defaultProfile.jpeg";
 import kendallPic from "../assets/AboutPagePictures/KendallHulburt.jpg";
 import moPic from "../assets/AboutPagePictures/mo.jpg";
@@ -12,8 +12,6 @@ import lilyPic from "../assets/AboutPagePictures/lily.jpg";
 import theresaPic from "../assets/AboutPagePictures/Theresa.jpg";
 import nickPic from "../assets/AboutPagePictures/nick.png";
 import heroImage from "../assets/Hero_Image/brighams_hero.jpg";
-//import wpiPic from "../assets/AboutPagePictures/wpiSoftEng.png";
-//import brighamPic from "../assets/AboutPagePictures/brigham.png";
 import bwhLogo from "../assets/bwh-logo-white.svg";
 import benPic from "../assets/AboutPagePictures/ben.jpg";
 import Modal from "../components/Modal.tsx";
@@ -21,20 +19,37 @@ import Modal from "../components/Modal.tsx";
 
 export function AboutPage(){
 
+    const moQuote = "Hello";
+    const colinQuote = "";
+    const jadeQuote = "";
+    const nickQuote = "\"My mission in life is not merely to survive, but to thrive; and to do so with some passion, some compassion, some humor, and some style.\" - Maya Angelou ";
+    const jeremyQuote = "\"I am the bug finder not the bug fixer\" -Colin Nguyen";
+    const henryQuote = "";
+    const theresaQuote = "";
+    const fisalQuote = "";
+    const kendallQuote = "\"The only thing we have to fear is fear itself \" -Franklin D. Roosevelt";
+    const lilyQuote = "";
+    const benQuote = "";
+
     const [quoteWindowVisibility, setQuoteWindowVisibility] = useState({
         formScreen: "block",
         quoteScreen: "hidden"
     });
 
-
-    function handleQuote(){
+    //const quote = "test";
+    const setQuote = useRef("");
+    function handleQuote(quote: string){
         setQuoteWindowVisibility({formScreen: "hidden", quoteScreen: "block"});
         openQuoteFunction();
+        setQuote.current = quote;
+
+        return setQuote;
     }
     const [openQuote, setOpenQuote] = useState<boolean>(false);
     function openQuoteFunction() {
         setOpenQuote(true);
     }
+
 
 
     return(
@@ -55,31 +70,31 @@ export function AboutPage(){
                             <div className="grid grid-cols-5 px-28 pt-10 text-deep-blue">
                                 <div>
                                     <img src={moPic} alt="Mo Picture"
-                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(moQuote)}/>
                                     <p className="font-bold"> Mo Nguyen </p>
                                     <p> Lead Soft Eng. </p>
                                 </div>
                                 <div>
                                     <img src={colinPic} alt="Colin Picture"
-                                         className="h-56 w-fit object-cover rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                         className="h-56 w-fit object-cover rounded-full aspect-square px-4" onClick={() => handleQuote(colinQuote)}/>
                                     <p className="font-bold"> Colin Nguyen </p>
                                     <p> Assistant Lead Eng. </p>
                                 </div>
                                 <div>
                                     <img src={jadePic} alt="Jade Picture"
-                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(jadeQuote)}/>
                                     <p className="font-bold"> Jade Logan </p>
                                     <p> Assistant Lead Eng. </p>
                                 </div>
                                 <div>
                                     <img src={nickPic} alt="Nick Picture"
-                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(nickQuote)}/>
                                     <p className="font-bold"> Nick Gill </p>
                                     <p> Assistant Lead Eng. </p>
                                 </div>
                                 <div>
                                     <img src={jeremyPic} alt="Jeremy Picture"
-                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(jeremyQuote)}/>
                                     <p className="font-bold"> Jeremy Kurtz </p>
                                     <p> Project Manager </p>
                                 </div>
@@ -88,38 +103,38 @@ export function AboutPage(){
                             <div className="grid grid-cols-6 px-8 pb-5 text-deep-blue">
                                 <div>
                                     <img src={henryPic} alt="Henry Picture"
-                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(henryQuote)}/>
                                     <p className="font-bold"> Henry Hribar </p>
                                     <p> Doc. Analyst </p>
                                 </div>
                                 <div>
                                     <img src={theresaPic} alt="Theresa Picture"
-                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(theresaQuote)}/>
                                     <p className="font-bold"> Theresa Acheampong </p>
                                     <p> Scrum Master </p>
                                 </div>
                                 <div>
                                     <img src={fisalPic} alt="Fisal Picture"
-                                         className="h-56 w-fit object-cover rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                         className="h-56 w-fit object-cover rounded-full aspect-square px-4" onClick={() => handleQuote(fisalQuote)}/>
                                     <p className="font-bold"> Fisal Qutubzad </p>
                                     <p> Product Owner </p>
                                 </div>
                                 <div>
                                     <img src={kendallPic} alt="Kendall Picture"
-                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}>
+                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(kendallQuote)}>
                                     </img>
                                     <p className="font-bold"> Kendall Hulburt </p>
                                     <p> Full-Stack Eng. </p>
                                 </div>
                                 <div>
                                     <img src={lilyPic} alt="Lily Picture"
-                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(lilyQuote)}/>
                                     <p className="font-bold"> Lily Jones </p>
                                     <p> Doc. Analyst </p>
                                 </div>
                                 <div>
                                     <img src={benPic} alt="Ben Picture"
-                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(benQuote)}/>
                                     <p className="font-bold"> Benjamin Cruse </p>
                                     <p> Full-Stack Eng. </p>
                                 </div>
@@ -164,13 +179,13 @@ export function AboutPage(){
 
             <div className={quoteWindowVisibility.quoteScreen}>
                 <Modal open={openQuote} onClose={() => setOpenQuote(false)}>
-                    <div className="">
+                    <div className=" w-100">
                         <h1 className="text-deep-blue">Favorite Quote: </h1>
-                        <p className="text-deep-blue"> </p>
+                        <br/>
+                        <p className="text-deep-blue px-2 pb-4"> {setQuote.current}</p>
                     </div>
                 </Modal>
-
-                    <div className="h-fit bg-deep-blue bg-opacity-60">
+                <div className="h-fit bg-deep-blue bg-opacity-60">
                         <img src={heroImage} alt="Hospital Picture"
                              className="h-full w-fit object-cover relative opacity-60"/>
                     </div>
@@ -186,31 +201,31 @@ export function AboutPage(){
                                 <div className="grid grid-cols-5 px-28 pt-10 text-deep-blue">
                                     <div>
                                         <img src={moPic} alt="Mo Picture"
-                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(moQuote)}/>
                                         <p className="font-bold"> Mo Nguyen </p>
                                         <p> Lead Soft Eng. </p>
                                     </div>
                                     <div>
                                         <img src={colinPic} alt="Colin Picture"
-                                             className="h-56 w-fit object-cover rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                             className="h-56 w-fit object-cover rounded-full aspect-square px-4" onClick={() => handleQuote(colinQuote)}/>
                                         <p className="font-bold"> Colin Nguyen </p>
                                         <p> Assistant Lead Eng. </p>
                                     </div>
                                     <div>
                                         <img src={jadePic} alt="Jade Picture"
-                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(jadeQuote)}/>
                                         <p className="font-bold"> Jade Logan </p>
                                         <p> Assistant Lead Eng. </p>
                                     </div>
                                     <div>
                                         <img src={nickPic} alt="Nick Picture"
-                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(nickQuote)}/>
                                         <p className="font-bold"> Nick Gill </p>
                                         <p> Assistant Lead Eng. </p>
                                     </div>
                                     <div>
                                         <img src={jeremyPic} alt="Jeremy Picture"
-                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(jeremyQuote)}/>
                                         <p className="font-bold"> Jeremy Kurtz </p>
                                         <p> Project Manager </p>
                                     </div>
@@ -219,39 +234,39 @@ export function AboutPage(){
                                 <div className="grid grid-cols-6 px-8 pb-5 text-deep-blue">
                                     <div>
                                         <img src={henryPic} alt="Henry Picture"
-                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(henryQuote)}/>
                                         <p className="font-bold"> Henry Hribar </p>
                                         <p> Doc. Analyst </p>
                                     </div>
                                     <div>
                                         <img src={theresaPic} alt="Theresa Picture"
-                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(theresaQuote)}/>
                                         <p className="font-bold"> Theresa Acheampong </p>
                                         <p> Scrum Master </p>
                                     </div>
                                     <div>
                                         <img src={fisalPic} alt="Fisal Picture"
-                                             className="h-56 w-fit object-cover rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                             className="h-56 w-fit object-cover rounded-full aspect-square px-4" onClick={() => handleQuote(fisalQuote)}/>
                                         <p className="font-bold"> Fisal Qutubzad </p>
                                         <p> Product Owner </p>
                                     </div>
                                     <div>
                                         <img src={kendallPic} alt="Kendall Picture"
                                              className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
-                                             onClick={handleQuote}>
+                                             onClick={() => handleQuote(kendallQuote)}>
                                         </img>
                                         <p className="font-bold"> Kendall Hulburt </p>
                                         <p> Full-Stack Eng. </p>
                                     </div>
                                     <div>
                                         <img src={lilyPic} alt="Lily Picture"
-                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(lilyQuote)}/>
                                         <p className="font-bold"> Lily Jones </p>
                                         <p> Doc. Analyst </p>
                                     </div>
                                     <div>
                                         <img src={benPic} alt="Ben Picture"
-                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={handleQuote}/>
+                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(benQuote)}/>
                                         <p className="font-bold"> Benjamin Cruse </p>
                                         <p> Full-Stack Eng. </p>
                                     </div>
