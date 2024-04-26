@@ -86,7 +86,7 @@ function Sanitation() {
         <>
             <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
                 {/*<img src={sanitationPic} alt="maintenance Picture" className="w-screen opacity-65 absolute h-80 mask-gradient"/>*/}
-                <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-[400px] bottom-0 margin-auto">
+                <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-[300px] bottom-0 margin-auto">
                 <div className={submittedWindowVisibility.formScreen}>
 
                     <div className="relative bg-light-white my-10 p-10 px-20 rounded-3xl w-[1200px] drop-shadow-2xl">

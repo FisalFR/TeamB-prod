@@ -91,9 +91,9 @@ export function InternalTransportationRequestPage() {
             <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
                 {/*<img src={internalTransportPic} alt="Internal Transport Picture"*/}
                 {/*     className="w-screen opacity-65 absolute mask-gradient"/>*/}
-                <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-80 bottom-0 margin-auto">
+                <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-60 bottom-0 margin-auto">
                     <div className={submittedWindowVisibility.formScreen}>
-                        <div className="relative bg-light-white my-10 p-10 px-20 rounded-3xl w-[860px]">
+                        <div className="relative bg-light-white my-10 p-10 px-20 rounded-3xl w-[860px] drop-shadow-2xl">
                             <div className="absolute bg-deep-blue rounded-t-2xl top-0 right-0 w-full p-6">
                             <h1 className="text-4xl font-OpenSans py-4 font-extrabold text-white"> Internal Transportation Service Request</h1>
                             </div>

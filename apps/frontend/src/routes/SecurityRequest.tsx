@@ -100,7 +100,7 @@ export function SecurityPage() {
         <>
             <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
                 {/*<img src={securityPic} alt="maintenance Picture" className="w-screen opacity-65 absolute mask-gradient"/>*/}
-                <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-72 bottom-0 margin-auto">
+                <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-60 bottom-0 margin-auto">
                 <div className={submittedWindowVisibility.formScreen}>
                     <div className="relative bg-light-white drop-shadow-2xl  my-10 p-10 px-20 rounded-3xl w-[1100px]">
                         <div className="absolute bg-deep-blue rounded-t-2xl w-full top-0 right-0 bottom-[780px] ">

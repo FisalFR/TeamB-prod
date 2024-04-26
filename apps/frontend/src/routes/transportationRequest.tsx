@@ -101,7 +101,7 @@ export function TransportationRequestPage() {
                 {/*<img src={transportPic} alt="transport Picture" className="w-screen opacity-65 absolute h-72 mask-gradient"/>*/}
                 <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-80 bottom-0 margin-auto">
                     <div className={submittedWindowVisibility.formScreen}>
-                        <div className=" relative flex flex-col bg-light-white my-10 p-10 px-20 rounded-3xl max-w-[850px] relative">
+                        <div className=" relative flex flex-col bg-light-white my-10 p-10 px-20 rounded-3xl max-w-[850px] relative drop-shadow-2xl">
                             <div className=" flex flex-col">
                                 <div className="absolute bg-deep-blue rounded-t-2xl w-full top-0 right-0 p-4">
                                     <h1 className="text-4xl font-OpenSans text-white font-extrabold py-4"> Welcome to the External Patient
