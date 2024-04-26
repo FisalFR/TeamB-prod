@@ -247,7 +247,7 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
                 <div className="flex flex-row items-center gap-8 p-12 w-fit ">
                     <div>
                         <h1 className="text-3xl font-OpenSans font-extrabold border-b border-b-4 border-deep-blue">Information</h1>
-                        <ul className="pt-5 flex flex-col items-start leading-8 max-w-100 text-overflow-ellipsis whitespace-nowrap">
+                        <ul className="pt-5 flex flex-col items-start leading-8 max-w-100 text-wrap text-left whitespace-nowrap">
                             <li><b>FormID:</b> {assignment.formID}</li>
                             <li><b>Type:</b> {assignment.type}</li>
                             <li><b>Status:</b> {assignment.status}</li>

@@ -153,11 +153,11 @@ function GiftDelivery() {
             return <p>There are no items in your cart</p>;
         return cart.map((item) =>
             <div className="flex flex-col pt-2">
-                <p className={"bg-gray-200 shadow-lg rounded-lg"}>
+                <p className={"bg-blue-200 shadow-lg rounded-lg"}>
                     <div className={"flex flex-row gap-4"}>
-                        <img src={item.image} alt={item.name} className="w-20 h-20 border-2 border-gray-200 rounded-lg p-1"/>
+                        <img src={item.image} alt={item.name} className="w-20 h-20 border-2 border-blue-200 rounded-lg p-1"/>
                         <p className={"text-left pt-2 text-xs font-bold"}>{item.name}
-                            <div className="flex flex-row justify-center gap-x-32 pt-4">
+                            <div className="flex flex-row justify-center gap-x-32 pt-6">
                                 <QuantityPicker min={0} max={10} initialValue={item.quantity} onQuantityChange={(newQuantity) => {
                                     changeCart(item.name, newQuantity, item.image);
                                 }}/>
@@ -225,8 +225,8 @@ function GiftDelivery() {
         <div className="overflow-hidden bg-gradient-to-t from-bone-white to-deep-blue relative">
             <div className={submittedWindowVisibility.formScreen}>
             <div
-                className=" rounded-3xl right-5 top-20 fixed z-20"> {/*Entire Cart Page*/}
-                <Button onClick={handleCartScreen} color={"bg-gradient-to-br from-green-blue to-bone-white via-delete-button"} px={"px-6"} py={"py-3"} text={"text-deep-blue"}>
+                className=" rounded-3xl right-3 top-20 fixed z-20"> {/*Entire Cart Page*/}
+                <Button onClick={handleCartScreen} color={"bg-bone-white"} px={"px-6"} py={"py-3"} text={"text-deep-blue"}>
                     <div className="flex items-center">
                         <span className="mr-2">{totalItems()}</span>
                         {CartSVG}
@@ -378,7 +378,7 @@ function GiftDelivery() {
                         <div
                             className="centerContent"> {/*Entire Cart Page*/}
                             <div className="absolute top-5 left-[20px]">
-                                <Button onClick={handleBackbutton} color={"bg-gradient-to-br from-green-blue to-bone-white"} px={"px-3"} py={"py-3"}>
+                                <Button onClick={handleBackbutton} color={"bg-white"} px={"px-3"} py={"py-3"}>
                                     {BackwardSVG}
                                 </Button>
                             </div>
