@@ -4,7 +4,7 @@ import {internalTransportationRequest} from "common/src/internalTransportationRe
 import Dropdown from "../components/dropdown.tsx";
 import axios from "axios";
 import Button from "../components/Button.tsx";
-import internalTransportPic from "../assets/serviceRequestBanners/internalTransportPic.jpg";
+// import internalTransportPic from "../assets/serviceRequestBanners/internalTransportPic.jpg";
 
 
 export function InternalTransportationRequestPage() {
@@ -89,16 +89,31 @@ export function InternalTransportationRequestPage() {
     return (
         <>
             <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
-                <img src={internalTransportPic} alt="Internal Transport Picture"
-                     className="w-screen opacity-65 absolute"/>
-                <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-40 bottom-0 margin-auto">
+                {/*<img src={internalTransportPic} alt="Internal Transport Picture"*/}
+                {/*     className="w-screen opacity-65 absolute mask-gradient"/>*/}
+                <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-80 bottom-0 margin-auto">
                     <div className={submittedWindowVisibility.formScreen}>
-                        <div className="bg-light-white my-10 p-10 px-20 rounded-3xl w-auto">
-                            <h1 className="text-3xl font-HeadlandOne py-4"> Welcome to the Internal Transportation
-                                page!</h1>
-                            <p>Fill out the form below if a patient needs to be transported somewhere inside
-                                of the
-                                hospital.</p>
+                        <div className="relative bg-light-white my-10 p-10 px-20 rounded-3xl w-[860px]">
+                            <div className="absolute bg-deep-blue rounded-t-2xl top-0 right-0 w-full p-6">
+                            <h1 className="text-4xl font-OpenSans py-4 font-extrabold text-white"> Internal Transportation Service Request</h1>
+                            </div>
+                            <p className="text-left mt-24">
+                                Our facility is committed to providing efficient and safe internal transportation for
+                                all occupants. Our internal transportation services are crucial in this endeavor. Please
+                                inform your facility manager in advance about your transportation needs.
+                            </p>
+                            <br/>
+                            <p className="text-left">
+                                Our transportation team is available during normal business hours, Monday-Friday, 9:00
+                                a.m. to 5:00 p.m. Please fill out the form to request an internal transportation service
+                                for your location.
+                            </p>
+                            <br/>
+                            <p className="font-bold text-left ">
+                                Please select the type of transportation service, the start location, and the end
+                                location from the dropdown. Any services not listed in the dropdown will need to be
+                                requested through facility administration.
+                            </p>
                             <form ref={formRef} onSubmit={e => {
                                 e.preventDefault();
                             }}>
@@ -108,9 +123,10 @@ export function InternalTransportationRequestPage() {
                                             <div>
                                                 <p className={"text-left font-bold"}>Employee Name</p>
                                                 <div
-                                                    className={"border-solid border-deep-blue border-2 rounded w-full"}>
+                                                    className={"border-solid border-gray-300 border-2 rounded w-full"}>
                                                     <Dropdown options={employeeOptions} placeholder={"Employee Name"}
                                                               name={"employeeDropdown"}
+                                                              color={"bg-light-white"}
                                                               id={"employeeName"} value={cleared}
                                                               setInput={handleEmployeeInput} required={true}
                                                               width={"w-80"}/>
@@ -118,9 +134,10 @@ export function InternalTransportationRequestPage() {
                                             </div>
                                             <div>
                                                 <p className={"text-left font-bold"}>What room is the patient in?</p>
-                                                <div className="border-deep-blue border-solid border-2 rounded w-fit">
+                                                <div className="border-gray-300 border-solid border-2 rounded w-fit">
                                                     <Dropdown options={locationOptions} placeholder={"Location"}
                                                               name={"locationDropdown"}
+                                                              color={"bg-light-white"}
                                                               id={"dropdown1"} value={cleared}
                                                               setInput={handleStartLocationInput} required={true}
                                                               width={"w-80"}/>
@@ -129,9 +146,10 @@ export function InternalTransportationRequestPage() {
                                             <div>
                                                 <p className={"text-left font-bold"}>Where does the patient want to
                                                     go?</p>
-                                                <div className="border-deep-blue border-solid border-2 rounded w-fit">
+                                                <div className="border-gray-300 border-solid border-2 rounded w-fit">
                                                     <Dropdown options={locationOptions} placeholder={"Location"}
                                                               name={"locationDropdown"}
+                                                              color={"bg-light-white"}
                                                               id={"dropdown2"} value={cleared}
                                                               setInput={handleEndLocationInput} required={true}
                                                               width={"w-80"}/>
@@ -143,21 +161,25 @@ export function InternalTransportationRequestPage() {
                                         <div className="flex flex-col w-fit">
                                             <p className={"text-left font-bold "}>What is the priority of this
                                                 request?</p>
-                                            <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                            <div className={"border-solid border-gray-300 border-2 rounded"}>
                                                 <RadioButton value={"Low"} name={"priority"} id={"priority1"}
                                                              state={request.priority}
+                                                             color={"bg-light-white"}
                                                              onChange={handlePriorityInput} required={true}
                                                              width={"w-80"}/>
                                                 <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
                                                              state={request.priority}
+                                                             color={"bg-light-white"}
                                                              onChange={handlePriorityInput} required={true}
                                                              width={"w-80"}/>
                                                 <RadioButton value={"High"} name={"priority"} id={"priority3"}
                                                              state={request.priority}
+                                                             color={"bg-light-white"}
                                                              onChange={handlePriorityInput} required={true}
                                                              width={"w-80"}/>
                                                 <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
                                                              state={request.priority}
+                                                             color={"bg-light-white"}
                                                              onChange={handlePriorityInput} required={true}
                                                              width={"w-80"}/>
                                             </div>
@@ -165,16 +187,18 @@ export function InternalTransportationRequestPage() {
                                     </div>
 
                                     <div>
-                                        <p className="font-bold">Additional Comments </p>
+                                        <p className="font-bold text-left">Additional Comments </p>
                                         <textarea id={"feedback"}
-                                                  className={"w-full max-w-full h-28 max-h-28 p-1 border-deep-blue border-solid border-2 rounded"}
+                                                  className={"w-full max-w-full h-28 max-h-28 p-1 border-gray-300 border-solid border-2 rounded bg-light-white"}
                                                   onChange={handleFeedbackInput}
                                                   value={request.feedback} required={true}
                                                   placeholder="Enter detailed description here..."/>
                                     </div>
-                                    <div className={"formButtons flex gap-4 my-4"}>
+                                    <div className={"formButtons flex gap-4 my-4 space-x-5"}>
                                         <Button onClick={handleSubmit} children={"Submit"}/>
-                                        <Button onClick={handleClear} children={"Clear"} color={"bg-transparent border-2 border-deep-blue"} text={"text-deep-blue"}/>
+                                        <Button onClick={handleClear} children={"Clear"}
+                                                color={"bg-transparent border-2 border-deep-blue"}
+                                                text={"text-deep-blue"}/>
                                     </div>
                                 </div>
 
