@@ -4,7 +4,7 @@ import Dropdown from "../components/dropdown.tsx";
 import Button from "../components/Button.tsx";
 import axios from "axios";
 import RadioButton from "../components/RadioButton.tsx";
-import interpreterPic from "../assets/serviceRequestBanners/interpreter.jpg";
+// import interpreterPic from "../assets/serviceRequestBanners/interpreter.jpg";
 
 function LanguageInterpreter(){
     const [request, setRequest] = useState<LanguageInterpreterTypes>(
@@ -130,17 +130,19 @@ function LanguageInterpreter(){
     return (
         <>
             <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
-            <img src={interpreterPic} alt="language interpreter Picture" className="w-screen opacity-65 absolute h-80"/>
-            <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-80 bottom-0 margin-auto">
+            {/*<img src={interpreterPic} alt="language interpreter Picture" className="w-screen opacity-65 absolute h-80 mask-gradient"/>*/}
+            <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-60 bottom-0 margin-auto">
 
                 <div className="interpreterContent px-50">
                     <div className={submittedWindowVisibility.requestScreen}>
 
                         <div className="">
-                            <div className="bg-light-white my-10 p-10 px-20 rounded-3xl shadow-xl">
-                                <h1 className={" text-3xl font-HeadlandOne"}>Language Interpreter Request</h1>
-                                <br/>
-                                <p className="text-left">
+                            <div className="relative bg-light-white my-10 p-10 px-20 rounded-3xl shadow-2xl">
+                                <div className="bg-deep-blue rounded-t-2xl absolute top-0 w-full right-[0px] p-8">
+                                    <h1 className={"text-4xl font-OpenSans text-white font-extrabold"}>Language Interpreter Request</h1>
+                                </div>
+
+                                <p className="text-left mt-20">
                                     Brigham and Women's Hospital is committed to clearly and thoroughly communicating
                                     with
                                     all
