@@ -7,8 +7,18 @@ import figma from "../assets/creditPictures/figma.png";
 import taiga from "../assets/creditPictures/Taiga.png";
 import react from "../assets/creditPictures/React.png";
 import typescript from "../assets/creditPictures/typescript.png";
+import axios from "../assets/creditPictures/axios.png";
+import auth0 from "../assets/creditPictures/auth0.png";
+import postgreSQL from "../assets/creditPictures/PostgreSQL.png";
+import prismaORM from "../assets/creditPictures/prismaORM.jpeg";
+import tailwind from "../assets/creditPictures/tailwind.png";
 
-export function creditsPage() {
+export function CreditsPage() {
+
+    const openInNewTab = (url: string) => {
+        window.open(url, "Window", "noreferrer");
+    };
+
 
     return(
         <>
@@ -27,7 +37,9 @@ export function creditsPage() {
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">Webstorm</p>
+                                <li className="text-deep-blue font-bold pt-2 text-lg underline"
+                                    onClick={() => openInNewTab("https://www.jetbrains.com/webstorm/")}>Webstorm
+                                </li>
                                 <p className=" text-deep-blue">2023.3</p>
                                 <br/>
                             </div>
@@ -41,8 +53,9 @@ export function creditsPage() {
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">Docker</p>
-                                <p className=" text-deep-blue">Version</p>
+                                <p className="text-deep-blue font-bold pt-2 text-lg underline"
+                                   onClick={() => openInNewTab("https://www.docker.com/#build")}>Docker</p>
+                                <p className=" text-deep-blue">4.29.0</p>
                                 <br/>
                             </div>
                         </div>
@@ -55,8 +68,9 @@ export function creditsPage() {
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">GitHub</p>
-                                <p className=" text-deep-blue">Version</p>
+                                <p className="text-deep-blue font-bold pt-2 text-lg underline"
+                                   onClick={() => openInNewTab("https://github.com/")}>GitHub</p>
+                                <p className=" text-deep-blue">3.12</p>
                                 <br/>
                             </div>
                         </div>
@@ -69,8 +83,9 @@ export function creditsPage() {
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">Figma</p>
-                                <p className=" text-deep-blue">Version</p>
+                                <p className="text-deep-blue font-bold pt-2 text-lg underline"
+                                   onClick={() => openInNewTab("https://www.figma.com/")}>Figma</p>
+                                <p className=" text-deep-blue">16.13.3</p>
                                 <br/>
                             </div>
                         </div>
@@ -82,8 +97,9 @@ export function creditsPage() {
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">Taiga</p>
-                                <p className=" text-deep-blue">Version</p>
+                                <p className="text-deep-blue font-bold pt-2 text-lg underline"
+                                   onClick={() => openInNewTab("https://taiga.io/")}>Taiga</p>
+                                <p className=" text-deep-blue">6.7.1</p>
                                 <br/>
                             </div>
                         </div>
@@ -103,8 +119,9 @@ export function creditsPage() {
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">React</p>
-                                <p className=" text-deep-blue">Version</p>
+                                <p className="text-deep-blue font-bold pt-2 text-lg underline"
+                                   onClick={() => openInNewTab("https://legacy.reactjs.org/")}>React</p>
+                                <p className=" text-deep-blue">React 18</p>
                                 <br/>
                             </div>
                         </div>
@@ -117,8 +134,9 @@ export function creditsPage() {
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">Typescript</p>
-                                <p className=" text-deep-blue">Version</p>
+                                <p className="text-deep-blue font-bold pt-2 text-lg underline"
+                                   onClick={() => openInNewTab("https://www.typescriptlang.org/")}>Typescript</p>
+                                <p className=" text-deep-blue">5.4.5</p>
                                 <br/>
                             </div>
                         </div>
@@ -127,12 +145,13 @@ export function creditsPage() {
                     <div className="w-56">
                         <div className=" border-2 rounded-3xl bg-gradient-to-t from-white to-blue-300 text-center">
                             <div className="h-56 my-auto">
-                                <img src={github} alt="github"
+                                <img src={axios} alt="axios"
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">GitHub</p>
-                                <p className=" text-deep-blue">Version</p>
+                                <p className="text-deep-blue font-bold pt-2 text-lg underline"
+                                   onClick={() => openInNewTab("https://axios-http.com")}>Axios</p>
+                                <p className=" text-deep-blue">1.6.8</p>
                                 <br/>
                             </div>
                         </div>
@@ -141,12 +160,13 @@ export function creditsPage() {
                     <div className="w-56">
                         <div className=" border-2 rounded-3xl bg-gradient-to-t from-white to-blue-300 text-center">
                             <div className="h-56 my-auto">
-                                <img src={figma} alt="Figma"
+                                <img src={auth0} alt="auth0"
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">Figma</p>
-                                <p className=" text-deep-blue">Version</p>
+                                <p className="text-deep-blue font-bold pt-2 text-lg underline"
+                                   onClick={() => openInNewTab("https://auth0.com")}>auth0</p>
+                                <p className=" text-deep-blue">4.3.1</p>
                                 <br/>
                             </div>
                         </div>
@@ -155,67 +175,71 @@ export function creditsPage() {
 
                 <h1 className="font-bold text-deep-blue font-OpenSans text-left py-4 px-14 mt-48"> Frameworks:</h1>
                 <div className="grid grid-cols-4 place-items-center h-40">
-                    <div className="w-56">
+                    <div className="w-56 pb-10">
                         <div className=" border-2 rounded-3xl bg-gradient-to-t from-white to-blue-300 text-center">
                             <div className="h-56 my-auto">
-                                <img src={webstorm} alt="webstorm"
+                                <img src={react} alt="React.js"
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">Webstorm</p>
-                                <p className=" text-deep-blue">2023.3</p>
+                                <p className="text-deep-blue font-bold pt-2 text-lg underline"
+                                   onClick={() => openInNewTab("https://react.dev")}>React.js</p>
+                                <p className=" text-deep-blue">React 18</p>
                                 <br/>
                             </div>
                         </div>
                     </div>
 
-                    <div className="w-56">
+                    <div className="w-56 pb-10">
                         <div className=" border-2 rounded-3xl bg-gradient-to-t from-white to-blue-300 text-center">
                             <div className="h-56 my-auto">
-                                <img src={Docker} alt="docker"
+                                <img src={postgreSQL} alt="PostgreSQL"
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">Docker</p>
-                                <p className=" text-deep-blue">Version</p>
+                                <p className="text-deep-blue font-bold pt-2 text-lg underline"
+                                   onClick={() => openInNewTab("https://www.postgresql.org")}>PostgreSQL</p>
+                                <p className=" text-deep-blue">16.2</p>
                                 <br/>
                             </div>
                         </div>
                     </div>
 
-                    <div className="w-56">
+                    <div className="w-56 pb-10">
                         <div className=" border-2 rounded-3xl bg-gradient-to-t from-white to-blue-300 text-center">
                             <div className="h-56 my-auto">
-                                <img src={github} alt="github"
+                                <img src={prismaORM} alt="prismORM"
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">GitHub</p>
-                                <p className=" text-deep-blue">Version</p>
+                                <p className="text-deep-blue font-bold pt-2 text-lg underline"
+                                   onClick={() => openInNewTab("https://www.prisma.io")}>PrismaORM</p>
+                                <p className=" text-deep-blue">5</p>
                                 <br/>
                             </div>
                         </div>
                     </div>
 
-                    <div className="w-56">
+                    <div className="w-56 pb-10">
                         <div className=" border-2 rounded-3xl bg-gradient-to-t from-white to-blue-300 text-center">
                             <div className="h-56 my-auto">
-                                <img src={figma} alt="Figma"
+                                <img src={tailwind} alt="Tailwind"
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
                             <div className=" ">
-                                <p className="text-deep-blue font-bold pt-2 text-lg">Figma</p>
-                                <p className=" text-deep-blue">Version</p>
+                                <p className="text-deep-blue font-bold pt-2 text-lg underline"
+                                   onClick={() => openInNewTab("https://tailwindcss.com")}>Tailwind</p>
+                                <p className=" text-deep-blue">v3.0</p>
                                 <br/>
                             </div>
                         </div>
                     </div>
+                    <br/><br/>
                 </div>
-
 
             </div>
         </>
     );
 }
 
-export default creditsPage;
+export default CreditsPage;
