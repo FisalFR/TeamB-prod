@@ -3,7 +3,7 @@ import HandleLogin from "./handleLogin.tsx";
 import { motion } from 'framer-motion';
 import {useAuth0} from "@auth0/auth0-react";
 
-const Carousel = ({ content, autoPlay, interval }) => {
+const Carousel = ({ content, autoPlay, interval}) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const {isAuthenticated,isLoading} = useAuth0();
 
@@ -31,7 +31,7 @@ const Carousel = ({ content, autoPlay, interval }) => {
                      className={`${currentIndex === index ? ' flex flex-auto' : 'hidden '}`}
                      // style={{height: '100%'}}
                      onClick={() => LoginGuest({path: item.text.route})}>
-                    <div className="w-[400px] p-2">
+                    <div className={"w-[400px] p-2"}>
                         <h4 className="font-semibold text-white text-2xl">
                             <span className="outlined-text">{item.text.title}</span>
                         </h4>

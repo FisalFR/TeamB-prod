@@ -1,10 +1,31 @@
 import Chart from "react-apexcharts";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import map from '../assets/Profile/map.svg';
+import data from '../assets/Profile/data.svg';
+import manage from '../assets/Profile/manage.svg';
+import edit from '../assets/Profile/edit.svg';
+import profile from '../assets/Profile/default.svg';
+import picture from '../assets/Profile/picture.svg';
+import {useAuth0} from "@auth0/auth0-react";
+// import employee from '../../../../packages/common/src/employee.ts';
+
+
+
 
 
 
 function UserProfile(){
+    const MapSVG = <img src={map} alt="map" className={"w-50"} />;
+    const DataSVG = <img src={data} alt="data" className={"w-50"} />;
+    const ManageSVG = <img src={manage} alt="manage" className={"w-50"} />;
+    const EditSVG = <img src={edit} alt="edit" className={"w-50"} />;
+    const ProfileSVG = <img src={profile} alt="profile" className={"w-50"} />;
+    const PictureSVG = <img src={picture} alt="profile" className={"w-10"} />;
+
+
+
+
 
     const [maintenanceCount, setMaintenanceCount] = useState(0);
     const [maintenanceMediumCount, setMaintenanceMediumCount] = useState(0);
@@ -288,194 +309,6 @@ function UserProfile(){
         });
     }
 
-    // const state = {
-    //     series: [
-    //         {
-    //             name: 'Maintenance',
-    //             data: [{
-    //                     x: 'Low',
-    //                     y: [maintenanceCount,]
-    //                 }, {
-    //                     x: 'Medium',
-    //                     y: [maintenanceMediumCount,]
-    //                 }, {
-    //                     x: 'High',
-    //                     y: [maintenanceHighCount,]
-    //                 }, {
-    //                     x: 'Emergency',
-    //                     y: [maintenanceEmergencyCount,]
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             name: 'Language',
-    //             data: [{
-    //                     x: 'Low',
-    //                     y: [languageCount,]
-    //                 }, {
-    //                     x: 'Medium',
-    //                     y: [languageMediumCount,]
-    //                 }, {
-    //                     x: 'High',
-    //                     y: [languageHighCount,]
-    //                 }, {
-    //                     x: 'Emergency',
-    //                     y: [languageEmergencyCount,]
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             name: 'Sanitation',
-    //             data: [{
-    //                     x: 'Low',
-    //                     y: [sanitationCount,]
-    //                 }, {
-    //                     x: 'Medium',
-    //                     y: [sanitationMediumCount,]
-    //                 }, {
-    //                     x: 'High',
-    //                     y: [sanitationHighCount,]
-    //                 }, {
-    //                     x: 'Emergency',
-    //                     y: [sanitationEmergencyCount,]}
-    //             ]
-    //         },
-    //         {
-    //             name: 'Medicine',
-    //             data: [{
-    //                     x: 'Low',
-    //                     y: [medicineCount,]
-    //                 }, {
-    //                     x: 'Medium',
-    //                     y: [medicineMediumCount,]
-    //                 }, {
-    //                     x: 'High',
-    //                     y: [medicineHighCount,]
-    //                 }, {
-    //                     x: 'Emergency',
-    //                     y: [medicineEmergencyCount,]
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             name: 'Security',
-    //             data: [{
-    //                     x: 'Low',
-    //                     y: [securityCount,]
-    //                 }, {
-    //                     x: 'Medium',
-    //                     y: [securityMediumCount,]
-    //                 }, {
-    //                     x: 'High',
-    //                     y: [securityHighCount,]
-    //                 }, {
-    //                     x: 'Emergency',
-    //                     y: [securityEmergencyCount,]
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             name: 'Int. Transport',
-    //             data: [{
-    //                     x: 'Low',
-    //                     y: [internalCount,]
-    //                 }, {
-    //                     x: 'Medium',
-    //                     y: [internalMediumCount,]
-    //                 }, {
-    //                     x: 'High',
-    //                     y: [internalHighCount,]
-    //                 }, {
-    //                     x: 'Emergency',
-    //                     y: [internalEmergencyCount,]
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             name: 'Ext. Transport',
-    //             data: [{
-    //                     x: 'Low',
-    //                     y: [externalCount,]
-    //                 }, {
-    //                     x: 'Medium',
-    //                     y: [externalMediumCount,]
-    //                 }, {
-    //                     x: 'High',
-    //                     y: [externalHighCount,]
-    //                 }, {
-    //                     x: 'Emergency',
-    //                     y: [externalEmergencyCount,]
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             name: 'Gift Delivery',
-    //             data: [{
-    //                     x: 'Low',
-    //                     y: [giftCount,]
-    //                 }, {
-    //                     x: 'Medium',
-    //                     y: [giftMediumCount,]
-    //                 }, {
-    //                     x: 'High',
-    //                     y: [giftHighCount,]
-    //                 }, {
-    //                     x: 'Emergency',
-    //                     y: [giftEmergencyCount,]
-    //                 }
-    //             ]
-    //         },
-    //     ],
-    //     options: {
-    //         chart: {
-    //             height: 350,
-    //             type: 'rangeBar'
-    //         },
-    //         plotOptions: {
-    //             bar: {
-    //                 borderRadius: 10,
-    //             }
-    //         },
-    //         dataLabels: {
-    //             enabled: true,
-    //         },
-    //         fill: {
-    //             type: 'gradient',
-    //             gradient: {
-    //                 shade: 'light',
-    //                 type: 'vertical',
-    //                 shadeIntensity: 0.25,
-    //                 gradientToColors: undefined,
-    //                 inverseColors: true,
-    //                 opacityFrom: 1,
-    //                 opacityTo: 1,
-    //                 stops: [50, 0, 100, 100]
-    //             }
-    //         },
-    //         title:{
-    //             text: "Form Priority Distribution",
-    //             align: 'middle',
-    //             margin: 10,
-    //             offsetX: 0,
-    //             offsetY: 0,
-    //             floating: false,
-    //             style: {
-    //                 fontSize: '25px',
-    //                 fontWeight: '1000',
-    //                 fontFamily: 'Open Sans',
-    //                 color: '#263238'
-    //             }
-    //         },
-    //         xaxis: {
-    //             type: 'number',
-    //             label: 'Priority'
-    //         },
-    //         legend: {
-    //             position: 'bottom'
-    //         }
-    //     },
-    // };
-
     const yourState = {
         series: [
             {
@@ -669,21 +502,89 @@ function UserProfile(){
         },
     };
 
+    const user = useAuth0();
+
+//     const [employee, setEmployee] = useState<employee>({
+//         employeeEmail: "",
+//         firstName: "",
+//         lastName: "",
+//         salary: 0,
+//         gender: "",
+//         type: ""
+// });
+//
+//     useEffect(() => {
+//         axios.get("/api/employee/employeeInfo").then((response) => {
+//             const employeeNames: string[] = [];
+//             for (let i = 0; i < response.data.length; i++) {
+//                 employeeNames.push(response.data[i].firstName);
+//             }
+//             setEmployeeOptions(employeeNames);
+//         });
+//     }, []);
+
     return (
         <div className={"flex flex-row"}>
             <div className={"h-[640px] w-100 bg-white text-wrap rounded-xl shadow-xl ml-10 mt-4 overflow-hidden"}>
-                <p className={"text-wrap w-full h-full"}>One two three four five six seven eight nine ten</p>
+                <div className={"w-full centerContent bg-gray-200 h-[35%]"}>
+                    <div className={"absolute top-[80px] left-[400px]"}>{PictureSVG}</div>
+                    {ProfileSVG}
+                </div>
+                <div className={"text-left pb-4 border-b-2"}>
+                    <h2 className={"text-3xl font-bold font-OpenSans pl-4 pt-4 border-gray-200 pb-2 "}>My Profile</h2>
+                </div>
+                <div className={"text-left pl-4 pt-2 pr-4 flex flex-col"}>
+
+                    <div>
+                        <h2 className={"text-l font-bold w-full"}>Email:</h2>
+                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{user.user?.email}</p>
+                    </div>
+
+                    <div className={"mt-2"}>
+                        <h2 className={"text-l font-bold w-full"}>Name:</h2>
+                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>Colin Nguyen</p>
+                    </div>
+
+
+                    <div className={"mt-2"}>
+                        <h2 className={"text-l font-bold w-full"}>Type:</h2>
+                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>Admin</p>
+                    </div>
+
+                    <div className={"mt-2"}>
+                        <h2 className={"text-l font-bold w-full"}>Salary:</h2>
+                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>10000</p>
+                    </div>
+
+                    <div className={"mt-2"}>
+                        <h2 className={"text-l font-bold w-full"}>Gender:</h2>
+                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>Male</p>
+                    </div>
+
+                </div>
+
+
             </div>
             <div className={"flex flex-col space-y-5 mt-4"}>
                 <div className="flex flex-row w-fit h-fit ml-5 space-x-5" id="rangeBar">
-                    <div className={" bg-white rounded-xl shadow-xl h-[295px] w-[360px]"}>
-                        t
-                        {/*<Chart options={state.options}*/}
-                        {/*       series={state.series}*/}
-                        {/*       type="bar"*/}
-                        {/*       height={285}*/}
-                        {/*       width={360}*/}
-                        {/*/>*/}
+                    <div
+                        className={"flex flex-col centerContent bg-white rounded-xl shadow-xl h-[295px] w-[360px] space-y-10"}>
+                        <div className={"flex flex-row space-x-10"}>
+                            <div className={"h-[85px] w-[85px] centerContent"}>
+                                {MapSVG}
+                            </div>
+                            <div className={"h-[85px] w-[85px] centerContent"}>
+                                {DataSVG}
+                            </div>
+                        </div>
+                        <div className={"flex flex-row space-x-10"}>
+                            <div className={"h-[85px] w-[85px] centerContent"}>
+                                {ManageSVG}
+                            </div>
+                            <div className={"h-[85px] w-[85px] centerContent"}>
+                                {EditSVG}
+                            </div>
+                        </div>
                     </div>
                     <div className={"bg-white rounded-xl shadow-xl"}>
                         <Chart options={donutRequest.options}

@@ -8,4 +8,8 @@ router.get("/", async function (req: Request, res: Response) {
   res.status(200).json(employee);
 });
 
+router.get("/employeeInfo", async function (req: Request, res: Response) {
+  const employee = await client.employee.findMany({});
+  res.status(200).json(employee);
+});
 export default router;
