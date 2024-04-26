@@ -22,6 +22,10 @@ module.exports = {
       },
     },
     extend: {
+      backgroundImage: theme => ({
+        'fade-bottom': 'linear-gradient(to bottom, transparent, black)',
+      }),
+
       colors: {
         'deep-blue': '#012D5A',
         'bone-white': '#F1F1F1',
@@ -66,7 +70,17 @@ module.exports = {
   },
   plugins: [
     addVariablesForColors,
-    require("tailwindcss-animate")
+    require("tailwindcss-animate"),
+    require('@tailwindcss/postcss7-compat'),
+    function ({addUtilities}) {
+      const newUtilities = {
+        '.mask-gradient': {
+          maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
+          '-webkit-mask-image': 'linear-gradient(to bottom, black 60%, transparent 100%)'
+        }
+      }
+      addUtilities(newUtilities)
+    }
   ],
 };
 

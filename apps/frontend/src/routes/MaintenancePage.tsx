@@ -93,7 +93,7 @@ export function MaintenancePage() {
     return (
         <>
             <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
-                <img src={maintenancePic} alt="maintenance Picture" className="w-screen opacity-65 absolute"/>
+                <img src={maintenancePic} alt="maintenance Picture" className="w-screen opacity-65 absolute mask-gradient"/>
                 <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-50 bottom-0 margin-auto">
                     <div className={submittedWindowVisibility.formScreen}>
                         <div className="bg-light-white my-10 p-10 px-20 rounded-3xl w-auto drop-shadow-xl">
