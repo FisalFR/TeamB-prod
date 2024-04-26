@@ -220,7 +220,7 @@ export function MaintenancePage() {
                                           placeholder="Enter detailed description here..."/>
 
 
-                                    <div className={"formButtons flex gap-4 my-4"}>
+                                    <div className={"formButtons flex gap-4 my-4 space-x-5"}>
                                         <Button onClick={handleSubmit} children={"Submit"}/>
                                         <Button onClick={handleClear} children={"Clear"}
                                                 color={"bg-transparent border-2 border-deep-blue"}

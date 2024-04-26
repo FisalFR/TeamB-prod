@@ -4,7 +4,7 @@ import RadioButton from "../components/RadioButton.tsx";
 import Button from "../components/Button.tsx";
 import Dropdown from "../components/dropdown.tsx";
 import axios from "axios";
-import sanitationPic from "../assets/serviceRequestBanners/sanitation.jpg";
+// import sanitationPic from "../assets/serviceRequestBanners/sanitation.jpg";
 
 function Sanitation() {
     const [request, setRequest] = useState<SanitationRequest>({employeeName: '', priority: '', location: '', serviceType: '', contaminant: '', additionalComments: '', status: ''});
@@ -85,13 +85,25 @@ function Sanitation() {
     return (
         <>
             <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
-                <img src={sanitationPic} alt="maintenance Picture" className="w-screen opacity-65 absolute h-80"/>
-                <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-50 bottom-0 margin-auto">
+                {/*<img src={sanitationPic} alt="maintenance Picture" className="w-screen opacity-65 absolute h-80 mask-gradient"/>*/}
+                <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-[400px] bottom-0 margin-auto">
                 <div className={submittedWindowVisibility.formScreen}>
 
-                    <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                        <h1 className={"text-3xl font-HeadlandOne py-4"}>Welcome to the Sanitation page!</h1>
-                        <p>Fill out the form below to report an issue and make a sanitation request.</p>
+                    <div className="relative bg-light-white my-10 p-10 px-20 rounded-3xl w-[1200px] drop-shadow-2xl">
+                        <div className="absolute bg-deep-blue rounded-t-2xl w-full top-0 right-0 p-4">
+                            <h1 className={"text-4xl font-extrabold text-white font-OpenSans py-4"}>Sanitation Service Request</h1>
+                        </div>
+                        <p className="text-left mt-24">
+                        Our facility is committed to maintaining a clean and healthy environment for all occupants. Our sanitation services are crucial in this endeavor. Please inform your facility manager in advance about your sanitation needs.
+                        </p>
+                        <br/>
+                        <p className="text-left">
+                            Our sanitation team is available during normal business hours, Monday-Friday, 9:00 a.m. to 5:00 p.m. Please fill out the form to request a sanitation service for your location.
+                        </p>
+                        <br/>
+                        <p className="font-bold text-left ">
+                            Please select the type of sanitation service and the contaminant from the dropdown. Any services not listed in the dropdown will need to be requested through facility administration.
+                        </p>
 
                     <form ref={formRef} onSubmit={e => {
                         e.preventDefault();
@@ -99,7 +111,7 @@ function Sanitation() {
                         <div className="formTest w-full my-10 grid grid-cols-2 gap-12">
                             <div>
                                 <p className={"text-left font-bold"}>Employee Name:</p>
-                                <div className={"border-solid border-deep-blue border-2 rounded"}>
+                                <div className={"border-solid border-gray-300 border-2 rounded"}>
                                     <Dropdown options={employeeOptions} placeholder={"Employee Name"}
                                               name={"employeeDropdown"}
                                               id={"employeeName"} value={cleared}
@@ -109,37 +121,44 @@ function Sanitation() {
 
                                 <br/>
                                 <p className={"text-left font-bold"}>What kind of service?</p>
-                                <div className="border-solid border-deep-blue border-2 rounded overflow-hidden w-full">
+                                <div className="border-solid border-gray-300 border-2 rounded overflow-hidden w-full">
                                     <RadioButton value={"Bed Cleaning"} name={"serviceType"} id={"serviceType1"}
                                                  state={request.serviceType}
+                                                 color={"bg-light-white"}
                                                  onChange={handleInput} required={true}
                                                  width={"w-full"}/>
                                     <RadioButton value={"Toilet Cleaning"} name={"serviceType"} id={"serviceType2"}
                                                  state={request.serviceType}
+                                                 color={"bg-light-white"}
                                                  onChange={handleInput} required={true}
                                                  width={"w-full"}/>
                                     <RadioButton value={"General Sanitation"} name={"serviceType"} id={"serviceType3"}
                                                  state={request.serviceType}
+                                                 color={"bg-light-white"}
                                                  onChange={handleInput} required={true}
                                                  width={"w-full"}/>
                                 </div>
                                 <br/>
                                 <p className={"text-left font-bold"}>Priority</p>
-                                <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
+                                <div className="border-solid border-gray-300 border-2 rounded overflow-hidden">
                                     <RadioButton value={"Low"} name={"priority"} id={"priority1"}
                                                  state={request.priority}
+                                                 color={"bg-light-white"}
                                                  onChange={handleInput} required={true}
                                                  width={"w-full"}/>
                                     <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
                                                  state={request.priority}
+                                                 color={"bg-light-white"}
                                                  onChange={handleInput} required={true}
                                                  width={"w-full"}/>
                                     <RadioButton value={"High"} name={"priority"} id={"priority3"}
                                                  state={request.priority}
+                                                 color={"bg-light-white"}
                                                  onChange={handleInput} required={true}
                                                  width={"w-full"}/>
                                     <RadioButton value={"Emergency"} name={"priority"} id={"priority3"}
                                                  state={request.priority}
+                                                 color={"bg-light-white"}
                                                  onChange={handleInput} required={true}
                                                  width={"w-full"}/>
                                 </div>
@@ -150,26 +169,30 @@ function Sanitation() {
 
 
                                 <p className={"text-left font-bold"}>What location is this issue in?</p>
-                                <div className="border-solid border-deep-blue border-2 rounded ">
+                                <div className="border-solid border-gray-300 border-2 rounded ">
                                     <Dropdown options={locationOptions} placeholder={"Location"}
                                               name={"locationDropdown"}
                                               id={"dropdown1"} value={cleared}
                                               setInput={handleLocationInput} required={true}
+                                              color={"bg-light-white"}
                                               width={"w-100"}/>
                                 </div>
                                 <br/>
                                 <p className={"text-left font-bold"}>Contaminant</p>
-                                <div className="border-solid border-deep-blue border-2 rounded overflow-hidden">
+                                <div className="border-solid border-gray-300 border-2 rounded overflow-hidden">
                                     <RadioButton value={"Biological Fluids"} name={"contaminant"} id={"contaminant1"}
                                                  state={request.contaminant}
+                                                 color={"bg-light-white"}
                                                  onChange={handleInput} required={true}
                                                  width={"w-full"}/>
                                     <RadioButton value={"Waste Stains"} name={"contaminant"} id={"contaminant2"}
                                                  state={request.contaminant}
+                                                 color={"bg-light-white"}
                                                  onChange={handleInput} required={true}
                                                  width={"w-full"}/>
                                     <RadioButton value={"Dust and Debris"} name={"contaminant"} id={"contaminant3"}
                                                  state={request.contaminant}
+                                                 color={"bg-light-white"}
                                                  onChange={handleInput} required={true}
                                                  width={"w-full"}/>
                                 </div>
@@ -177,7 +200,7 @@ function Sanitation() {
                                 <label htmlFor={"additionalComments"} className={"flex w-full text-left font-bold"}>Additional
                                     Comments</label>
                                 <textarea id={"additionalComments"}
-                                          className={"w-full max-w-full h-40 max-h-40 p-1 border-solid border-deep-blue border-2 rounded"}
+                                          className={"w-full max-w-full h-40 max-h-40 p-1 border-solid border-gray-300 border-2 rounded bg-light-white"}
                                           onChange={handleAdditionalComments}
                                           value={request.additionalComments} required={false}
                                           placeholder="Enter detailed description here..."/>
@@ -185,7 +208,7 @@ function Sanitation() {
                         </div>
 
 
-                            <div className={"formButtons flex gap-4 my-4"}>
+                            <div className={"formButtons flex gap-4 my-4 space-x-5"}>
                                 <Button onClick={handleSubmit} children={"Submit"}/>
                                 <Button onClick={handleClear} children={"Clear"} color={"bg-transparent border-2 border-deep-blue"} text={"text-deep-blue"}/>
                             </div>

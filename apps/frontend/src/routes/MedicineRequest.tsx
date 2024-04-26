@@ -128,10 +128,10 @@ export function MedicineRequest(){
             <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-60 bottom-0 margin-auto">
                 <div className={submittedWindowVisibility.formScreen}>
                     <div className="relative bg-light-white my-10 p-10 px-20 rounded-3xl w-[1000px] mt-100">
-                        <div className="bg-deep-blue absolute inset-0 bottom-[1130px] rounded-t-2xl">
+                        <div className="bg-deep-blue absolute inset-0 bottom-[1120px] rounded-t-2xl">
                         <h1 className={"text-4xl font-OpenSans text-white font-extrabold mt-7"}>Medicine Delivery Request</h1>
                         </div>
-                        <p className="text-left mt-20">
+                        <p className="text-left mt-16">
                             Our facility is dedicated to ensuring the health and well-being of all employees. Our medicine delivery service plays a vital role in this commitment. Please inform your facility manager in advance about your medicine needs.
                         </p>
                         <br/>
@@ -233,7 +233,7 @@ export function MedicineRequest(){
                                 </div>
                             </div>
 
-                            <div className={"formButtons flex-auto object-center space-x-5 pb-16"}>
+                            <div className={"formButtons flex-auto object-center space-x-10 pb-16"}>
                                 <Button onClick={handleSubmit} children={"Submit"} px={"px-8"}/>
                                 <Button onClick={handleClear} children={"Clear"} color={"bg-transparent border-2 border-deep-blue"} text={"text-deep-blue"}/>
                             </div>
