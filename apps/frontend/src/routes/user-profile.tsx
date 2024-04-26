@@ -46,119 +46,175 @@ function UserProfile(){
     const [giftHighCount, setGiftHighCount] = useState(0);
     const [giftEmergencyCount, setGiftEmergencyCount] = useState(0);
 
-    function getCount(priority:string[]) {
+    function getMaintenanceCount(priority:string) {
         const requestData = { priority };
-        axios.post("/api/csvManager/countTypePriority", JSON.stringify(requestData) , {
+        console.log(requestData);
+        axios.post("/api/csvManager/countMaintenancePriority", JSON.stringify(requestData) , {
             headers: {
                 'Content-Type': 'application/json'
             }
-            }).then((response) => {
-                if(priority[1] == "Maintenance" && priority[0] == "Low"){
-                    setMaintenanceCount(response.data);
-                } else if(priority[1] == "Maintenance" && priority[0] == "Medium"){
-                    setMaintenanceMediumCount(response.data);
-                } else if(priority[1] == "Maintenance" && priority[0] == "High"){
-                    setMaintenanceHighCount(response.data);
-                } else if(priority[1] == "Maintenance" && priority[0] == "Emergency"){
-                    setMaintenanceEmergencyCount(response.data);
-                } else if(priority[1] == "Language" && priority[0] == "Low"){
-                    setLanguageCount(response.data);
-                } else if(priority[1] == "Language" && priority[0] == "Medium"){
-                    setLanguageMediumCount(response.data);
-                } else if(priority[1] == "Language" && priority[0] == "High"){
-                    setLanguageHighCount(response.data);
-                } else if(priority[1] == "Language" && priority[0] == "Emergency"){
-                    setLanguageEmergencyCount(response.data);
-                } else if(priority[1] == "Sanitation" && priority[0] == "Low"){
-                    setSanitationCount(response.data);
-                } else if(priority[1] == "Sanitation" && priority[0] == "Medium"){
-                    setSanitationMediumCount(response.data);
-                } else if(priority[1] == "Sanitation" && priority[0] == "High"){
-                    setSanitationHighCount(response.data);
-                } else if(priority[1] == "Sanitation" && priority[0] == "Emergency"){
-                    setSanitationEmergencyCount(response.data);
-                } else if(priority[1] == "Medicine" && priority[0] == "Low"){
-                    setMedicineCount(response.data);
-                } else if(priority[1] == "Medicine" && priority[0] == "Medium"){
-                    setMedicineMediumCount(response.data);
-                } else if(priority[1] == "Medicine" && priority[0] == "High"){
-                    setMedicineHighCount(response.data);
-                } else if(priority[1] == "Medicine" && priority[0] == "Emergency"){
-                    setMedicineEmergencyCount(response.data);
-                } else if(priority[1] == "Security" && priority[0] == "Low"){
-                    setSecurityCount(response.data);
-                } else if(priority[1] == "Security" && priority[0] == "Medium"){
-                    setSecurityMediumCount(response.data);
-                } else if(priority[1] == "Security" && priority[0] == "High"){
-                    setSecurityHighCount(response.data);
-                } else if(priority[1] == "Security" && priority[0] == "Emergency"){
-                    setSecurityEmergencyCount(response.data);
-                } else if(priority[1] == "Internal Transport" && priority[0] == "Low"){
-                    setInternalCount(response.data);
-                } else if(priority[1] == "Internal Transport" && priority[0] == "Medium"){
-                    setInternalMediumCount(response.data);
-                } else if(priority[1] == "Internal Transport" && priority[0] == "High"){
-                    setInternalHighCount(response.data);
-                } else if(priority[1] == "Internal Transport" && priority[0] == "Emergency"){
-                    setInternalEmergencyCount(response.data);
-                } else if(priority[1] == "External Transportation" && priority[0] == "Low"){
-                    setExternalCount(response.data);
-                } else if(priority[1] == "External Transportation" && priority[0] == "Medium"){
-                    setExternalMediumCount(response.data);
-                } else if(priority[1] == "External Transportation" && priority[0] == "High"){
-                    setExternalHighCount(response.data);
-                } else if(priority[1] == "External Transportation" && priority[0] == "Emergency"){
-                    setExternalEmergencyCount(response.data);
-                } else if(priority[1] == "Gift" && priority[0] == "Low"){
-                    setGiftCount(response.data);
-                } else if(priority[1] == "Gift" && priority[0] == "Medium"){
-                    setGiftMediumCount(response.data);
-                } else if(priority[1] == "Gift" && priority[0] == "High"){
-                    setGiftHighCount(response.data);
-                } else if(priority[1] == "Gift" && priority[0] == "Emergency"){
-                    setGiftEmergencyCount(response.data);
-                }
-
-
-
+        }).then((response) => {
+            if(priority == "Low"){
+                setMaintenanceCount(response.data);
+            } else if(priority == "Medium"){
+                setMaintenanceMediumCount(response.data);
+            } else if(priority == "High"){
+                setMaintenanceHighCount(response.data);
+            } else if(priority == "Emergency"){
+                setMaintenanceEmergencyCount(response.data);
+            }
 
         });
     };
 
-    useEffect(() => {
-        getCount(["Low", "Maintenance"]);
-        getCount(["Medium", "Maintenance"]);
-        getCount(["High", "Maintenance"]);
-        getCount(["Emergency", "Maintenance"]);
-        getCount(["Low", "Language"]);
-        getCount(["Medium", "Language"]);
-        getCount(["High", "Language"]);
-        getCount(["Emergency", "Language"]);
-        getCount(["Low", "Sanitation"]);
-        getCount(["Medium", "Sanitation"]);
-        getCount(["High", "Sanitation"]);
-        getCount(["Emergency", "Sanitation"]);
-        getCount(["Low", "Medicine"]);
-        getCount(["Medium", "Medicine"]);
-        getCount(["High", "Medicine"]);
-        getCount(["Emergency", "Medicine"]);
-        getCount(["Low", "Security"]);
-        getCount(["Medium", "Security"]);
-        getCount(["High", "Security"]);
-        getCount(["Emergency", "Security"]);
-        getCount(["Low", "Internal Transport"]);
-        getCount(["Medium", "Internal Transport"]);
-        getCount(["High", "Internal Transport"]);
-        getCount(["Emergency", "Internal Transport"]);
-        getCount(["Low", "External Transportation"]);
-        getCount(["Medium", "External Transportation"]);
-        getCount(["High", "External Transportation"]);
-        getCount(["Emergency", "External Transportation"]);
-        getCount(["Low", "Gift"]);
-        getCount(["Medium", "Gift"]);
-        getCount(["High", "Gift"]);
-        getCount(["Emergency", "Gift"]);
+    function getLanguageCount(priority:string) {
+        const requestData = { priority };
+        console.log(requestData);
+        axios.post("/api/csvManager/countLanguagePriority", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            if(priority == "Low"){
+                setLanguageCount(response.data);
+            } else if(priority == "Medium"){
+                setLanguageMediumCount(response.data);
+            } else if(priority == "High"){
+                setLanguageHighCount(response.data);
+            } else if(priority == "Emergency"){
+                setLanguageEmergencyCount(response.data);
+            }
+        });
+    };
 
+    function getSanitationCount(priority:string) {
+        const requestData = { priority };
+        console.log(JSON.stringify(requestData));
+        axios.post("/api/csvManager/countSanitationPriority", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            if(priority == "Low"){
+                setSanitationCount(response.data);
+            } else if(priority == "Medium"){
+                setSanitationMediumCount(response.data);
+            } else if(priority == "High"){
+                setSanitationHighCount(response.data);
+            } else if(priority == "Emergency"){
+                setSanitationEmergencyCount(response.data);
+            }
+        });
+    };
+
+    function getMedicineCount(priority:string) {
+        const requestData = { priority };
+        axios.post("/api/csvManager/countMedicinePriority", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            if(priority == "Low"){
+                setMedicineCount(response.data);
+            } else if(priority == "Medium"){
+                setMedicineMediumCount(response.data);
+            } else if(priority == "High"){
+                setMedicineHighCount(response.data);
+            } else if(priority == "Emergency"){
+                setMedicineEmergencyCount(response.data);
+            }
+        });
+    };
+
+    function getSecurityCount(priority:string) {
+        const requestData = { priority };
+        axios.post("/api/csvManager/countSecurityPriority", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            if(priority == "Low"){
+                setSecurityCount(response.data);
+            } else if(priority == "Medium"){
+                setSecurityMediumCount(response.data);
+            } else if(priority == "High"){
+                setSecurityHighCount(response.data);
+            } else if(priority == "Emergency"){
+                setSecurityEmergencyCount(response.data);
+            }
+        });
+    };
+
+    function getInternalCount(priority:string) {
+        const requestData = { priority };
+        axios.post("/api/csvManager/countInternalPriority", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            if(priority == "Low"){
+                setInternalCount(response.data);
+            } else if(priority == "Medium"){
+                setInternalMediumCount(response.data);
+            } else if(priority == "High"){
+                setInternalHighCount(response.data);
+            } else if(priority == "Emergency"){
+                setInternalEmergencyCount(response.data);
+            }
+        });
+    };
+
+    function getExternalCount(priority:string) {
+        const requestData = { priority };
+        axios.post("/api/csvManager/countExternalPriority", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            if(priority == "Low"){
+                setExternalCount(response.data);
+            } else if(priority == "Medium"){
+                setExternalMediumCount(response.data);
+            } else if(priority == "High"){
+                setExternalHighCount(response.data);
+            } else if(priority == "Emergency"){
+                setExternalEmergencyCount(response.data);
+            }
+        });
+    };
+
+    function getGiftCount(priority:string) {
+        const requestData = { priority };
+        axios.post("/api/csvManager/countGiftPriority", JSON.stringify(requestData) , {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            if(priority == "Low"){
+                setGiftCount(response.data);
+            } else if(priority == "Medium"){
+                setGiftMediumCount(response.data);
+            } else if(priority == "High"){
+                setGiftHighCount(response.data);
+            } else if(priority == "Emergency"){
+                setGiftEmergencyCount(response.data);
+            }
+        });
+    };
+
+    useEffect(() => {
+        let priorities: string[] =
+            ["Low", "Medium", "High", "Emergency"];
+            for(let j = 0; j < 4; j++){
+                    getMaintenanceCount(priorities[j]);
+                    getLanguageCount(priorities[j]);
+                    getSanitationCount(priorities[j]);
+                    getMedicineCount(priorities[j]);
+                    getSecurityCount(priorities[j]);
+                    getInternalCount(priorities[j]);
+                    getExternalCount(priorities[j]);
+                    getGiftCount(priorities[j]);
+            }
         getCreatedBy("Colin");
     }, []);
 
@@ -232,275 +288,248 @@ function UserProfile(){
         });
     }
 
-    const state = {
+    // const state = {
+    //     series: [
+    //         {
+    //             name: 'Maintenance',
+    //             data: [{
+    //                     x: 'Low',
+    //                     y: [maintenanceCount,]
+    //                 }, {
+    //                     x: 'Medium',
+    //                     y: [maintenanceMediumCount,]
+    //                 }, {
+    //                     x: 'High',
+    //                     y: [maintenanceHighCount,]
+    //                 }, {
+    //                     x: 'Emergency',
+    //                     y: [maintenanceEmergencyCount,]
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             name: 'Language',
+    //             data: [{
+    //                     x: 'Low',
+    //                     y: [languageCount,]
+    //                 }, {
+    //                     x: 'Medium',
+    //                     y: [languageMediumCount,]
+    //                 }, {
+    //                     x: 'High',
+    //                     y: [languageHighCount,]
+    //                 }, {
+    //                     x: 'Emergency',
+    //                     y: [languageEmergencyCount,]
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             name: 'Sanitation',
+    //             data: [{
+    //                     x: 'Low',
+    //                     y: [sanitationCount,]
+    //                 }, {
+    //                     x: 'Medium',
+    //                     y: [sanitationMediumCount,]
+    //                 }, {
+    //                     x: 'High',
+    //                     y: [sanitationHighCount,]
+    //                 }, {
+    //                     x: 'Emergency',
+    //                     y: [sanitationEmergencyCount,]}
+    //             ]
+    //         },
+    //         {
+    //             name: 'Medicine',
+    //             data: [{
+    //                     x: 'Low',
+    //                     y: [medicineCount,]
+    //                 }, {
+    //                     x: 'Medium',
+    //                     y: [medicineMediumCount,]
+    //                 }, {
+    //                     x: 'High',
+    //                     y: [medicineHighCount,]
+    //                 }, {
+    //                     x: 'Emergency',
+    //                     y: [medicineEmergencyCount,]
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             name: 'Security',
+    //             data: [{
+    //                     x: 'Low',
+    //                     y: [securityCount,]
+    //                 }, {
+    //                     x: 'Medium',
+    //                     y: [securityMediumCount,]
+    //                 }, {
+    //                     x: 'High',
+    //                     y: [securityHighCount,]
+    //                 }, {
+    //                     x: 'Emergency',
+    //                     y: [securityEmergencyCount,]
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             name: 'Int. Transport',
+    //             data: [{
+    //                     x: 'Low',
+    //                     y: [internalCount,]
+    //                 }, {
+    //                     x: 'Medium',
+    //                     y: [internalMediumCount,]
+    //                 }, {
+    //                     x: 'High',
+    //                     y: [internalHighCount,]
+    //                 }, {
+    //                     x: 'Emergency',
+    //                     y: [internalEmergencyCount,]
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             name: 'Ext. Transport',
+    //             data: [{
+    //                     x: 'Low',
+    //                     y: [externalCount,]
+    //                 }, {
+    //                     x: 'Medium',
+    //                     y: [externalMediumCount,]
+    //                 }, {
+    //                     x: 'High',
+    //                     y: [externalHighCount,]
+    //                 }, {
+    //                     x: 'Emergency',
+    //                     y: [externalEmergencyCount,]
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             name: 'Gift Delivery',
+    //             data: [{
+    //                     x: 'Low',
+    //                     y: [giftCount,]
+    //                 }, {
+    //                     x: 'Medium',
+    //                     y: [giftMediumCount,]
+    //                 }, {
+    //                     x: 'High',
+    //                     y: [giftHighCount,]
+    //                 }, {
+    //                     x: 'Emergency',
+    //                     y: [giftEmergencyCount,]
+    //                 }
+    //             ]
+    //         },
+    //     ],
+    //     options: {
+    //         chart: {
+    //             height: 350,
+    //             type: 'rangeBar'
+    //         },
+    //         plotOptions: {
+    //             bar: {
+    //                 borderRadius: 10,
+    //             }
+    //         },
+    //         dataLabels: {
+    //             enabled: true,
+    //         },
+    //         fill: {
+    //             type: 'gradient',
+    //             gradient: {
+    //                 shade: 'light',
+    //                 type: 'vertical',
+    //                 shadeIntensity: 0.25,
+    //                 gradientToColors: undefined,
+    //                 inverseColors: true,
+    //                 opacityFrom: 1,
+    //                 opacityTo: 1,
+    //                 stops: [50, 0, 100, 100]
+    //             }
+    //         },
+    //         title:{
+    //             text: "Form Priority Distribution",
+    //             align: 'middle',
+    //             margin: 10,
+    //             offsetX: 0,
+    //             offsetY: 0,
+    //             floating: false,
+    //             style: {
+    //                 fontSize: '25px',
+    //                 fontWeight: '1000',
+    //                 fontFamily: 'Open Sans',
+    //                 color: '#263238'
+    //             }
+    //         },
+    //         xaxis: {
+    //             type: 'number',
+    //             label: 'Priority'
+    //         },
+    //         legend: {
+    //             position: 'bottom'
+    //         }
+    //     },
+    // };
+
+    const yourState = {
         series: [
             {
                 name: 'Maintenance',
-                data: [
-                    {
-                        x: 'Low',
-                        y: [
-                            maintenanceCount,
-                        ]
-                    },
-                    {
-                        x: 'Medium',
-                        y: [
-                            maintenanceMediumCount,
-                        ]
-                    },
-                    {
-                        x: 'High',
-                        y: [
-                            maintenanceHighCount,
-                        ]
-                    },
-                    {
-                        x: 'Emergency',
-                        y: [
-                            maintenanceEmergencyCount,
-                        ]
-                    }
-                ]
-            },
-            {
+                data: [maintenanceCount, maintenanceMediumCount, maintenanceHighCount, maintenanceEmergencyCount]
+            }, {
                 name: 'Language',
-                data: [
-                    {
-                        x: 'Low',
-                        y: [
-                            languageCount,
-                        ]
-                    },
-                    {
-                        x: 'Medium',
-                        y: [
-                            languageMediumCount,
-                        ]
-                    },
-                    {
-                        x: 'High',
-                        y: [
-                            languageHighCount,
-                        ]
-                    },
-                    {
-                        x: 'Emergency',
-                        y: [
-                            languageEmergencyCount,
-                        ]
-                    }
-                ]
-            },
-            {
+                data: [languageCount, languageMediumCount, languageHighCount, languageEmergencyCount]
+            }, {
                 name: 'Sanitation',
-                data: [
-                    {
-                        x: 'Low',
-                        y: [
-
-                            sanitationCount,
-                        ]
-                    },
-                    {
-                        x: 'Medium',
-                        y: [
-                            sanitationMediumCount,
-
-                        ]
-                    },
-                    {
-                        x: 'High',
-                        y: [
-
-
-                            sanitationHighCount,
-                        ]
-                    },
-                    {
-                        x: 'Emergency',
-                        y: [
-                            sanitationEmergencyCount,
-                        ]
-                    }
-                ]
-            },
-            {
+                data: [sanitationCount, sanitationMediumCount, sanitationHighCount, sanitationEmergencyCount]
+            }, {
                 name: 'Medicine',
-                data: [
-                    {
-                        x: 'Low',
-                        y: [
-                            medicineCount,
-
-                        ]
-                    },
-                    {
-                        x: 'Medium',
-                        y: [
-                            medicineMediumCount,
-
-                        ]
-                    },
-                    {
-                        x: 'High',
-                        y: [
-                            medicineHighCount,
-
-                        ]
-                    },
-                    {
-                        x: 'Emergency',
-                        y: [
-                            medicineEmergencyCount,
-                        ]
-                    }
-                ]
-            },
-            {
+                data: [medicineCount, medicineMediumCount, medicineHighCount, medicineEmergencyCount]
+            }, {
                 name: 'Security',
-                data: [
-                    {
-                        x: 'Low',
-                        y: [
-                            securityCount,
-
-                        ]
-                    },
-                    {
-                        x: 'Medium',
-                        y: [
-
-                            securityMediumCount,
-
-
-                        ]
-                    },
-                    {
-                        x: 'High',
-                        y: [
-
-                            securityHighCount,
-                        ]
-                    },
-                    {
-                        x: 'Emergency',
-                        y: [
-                            securityEmergencyCount,
-                        ]
-                    }
-                ]
-            },
-            {
+                data: [securityCount, securityMediumCount, securityHighCount, securityEmergencyCount]
+            }, {
                 name: 'Int. Transport',
-                data: [
-                    {
-                        x: 'Low',
-                        y: [
-                            internalCount,
-
-                        ]
-                    },
-                    {
-                        x: 'Medium',
-                        y: [
-
-                            internalMediumCount,
-
-
-                        ]
-                    },
-                    {
-                        x: 'High',
-                        y: [
-
-                            internalHighCount,
-                        ]
-                    },
-                    {
-                        x: 'Emergency',
-                        y: [
-                            internalEmergencyCount,
-                        ]
-                    }
-                ]
-            },
-            {
+                data: [internalCount, internalMediumCount, internalHighCount, internalEmergencyCount]
+            }, {
                 name: 'Ext. Transport',
-                data: [
-                    {
-                        x: 'Low',
-                        y: [
-                            externalCount,
-
-                        ]
-                    },
-                    {
-                        x: 'Medium',
-                        y: [
-
-                            externalMediumCount,
-
-
-                        ]
-                    },
-                    {
-                        x: 'High',
-                        y: [
-
-                            externalHighCount,
-                        ]
-                    },
-                    {
-                        x: 'Emergency',
-                        y: [
-                            externalEmergencyCount,
-                        ]
-                    }
-                ]
-            },
-            {
+                data: [externalCount, externalMediumCount, externalHighCount, externalEmergencyCount]
+            }, {
                 name: 'Gift Delivery',
-                data: [
-                    {
-                        x: 'Low',
-                        y: [
-                            giftCount,
-                        ]
-                    },
-                    {
-                        x: 'Medium',
-                        y: [
-                            giftMediumCount,
-                        ]
-                    },
-                    {
-                        x: 'High',
-                        y: [
-                            giftHighCount,
-                        ]
-                    },
-                    {
-                        x: 'Emergency',
-                        y: [
-                            giftEmergencyCount,
-                        ]
-                    }
-                ]
+                data: [giftCount, giftMediumCount, giftHighCount, giftEmergencyCount]
             },
         ],
         options: {
             chart: {
                 height: 350,
-                type: 'rangeBar'
+                type: 'bar',
+                stacked: true,
             },
             plotOptions: {
                 bar: {
-                    borderRadius: 10,
-                }
-            },
-            dataLabels: {
-                enabled: true,
+                    columnWidth: 150,
+                    horizontal: false,
+                    borderRadius: 20,
+                    borderRadiusApplication: 'end',
+                    borderRadiusWhenStacked: 'last',
+                    dataLabels: {
+                        total: {
+                            enabled: true,
+                            style: {
+                                fontSize: '13px',
+                                fontWeight: 900
+                            }
+                        }
+                    }
+                },
+            area:{
+                fillTo: 'end'
+            }
             },
             fill: {
                 type: 'gradient',
@@ -516,7 +545,7 @@ function UserProfile(){
                 }
             },
             title:{
-                text: "Form Priority Distribution",
+                text: "Total Form Priority Distribution",
                 align: 'middle',
                 margin: 10,
                 offsetX: 0,
@@ -530,14 +559,15 @@ function UserProfile(){
                 }
             },
             xaxis: {
-                type: 'number',
-                label: 'Priority'
+                type: 'string',
+                categories: ['Low', 'Medium', 'High', 'Emergency'],
             },
             legend: {
                 position: 'bottom'
-            }
+            },
         },
     };
+
 
     const donutRequest = {
         options: {
@@ -565,7 +595,9 @@ function UserProfile(){
                 markers: {
                     fillColors: ['#008FFB', '#00E396', '#FEB019', '#FF4560'] // Adjust colors accordingly
                 },
-                offsetY: 5,
+                style:{
+                    fontWeight: '200',
+                },
             },
             title:{
                 text: "Request Status",
@@ -642,8 +674,17 @@ function UserProfile(){
             <div className={"h-[640px] w-100 bg-white text-wrap rounded-xl shadow-xl ml-10 mt-4 overflow-hidden"}>
                 <p className={"text-wrap w-full h-full"}>One two three four five six seven eight nine ten</p>
             </div>
-            <div className={"flex flex-col space-y-10 mt-4"}>
-                <div className="flex flex-row w-fit h-fit ml-5 space-x-12" id="rangeBar">
+            <div className={"flex flex-col space-y-5 mt-4"}>
+                <div className="flex flex-row w-fit h-fit ml-5 space-x-5" id="rangeBar">
+                    <div className={" bg-white rounded-xl shadow-xl h-[295px] w-[360px]"}>
+                        t
+                        {/*<Chart options={state.options}*/}
+                        {/*       series={state.series}*/}
+                        {/*       type="bar"*/}
+                        {/*       height={285}*/}
+                        {/*       width={360}*/}
+                        {/*/>*/}
+                    </div>
                     <div className={"bg-white rounded-xl shadow-xl"}>
                         <Chart options={donutRequest.options}
                                series={donutRequest.options.series}
@@ -653,27 +694,19 @@ function UserProfile(){
                         />
                     </div>
                     <div className={" bg-white rounded-xl shadow-xl "}>
-                    <Chart options={donutAssignment.options}
-                           series={donutAssignment.options.series}
-                           type="donut"
-                           height={325}
-                           width={300}
-                    />
-                    </div>
-                    <div className={" bg-white rounded-xl shadow-xl "}>
-                    <Chart options={state.options}
-                           series={state.series}
-                           type="bar"
-                           height={285}
-                           width={300}
-                    />
+                        <Chart options={donutAssignment.options}
+                               series={donutAssignment.options.series}
+                               type="donut"
+                               height={325}
+                               width={300}
+                        />
                     </div>
                 </div>
                 <div className="w-fit h-fit bg-white rounded-xl shadow-xl ml-5" id="rangeBar">
-                    <Chart options={state.options}
-                           series={state.series}
+                    <Chart options={yourState.options}
+                           series={yourState.series}
                            type="bar"
-                           height={285}
+                           height={310}
                            width={1000}
                     />
                 </div>

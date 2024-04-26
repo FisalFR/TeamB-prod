@@ -583,15 +583,113 @@ router.get(
   },
 );
 
-router.post("/countTypePriority", async function (req: Request, res: Response) {
-  const { priority }: { priority: string[] } = req.body;
-  const maintenanceCount = await client.forms.count({
+router.post(
+  "/countMaintenancePriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const maintenanceCount = await client.forms.count({
+      where: {
+        type: "Maintenance",
+        priority: priority,
+      },
+    });
+    res.status(200).json(maintenanceCount);
+  },
+);
+
+router.post(
+  "/countLanguagePriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const languageCount = await client.forms.count({
+      where: {
+        type: "Language",
+        priority: priority,
+      },
+    });
+    res.status(200).json(languageCount);
+  },
+);
+
+router.post(
+  "/countSanitationPriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const sanitationCount = await client.forms.count({
+      where: {
+        type: "Sanitation",
+        priority: priority,
+      },
+    });
+    res.status(200).json(sanitationCount);
+  },
+);
+
+router.post(
+  "/countMedicinePriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const medicineCount = await client.forms.count({
+      where: {
+        type: "Medicine",
+        priority: priority,
+      },
+    });
+    res.status(200).json(medicineCount);
+  },
+);
+
+router.post(
+  "/countSecurityPriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const securityCount = await client.forms.count({
+      where: {
+        type: "Security",
+        priority: priority,
+      },
+    });
+    res.status(200).json(securityCount);
+  },
+);
+
+router.post(
+  "/countInternalPriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const internalCount = await client.forms.count({
+      where: {
+        type: "Internal Transport",
+        priority: priority,
+      },
+    });
+    res.status(200).json(internalCount);
+  },
+);
+
+router.post(
+  "/countExternalPriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const externalCount = await client.forms.count({
+      where: {
+        type: "External Transportation",
+        priority: priority,
+      },
+    });
+    res.status(200).json(externalCount);
+  },
+);
+
+router.post("/countGiftPriority", async function (req: Request, res: Response) {
+  const { priority }: { priority: string } = req.body;
+  const giftCount = await client.forms.count({
     where: {
-      type: priority[1],
-      priority: priority[0],
+      type: "Gift",
+      priority: priority,
     },
   });
-  res.status(200).json(maintenanceCount);
+  res.status(200).json(giftCount);
 });
 
 router.post(
