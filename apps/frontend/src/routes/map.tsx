@@ -5,6 +5,7 @@ import l2map from "../assets/floors/02_thesecondfloor.png";
 import l3map from "../assets/floors/03_thethirdfloor.png";
 import plus from "../assets/icons/plus.svg";
 import minus from "../assets/icons/minus.svg";
+import fit from "../assets/icons/fit.svg";
 import PathVisual from "../components/map/PathVisual.tsx";
 import React, {useEffect, useState, useCallback, useRef} from "react";
 import axios from "axios";
@@ -116,17 +117,15 @@ export function Map(){
         );
     }
     function ZoomOutFitButton() {
-        const {  setTransform } = useControls();
-        const viewWidth = window.innerWidth;
-        const newXPosition = viewWidth / 5.9;
+        const { centerView} = useControls();
         const handleClick = () => {
-            setTransform(newXPosition, 0, 0.254);
-            // centerView();
+            centerView(0.22);
         };
+        const fitIcon = <img src={fit} alt="Fit" className={"size-9"} />;
         return(
-            <div className={"absolute top-20 right-7"}>
-                <Button onClick={handleClick} px={"px-5"} py={"py-4"}>
-                    Fit
+            <div className={"absolute top-16 right-7"}>
+                <Button onClick={handleClick} px={"px-3"} py={"py-3"}>
+                    {fitIcon}
                 </Button>
             </div>
 
