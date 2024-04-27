@@ -5,7 +5,6 @@ export type employee = {
     salary:       number
     gender:       string
     type:         string
-    picture: string
 }
 
 export default employee;

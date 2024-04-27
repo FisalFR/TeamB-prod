@@ -20,17 +20,40 @@ router.post("/employeeInfo", async function (req: Request, res: Response) {
   res.status(200).json(employee);
 });
 
-router.post("/insertPicture", async function (req: Request, res: Response) {
+// router.post("/insertPicture", async function (req: Request, res: Response) {
+//   const user: userProfile = req.body;
+//   const employee: userProfile = await client.employee.update({
+//     where: {
+//       employeeEmail: user.employeeEmail,
+//     },
+//     data: {
+//       picture: user.picture,
+//     },
+//   });
+//   res.status(200).json(employee);
+// });
+
+router.post("/checkEmployee", async function (req: Request, res: Response) {
   const user: userProfile = req.body;
-  const employee: userProfile = await client.employee.update({
+  const employee: userProfile = await client.employee.findUnique({
     where: {
       employeeEmail: user.employeeEmail,
     },
-    data: {
-      picture: user.picture,
-    },
   });
-  res.status(200).json(employee);
+  if (employee) {
+    res.status(200).json(employee);
+  } else {
+    await client.employee.create({
+      data: {
+        employeeEmail: user.employeeEmail,
+        firstName: user.firstName,
+        lastName: "",
+        salary: user.salary,
+        gender: "It",
+        type: user.type,
+      },
+    });
+  }
 });
 
 export default router;

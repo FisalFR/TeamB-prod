@@ -5,6 +5,9 @@ import user_icon from "../../assets/icons/login/user_icon.svg";
 import {useAuth0} from "@auth0/auth0-react";
 import HandleLogout from "../authentication/HandleLogout.tsx";
 import LoginNavigationBar from "../authentication/LoginNavigationBar.tsx";
+import axios from "axios";
+import {useEffect} from "react";
+import {employee} from "../../../../../packages/common/src/profile.ts";
 
 
 
@@ -15,6 +18,33 @@ export function NavBar() {
     function home() {
         window.location.href = homeRedirect;
     }
+
+    const user = useAuth0();
+    useEffect(() => {
+        console.log("here");
+        const userEmail = user.user?.email;
+        const userFirst = user.user?.name;
+        if (userEmail) {
+            console.log(userEmail);
+            if (userFirst) {
+                console.log(userFirst);
+                        const userProfile: employee = {
+                            employeeEmail: userEmail,
+                            firstName: userFirst,
+                            lastName: "",
+                            salary: 0,
+                            gender: "",
+                            type: "Employee",
+                        };
+                        axios.post("/api/employee/checkEmployee", userProfile, {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        }).then(() => {
+                        });
+                    }
+                }
+    }, [user.user?.email, user.user?.name]);
 
     {
 

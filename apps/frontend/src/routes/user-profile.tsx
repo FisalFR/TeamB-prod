@@ -499,7 +499,6 @@ function UserProfile() {
         salary: 0,
         gender: "",
         type: "",
-        picture: ""
     });
 
     useEffect(() => {
