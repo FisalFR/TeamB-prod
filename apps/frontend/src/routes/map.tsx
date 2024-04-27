@@ -3,13 +3,13 @@ import ll2map from "../assets/floors/00_thelowerlevel2.png";
 import l1map from "../assets/floors/01_thefirstfloor.png";
 import l2map from "../assets/floors/02_thesecondfloor.png";
 import l3map from "../assets/floors/03_thethirdfloor.png";
-import plus from "../assets/plus.svg";
-import minus from "../assets/minus.svg";
+import plus from "../assets/icons/plus.svg";
+import minus from "../assets/icons/minus.svg";
 import PathVisual from "../components/map/PathVisual.tsx";
 import React, {useEffect, useState, useCallback, useRef} from "react";
 import axios from "axios";
-import {startEndNodes} from "common/src/pathfinding.ts";
-import Node from "../../../../packages/common/src/node";
+import {startEndNodes} from "common/src/pathfinding/pathfinding.ts";
+import Node from "common/src/nodes-and-edges/node.ts";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import PathSelector from "../components/map/PathSelector.tsx";
@@ -119,11 +119,11 @@ export function Map(){
     }
     const ref = useRef(0);
     function onClickCircle(Node: Node) {
-        if(ref.current%2 == 0){
+        if (ref.current % 2 == 0){
             setRequest({...request, startNode: Node.nodeID});
             ref.current++;
         }
-        else{
+        else {
             setRequest({...request, endNode: Node.nodeID});
             ref.current++;
         }
