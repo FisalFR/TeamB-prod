@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 // import Edge from "common/src/edge.ts";
-import EdgeType from "common/src/EdgeType.ts";
+import EdgeType from "common/src/nodes-and-edges/edge-type.ts";
 export function useEdges() {
     const [edges, setEdges] = useState<EdgeType[]>([]);
     const [edgeMap, setEdgeMap] = useState<Map<string, string[]>>(new Map());
