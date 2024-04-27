@@ -117,7 +117,7 @@ export function Map(){
                          onClick2={() => zoomOut()} minusSvg={MinusSvg}/>
         );
     }
-    let ref = useRef(0);
+    const ref = useRef(0);
     function onClickCircle(Node: Node) {
         if(ref.current%2 == 0){
             setRequest({...request, startNode: Node.nodeID});
