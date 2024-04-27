@@ -3009,6 +3009,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"canvas-renderer@npm:~2.2.0":
+  version: 2.2.1
+  resolution: "canvas-renderer@npm:2.2.1"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 857ebc09893e977b46e1acb14e1b02e4bd96c71d965721b0d635586e5ac96ccb8a1adf184cdfd19053b3adcb38b9d0db6ad1f517914f3ea753fd48d802bd92c4
+  languageName: node
+  linkType: hard
+
 "chai@npm:^4.3.10, chai@npm:^4.3.7":
   version: 4.4.1
   resolution: "chai@npm:4.4.1"
@@ -5176,6 +5185,17 @@ __metadata:
     "@pkgjs/parseargs":
       optional: true
   checksum: 6e6490d676af8c94a7b5b29b8fd5629f21346911ebe2e32931c2a54210134408171c24cee1a109df2ec19894ad04a429402a8438cbf5cc2794585d35428ace76
+  languageName: node
+  linkType: hard
+
+"jdenticon@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "jdenticon@npm:3.2.0"
+  dependencies:
+    canvas-renderer: "npm:~2.2.0"
+  bin:
+    jdenticon: bin/jdenticon.js
+  checksum: a6d7f9ff0c54d8b2aa0417a132f38ab7ef75505a4ad249aface1bca6fc111b95ed92f491515419d7a838191e5f7e49c93813570ba58a872d4bb7434de1c14118
   languageName: node
   linkType: hard
 
@@ -7531,6 +7551,7 @@ __metadata:
     fs: "npm:^0.0.1-security"
     happy-dom: "npm:^10.6.3"
     husky: "npm:^8.0.0"
+    jdenticon: "npm:^3.2.0"
     node-fs: "npm:^0.1.7"
     number-to-words: "npm:^1.2.4"
     prettier: "npm:2.8.8"

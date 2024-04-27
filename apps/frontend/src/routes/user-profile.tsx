@@ -5,20 +5,17 @@ import map from '../assets/Profile/map.svg';
 import data from '../assets/Profile/data.svg';
 import manage from '../assets/Profile/manage.svg';
 import edit from '../assets/Profile/edit.svg';
-import profile from '../assets/Profile/default.svg';
-import picture from '../assets/Profile/picture.svg';
 import {useAuth0} from "@auth0/auth0-react";
 import profileUser from '../../../../packages/common/src/profile.ts';
+import { toSvg } from "jdenticon";
 
 
 
-function UserProfile(){
-    const MapSVG = <img src={map} alt="map" className={"w-50"} />;
-    const DataSVG = <img src={data} alt="data" className={"w-50"} />;
-    const ManageSVG = <img src={manage} alt="manage" className={"w-50"} />;
-    const EditSVG = <img src={edit} alt="edit" className={"w-50"} />;
-
-
+function UserProfile() {
+    const MapSVG = <img src={map} alt="map" className={"w-50"}/>;
+    const DataSVG = <img src={data} alt="data" className={"w-50"}/>;
+    const ManageSVG = <img src={manage} alt="manage" className={"w-50"}/>;
+    const EditSVG = <img src={edit} alt="edit" className={"w-50"}/>;
 
 
     const [maintenanceCount, setMaintenanceCount] = useState(0);
@@ -61,154 +58,154 @@ function UserProfile(){
     const [giftHighCount, setGiftHighCount] = useState(0);
     const [giftEmergencyCount, setGiftEmergencyCount] = useState(0);
 
-    function getMaintenanceCount(priority:string) {
-        const requestData = { priority };
-        axios.post("/api/csvManager/countMaintenancePriority", JSON.stringify(requestData) , {
+    function getMaintenanceCount(priority: string) {
+        const requestData = {priority};
+        axios.post("/api/csvManager/countMaintenancePriority", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if(priority == "Low"){
+            if (priority == "Low") {
                 setMaintenanceCount(response.data);
-            } else if(priority == "Medium"){
+            } else if (priority == "Medium") {
                 setMaintenanceMediumCount(response.data);
-            } else if(priority == "High"){
+            } else if (priority == "High") {
                 setMaintenanceHighCount(response.data);
-            } else if(priority == "Emergency"){
+            } else if (priority == "Emergency") {
                 setMaintenanceEmergencyCount(response.data);
             }
 
         });
     };
 
-    function getLanguageCount(priority:string) {
-        const requestData = { priority };
-        axios.post("/api/csvManager/countLanguagePriority", JSON.stringify(requestData) , {
+    function getLanguageCount(priority: string) {
+        const requestData = {priority};
+        axios.post("/api/csvManager/countLanguagePriority", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if(priority == "Low"){
+            if (priority == "Low") {
                 setLanguageCount(response.data);
-            } else if(priority == "Medium"){
+            } else if (priority == "Medium") {
                 setLanguageMediumCount(response.data);
-            } else if(priority == "High"){
+            } else if (priority == "High") {
                 setLanguageHighCount(response.data);
-            } else if(priority == "Emergency"){
+            } else if (priority == "Emergency") {
                 setLanguageEmergencyCount(response.data);
             }
         });
     };
 
-    function getSanitationCount(priority:string) {
-        const requestData = { priority };
-        axios.post("/api/csvManager/countSanitationPriority", JSON.stringify(requestData) , {
+    function getSanitationCount(priority: string) {
+        const requestData = {priority};
+        axios.post("/api/csvManager/countSanitationPriority", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if(priority == "Low"){
+            if (priority == "Low") {
                 setSanitationCount(response.data);
-            } else if(priority == "Medium"){
+            } else if (priority == "Medium") {
                 setSanitationMediumCount(response.data);
-            } else if(priority == "High"){
+            } else if (priority == "High") {
                 setSanitationHighCount(response.data);
-            } else if(priority == "Emergency"){
+            } else if (priority == "Emergency") {
                 setSanitationEmergencyCount(response.data);
             }
         });
     };
 
-    function getMedicineCount(priority:string) {
-        const requestData = { priority };
-        axios.post("/api/csvManager/countMedicinePriority", JSON.stringify(requestData) , {
+    function getMedicineCount(priority: string) {
+        const requestData = {priority};
+        axios.post("/api/csvManager/countMedicinePriority", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if(priority == "Low"){
+            if (priority == "Low") {
                 setMedicineCount(response.data);
-            } else if(priority == "Medium"){
+            } else if (priority == "Medium") {
                 setMedicineMediumCount(response.data);
-            } else if(priority == "High"){
+            } else if (priority == "High") {
                 setMedicineHighCount(response.data);
-            } else if(priority == "Emergency"){
+            } else if (priority == "Emergency") {
                 setMedicineEmergencyCount(response.data);
             }
         });
     };
 
-    function getSecurityCount(priority:string) {
-        const requestData = { priority };
-        axios.post("/api/csvManager/countSecurityPriority", JSON.stringify(requestData) , {
+    function getSecurityCount(priority: string) {
+        const requestData = {priority};
+        axios.post("/api/csvManager/countSecurityPriority", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if(priority == "Low"){
+            if (priority == "Low") {
                 setSecurityCount(response.data);
-            } else if(priority == "Medium"){
+            } else if (priority == "Medium") {
                 setSecurityMediumCount(response.data);
-            } else if(priority == "High"){
+            } else if (priority == "High") {
                 setSecurityHighCount(response.data);
-            } else if(priority == "Emergency"){
+            } else if (priority == "Emergency") {
                 setSecurityEmergencyCount(response.data);
             }
         });
     };
 
-    function getInternalCount(priority:string) {
-        const requestData = { priority };
-        axios.post("/api/csvManager/countInternalPriority", JSON.stringify(requestData) , {
+    function getInternalCount(priority: string) {
+        const requestData = {priority};
+        axios.post("/api/csvManager/countInternalPriority", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if(priority == "Low"){
+            if (priority == "Low") {
                 setInternalCount(response.data);
-            } else if(priority == "Medium"){
+            } else if (priority == "Medium") {
                 setInternalMediumCount(response.data);
-            } else if(priority == "High"){
+            } else if (priority == "High") {
                 setInternalHighCount(response.data);
-            } else if(priority == "Emergency"){
+            } else if (priority == "Emergency") {
                 setInternalEmergencyCount(response.data);
             }
         });
     };
 
-    function getExternalCount(priority:string) {
-        const requestData = { priority };
-        axios.post("/api/csvManager/countExternalPriority", JSON.stringify(requestData) , {
+    function getExternalCount(priority: string) {
+        const requestData = {priority};
+        axios.post("/api/csvManager/countExternalPriority", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if(priority == "Low"){
+            if (priority == "Low") {
                 setExternalCount(response.data);
-            } else if(priority == "Medium"){
+            } else if (priority == "Medium") {
                 setExternalMediumCount(response.data);
-            } else if(priority == "High"){
+            } else if (priority == "High") {
                 setExternalHighCount(response.data);
-            } else if(priority == "Emergency"){
+            } else if (priority == "Emergency") {
                 setExternalEmergencyCount(response.data);
             }
         });
     };
 
-    function getGiftCount(priority:string) {
-        const requestData = { priority };
-        axios.post("/api/csvManager/countGiftPriority", JSON.stringify(requestData) , {
+    function getGiftCount(priority: string) {
+        const requestData = {priority};
+        axios.post("/api/csvManager/countGiftPriority", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            if(priority == "Low"){
+            if (priority == "Low") {
                 setGiftCount(response.data);
-            } else if(priority == "Medium"){
+            } else if (priority == "Medium") {
                 setGiftMediumCount(response.data);
-            } else if(priority == "High"){
+            } else if (priority == "High") {
                 setGiftHighCount(response.data);
-            } else if(priority == "Emergency"){
+            } else if (priority == "Emergency") {
                 setGiftEmergencyCount(response.data);
             }
         });
@@ -217,16 +214,16 @@ function UserProfile(){
     useEffect(() => {
         let priorities: string[] =
             ["Low", "Medium", "High", "Emergency"];
-            for(let j = 0; j < 4; j++){
-                    getMaintenanceCount(priorities[j]);
-                    getLanguageCount(priorities[j]);
-                    getSanitationCount(priorities[j]);
-                    getMedicineCount(priorities[j]);
-                    getSecurityCount(priorities[j]);
-                    getInternalCount(priorities[j]);
-                    getExternalCount(priorities[j]);
-                    getGiftCount(priorities[j]);
-            }
+        for (let j = 0; j < 4; j++) {
+            getMaintenanceCount(priorities[j]);
+            getLanguageCount(priorities[j]);
+            getSanitationCount(priorities[j]);
+            getMedicineCount(priorities[j]);
+            getSecurityCount(priorities[j]);
+            getInternalCount(priorities[j]);
+            getExternalCount(priorities[j]);
+            getGiftCount(priorities[j]);
+        }
         getCreatedBy("Colin");
     }, []);
 
@@ -240,58 +237,58 @@ function UserProfile(){
     const [emergencyCount, setEmergencyCount] = useState(0);
 
 
-    function getCreatedBy(name:string) {
-        const requestData = { name };
-        axios.post("/api/csvManager/countFormUnassigned", JSON.stringify(requestData) , {
+    function getCreatedBy(name: string) {
+        const requestData = {name};
+        axios.post("/api/csvManager/countFormUnassigned", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
             setUnassignedCount(response.data);
         });
-        axios.post("/api/csvManager/countFormAssigned", JSON.stringify(requestData) , {
+        axios.post("/api/csvManager/countFormAssigned", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
             setAssignedCount(response.data);
         });
-        axios.post("/api/csvManager/countFormInProgress", JSON.stringify(requestData) , {
+        axios.post("/api/csvManager/countFormInProgress", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
             setInProgressCount(response.data);
         });
-        axios.post("/api/csvManager/countFormClosed", JSON.stringify(requestData) , {
+        axios.post("/api/csvManager/countFormClosed", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
             setClosedCount(response.data);
         });
-        axios.post("/api/csvManager/countFormLow", JSON.stringify(requestData) , {
+        axios.post("/api/csvManager/countFormLow", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
             setLowCount(response.data);
         });
-        axios.post("/api/csvManager/countFormMedium", JSON.stringify(requestData) , {
+        axios.post("/api/csvManager/countFormMedium", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
             setMediumCount(response.data);
         });
-        axios.post("/api/csvManager/countFormHigh", JSON.stringify(requestData) , {
+        axios.post("/api/csvManager/countFormHigh", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
             setHighCount(response.data);
         });
-        axios.post("/api/csvManager/countFormEmergency", JSON.stringify(requestData) , {
+        axios.post("/api/csvManager/countFormEmergency", JSON.stringify(requestData), {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -351,9 +348,9 @@ function UserProfile(){
                         }
                     }
                 },
-            area:{
-                fillTo: 'end'
-            }
+                area: {
+                    fillTo: 'end'
+                }
             },
             fill: {
                 type: 'gradient',
@@ -368,7 +365,7 @@ function UserProfile(){
                     stops: [50, 0, 100, 100]
                 }
             },
-            title:{
+            title: {
                 text: "Total Form Priority Distribution",
                 align: 'middle',
                 margin: 10,
@@ -419,11 +416,11 @@ function UserProfile(){
                 markers: {
                     fillColors: ['#008FFB', '#00E396', '#FEB019', '#FF4560'] // Adjust colors accordingly
                 },
-                style:{
+                style: {
                     fontWeight: '200',
                 },
             },
-            title:{
+            title: {
                 text: "Request Status",
                 align: 'middle',
                 offsetX: 0,
@@ -472,7 +469,7 @@ function UserProfile(){
                 },
                 offsetY: 5,
             },
-            title:{
+            title: {
                 text: "Assignments (Priority)",
                 align: 'middle',
                 offsetX: 0,
@@ -503,11 +500,11 @@ function UserProfile(){
         gender: "",
         type: "",
         picture: ""
-});
+    });
 
     useEffect(() => {
         const userEmail = user.user?.email;
-        if (userEmail){
+        if (userEmail) {
             axios.post("/api/employee/employeeInfo", {employeeEmail: userEmail}, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -515,142 +512,144 @@ function UserProfile(){
             }).then((response) => {
                 setEmployee(response.data);
             });
-    }
+        }
     }, [user.user?.email]);
 
     // const ProfileSVG = <img src={profile} alt="profile" className={"w-50"} />;
-    const PictureSVG = <img src={picture} alt="profile" className={"w-10"} />;
-    const handleChange = async (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        const fileLoaded = URL.createObjectURL(event.target.files[0]);
-        // setFile(fileLoaded);
-
-        const user: profileUser = {
-            employeeEmail: employee.employeeEmail,
-            firstName: "",
-            lastName: "",
-            salary: 0,
-            gender: "",
-            type: "",
-            picture: fileLoaded,
-        };
-        axios.post("/api/employee/insertPicture", user, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            console.log(response);
-        });
-    };
+    // const PictureSVG = <img src={picture} alt="profile" className={"w-10"}/>;
+    // const handleChange = async (
+    //     event: React.ChangeEvent<HTMLInputElement>
+    // ) => {
+    //     const fileLoaded = URL.createObjectURL(event.target.files[0]);
+    //     // setFile(fileLoaded);
+    //
+    //     const user: profileUser = {
+    //         employeeEmail: employee.employeeEmail,
+    //         firstName: "",
+    //         lastName: "",
+    //         salary: 0,
+    //         gender: "",
+    //         type: "",
+    //         picture: fileLoaded,
+    //     };
+    //     axios.post("/api/employee/insertPicture", user, {
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         }
+    //     }).then((response) => {
+    //         console.log(response);
+    //     });
+    // };
 
     const profilePicture = () => {
-        if(employee.picture == "default"){
-            return ((<img src={profile} alt="profile" className={"w-50"} />));
-        }
-        return (<img src={employee.picture} alt="profile" className={"w-50"} />);
-    } ;
+        const svgString = toSvg(employee.employeeEmail, 240);
+        const svgBlob = new Blob([svgString], { type: 'image/svg+xml' });
+        const svgUrl = URL.createObjectURL(svgBlob);
+        return (
+            <div>
+                <img src={svgUrl} alt="Profile"/>
+            </div>
+        );
+    };
+
 
     return (
         <div className={"flex flex-row"}>
             <div className={"h-[640px] w-100 bg-white text-wrap rounded-xl shadow-xl ml-10 mt-4 overflow-hidden"}>
-                <div className={"w-full centerContent bg-gray-200 h-[35%]"}>
-                    <div className={"absolute top-[80px] left-[400px]"}>  <div>
-                        <label htmlFor="profile">{PictureSVG}</label>
-                        <input
-                            type="file"
-                            onChange={handleChange}
-                            accept="image/jpg,.gif,.png,.svg,.webp audio/wav,.mp3"
-                            id="profile"
-                        />
+                <div className={"flex flex-row full text-left h-[35%]"}>
+                    <div className={"w-[150%] text-right"}>
+                        {profilePicture()}
                     </div>
-                    </div>
-                    {profilePicture()}
+                    <h2 className={"text-3xl font-OpenSans border-gray-200 pb-2 pt-10 pr-2"}><strong>Welcome,</strong>
+                      <br/>
+                        {employee.firstName} to your user profile!
+                    </h2>
                 </div>
-                <div className={"text-left pb-4 border-b-2"}>
-                    <h2 className={"text-3xl font-bold font-OpenSans pl-4 pt-4 border-gray-200 pb-2 "}>My Profile</h2>
+                <div className={"text-left pb-2 border-b-2 px-2 pt-2"}>
+                    <h2 className={"text-3xl font-bold font-OpenSans border-gray-200 pb-2 pl-2"}>My
+                            Profile</h2>
+                    </div>
+                    <div className={"text-left pl-4 pt-2 pr-4 flex flex-col"}>
+
+                        <div>
+                            <h2 className={"text-l font-bold w-full"}>Email:</h2>
+                            <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{user.user?.email}</p>
+                        </div>
+
+                        <div className={"mt-2"}>
+                            <h2 className={"text-l font-bold w-full"}>Name:</h2>
+                            <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.firstName} {employee.lastName}</p>
+                        </div>
+
+
+                        <div className={"mt-2"}>
+                            <h2 className={"text-l font-bold w-full"}>Type:</h2>
+                            <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.type}</p>
+                        </div>
+
+                        <div className={"mt-2"}>
+                            <h2 className={"text-l font-bold w-full"}>Salary:</h2>
+                            <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.salary}</p>
+                        </div>
+
+                        <div className={"mt-2"}>
+                            <h2 className={"text-l font-bold w-full"}>Gender:</h2>
+                            <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.gender}</p>
+                        </div>
+
+                    </div>
+
+
                 </div>
-                <div className={"text-left pl-4 pt-2 pr-4 flex flex-col"}>
-
-                    <div>
-                        <h2 className={"text-l font-bold w-full"}>Email:</h2>
-                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{user.user?.email}</p>
-                    </div>
-
-                    <div className={"mt-2"}>
-                        <h2 className={"text-l font-bold w-full"}>Name:</h2>
-                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.firstName} {employee.lastName}</p>
-                    </div>
-
-
-                    <div className={"mt-2"}>
-                        <h2 className={"text-l font-bold w-full"}>Type:</h2>
-                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.type}</p>
-                    </div>
-
-                    <div className={"mt-2"}>
-                        <h2 className={"text-l font-bold w-full"}>Salary:</h2>
-                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.salary}</p>
-                    </div>
-
-                    <div className={"mt-2"}>
-                        <h2 className={"text-l font-bold w-full"}>Gender:</h2>
-                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.gender}</p>
-                    </div>
-
-                </div>
-
-
-            </div>
-            <div className={"flex flex-col space-y-5 mt-4"}>
-                <div className="flex flex-row w-fit h-fit ml-5 space-x-5" id="rangeBar">
-                    <div
-                        className={"flex flex-col centerContent bg-white rounded-xl shadow-xl h-[295px] w-[360px] space-y-10"}>
-                        <div className={"flex flex-row space-x-10"}>
-                            <div className={"h-[85px] w-[85px] centerContent"}>
-                                {MapSVG}
+                <div className={"flex flex-col space-y-5 mt-4"}>
+                    <div className="flex flex-row w-fit h-fit ml-5 space-x-5" id="rangeBar">
+                        <div
+                            className={"flex flex-col centerContent bg-white rounded-xl shadow-xl h-[295px] w-[360px] space-y-10"}>
+                            <div className={"flex flex-row space-x-10"}>
+                                <div className={"h-[85px] w-[85px] centerContent"}>
+                                    {MapSVG}
+                                </div>
+                                <div className={"h-[85px] w-[85px] centerContent"}>
+                                    {DataSVG}
+                                </div>
                             </div>
-                            <div className={"h-[85px] w-[85px] centerContent"}>
-                                {DataSVG}
+                            <div className={"flex flex-row space-x-10"}>
+                                <div className={"h-[85px] w-[85px] centerContent"}>
+                                    {ManageSVG}
+                                </div>
+                                <div className={"h-[85px] w-[85px] centerContent"}>
+                                    {EditSVG}
+                                </div>
                             </div>
                         </div>
-                        <div className={"flex flex-row space-x-10"}>
-                            <div className={"h-[85px] w-[85px] centerContent"}>
-                                {ManageSVG}
-                            </div>
-                            <div className={"h-[85px] w-[85px] centerContent"}>
-                                {EditSVG}
-                            </div>
+                        <div className={"bg-white rounded-xl shadow-xl"}>
+                            <Chart options={donutRequest.options}
+                                   series={donutRequest.options.series}
+                                   type="donut"
+                                   height={325}
+                                   width={300}
+                            />
+                        </div>
+                        <div className={" bg-white rounded-xl shadow-xl "}>
+                            <Chart options={donutAssignment.options}
+                                   series={donutAssignment.options.series}
+                                   type="donut"
+                                   height={325}
+                                   width={300}
+                            />
                         </div>
                     </div>
-                    <div className={"bg-white rounded-xl shadow-xl"}>
-                        <Chart options={donutRequest.options}
-                               series={donutRequest.options.series}
-                               type="donut"
-                               height={325}
-                               width={300}
+                    <div className="w-fit h-fit bg-white rounded-xl shadow-xl ml-5" id="rangeBar">
+                        <Chart options={yourState.options}
+                               series={yourState.series}
+                               type="bar"
+                               height={310}
+                               width={1000}
                         />
                     </div>
-                    <div className={" bg-white rounded-xl shadow-xl "}>
-                        <Chart options={donutAssignment.options}
-                               series={donutAssignment.options.series}
-                               type="donut"
-                               height={325}
-                               width={300}
-                        />
-                    </div>
-                </div>
-                <div className="w-fit h-fit bg-white rounded-xl shadow-xl ml-5" id="rangeBar">
-                    <Chart options={yourState.options}
-                           series={yourState.series}
-                           type="bar"
-                           height={310}
-                           width={1000}
-                    />
                 </div>
             </div>
-        </div>
-    );
+        );
 }
 
 export default UserProfile;
