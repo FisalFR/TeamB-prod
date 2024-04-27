@@ -9,7 +9,9 @@ function PathVisual(props: {width: number; height: number;
     pathNodes: Node[]; images: Map<string, string>;
     currentFloor: string; onClickCircle: (Node: Node) => void;
     allNodes: Node[]; showNodes: boolean;
-    onChangeFloor: (floor: string) => void;}) {
+    onChangeFloor: (floor: string) => void;
+    startNodeID: string;
+    endNodeID: string}) {
     let startCoord: number[] = [];
     let endCoord: number[] = [];
     if (props.pathNodes[0] != null) {
@@ -42,12 +44,6 @@ function PathVisual(props: {width: number; height: number;
 
     const imgRef = useRef<HTMLDivElement>(null);
 
-    function getOpacity(): number {
-        if (props.showNodes) {
-            return 1;
-        }
-        return 0;
-    }
 
     function createFloors() {
         const floorSVGs: JSX.Element[] = [];
@@ -89,17 +85,21 @@ function PathVisual(props: {width: number; height: number;
         {props.allNodes.filter(node => {
             return node.floor === props.currentFloor && !node.longName.includes("Hall");
         }).map((node) => {
+            let fillColor = '#FFFFFF'; // Default color
+            if (node.nodeID === props.startNodeID) {
+                fillColor = '#c7f2a7'; // Color for start node
+            } else if (node.nodeID === props.endNodeID) {
+                fillColor = '#F2A7A7'; // Color for end node
+            }
+
             pathDivs.push(<>
                 <circle  className={"hover:cursor-pointer"}
                          cx={node.xcoord} cy={node.ycoord}
                          r={12} // smaller visible circle
-                         fill= "#FFFFFF"
+                         fill= {fillColor}
                          stroke= "#012D5A"
                          strokeWidth= "4"
-                         opacity={getOpacity()}
-                    // initial={{opacity: 0}}
-                    // animate={{opacity: getOpacity()}}
-                    // transition={{duration: 0.2}}
+                         display={props.showNodes ? "block" : "none"}
                          onClick={() => {
                              props.onClickCircle(node);
                          }}/>

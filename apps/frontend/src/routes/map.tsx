@@ -142,7 +142,9 @@ export function Map(){
                                 onClickCircle={onClickCircle}
                                 allNodes ={nodes}
                                 showNodes = {showNodes}
-                                onChangeFloor = {handleChangeFloor}/>
+                                onChangeFloor = {handleChangeFloor}
+                                startNodeID = {request.startNode}
+                                endNodeID = {request.endNode}/>
                 </TransformComponent>
 
                 <ToggleNodes onClick={() => setShowNodes(!showNodes) } isOn={showNodes}/>
