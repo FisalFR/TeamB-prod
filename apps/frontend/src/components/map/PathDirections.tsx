@@ -2,13 +2,13 @@ import { SideTab } from "./SideTab.tsx";
 import useNodes from "../../hooks/useNodes.ts";
 import useEdges from "../../hooks/useEdges.ts";
 import genInstructions from "../../directionTools.ts";
-import forwardArrow from "../../assets/Direction_Icons/Forward.svg";
-import leftArrow from "../../assets/Direction_Icons/LeftArrow.svg";
-import rightArrow from "../../assets/Direction_Icons/RightArrow.svg";
-import elevator from "../../assets/Direction_Icons/Elevator.svg";
-import star from "../../assets/Star.svg";
+import forwardArrow from "@/assets/icons/Direction_Icons/Forward.svg";
+import leftArrow from "@/assets/icons/Direction_Icons/LeftArrow.svg";
+import rightArrow from "@/assets/icons/Direction_Icons/RightArrow.svg";
+import elevator from "@/assets/icons/Direction_Icons/Elevator.svg";
+import star from "../../assets/icons/Star.svg";
 import React from "react";
-import Node from "common/src/node.ts";
+import Node from "common/src/nodes-and-edges/node.ts";
 import { motion } from "framer-motion";
 
 function icon(image: string) {
