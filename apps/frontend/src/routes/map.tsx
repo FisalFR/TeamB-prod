@@ -88,6 +88,7 @@ export function Map(){
     function handleStartChange(e: React.ChangeEvent<HTMLSelectElement>) {
         setRequest({...request, startNode: e.target.value});
         setShowPath(true);
+        setCurrentFloor(nodeMap.get(e.target.value)?.floor as string);
         findPath(e.target.value, request.endNode);
     }
     function handleEndChange(e: React.ChangeEvent<HTMLSelectElement>) {
