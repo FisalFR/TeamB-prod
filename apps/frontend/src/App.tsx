@@ -19,7 +19,8 @@ import MapEditor from "./routes/admin/map-editor.tsx";
 import NavBar from "./components/navigation/NavBar.tsx";
 import {Authenticate} from "./components/authentication/Authenticate.tsx";
 import InternalTransportationRequestPage from "./routes/service-requests/internal-transport-page.tsx";
-
+import AdminLanding from "@/routes/admin-landing.tsx";
+import RequestLanding from "@/routes/request-landing.tsx";
 function App() {
 
     const router = createBrowserRouter([
@@ -90,6 +91,14 @@ function App() {
                         {
                             path:"/internalTransport",
                             element:<Authenticate component={InternalTransportationRequestPage}/>
+                        },
+                        {
+                            path:"/request",
+                            element:<Authenticate component={RequestLanding}/>
+                        },
+                        {
+                            path:"/admin",
+                            element:<Authenticate component={AdminLanding}/>
                         },
 
             ],
