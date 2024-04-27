@@ -1,6 +1,6 @@
 import React, {ReactElement, ReactNode, useState} from "react";
 import { motion, AnimatePresence} from "framer-motion";
-import pencilSVG from "../../assets/pencil.svg";
+import pencilSVG from "../../assets/icons/pencil.svg";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
