@@ -12,11 +12,14 @@ import { toSvg } from "jdenticon";
 
 
 function UserProfile() {
-    const MapSVG = <img src={map} alt="map" className={"w-50"}/>;
-    const DataSVG = <img src={data} alt="data" className={"w-50"}/>;
-    const ManageSVG = <img src={manage} alt="manage" className={"w-50"}/>;
-    const EditSVG = <img src={edit} alt="edit" className={"w-50"}/>;
-
+    // const MapSVG = <img onClick={() => window.location.href = "/map"} src={map} alt="map" className={"w-50 hover:cursor-pointer"} />;
+    // const DataSVG = <img onClick={() => window.location.href = "/database"} src={data} alt="data" className={"w-50 hover:cursor-pointer"} />;
+    // const ManageSVG = <img onClick={() => window.location.href = "/csvManager"} src={manage} alt="manage" className={"w-50 hover:cursor-pointer"} />;
+    // const EditSVG = <img onClick={() => window.location.href = "/mapEditor"} src={edit} alt="edit" className={"w-50 hover:cursor-pointer"} />;
+    const MapSVG = <img src={map} alt="map" className={"w-50 hover:cursor-pointer"} />;
+    const DataSVG = <img  src={data} alt="data" className={"w-50 hover:cursor-pointer"} />;
+    const ManageSVG = <img  src={manage} alt="manage" className={"w-50 hover:cursor-pointer"} />;
+    const EditSVG = <img src={edit} alt="edit" className={"w-50 hover:cursor-pointer"} />;
 
     const [maintenanceCount, setMaintenanceCount] = useState(0);
     const [maintenanceMediumCount, setMaintenanceMediumCount] = useState(0);
@@ -76,7 +79,10 @@ function UserProfile() {
             }
 
         });
-    };
+    }
+    function handleWindow(path: string) {
+        return window.location.href = window.location.origin.concat(path);
+    }
 
     function getLanguageCount(priority: string) {
         const requestData = {priority};
@@ -95,7 +101,7 @@ function UserProfile() {
                 setLanguageEmergencyCount(response.data);
             }
         });
-    };
+    }
 
     function getSanitationCount(priority: string) {
         const requestData = {priority};
@@ -114,7 +120,7 @@ function UserProfile() {
                 setSanitationEmergencyCount(response.data);
             }
         });
-    };
+    }
 
     function getMedicineCount(priority: string) {
         const requestData = {priority};
@@ -133,7 +139,7 @@ function UserProfile() {
                 setMedicineEmergencyCount(response.data);
             }
         });
-    };
+    }
 
     function getSecurityCount(priority: string) {
         const requestData = {priority};
@@ -152,7 +158,7 @@ function UserProfile() {
                 setSecurityEmergencyCount(response.data);
             }
         });
-    };
+    }
 
     function getInternalCount(priority: string) {
         const requestData = {priority};
@@ -171,7 +177,7 @@ function UserProfile() {
                 setInternalEmergencyCount(response.data);
             }
         });
-    };
+    }
 
     function getExternalCount(priority: string) {
         const requestData = {priority};
@@ -190,7 +196,7 @@ function UserProfile() {
                 setExternalEmergencyCount(response.data);
             }
         });
-    };
+    }
 
     function getGiftCount(priority: string) {
         const requestData = {priority};
@@ -209,10 +215,10 @@ function UserProfile() {
                 setGiftEmergencyCount(response.data);
             }
         });
-    };
+    }
 
     useEffect(() => {
-        let priorities: string[] =
+        const priorities: string[] =
             ["Low", "Medium", "High", "Emergency"];
         for (let j = 0; j < 4; j++) {
             getMaintenanceCount(priorities[j]);
@@ -514,31 +520,6 @@ function UserProfile() {
         }
     }, [user.user?.email]);
 
-    // const ProfileSVG = <img src={profile} alt="profile" className={"w-50"} />;
-    // const PictureSVG = <img src={picture} alt="profile" className={"w-10"}/>;
-    // const handleChange = async (
-    //     event: React.ChangeEvent<HTMLInputElement>
-    // ) => {
-    //     const fileLoaded = URL.createObjectURL(event.target.files[0]);
-    //     // setFile(fileLoaded);
-    //
-    //     const user: profileUser = {
-    //         employeeEmail: employee.employeeEmail,
-    //         firstName: "",
-    //         lastName: "",
-    //         salary: 0,
-    //         gender: "",
-    //         type: "",
-    //         picture: fileLoaded,
-    //     };
-    //     axios.post("/api/employee/insertPicture", user, {
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     }).then((response) => {
-    //         console.log(response);
-    //     });
-    // };
 
     const profilePicture = () => {
         const svgString = toSvg(employee.employeeEmail, 240);
@@ -605,22 +586,41 @@ function UserProfile() {
                         <div
                             className={"flex flex-col centerContent bg-white rounded-xl shadow-xl h-[295px] w-[360px] space-y-10"}>
                             <div className={"flex flex-row space-x-10"}>
-                                <div className={"h-[85px] w-[85px] centerContent"}>
-                                    {MapSVG}
+
+                                <div className={"h-[85px] w-[95px] centerContent hover:cursor-pointer"} onClick={() => handleWindow(("/map"))}>
+                                    <div>
+                                        <h2 className="font-bold">Map</h2>
+                                        {MapSVG}
+                                    </div>
+
                                 </div>
-                                <div className={"h-[85px] w-[85px] centerContent"}>
-                                    {DataSVG}
+                                <div className={"h-[85px] w-[95px] centerContent hover:cursor-pointer"} onClick={() => handleWindow("/database")}>
+                                    <div>
+                                        <h2 className="font-bold">Database</h2>
+                                        {DataSVG}
+                                    </div>
+
                                 </div>
                             </div>
-                            <div className={"flex flex-row space-x-10"}>
-                                <div className={"h-[85px] w-[85px] centerContent"}>
-                                    {ManageSVG}
-                                </div>
-                                <div className={"h-[85px] w-[85px] centerContent"}>
-                                    {EditSVG}
+                                <div className={"flex flex-row space-x-10 ml-7"}>
+                                    <div className={"h-[95px] w-[85px] centerContent hover:cursor-pointer"} onClick={() => handleWindow("/csvManager")}>
+                                        <div>
+                                            <h2 className="font-bold" style={{whiteSpace:'nowrap'}} >CSV Manager</h2>
+                                            {ManageSVG}
+                                        </div>
+
+                                    </div>
+                                    <div className={" h-[95px] w-[110px] centerContent hover:cursor-pointer"} onClick={() => handleWindow("/mapEditor")}>
+                                        <div>
+                                            <h2 className="font-bold " style={{whiteSpace:'nowrap'}} >Map Editor</h2>
+                                            {EditSVG}
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+
+
                         <div className={"bg-white rounded-xl shadow-xl"}>
                             <Chart options={donutRequest.options}
                                    series={donutRequest.options.series}
