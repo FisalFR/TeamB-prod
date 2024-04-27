@@ -10,6 +10,10 @@ import star from "../../assets/icons/Star.svg";
 import React from "react";
 import Node from "common/src/nodes-and-edges/node.ts";
 import { motion } from "framer-motion";
+import {Instruction} from "common/src/instruction.ts";
+
+import {toWords} from "number-to-words";
+import React from "react";
 
 function icon(image: string) {
     switch (image) {
@@ -53,9 +57,41 @@ const animatePath = {
     }
 };
 
+
+
 export default function PathDirections(props: { Path: Node[] }) {
     const { nodeMap } = useNodes();
     const { edgeMap } = useEdges();
+    const voices = speechSynthesis.getVoices();
+
+    const selectedVoice = voices[18];
+    const speech = new SpeechSynthesisUtterance();
+
+
+
+    function speak(){
+        speech.voice = selectedVoice;
+        const content:Instruction[] = genInstructions(props.Path, nodeMap, edgeMap);
+        let ReadIndex = 0;
+        const text:string[] = [];
+        for (let i = 0; i < content.length; i++) {
+            const numbers = content[i].content.match(/(\d+)/ );
+
+            if (numbers)
+            for (let j = 0; j < numbers.length; j++) {
+            console.log(numbers[j]);
+                content[i].content = content[i].content.replace(numbers[j],` ${toWords(numbers[j])} `);
+            }
+            text.push(content[i].content);
+        }
+        speech.text = text[ReadIndex];
+        if (text.length > 0)
+        speechSynthesis.speak(speech);
+        speech.onend = () => {speech.text = text[++ReadIndex];
+            if (ReadIndex<text.length)
+            speechSynthesis.speak(speech);};
+    }
+
     return (
         <SideTab
             height={"h-[300px]"}
@@ -74,10 +110,18 @@ export default function PathDirections(props: { Path: Node[] }) {
                 </div>
             }
             bodyChildren={
-                <div>
-                    <div style={{fontWeight: "bold", color: "#012D5A"}}>DIRECTIONS</div>
-                    <div className="bg-deep-blue h-0.5"/>
-                    <div className="h-[250px] overflow-y-scroll overflow-hidden w-[416px] divide-y">
+                <div className="w-full">
+
+                    <div className="h-full w-full flex items-start justify-center pb-1">
+                        <b className="ml-2 w-1/2 text-left" style={{fontWeight: "bold", color: "#012D5A", fontSize: "large"}}>DIRECTIONS</b>
+                        <a onClick={speak}
+                           className="mr-3 w-1/2 font-medium text-blue-600 dark:text-blue-500 hover:underline top-[1px] text-right ">Read
+                            Aloud</a>
+
+                    </div>
+
+                    <div className="bg-gray-200 h-0.5 w-full"/>
+                    <div className="h-[250px] overflow-y-scroll overflow-hidden w-[403px] divide-y ml-3">
                         {genInstructions(props.Path, nodeMap, edgeMap).map(instruction => (
                             <div className="flex flex-col text-sm/[17px] gap-36">
                                 <div className="flex flex-row py-3">
@@ -86,7 +130,7 @@ export default function PathDirections(props: { Path: Node[] }) {
                                             {icon(instruction.type)}
                                         </div>
                                     </div>
-                                    <h1 className="w-2/3 align-middle"
+                                    <h1 className="w-[calc(100%-13rem)] text-center break-normal"
                                         style={{color: "#012D5A", fontSize: 17, textAlign: "left"}}>
                                         {instruction.content}
                                     </h1>

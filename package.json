@@ -35,6 +35,7 @@
   "packageManager": "yarn@4.0.2",
   "devDependencies": {
     "@types/express-fileupload": "^1.5.0",
+    "@types/number-to-words": "^1",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/react-table": "^7",
@@ -68,6 +69,7 @@
     "frontend": "workspace:^",
     "fs": "^0.0.1-security",
     "node-fs": "^0.1.7",
+    "number-to-words": "^1.2.4",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-bootstrap": "^2.10.0",
