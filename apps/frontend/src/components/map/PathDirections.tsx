@@ -13,7 +13,6 @@ import { motion } from "framer-motion";
 import {Instruction} from "common/src/instruction.ts";
 
 import {toWords} from "number-to-words";
-import React from "react";
 
 function icon(image: string) {
     switch (image) {
