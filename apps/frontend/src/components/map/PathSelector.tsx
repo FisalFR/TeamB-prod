@@ -1,11 +1,11 @@
 import React from 'react';
 import {AlgorithmButtons} from "./AlgorithmButtons.tsx";
-import Select from "../Select.tsx";
-import fromIconInverse from "../../assets/from_to_icons/circle_from_inverse.svg";
-import dotsInverse from "../../assets/from_to_icons/circles_from_to_inverse.svg";
-import destinationInverse from "../../assets/from_to_icons/icon_to_inverse.svg";
-import star from "../../assets/Star.svg";
-import Node from "../../../../../packages/common/src/node";
+import Select from "../input-components/Select.tsx";
+import fromIconInverse from "@/assets/icons/from_to_icons/circle_from_inverse.svg";
+import dotsInverse from "@/assets/icons/from_to_icons/circles_from_to_inverse.svg";
+import destinationInverse from "@/assets/icons/from_to_icons/icon_to_inverse.svg";
+import star from "../../assets/icons/Star.svg";
+import Node from "common/src/nodes-and-edges/node";
 import {motion} from 'framer-motion';
 import {SideTab} from "./SideTab.tsx";
 
