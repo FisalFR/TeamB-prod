@@ -1,5 +1,6 @@
 import {AnimatePresence, motion} from "framer-motion";
-import Node from "../../../../../packages/common/src/node";
+import Node from "../../../../../packages/common/src/nodes-and-edges/node";
+import {JSX} from "react";
 
 export default function FloorIndicator (props:{
     onClick1: () => void,
@@ -16,8 +17,6 @@ export default function FloorIndicator (props:{
     const FIlength: string[] = [];
     FIlength.push((10 + 25 * floorOrder.length).toString());
     FIlength.push((20 + 25 * floorOrder.length).toString());
-    let left = "";
-    left = (49 - 2 * floorOrder.length).toString();
 
     const animateIndicator = {
         initial: {
@@ -42,14 +41,12 @@ export default function FloorIndicator (props:{
     function getFloorOrder() {
         const floorOrder: string[] = [];
         let prevFloor = "";
-        console.log(props.path);
         for(let i = 0; i < props.path.length; i++) {
             if(props.path[i].floor !== prevFloor) {
                 floorOrder.push(props.path[i].floor);
                 prevFloor = props.path[i].floor;
             }
         }
-        console.log(floorOrder);
         return floorOrder;
     }
 
@@ -89,7 +86,7 @@ export default function FloorIndicator (props:{
     }
 
     function createFloors() {
-        const floorPolygons = [];
+        const floorPolygons: JSX.Element[] = [];
         for(let i = 0; i < floorOrder.length; i++) {
             floorPolygons.push(
                 <motion.polygon points={getPoints(i)} fill={colorFloor(floorOrder[i])}
@@ -97,18 +94,16 @@ export default function FloorIndicator (props:{
             );
         }
         return (
-            <>
-                {floorPolygons}
-            </>
+            <>{floorPolygons}</>
         );
     }
 
     return (
-        <AnimatePresence> {props.pathChange && (left !== "") &&
-            <motion.div className={"fixed bottom-[15%] left-[" + left + "%]"} initial={animateIndicator.initial}
-                        animate={animateIndicator.animate} exit={animateIndicator.exit}>
-                <motion.svg width={(Number.parseInt(FIlength[1]) * 3).toString() + "px"} height="full" viewBox={"0 0 " + FIlength[1] + " 20"} fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
+        <AnimatePresence> {props.pathChange &&
+            <motion.div className={"fixed bottom-[15%]"} style={{left: (49 - 2 * floorOrder.length).toString() + "%"}}
+                        initial={animateIndicator.initial} animate={animateIndicator.animate} exit={animateIndicator.exit}>
+                <motion.svg width={(Number.parseInt(FIlength[1]) * 3).toString() + "px"} height="60" viewBox={"0 0 " + FIlength[1] + " 20"}
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
                     <motion.polygon points={"0,0 " + FIlength[0] + ",0 " + FIlength[1] + ",10 " + FIlength[0] + ",20 0,20 10,10"} fill="#012D5A"/>
                     {createFloors()}
                 </motion.svg>
