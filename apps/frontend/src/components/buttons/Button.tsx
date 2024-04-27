@@ -3,7 +3,7 @@ import React, {ReactNode} from "react";
 
 function Button(props:{px: string,py:string, rounded:string, color: string, onClick:(e: React.MouseEvent) => void, children: ReactNode}) {
     return(
-        <motion.button className={`${props.px} ${props.py} ${props.color} font-bold text-white w-fit ${props.rounded}`}
+        <motion.button className={`${props.px} ${props.py} ${props.color} font-bold text-white w-fit flex flex-row gap-2 ${props.rounded}`}
                onClick={props.onClick}
                whileHover={{scale: 1.1}}
                whileTap={{scale: 0.9}}>
