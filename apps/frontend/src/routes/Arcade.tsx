@@ -10,6 +10,7 @@ import Plot from "@/components/arcade/Plot.tsx";
 import VaseTrash from "@/components/arcade/VaseTrash.tsx";
 import VaseBox from "@/components/arcade/VaseBox.tsx";
 import DeliveryBike from "@/components/arcade/DeliveryBike.tsx";
+import Vase from "@/components/arcade/Vase.tsx";
 
 function Arcade() {
 
@@ -29,11 +30,15 @@ function Arcade() {
         flowers: []
     });
 
+    const [vaseMode, setVaseMode] = useState("noVase");
+    const vaseScale = useRef(1);
+    const vasePattern = useRef("wavy");
+
     //Player movement constants
-    const START_HEIGHT = 430;
+    const START_HEIGHT = 455;
     const MAX_JUMP = 110;
     const MOVE_MULTIPLIER = 10;
-    const SCREEN_WIDTH = 1280;
+    const SCREEN_WIDTH = 1000;
     const SCREEN_HEIGHT = 600;
 
     //Player movement states/refs
@@ -52,6 +57,10 @@ function Arcade() {
 
     const orders = useRef([]);
     const orderTimes = useRef([]);
+
+    const orderNum = useRef(0);
+    const currentOrder = useRef({flowers: 0, vase: 0, time: 0});
+    const orderScoresAvg = useRef({flowers: 0, vase: 0, time: 0});
 
     useEffect(() => {
         //Implementing the setInterval method
@@ -165,10 +174,14 @@ function Arcade() {
 
     function grabVase() {
         setHasVase(true);
+        setVaseMode("choose");
+        vaseScale.current = .25;
         vase.current.hasVase = true;
     }
     function trashVase() {
         if (hasVase) {
+            setVaseMode("noVase");
+            vaseScale.current = 1;
             setHasVase(false);
             vase.current.hasVase = false;
             vase.current.flowers = [];
@@ -185,7 +198,10 @@ function Arcade() {
     }
 
     function deliverVase() {
-        const toScore = orders.current[0];
+        setVaseMode("noVase");
+        vaseScale.current = 1;
+        const toScore = [];
+        toScore.push(orders.current[0]);
         let score = 100;
 
         const orderCount = {
@@ -214,6 +230,11 @@ function Arcade() {
         score = Math.max(0, score);
 
         alert(score);
+        currentOrder.current.flowers = score;
+
+        orderScoresAvg.current.flowers = (orderScoresAvg.current.flowers + score)/(orderNum.current+1);
+        orderScoresAvg.current.vase = (orderScoresAvg.current.vase + currentOrder.current.vase)/(orderNum.current+1);
+        orderScoresAvg.current.time = (orderScoresAvg.current.flowers + currentOrder.current.time)/(orderNum.current+1);
 
         vase.current.hasVase = false;
         vase.current.flowers = [];
@@ -221,6 +242,19 @@ function Arcade() {
 
         orders.current.splice(0,1);
         orderTimes.current.splice(0,1);
+
+        orderNum.current += 1;
+    }
+
+    function scoreVase(score: number){
+        setVaseMode("move");
+
+        currentOrder.current.vase = score;
+    }
+
+    function choosePattern(pattern: string) {
+        vasePattern.current = pattern;
+        setVaseMode("paint");
     }
 
 
@@ -229,7 +263,7 @@ function Arcade() {
             <div className="centerContent w-full h-screen fixed top-0 flex-col">
                 <h1 className="text-2xl">Flower Delivery Game</h1>
                 <div className="relative border-4 border-black overflow-hidden"
-                     style = {{width: SCREEN_WIDTH + "px", height: SCREEN_HEIGHT + "px"}}
+                     style = {{width: SCREEN_WIDTH + "px", height: SCREEN_HEIGHT + "px", backgroundColor: "#C9E4F1"}}
                      onKeyDown={(e: React.KeyboardEvent) => {movePlayer(e);}}
                      onKeyUp={(e: React.KeyboardEvent) => {stopMove(e);}}
                      tabIndex={0}
@@ -238,22 +272,25 @@ function Arcade() {
                     <OrderManager orderMax={ORDER_MAX} flowers={FLOWERS} currentTime={globalTime}
                                   addOrder={addOrder} orders = {orders.current} orderTimes={orderTimes.current}/>
 
-                    <Plot x1={150} x2={380} playerX={playerX} plot={1} currentLoc={LOCATIONS[currentLoc.current].name}
+                    <Plot x1={115} x2={300} playerX={playerX} plot={1} currentLoc={LOCATIONS[currentLoc.current].name}
                           currentTime={globalTime} vase={vase.current} addToVase={addToVase}/>
-                    <Plot x1={490} x2={720} playerX={playerX} plot={2} currentLoc={LOCATIONS[currentLoc.current].name}
+                    <Plot x1={380} x2={560} playerX={playerX} plot={2} currentLoc={LOCATIONS[currentLoc.current].name}
                           currentTime={globalTime} vase={vase.current} addToVase={addToVase}/>
-                    <Plot x1={850} x2={1090} playerX={playerX} plot={3} currentLoc={LOCATIONS[currentLoc.current].name}
+                    <Plot x1={660} x2={850} playerX={playerX} plot={3} currentLoc={LOCATIONS[currentLoc.current].name}
                           currentTime={globalTime} vase={vase.current} addToVase={addToVase}/>
 
-                    <VaseTrash x1={900} x2={1040} playerX={playerX} currentLoc={LOCATIONS[currentLoc.current].name}
+                    <VaseTrash x1={710} x2={810} playerX={playerX} currentLoc={LOCATIONS[currentLoc.current].name}
                                trashVase={trashVase}/>
-                    <VaseBox x1={210} x2={450} playerX={playerX} currentLoc={LOCATIONS[currentLoc.current].name}
+                    <VaseBox x1={170} x2={350} playerX={playerX} currentLoc={LOCATIONS[currentLoc.current].name}
                              grabVase={grabVase} hasVase={hasVase}/>
                     <DeliveryBike x1={650} x2={900} playerX={playerX} currentLoc={LOCATIONS[currentLoc.current].name}
                                   hasVase={hasVase} deliverVase={deliverVase}/>
 
 
                     <Player xpos={playerX} ypos={playerY} vase={vase.current}/>
+
+                    <Vase mode={vaseMode} playerX={playerX} playerY={playerY} type={vasePattern.current} scale={vaseScale.current}
+                          scoreVase = {scoreVase} choosePattern={choosePattern}/>
                 </div>
 
             </div>

@@ -24,7 +24,8 @@ function BoundingRect(props:{x1: number, x2: number, changeOverlap: (boolean) =>
             {
                 width: props.x2-props.x1 + "px",
                 height: "20px",
-                top: "430px",
+                top: "460px",
+                opacity: 0.5,
                 left: props.x1 + "px"
 
             }

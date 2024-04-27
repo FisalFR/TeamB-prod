@@ -4,7 +4,7 @@ import React, {ReactNode} from "react";
 function ArcadeButton(props:{px: string,py:string, rounded:string, color: string, onClick:(e: React.MouseEvent) => void, children: ReactNode}) {
     return(
         <>
-        <motion.div className={`${props.px} ${props.py} ${props.color} font-bold text-white w-fit ${props.rounded}`}
+        <motion.div className={`${props.px} ${props.py} ${props.color} font-bold text-white w-fit cursor-pointer ${props.rounded}`}
                        onClick={props.onClick}
                        whileHover={{scale: 1.1}}
                        whileTap={{scale: 0.9}}
