@@ -1,4 +1,4 @@
-import Node from 'common/src/node.ts';
+import Node from 'common/src/nodes-and-edges/node.ts';
 import {Instruction} from 'common/src/instruction.ts';
 const distThresh = 40;
 const nearThresh = 3;
