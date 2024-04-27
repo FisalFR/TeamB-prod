@@ -7,9 +7,6 @@ import Sanitation from "../assets/Service_Request_Icon/Sanitation.svg";
 import Security from "../assets/Service_Request_Icon/Security.svg";
 import InternalTransport from "../assets/Service_Request_Icon/InternalTransportation.svg";
 import ExternalTransport from "../assets/Service_Request_Icon/ExternalTransportation.svg";
-// import {Link} from "react-router-dom";
-
-
 
 
 export function RequestLanding(){
@@ -22,25 +19,23 @@ export function RequestLanding(){
                 <br/>
                 <div className="flex flex-col w-full">
                     <div className="flex justify-center gap-40">
-
-                            <ServiceCard icon={Maintenance} Request={"Maintenance Request"}/>
-
-                        <ServiceCard icon={GiftIcon} Request={"Gift Delivery"}/>
+                        <ServiceCard onClick={()=> window.location.href = "/maintenance"} icon={Maintenance} Request={"Maintenance Request"}/>
+                        <ServiceCard onClick={() => window.location.href ="/giftdelivery"} icon={GiftIcon} Request={"Gift Delivery"}/>
                     </div>
                     <br/>
                     <div className="flex justify-center gap-40">
-                        <ServiceCard icon={Language} Request={"Language Interpreter"}/>
-                        <ServiceCard icon={Medicine} Request={"Medicine Request"}/>
+                        <ServiceCard onClick={() => window.location.href ="/interpreter"} icon={Language} Request={"Language Interpreter"}/>
+                        <ServiceCard onClick={() => window.location.href ="/medicinerequest"} icon={Medicine} Request={"Medicine Request"}/>
                     </div>
                     <br/>
                     <div className="flex justify-center gap-40">
-                        <ServiceCard icon={Sanitation} Request={"Sanitation Request"}/>
-                        <ServiceCard icon={Security} Request={"Security Request"}/>
+                        <ServiceCard onClick={() => window.location.href ="/sanitation"} icon={Sanitation} Request={"Sanitation Request"}/>
+                        <ServiceCard onClick={() => window.location.href ="/security"} icon={Security} Request={"Security Request"}/>
                     </div>
                     <br/>
                     <div className="flex justify-center gap-40">
-                        <ServiceCard icon={InternalTransport} Request={"Internal Transportation Request"}/>
-                        <ServiceCard icon={ExternalTransport} Request={"External Transportation Request"}/>
+                        <ServiceCard onClick={() => window.location.href ="/internaltransport"} icon={InternalTransport} Request={"Internal Transportation Request"}/>
+                        <ServiceCard onClick={() => window.location.href ="/transport"} icon={ExternalTransport} Request={"External Transportation Request"}/>
                     </div>
                 </div>
 
