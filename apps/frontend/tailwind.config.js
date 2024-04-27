@@ -71,15 +71,15 @@ module.exports = {
   plugins: [
     addVariablesForColors,
     require("tailwindcss-animate"),
-    require('@tailwindcss/postcss7-compat'),
+    // require("@tailwindcss/postcss7-compat"),
     function ({addUtilities}) {
       const newUtilities = {
         '.mask-gradient': {
           maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
           '-webkit-mask-image': 'linear-gradient(to bottom, black 60%, transparent 100%)'
         }
-      }
-      addUtilities(newUtilities)
+      };
+      addUtilities(newUtilities);
     }
   ],
 };
