@@ -5,7 +5,7 @@ import l2map from "../assets/floors/02_thesecondfloor.png";
 import l3map from "../assets/floors/03_thethirdfloor.png";
 import plus from "../assets/icons/plus.svg";
 import minus from "../assets/icons/minus.svg";
-import fit from "../assets/icons/fit.svg";
+import fill from "../assets/icons/fit.svg";
 import PathVisual from "../components/map/PathVisual.tsx";
 import React, {useEffect, useState, useCallback, useRef} from "react";
 import axios from "axios";
@@ -116,16 +116,16 @@ export function Map(){
                          onClick2={() => zoomOut()} minusSvg={MinusSvg}/>
         );
     }
-    function ZoomOutFitButton() {
-        const { centerView} = useControls();
+    function ZoomOutFillButton() {
+        const { resetTransform} = useControls();
         const handleClick = () => {
-            centerView(0.22);
+            resetTransform();
         };
-        const fitIcon = <img src={fit} alt="Fit" className={"size-9"} />;
+        const fillIcon = <img src={fill} alt="Fit" className={"size-9"} />;
         return(
             <div className={"absolute top-16 right-7"}>
                 <Button onClick={handleClick} px={"px-3"} py={"py-3"}>
-                    {fitIcon}
+                    {fillIcon}
                 </Button>
             </div>
 
@@ -194,7 +194,7 @@ export function Map(){
                     currentFloor={currentFloor}
                 />
                 <ZoomControls/>
-                <ZoomOutFitButton/>
+                <ZoomOutFillButton/>
             </TransformWrapper>
         </div>
     );
