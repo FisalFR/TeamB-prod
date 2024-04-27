@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import {ChangeEvent} from "react";
-import plus from '../../assets/plus.svg';
-import minus from '../../assets/minus.svg';
+import plus from '../../assets/icons/plus.svg';
+import minus from '../../assets/icons/minus.svg';
 
 export default function NumberInput( props:{min:string, max:string, width:string, height:string, value:number, onChange:(e: number) => void;}){
 

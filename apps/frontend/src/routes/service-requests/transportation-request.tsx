@@ -4,8 +4,8 @@ import RadioButton from "../../components/input-components/RadioButton.tsx";
 import {TransportationRequest} from "common/src/service-requests/transportation-request.ts";
 import Dropdown from "../../components/input-components/Dropdown.tsx";
 import axios from "axios";
-import Button from "../../components/Button.tsx";
-import transportPic from "../../assets/transport-pic.jpg";
+import Button from "../../components/buttons/Button.tsx";
+import transportPic from "../../assets/serviceRequestBanners/transport-pic.jpg";
 
 export function TransportationRequestPage() {
     const [request, setRequest] = useState<TransportationRequest>({

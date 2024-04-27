@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Table from "../components/Table.tsx";
+import Table from "../../components/display/Table.tsx";
 
 function LogBook() {
 

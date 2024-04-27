@@ -3,18 +3,18 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import pathfindingRoute from "./routes/pathfinding-route";
-import maintenanceRoute from "./routes/maintenance-route";
-import languageInterpreterRoute from "./routes/language-interpreter-route";
+import maintenanceRoute from "./routes/service-requests/maintenance-route";
+import languageInterpreterRoute from "./routes/service-requests/language-interpreter-route";
 import csvManagerRoute from "./routes/csv-manager-route";
-import medicineRoute from "./routes/medicine-route";
-import sanitationRoute from "./routes/sanitation-route";
-import securityRoute from "./routes/security-route";
-import giftDeliveryRoute from "./routes/gift-delivery-route";
+import medicineRoute from "./routes/service-requests/medicine-route";
+import sanitationRoute from "./routes/service-requests/sanitation-route";
+import securityRoute from "./routes/service-requests/security-route";
+import giftDeliveryRoute from "./routes/service-requests/gift-delivery-route";
 import nodesRouter from "./routes/nodes-route";
 import edgesRouter from "./routes/edges-route";
-import transportationRoute from "./routes/transportation-route";
+import transportationRoute from "./routes/service-requests/transportation-route";
 import employeeRoute from "./routes/employee-route";
-import internalTransportRoute from "./routes/internal-transport-route";
+import internalTransportRoute from "./routes/service-requests/internal-transport-route";
 
 const app: Express = express(); // Set up the backend
 

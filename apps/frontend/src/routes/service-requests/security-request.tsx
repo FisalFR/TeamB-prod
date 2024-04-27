@@ -3,7 +3,7 @@ import {SecurityRequest} from "common/src/service-requests/security-request.ts";
 import axios from "axios";
 import Dropdown from "../../components/input-components/Dropdown.tsx";
 import RadioButton from "../../components/input-components/RadioButton.tsx";
-import Button from "../../components/Button.tsx";
+import Button from "../../components/buttons/Button.tsx";
 import securityPic from "../../assets/serviceRequestBanners/security.jpg";
 
 export function SecurityPage() {

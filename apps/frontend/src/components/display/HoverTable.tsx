@@ -1,12 +1,12 @@
-import Modal from "./display/Modal.tsx";
+import Modal from "../display/Modal.tsx";
 import React, {useEffect, useRef, useState} from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import {fullServiceFormType} from "common/src/full-service-form.ts";
 import {FormType} from "common/src/form-type.ts";
-import Dropdown from "./input-components/Dropdown.tsx";
-import LongButton from "./LongButton.tsx";
-import Button from "./Button.tsx";
+import Dropdown from "../input-components/Dropdown.tsx";
+import LongButton from "../buttons/LongButton.tsx";
+import Button from "../buttons/Button.tsx";
 
 
 
@@ -171,13 +171,14 @@ function HoverTable(props:{data: NonNullable<unknown>[]; headings: string[], key
     const [cleared, setCleared] = useState(false);
     const statusTypeOptions = ["Unassigned", "Assigned", "InProgress", "Closed"];
     const [assignment, setAssignment] = useState<FormType>({
+        priority: "",
         formID: "",
         type: "",
         location: "",
         status: "",
         assignee: "",
         dateCreated: emptyDate,
-        employeeName: "",
+        employeeName: ""
     });
 
 

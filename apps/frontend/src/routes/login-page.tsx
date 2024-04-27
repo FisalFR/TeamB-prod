@@ -2,10 +2,10 @@ import AnimatedSVG from "../components/display/HeroImage.tsx";
 
 import React, {useState} from 'react';
 import Carousel from "../components/display/Carousel.tsx";
-import image1 from '../assets/Carousel/gift.svg';
-import image2 from '../assets/Carousel/language.svg';
-import image3 from '../assets/Carousel/security.svg';
-import image4 from '../assets/Carousel/map.svg';
+import image1 from '@/assets/icons/Carousel/gift.svg';
+import image2 from '@/assets/icons/Carousel/language.svg';
+import image3 from '@/assets/icons/Carousel/security.svg';
+import image4 from '@/assets/icons/Carousel/map.svg';
 import background from '../assets/Hero_Image/brighams_hero.jpg';
 import {useEffect} from "react";
 

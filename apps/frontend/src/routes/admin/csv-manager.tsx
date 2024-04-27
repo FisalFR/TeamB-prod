@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from "react"; // , useMemo
 import axios from "axios";
-import Table from "../components/Table.tsx";
-import Button from "../components/Button.tsx";
+import Table from "../../components/display/Table.tsx";
+import Button from "../../components/buttons/Button.tsx";
 import Chart from "react-apexcharts";
 //import {LoadingDot} from "../components/loadingDot.tsx";
 // import useTable from "react-table";

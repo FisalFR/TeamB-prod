@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 import {SanitationRequest} from "common/src/service-requests/sanitation-request.ts";
 import RadioButton from "../../components/input-components/RadioButton.tsx";
-import Button from "../../components/Button.tsx";
+import Button from "../../components/buttons/Button.tsx";
 import Dropdown from "../../components/input-components/Dropdown.tsx";
 import axios from "axios";
 import sanitationPic from "../../assets/serviceRequestBanners/sanitation.jpg";

@@ -1,8 +1,8 @@
 import express, { Router } from "express";
 import { MedicineRequestType } from "common/src/service-requests/medicine-request-type";
 const router: Router = express.Router();
-import client from "../bin/database-connection";
-import medicineFunctions from "../service-request-functions/medicine-functions";
+import client from "../../bin/database-connection";
+import medicineFunctions from "../../service-request-functions/medicine-functions";
 
 router.get("/", async (req, res) => {
   const all = await client.medicineRequests.findMany();

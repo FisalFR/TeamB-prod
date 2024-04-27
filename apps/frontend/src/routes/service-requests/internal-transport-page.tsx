@@ -3,7 +3,7 @@ import RadioButton from "../../components/input-components/RadioButton.tsx";
 import {internalTransportationRequest} from "common/src/service-requests/internal-transportation-request.ts";
 import Dropdown from "../../components/input-components/Dropdown.tsx";
 import axios from "axios";
-import Button from "../../components/Button.tsx";
+import Button from "../../components/buttons/Button.tsx";
 import internalTransportPic from "../../assets/serviceRequestBanners/internalTransportPic.jpg";
 
 

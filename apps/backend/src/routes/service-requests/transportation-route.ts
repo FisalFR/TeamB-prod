@@ -1,9 +1,9 @@
 import express, { Router } from "express";
 import { TransportationRequest } from "common/src/service-requests/transportation-request";
 const router: Router = express.Router();
-import client from "../bin/database-connection";
+import client from "../../bin/database-connection";
 
-import transportationFunctions from "../service-request-functions/transportation-functions";
+import transportationFunctions from "../../service-request-functions/transportation-functions";
 
 router.get("/", async (req, res) => {
   const formsWithTransportation = await client.$queryRaw`

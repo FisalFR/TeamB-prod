@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import {LanguageInterpreterTypes} from 'common/src/service-requests/language-interpreter-types.ts';
 import Dropdown from "../../components/input-components/Dropdown.tsx";
-import Button from "../../components/Button.tsx";
+import Button from "../../components/buttons/Button.tsx";
 import axios from "axios";
 import RadioButton from "../../components/input-components/RadioButton.tsx";
 import interpreterPic from "../../assets/serviceRequestBanners/interpreter.jpg";

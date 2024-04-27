@@ -1,5 +1,5 @@
-import Button from "../../components/Button.tsx";
-import ShopCard from "../../components/ShopCard.tsx";
+import Button from "../../components/buttons/Button.tsx";
+import ShopCard from "../../components/display/ShopCard.tsx";
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import {giftItem} from "common/src/service-requests/gift-item.ts";
 import Tulip from "../../assets/Gift_Images/Tulip.jpeg";
@@ -22,10 +22,10 @@ import {giftRequest} from "common/src/service-requests/gift-request.ts";
 import axios from "axios";
 import Dropdown from "../../components/input-components/Dropdown.tsx";
 import RadioButton from "../../components/input-components/RadioButton.tsx";
-import backward from "../../assets/backward.svg";
-import cartIMG from "../../assets/cart.svg";
+import backward from "../../assets/icons/backward.svg";
+import cartIMG from "../../assets/icons/cart.svg";
 import QuantityPicker from "../../components/input-components/QuantityPicker.tsx";
-import Datepicker from '../components/DatePicker.tsx';
+import Datepicker from '../../components/input-components/DatePicker.tsx';
 
 //this is a commit just for mo :)
 function GiftDelivery() {

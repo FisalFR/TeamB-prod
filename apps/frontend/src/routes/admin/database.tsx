@@ -1,13 +1,13 @@
-import Dropdown from "../components/input-components/Dropdown.tsx";
+import Dropdown from "../../components/input-components/Dropdown.tsx";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {forms} from "database/.prisma/client";
-import HoverTable from "../components/HoverTable.tsx";
+import HoverTable from "../../components/display/HoverTable.tsx";
 import formType from "common/src/form-type.ts";
-import pieGraph from "../assets/pie.svg";
-import bar from "../assets/bar.svg";
-import Button from "../components/Button.tsx";
-import Modal from "../components/display/Modal.tsx";
+import pieGraph from "../../assets/icons/graphs/pie.svg";
+import bar from "../../assets/icons/graphs/bar.svg";
+import Button from "../../components/buttons/Button.tsx";
+import Modal from "../../components/display/Modal.tsx";
 import Chart from "react-apexcharts";
 
 

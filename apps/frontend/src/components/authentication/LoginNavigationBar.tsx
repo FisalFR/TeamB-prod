@@ -1,6 +1,6 @@
 import bwhLogo from "../../assets/bwh-logo-white.svg";
 
-import user_icon from "../../assets/user_icon.svg";
+import user_icon from "../../assets/icons/login/user_icon.svg";
 import HandleLogin from "./HandleLogin.tsx";
 import HandleLogout from "./HandleLogout.tsx";
 import {useAuth0} from "@auth0/auth0-react";

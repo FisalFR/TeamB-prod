@@ -1,25 +1,25 @@
-import ll1map from "../assets/floors/00_thelowerlevel1.png";
-import ll2map from "../assets/floors/00_thelowerlevel2.png";
-import l1map from "../assets/floors/01_thefirstfloor.png";
-import l2map from "../assets/floors/02_thesecondfloor.png";
-import l3map from "../assets/floors/03_thethirdfloor.png";
-import plus from "../assets/plus.svg";
-import minus from "../assets/minus.svg";
+import ll1map from "../../assets/floors/00_thelowerlevel1.png";
+import ll2map from "../../assets/floors/00_thelowerlevel2.png";
+import l1map from "../../assets/floors/01_thefirstfloor.png";
+import l2map from "../../assets/floors/02_thesecondfloor.png";
+import l3map from "../../assets/floors/03_thethirdfloor.png";
+import plus from "../../assets/icons/plus.svg";
+import minus from "../../assets/icons/minus.svg";
 import React, {useEffect, useRef, useState} from "react";
-import ZoomButtons from "../components/map/ZoomButtons.tsx";
-import FloorSelector from "../components/map/FloorSelector.tsx";
-import useNodes from "../hooks/useNodes.ts";
-import useEdges from "../hooks/useEdges.ts";
+import ZoomButtons from "../../components/map/ZoomButtons.tsx";
+import FloorSelector from "../../components/map/FloorSelector.tsx";
+import useNodes from "../../hooks/useNodes.ts";
+import useEdges from "../../hooks/useEdges.ts";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
-import Select from "../components/input-components/Select.tsx";
-import Button from "../components/Button.tsx";
+import Select from "../../components/input-components/Select.tsx";
+import Button from "../../components/buttons/Button.tsx";
 import axios from "axios";
 import EdgeType from "common/src/nodes-and-edges/edge-type.ts";
-import NodeForm from "../components/map/NodeForm.tsx";
+import NodeForm from "../../components/map/NodeForm.tsx";
 import NodeType from "common/src/nodes-and-edges/node-type.ts";
 import nodeAddOrDelete from "common/src/nodes-and-edges/node-add-or-delete.ts";
 //import nodeType from "common/src/node-type.ts";
-import {EditingPanel, TabContent} from "../components/map/EditingPanel.tsx";
+import {EditingPanel, TabContent} from "../../components/map/EditingPanel.tsx";
 
 export function MapEditor(){
 

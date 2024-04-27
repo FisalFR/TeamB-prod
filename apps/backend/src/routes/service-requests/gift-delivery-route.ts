@@ -1,8 +1,8 @@
 import express, { Router } from "express";
 import { giftRequest } from "common/src/service-requests/gift-request";
 const router: Router = express.Router();
-import client from "../bin/database-connection";
-import giftDeliveryFunctions from "../service-request-functions/gift-delivery-functions";
+import client from "../../bin/database-connection";
+import giftDeliveryFunctions from "../../service-request-functions/gift-delivery-functions";
 
 router.get("/location", async (req, res) => {
   const nodeType = await client.nodes.findMany({

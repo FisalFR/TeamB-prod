@@ -1,13 +1,13 @@
 import express, { Router } from "express";
-import { SanitationRequest } from "common/src/service-requests/sanitation-request";
-import sanitationFunctions from "../service-request-functions/sanitation-functions";
+import { SecurityRequest } from "common/src/service-requests/security-request";
+import securityFunctions from "../../service-request-functions/security-functions";
 const router: Router = express.Router();
-import client from "../bin/database-connection";
+import client from "../../bin/database-connection";
 
 router.post("/insert", async (req, res) => {
-  const sanitationForm: SanitationRequest = req.body;
+  const securityForm: SecurityRequest = req.body;
   res.status(200).json({
-    message: await sanitationFunctions.sanitationInsert(sanitationForm),
+    message: await securityFunctions.securityInsert(securityForm),
   });
 });
 

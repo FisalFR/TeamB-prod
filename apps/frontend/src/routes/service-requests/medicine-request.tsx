@@ -1,6 +1,6 @@
 import React, {useRef, useState, ChangeEvent, useEffect} from "react";
 import {MedicineRequestType} from "common/src/service-requests/medicine-request-type.ts";
-import Button from "../../components/Button.tsx";
+import Button from "../../components/buttons/Button.tsx";
 import RadioButton from "../../components/input-components/RadioButton.tsx";
 import Dropdown from "../../components/input-components/Dropdown.tsx";
 import axios from "axios";
