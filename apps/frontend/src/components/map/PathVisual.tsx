@@ -70,25 +70,7 @@ function PathVisual(props: {width: number; height: number;
                                 key = {JSON.stringify(keys[x] + "svg")}
                     >
                         {createFloor(keys[x])}
-                        {props.allNodes.filter(node => {
-                            return node.floor === props.currentFloor && !node.longName.includes("Hall");
-                        }).map((node) => {
-                            return <>
-                                <circle  className={"hover:cursor-pointer"}
-                                                cx={node.xcoord} cy={node.ycoord}
-                                               r={12} // smaller visible circle
-                                               fill= "#FFFFFF"
-                                                stroke= "#012D5A"
-                                                strokeWidth= "4"
-                                                opacity={getOpacity()}
-                                               // initial={{opacity: 0}}
-                                               // animate={{opacity: getOpacity()}}
-                                               // transition={{duration: 0.2}}
-                                               onClick={() => {
-                                                   props.onClickCircle(node);
-                                               }}/>
-                            </>;
-                        })}
+
                     </motion.svg>
                 </>
             );
@@ -104,6 +86,26 @@ function PathVisual(props: {width: number; height: number;
                    ref={imgRef}
             ></image>
         );
+        {props.allNodes.filter(node => {
+            return node.floor === props.currentFloor && !node.longName.includes("Hall");
+        }).map((node) => {
+            pathDivs.push(<>
+                <circle  className={"hover:cursor-pointer"}
+                         cx={node.xcoord} cy={node.ycoord}
+                         r={12} // smaller visible circle
+                         fill= "#FFFFFF"
+                         stroke= "#012D5A"
+                         strokeWidth= "4"
+                         opacity={getOpacity()}
+                    // initial={{opacity: 0}}
+                    // animate={{opacity: getOpacity()}}
+                    // transition={{duration: 0.2}}
+                         onClick={() => {
+                             props.onClickCircle(node);
+                         }}/>
+            </>);
+            return;
+        });}
         if (Object.prototype.hasOwnProperty.call(props.floormap, floor)) {
             const floorPaths: Node[][] | undefined = props.floormap[floor];
 
