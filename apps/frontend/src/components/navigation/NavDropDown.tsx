@@ -5,8 +5,7 @@ import {AnimatePresence, motion} from "framer-motion";
 //props:
 // 2D array text with link
 // main link and  the list of links
- function NavDropDown(props: {onClick:MouseEventHandler, mainLink:string[],dropdownLinks:string[][]}){
-
+function NavDropDown(props: {onClick:MouseEventHandler, mainLink:string[],dropdownLinks:(string[] | (() => void))[][]}){
     const [isSeen, setIsSeen] = useState(false);
      const handleMouseEnter = () => {
         setIsSeen(true);
@@ -19,9 +18,23 @@ import {AnimatePresence, motion} from "framer-motion";
              <motion.div className="centerContent py-1 opacity-0"
                          animate={{opacity: 1, transition: {duration: 0.05 * props.dropdownLinks.length, delay: 0.025 * index, ease: "backOut"}}}
                          exit={{opacity: 0, transition: {duration: 0.05, delay: 0.025 * (props.dropdownLinks.length - index - 1), ease: "backOut"}}}>
-             <NavLink href={link[0]}>
-                 {link[1]}
-             </NavLink>
+                 {typeof  link[0] == 'function' ?
+                     <div className="text-white hover:cursor-pointer  " onClick={link[0]}>
+
+                         <p className="py-1 relative group font-OpenSans items-center font-bold text-bone-white top-0">
+                             <p
+                                 className="inline pl-2 pb-3"> {link[1]}</p>
+                             <span
+                                 className="absolute bottom-0 left-1/2 w-0 h-1 bg-gold-yellow transition-all group-hover:w-16"></span>
+                             <span
+                                 className="absolute bottom-0 right-1/2 w-0 h-1 bg-gold-yellow transition-all group-hover:w-16"></span>
+                         </p>
+
+                     </div> :
+                     <NavLink href={link[0]}>
+                         {link[1]}
+                     </NavLink>
+                 }
              </motion.div>
 
          );}

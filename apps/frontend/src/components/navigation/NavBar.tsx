@@ -8,6 +8,7 @@ import LoginNavigationBar from "../authentication/LoginNavigationBar.tsx";
 import axios from "axios";
 import {useEffect} from "react";
 import {employee} from "../../../../../packages/common/src/profile.ts";
+//import navDropDown from "./NavDropDown.tsx";
 
 
 
@@ -17,6 +18,9 @@ export function NavBar() {
     const homeRedirect = `${window.location.origin.concat("/")}`;
     function home() {
         window.location.href = homeRedirect;
+    }
+    function handleWindow(path:string){
+        return  window.location.href = window.location.origin.concat(path);
     }
 
     const user = useAuth0();
@@ -64,7 +68,7 @@ export function NavBar() {
             ["/mapEditor", "Map Editor"],
         ];
         const userDropdownList =[
-            ["/userProfile", "Profile"],
+            [handleLogout, "LOGOUT"]
         ];
 
         return (
@@ -76,46 +80,51 @@ export function NavBar() {
                             // Output when user is authenticated and page is not loading
                             <>
                                 <div className="navbar z-50 relative bg-deep-blue h-14 top-0 left-0 grid w-full">
-                                    <img onClick={home} className="hover:cursor-pointer h-3/6 self-center px-4" src={bwhLogo}
+                                    <img onClick={home} className="hover:cursor-pointer h-3/6 self-center px-4"
+                                         src={bwhLogo}
                                          alt="Brighams Logo White"></img>
-                                    <nav className="uppercase divide-x divide-solid centerContent w-fit justify-self-center">
+                                    <nav
+                                        className="uppercase divide-x divide-solid centerContent w-fit justify-self-center">
 
-                                        <NavDropDown onClick={handleLogout} mainLink= {["", "Request"]} dropdownLinks={dropdownList}/>
+                                        <NavDropDown onClick={() => handleWindow("")} mainLink={["", "Request"]}
+                                                     dropdownLinks={dropdownList as unknown as (string[] | (() => void))[][]}/>
 
                                         <div className="px-16">
                                             <NavLink href="/map">Map</NavLink>
                                         </div>
 
-                                        <NavDropDown onClick={handleLogout} mainLink={["", "Admin"]} dropdownLinks={adminDropdownList}></NavDropDown>
+                                        <NavDropDown onClick={() => handleWindow("")} mainLink={["", "Admin"]}
+                                                     dropdownLinks={adminDropdownList as unknown as (string[] | (() => void))[][]}></NavDropDown>
                                     </nav>
                                     <div className="self-center">
-                                        <div className="float-end centerContent px-16">
+                                        <div className="float-end centerContent ">
 
                                             {/*<NavLink onClick={handleLogout}><div className="flex flex-row gap-2">*/}
+                                            <div className="flex items-center">
 
-                                                <NavDropDown onClick={handleLogout}  mainLink={["", "LOGOUT"]} dropdownLinks={userDropdownList}
+                                                <NavDropDown onClick={() => handleWindow("/userProfile")}
+                                                             mainLink={["", "PROFILE"]}
+                                                             dropdownLinks={userDropdownList as unknown as (string[] | (() => void))[][]}/>
+                                            </div>
 
-                                                />
 
-{/*/!**/}
-{/*                                                <img src={user_icon} alt="Username icon" height="20" width="20"/>LOGOUT</div></NavLink>*/}
-{/**!/*/}
                                         </div>
                                     </div>
                                 </div>
                             </>
                         )
-                            : (!isLoading && isAuthenticated && window.location.href === homeRedirect)
-                    ? (
-                    // Different output when user is authenticated, page is not loading, and current window location is the home page
+                        : (!isLoading && isAuthenticated && window.location.href === homeRedirect)
+                            ? (
+                                // Different output when user is authenticated, page is not loading, and current window location is the home page
                                 <>
 
-                                    <div  className="navbar z-50 relative  bg-deep-blue  h-14 top-0 left-0 grid w-full">
+                                    <div className="navbar z-50 relative  bg-deep-blue  h-14 top-0 left-0 grid w-full">
 
-                                        <img onClick={home} className="hover:cursor-pointer h-3/6 self-center px-4" src={bwhLogo}
+                                        <img onClick={home} className="hover:cursor-pointer h-3/6 self-center px-4"
+                                             src={bwhLogo}
                                              alt="Brighams Logo White"></img>
                                         <br/>
-                                        <div onClick={handleLogout}  className="self-center hover:cursor-pointer pl-20">
+                                        <div onClick={handleLogout} className="self-center hover:cursor-pointer pl-20">
                                             <p  className="py-1 relative group font-OpenSans items-center font-bold text-bone-white">
                                                 <img className="inline" src={user_icon} alt="Username icon" height="20" width="20"/><a className="inline pl-2 pb-3">LOGOUT</a>
                                                 <span
