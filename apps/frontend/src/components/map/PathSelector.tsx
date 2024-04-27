@@ -9,7 +9,7 @@ import Node from "../../../../../packages/common/src/node";
 import {motion} from 'framer-motion';
 import {SideTab} from "./SideTab.tsx";
 
-export function PathSelector(props: {
+export default function PathSelector(props: {
     nodes: Node[],
     handleStartChange: (e: React.ChangeEvent<HTMLSelectElement>) => void,
     handleEndChange: (e: React.ChangeEvent<HTMLSelectElement>) => void,
