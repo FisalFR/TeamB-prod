@@ -5,6 +5,7 @@ import l2map from "../assets/floors/02_thesecondfloor.png";
 import l3map from "../assets/floors/03_thethirdfloor.png";
 import plus from "../assets/icons/plus.svg";
 import minus from "../assets/icons/minus.svg";
+import fill from "../assets/icons/fit.svg";
 import PathVisual from "../components/map/PathVisual.tsx";
 import React, {useEffect, useState, useCallback, useRef} from "react";
 import axios from "axios";
@@ -13,10 +14,11 @@ import Node from "common/src/nodes-and-edges/node.ts";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
 import {PathSelector} from "../components/map/PathSelector.tsx";
- import PathDirections from "../components/map/PathDirections.tsx";
+import PathDirections from "../components/map/PathDirections.tsx";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
 import useNodes from "../hooks/useNodes.ts";
 import ToggleNodes from "../components/map/ToggleNodes.tsx";
+import Button from "@/components/buttons/Button.tsx";
 
 
 
@@ -88,6 +90,7 @@ export function Map(){
     function handleStartChange(e: React.ChangeEvent<HTMLSelectElement>) {
         setRequest({...request, startNode: e.target.value});
         setShowPath(true);
+        setCurrentFloor(nodeMap.get(e.target.value)?.floor as string);
         findPath(e.target.value, request.endNode);
     }
     function handleEndChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -113,6 +116,21 @@ export function Map(){
                          onClick2={() => zoomOut()} minusSvg={MinusSvg}/>
         );
     }
+    function ZoomOutFillButton() {
+        const { resetTransform} = useControls();
+        const handleClick = () => {
+            resetTransform();
+        };
+        const fillIcon = <img src={fill} alt="Fit" className={"size-9"} />;
+        return(
+            <div className={"absolute top-16 right-7"}>
+                <Button onClick={handleClick} px={"px-3"} py={"py-3"}>
+                    {fillIcon}
+                </Button>
+            </div>
+
+        );
+    }
     let ref = useRef(0);
     function onClickCircle(Node: Node) {
         if (ref.current % 2 == 0){
@@ -128,12 +146,7 @@ export function Map(){
 
     return (
         <div className="relative">
-            <TransformWrapper limitToBounds={true} disablePadding={true}
-                              initialScale={0.384}
-                              minScale={0.384}
-                              maxScale={1.28}
-            >
-
+            <TransformWrapper limitToBounds={true} disablePadding={true}>
                 <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)", position: "fixed"}}>
                     <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor={currentFloor}
                                 showPath={showPath} floormap={floorMap as Record<string, Node[][]>}
@@ -142,7 +155,9 @@ export function Map(){
                                 onClickCircle={onClickCircle}
                                 allNodes ={nodes}
                                 showNodes = {showNodes}
-                                onChangeFloor = {handleChangeFloor}/>
+                                onChangeFloor = {handleChangeFloor}
+                                startNodeID = {request.startNode}
+                                endNodeID = {request.endNode}/>
                 </TransformComponent>
 
                 <ToggleNodes onClick={() => setShowNodes(!showNodes) } isOn={showNodes}/>
@@ -152,9 +167,9 @@ export function Map(){
                               selectedStartOption={request.startNode !== "" ? nodeMap.get(request.startNode)?.longName : undefined}
                               selectedEndOption={request.endNode !== "" ? nodeMap.get(request.endNode)?.longName : undefined}
                               onClick={() => {
-                    setAlgo("Astar");
-                    setSelectedAlgo("Astar");
-                }} selectedAlgo={selectedAlgo} onClick1={() => {
+                                  setAlgo("Astar");
+                                  setSelectedAlgo("Astar");
+                              }} selectedAlgo={selectedAlgo} onClick1={() => {
                     setAlgo("BFS");
                     setSelectedAlgo("BFS");
                 }} onClick2={() => {
@@ -174,6 +189,7 @@ export function Map(){
                     currentFloor={currentFloor}
                 />
                 <ZoomControls/>
+                <ZoomOutFillButton/>
             </TransformWrapper>
         </div>
     );
