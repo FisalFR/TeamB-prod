@@ -55,8 +55,7 @@ function PathVisual(props: {width: number; height: number;
             }
             floorSVGs.push(
                 <>
-                    <motion.svg width={props.width}
-                                height={props.height}
+                    <motion.svg width={"101vw"}
                                 viewBox={viewBox}
                                 initial="hidden"
                                 animate="visible"

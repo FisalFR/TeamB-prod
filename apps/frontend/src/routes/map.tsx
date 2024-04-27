@@ -146,12 +146,7 @@ export function Map(){
 
     return (
         <div className="relative">
-            <TransformWrapper limitToBounds={true} disablePadding={true}
-                              initialScale={0.384}
-                              minScale={0.384}
-                              maxScale={1.28}
-            >
-
+            <TransformWrapper limitToBounds={true} disablePadding={true}>
                 <TransformComponent wrapperStyle={{ width: screen.width, height: "calc(100vh - 55px)", position: "fixed"}}>
                     <PathVisual key={JSON.stringify(request)} width={5000} height={3400} currentFloor={currentFloor}
                                 showPath={showPath} floormap={floorMap as Record<string, Node[][]>}
