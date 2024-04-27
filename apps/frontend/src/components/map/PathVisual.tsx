@@ -9,7 +9,9 @@ function PathVisual(props: {width: number; height: number;
     pathNodes: Node[]; images: Map<string, string>;
     currentFloor: string; onClickCircle: (Node: Node) => void;
     allNodes: Node[]; showNodes: boolean;
-    onChangeFloor: (floor: string) => void;}) {
+    onChangeFloor: (floor: string) => void;
+    startNodeID: string;
+    endNodeID: string}) {
     let startCoord: number[] = [];
     let endCoord: number[] = [];
     if (props.pathNodes[0] != null) {
@@ -42,12 +44,6 @@ function PathVisual(props: {width: number; height: number;
 
     const imgRef = useRef<HTMLDivElement>(null);
 
-    function getOpacity(): number {
-        if (props.showNodes) {
-            return 1;
-        }
-        return 0;
-    }
 
     function createFloors() {
         const floorSVGs: JSX.Element[] = [];
@@ -59,36 +55,17 @@ function PathVisual(props: {width: number; height: number;
             }
             floorSVGs.push(
                 <>
-                    <motion.svg width={props.width}
-                                height={props.height}
+                    <motion.svg width={"101vw"}
                                 viewBox={viewBox}
                                 initial="hidden"
                                 animate="visible"
                                 variants={draw}
                                 className={classname}
-                                // onMouseMove={ (e) => {setMouseCoord(getSVGCoords(e));}}
+                        // onMouseMove={ (e) => {setMouseCoord(getSVGCoords(e));}}
                                 key = {JSON.stringify(keys[x] + "svg")}
                     >
                         {createFloor(keys[x])}
-                        {props.allNodes.filter(node => {
-                            return node.floor === props.currentFloor && !node.longName.includes("Hall");
-                        }).map((node) => {
-                            return <>
-                                <circle  className={"hover:cursor-pointer"}
-                                                cx={node.xcoord} cy={node.ycoord}
-                                               r={12} // smaller visible circle
-                                               fill= "#FFFFFF"
-                                                stroke= "#012D5A"
-                                                strokeWidth= "4"
-                                                opacity={getOpacity()}
-                                               // initial={{opacity: 0}}
-                                               // animate={{opacity: getOpacity()}}
-                                               // transition={{duration: 0.2}}
-                                               onClick={() => {
-                                                   props.onClickCircle(node);
-                                               }}/>
-                            </>;
-                        })}
+
                     </motion.svg>
                 </>
             );
@@ -104,6 +81,46 @@ function PathVisual(props: {width: number; height: number;
                    ref={imgRef}
             ></image>
         );
+        {props.allNodes.filter(node => {
+            return node.floor === props.currentFloor && !node.longName.includes("Hall");
+        }).map((node) => {
+            let fillColor = '#FFFFFF'; // Default color
+            if (node.nodeID === props.startNodeID) {
+                fillColor = '#89D4E3'; // Color for start node
+            } else if (node.nodeID === props.endNodeID) {
+                fillColor = '#009CA6'; // Color for end node
+            }
+
+            pathDivs.push(<>
+
+                <circle  className={"hover:cursor-pointer"}
+                         cx={node.xcoord} cy={node.ycoord}
+                         r={12} // smaller visible circle
+                         fill={fillColor}
+                         stroke= "#012D5A"
+                         strokeWidth= "4"
+                         display={props.showNodes ? "block" : "none"}
+                         onClick={() => {
+                             props.onClickCircle(node);
+                         }}/>
+                {fillColor !== '#FFFFFF' &&
+                    Array.from({ length: 3 }).map((_, index) => (
+                        <motion.circle
+                            cx={node.xcoord}
+                            cy={node.ycoord}
+                            r={index*48}
+                            fill={fillColor}
+                            display={props.showNodes ? "block" : "none"}
+                            initial={{ scale: 1, opacity: 0.65 }}
+                            animate={{ scale: 1.5, opacity: 0 }}
+                            transition={{ duration: 1, repeat: Infinity, delay: index * 0.3 }}
+                            key={index}
+                        />
+                    ))
+                }
+            </>);
+            return;
+        });}
         if (Object.prototype.hasOwnProperty.call(props.floormap, floor)) {
             const floorPaths: Node[][] | undefined = props.floormap[floor];
 
@@ -158,12 +175,12 @@ function PathVisual(props: {width: number; height: number;
             returnDivs.push(
                 <svg>
                     <motion.circle cx={start.xcoord + (props.pathNodes[nodePos-1].floor.length-1)*12 + 16} cy={start.ycoord - 16}
-                            r={36} fill="#F6BD38"
-                            key={JSON.stringify(startCoord[0] + startCoord[1])}
-                            onClick={() => props.onChangeFloor(props.pathNodes[nodePos-1].floor)}
-                            className={"hover: cursor-pointer"}
-                            whileHover={{scale: 1.1}}
-                            whileTap={{scale: 0.9}}
+                                   r={36} fill="#F6BD38"
+                                   key={JSON.stringify(startCoord[0] + startCoord[1])}
+                                   onClick={() => props.onChangeFloor(props.pathNodes[nodePos-1].floor)}
+                                   className={"hover: cursor-pointer"}
+                                   whileHover={{scale: 1.1}}
+                                   whileTap={{scale: 0.9}}
                     />
                     <text x={start.xcoord} y={start.ycoord} key={JSON.stringify(startCoord[0] + startCoord[1] + "text")}
                           className="text-5xl font-bold fill-deep-blue font-OpenSans hover: cursor-pointer"
@@ -184,9 +201,9 @@ function PathVisual(props: {width: number; height: number;
             returnDivs.push(
                 <svg>
                     <motion.circle cx={end.xcoord + (props.pathNodes[nodePos + 1].floor.length - 1)*12 + 16} cy={end.ycoord - 16} r={36} fill="#012D5A"
-                            key={JSON.stringify(endCoord[0] + endCoord[1])}
-                            onClick={() => props.onChangeFloor(props.pathNodes[nodePos+1].floor)}
-                            className={"hover: cursor-pointer"}
+                                   key={JSON.stringify(endCoord[0] + endCoord[1])}
+                                   onClick={() => props.onChangeFloor(props.pathNodes[nodePos+1].floor)}
+                                   className={"hover: cursor-pointer"}
                                    whileHover={{scale: 1.1}}
                                    whileTap={{scale: 0.9}}
                     />
@@ -213,7 +230,7 @@ function PathVisual(props: {width: number; height: number;
         return (
             <>
                 <div className="flex flex-col" key = {JSON.stringify("floors" + props.pathNodes)}
-                    ref={imgRef}>
+                     ref={imgRef}>
                     {createFloors()}
                 </div>
             </>

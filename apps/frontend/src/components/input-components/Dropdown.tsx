@@ -293,7 +293,7 @@ function Dropdown(props: { options: string[]; placeholder: string; name: string;
             </input>
 
             <div className={`${props.width} relative`} >
-                <div className={dropdownClass}>
+                <div className={`${dropdownClass} border-2 border-b-gray-400`}>
                     <div className={`${props.maxHeight} overflow-auto`} role="listbox" id="options-dropdown">
                         {createOptions()}
                     </div>
