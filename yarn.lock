@@ -6273,17 +6273,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"number-to-words@npm:^1.2.4":
-  version: 1.2.4
-  resolution: "number-to-words@npm:1.2.4"
-  checksum: 04a0d2a41b24964ede858a1422ab23036d97743d2437f269bf08f25e0b29ca8ea7284761ad383ad43443b5fce5382808b9f03d53f7c0c36e23bd52573d5983d2
-  languageName: node
-  linkType: hard
-
 "num2fraction@npm:^1.2.2":
   version: 1.2.2
   resolution: "num2fraction@npm:1.2.2"
   checksum: dea4b3a2d881d9f74c918aaf2f3ea99945694b546fc5766bbe353c1751903bb0c773be16ab1c608dc81d7dd379da9b8e231b813e5cc568b8ebc9e1e817bc58c7
+  languageName: node
+  linkType: hard
+
+"number-to-words@npm:^1.2.4":
+  version: 1.2.4
+  resolution: "number-to-words@npm:1.2.4"
+  checksum: 04a0d2a41b24964ede858a1422ab23036d97743d2437f269bf08f25e0b29ca8ea7284761ad383ad43443b5fce5382808b9f03d53f7c0c36e23bd52573d5983d2
   languageName: node
   linkType: hard
 
