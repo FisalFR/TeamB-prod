@@ -50,6 +50,7 @@ model employee {
   salary        Int
   gender        String
   type          String
+  picture       String        @default("default")
   interpreters  interpreter[] @relation(name: "interpreterUsernameID")
 }
 

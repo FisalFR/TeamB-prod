@@ -8,10 +8,7 @@ import edit from '../assets/Profile/edit.svg';
 import profile from '../assets/Profile/default.svg';
 import picture from '../assets/Profile/picture.svg';
 import {useAuth0} from "@auth0/auth0-react";
-// import employee from '../../../../packages/common/src/employee.ts';
-
-
-
+import profileUser from '../../../../packages/common/src/profile.ts';
 
 
 
@@ -20,9 +17,6 @@ function UserProfile(){
     const DataSVG = <img src={data} alt="data" className={"w-50"} />;
     const ManageSVG = <img src={manage} alt="manage" className={"w-50"} />;
     const EditSVG = <img src={edit} alt="edit" className={"w-50"} />;
-    const ProfileSVG = <img src={profile} alt="profile" className={"w-50"} />;
-    const PictureSVG = <img src={picture} alt="profile" className={"w-10"} />;
-
 
 
 
@@ -69,7 +63,6 @@ function UserProfile(){
 
     function getMaintenanceCount(priority:string) {
         const requestData = { priority };
-        console.log(requestData);
         axios.post("/api/csvManager/countMaintenancePriority", JSON.stringify(requestData) , {
             headers: {
                 'Content-Type': 'application/json'
@@ -90,7 +83,6 @@ function UserProfile(){
 
     function getLanguageCount(priority:string) {
         const requestData = { priority };
-        console.log(requestData);
         axios.post("/api/csvManager/countLanguagePriority", JSON.stringify(requestData) , {
             headers: {
                 'Content-Type': 'application/json'
@@ -110,7 +102,6 @@ function UserProfile(){
 
     function getSanitationCount(priority:string) {
         const requestData = { priority };
-        console.log(JSON.stringify(requestData));
         axios.post("/api/csvManager/countSanitationPriority", JSON.stringify(requestData) , {
             headers: {
                 'Content-Type': 'application/json'
@@ -504,31 +495,77 @@ function UserProfile(){
 
     const user = useAuth0();
 
-//     const [employee, setEmployee] = useState<employee>({
-//         employeeEmail: "",
-//         firstName: "",
-//         lastName: "",
-//         salary: 0,
-//         gender: "",
-//         type: ""
-// });
-//
-//     useEffect(() => {
-//         axios.get("/api/employee/employeeInfo").then((response) => {
-//             const employeeNames: string[] = [];
-//             for (let i = 0; i < response.data.length; i++) {
-//                 employeeNames.push(response.data[i].firstName);
-//             }
-//             setEmployeeOptions(employeeNames);
-//         });
-//     }, []);
+    const [employee, setEmployee] = useState<profileUser>({
+        employeeEmail: "",
+        firstName: "",
+        lastName: "",
+        salary: 0,
+        gender: "",
+        type: "",
+        picture: ""
+});
+
+    useEffect(() => {
+        const userEmail = user.user?.email;
+        if (userEmail){
+            axios.post("/api/employee/employeeInfo", {employeeEmail: userEmail}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => {
+                setEmployee(response.data);
+            });
+    }
+    }, [user.user?.email]);
+
+    // const ProfileSVG = <img src={profile} alt="profile" className={"w-50"} />;
+    const PictureSVG = <img src={picture} alt="profile" className={"w-10"} />;
+    const handleChange = async (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const fileLoaded = URL.createObjectURL(event.target.files[0]);
+        // setFile(fileLoaded);
+
+        const user: profileUser = {
+            employeeEmail: employee.employeeEmail,
+            firstName: "",
+            lastName: "",
+            salary: 0,
+            gender: "",
+            type: "",
+            picture: fileLoaded,
+        };
+        axios.post("/api/employee/insertPicture", user, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            console.log(response);
+        });
+    };
+
+    const profilePicture = () => {
+        if(employee.picture == "default"){
+            return ((<img src={profile} alt="profile" className={"w-50"} />));
+        }
+        return (<img src={employee.picture} alt="profile" className={"w-50"} />);
+    } ;
 
     return (
         <div className={"flex flex-row"}>
             <div className={"h-[640px] w-100 bg-white text-wrap rounded-xl shadow-xl ml-10 mt-4 overflow-hidden"}>
                 <div className={"w-full centerContent bg-gray-200 h-[35%]"}>
-                    <div className={"absolute top-[80px] left-[400px]"}>{PictureSVG}</div>
-                    {ProfileSVG}
+                    <div className={"absolute top-[80px] left-[400px]"}>  <div>
+                        <label htmlFor="profile">{PictureSVG}</label>
+                        <input
+                            type="file"
+                            onChange={handleChange}
+                            accept="image/jpg,.gif,.png,.svg,.webp audio/wav,.mp3"
+                            id="profile"
+                        />
+                    </div>
+                    </div>
+                    {profilePicture()}
                 </div>
                 <div className={"text-left pb-4 border-b-2"}>
                     <h2 className={"text-3xl font-bold font-OpenSans pl-4 pt-4 border-gray-200 pb-2 "}>My Profile</h2>
@@ -542,23 +579,23 @@ function UserProfile(){
 
                     <div className={"mt-2"}>
                         <h2 className={"text-l font-bold w-full"}>Name:</h2>
-                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>Colin Nguyen</p>
+                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.firstName} {employee.lastName}</p>
                     </div>
 
 
                     <div className={"mt-2"}>
                         <h2 className={"text-l font-bold w-full"}>Type:</h2>
-                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>Admin</p>
+                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.type}</p>
                     </div>
 
                     <div className={"mt-2"}>
                         <h2 className={"text-l font-bold w-full"}>Salary:</h2>
-                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>10000</p>
+                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.salary}</p>
                     </div>
 
                     <div className={"mt-2"}>
                         <h2 className={"text-l font-bold w-full"}>Gender:</h2>
-                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>Male</p>
+                        <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.gender}</p>
                     </div>
 
                 </div>
