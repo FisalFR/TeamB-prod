@@ -87,7 +87,7 @@ function PathVisual(props: {width: number; height: number;
         }).map((node) => {
             let fillColor = '#FFFFFF'; // Default color
             if (node.nodeID === props.startNodeID) {
-                fillColor = '#c7f2a7'; // Color for start node
+                fillColor = '#89D4E3'; // Color for start node
             } else if (node.nodeID === props.endNodeID) {
                 fillColor = '#009CA6'; // Color for end node
             }
