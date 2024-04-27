@@ -7,6 +7,11 @@ import Sanitation from "../assets/Service_Request_Icon/Sanitation.svg";
 import Security from "../assets/Service_Request_Icon/Security.svg";
 import InternalTransport from "../assets/Service_Request_Icon/InternalTransportation.svg";
 import ExternalTransport from "../assets/Service_Request_Icon/ExternalTransportation.svg";
+import {Link} from "react-router-dom";
+import MaintenancePage from "./MaintenancePage.tsx";
+
+
+
 export function RequestLanding(){
     return(
         <>
@@ -17,7 +22,9 @@ export function RequestLanding(){
                 <br/>
                 <div className="flex flex-col w-full">
                     <div className="flex justify-center gap-40">
-                        <ServiceCard icon={Maintenance} Request={"Maintenance Request"}/>
+                        <Link ref={""} to={MaintenancePage}>
+                            <ServiceCard icon={Maintenance} Request={"Maintenance Request"}/>
+                        </Link>
                         <ServiceCard icon={GiftIcon} Request={"Gift Delivery"}/>
                     </div>
                     <br/>
