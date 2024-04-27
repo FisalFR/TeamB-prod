@@ -4,7 +4,7 @@ import Dropdown from "../../components/input-components/Dropdown.tsx";
 import Button from "../../components/buttons/Button.tsx";
 import axios from "axios";
 import RadioButton from "../../components/input-components/RadioButton.tsx";
-import interpreterPic from "../../assets/serviceRequestBanners/interpreter.jpg";
+// import interpreterPic from "../../assets/serviceRequestBanners/interpreter.jpg";
 
 function LanguageInterpreter(){
     const [request, setRequest] = useState<LanguageInterpreterTypes>(
@@ -130,17 +130,19 @@ function LanguageInterpreter(){
     return (
         <>
             <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
-            <img src={interpreterPic} alt="language interpreter Picture" className="w-screen opacity-65 absolute h-80"/>
-            <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-80 bottom-0 margin-auto">
+            {/*<img src={interpreterPic} alt="language interpreter Picture" className="w-screen opacity-65 absolute h-80 mask-gradient"/>*/}
+            <div className="centerContent flex flex-col absolute my-50 right-0 left-0 top-60 bottom-0 margin-auto">
 
                 <div className="interpreterContent px-50">
                     <div className={submittedWindowVisibility.requestScreen}>
 
                         <div className="">
-                            <div className="bg-light-white my-10 p-10 px-20 rounded-3xl">
-                                <h1 className={" text-3xl font-HeadlandOne "}>Language Interpreter Request</h1>
-                                <br/>
-                                <p className="text-left">
+                            <div className="relative bg-light-white my-10 p-10 px-20 rounded-3xl shadow-2xl">
+                                <div className="bg-deep-blue rounded-t-2xl absolute top-0 w-full right-[0px] p-8">
+                                    <h1 className={"text-4xl font-OpenSans text-white font-extrabold"}>Language Interpreter Request</h1>
+                                </div>
+
+                                <p className="text-left mt-20">
                                     Brigham and Women's Hospital is committed to clearly and thoroughly communicating
                                     with
                                     all
@@ -178,7 +180,7 @@ function LanguageInterpreter(){
                                 e.preventDefault();
                             }} className="flex flex-col w-full justify-around">
                                     <p className={"text-left font-bold"}>Employee Name</p>
-                                    <div className={"border-solid border-deep-blue border-2 rounded w-fit"}>
+                                    <div className={"border-solid border-gray-300 border-2 rounded w-fit"}>
                                         <Dropdown options={employeeOptions} placeholder={"Employee Name"}
                                                   name={"employeeDropdown"}
                                                   id={"employeeName"} value={cleared}
@@ -192,7 +194,7 @@ function LanguageInterpreter(){
                                             interpreter for?</label>
                                         <br/>
                                         <div
-                                            className=" float-left border-solid border-deep-blue border-2 rounded">
+                                            className=" float-left border-solid border-gray-300 border-2 rounded">
                                         <Dropdown options={languages} placeholder={"Languages"}
                                                       name={"languagesDropdown"}
                                                       id={"dropdown2"} value={cleared}
@@ -205,7 +207,7 @@ function LanguageInterpreter(){
                                             <label className="flex justify-start font-bold">What room do you need the
                                                 interpreter?</label>
                                             <div
-                                                className=" float-start inline-block border-solid border-deep-blue border-2 rounded">
+                                                className=" float-start inline-block border-solid border-gray-300 border-2 rounded">
                                                 <Dropdown options={locationOptions} placeholder={"Location"}
                                                           name={"locationsDropdown"}
                                                           id={"dropdown3"} value={cleared}
@@ -219,22 +221,26 @@ function LanguageInterpreter(){
                                         <div className="w-fit">
                                             <p className={"text-left font-bold "}>What is the priority of this
                                                 request?</p>
-                                            <div className={"border-solid border-deep-blue border-2 rounded "}>
+                                            <div className={"border-solid border-gray-300 border-2 rounded "}>
                                                 <RadioButton value={"Low"} name={"priority"} id={"priority1"}
                                                              state={request.priority}
                                                              onChange={handlePriorityInput} required={true}
+                                                             color={"bg-light-white"}
                                                              width={"w-100"}/>
                                                 <RadioButton value={"Medium"} name={"priority"} id={"priority2"}
                                                              state={request.priority}
                                                              onChange={handlePriorityInput} required={true}
+                                                             color={"bg-light-white"}
                                                              width={"w-100"}/>
                                                 <RadioButton value={"High"} name={"priority"} id={"priority3"}
                                                              state={request.priority}
                                                              onChange={handlePriorityInput} required={true}
+                                                             color={"bg-light-white"}
                                                              width={"w-100"}/>
                                                 <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
                                                              state={request.priority}
                                                              onChange={handlePriorityInput} required={true}
+                                                             color={"bg-light-white"}
                                                              width={"w-100"}/>
                                             </div>
                                         </div>
@@ -242,7 +248,7 @@ function LanguageInterpreter(){
                                             <label htmlFor={"feedback"} className={"flex w-full text-left font-bold"}>Additional
                                                 Comments</label>
                                             <textarea id={"feedback"}
-                                                      className={"w-100 max-w-full h-40 max-h-40 p-1 border-solid border-deep-blue border-2 rounded"}
+                                                      className={"w-100 max-w-full h-40 max-h-40 p-1 border-solid border-gray-300 border-2 rounded bg-light-white"}
                                                       onChange={handleFeedbackInput}
                                                       value={request.feedback} required={false}
                                                       placeholder="Enter detailed description here..."/>
@@ -250,7 +256,7 @@ function LanguageInterpreter(){
                                     </div>
                                     <div className="formButtons pt-10 flex gap-4 space-x-5">
                                         <Button onClick={handleSubmitLanguage} children={"Submit"}/>
-                                        <Button onClick={handleClearLanguage} children={"Clear"}/>
+                                        <Button onClick={handleClearLanguage} children={"Clear"} color={"bg-transparent border-2 border-deep-blue"} text={"text-deep-blue"}/>
                                     </div>
                                 </form>
                             </div>

@@ -410,7 +410,7 @@ export function MapEditor(){
             <TransformWrapper disabled={dragging} disablePadding={true} limitToBounds={true}>
                 <TransformComponent
                     wrapperStyle={{width: screen.width, height: "calc(100vh - 55px)", position: "fixed"}}>
-                    <svg viewBox={"0 0 5000 3400"} width={"100vw"}
+                    <svg viewBox={"0 0 5000 3400"} width={"101vw"}
                          onMouseMove={(e) => handleDrag(e, dragNodeID.current)}>
                         <image xlinkHref={floorImages[currentFloor]} width={5000} height={3400}
                                key={JSON.stringify(floorImages[currentFloor])}

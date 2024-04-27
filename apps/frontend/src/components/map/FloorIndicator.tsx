@@ -15,8 +15,8 @@ export default function FloorIndicator (props:{
 
     const floorOrder = getFloorOrder();
     const FIlength: string[] = [];
-    FIlength.push((10 + 25 * floorOrder.length).toString());
-    FIlength.push((20 + 25 * floorOrder.length).toString());
+    FIlength.push((7 + 25 * floorOrder.length).toString());
+    FIlength.push((17 + 25 * floorOrder.length).toString());
 
     const animateIndicator = {
         initial: {
@@ -100,7 +100,7 @@ export default function FloorIndicator (props:{
 
     return (
         <AnimatePresence> {props.pathChange &&
-            <motion.div className={"fixed bottom-[15%]"} style={{left: (49 - 2 * floorOrder.length).toString() + "%"}}
+            <motion.div className={"fixed bottom-[15%]"} style={{left: (screen.width / 2 - 37.5 * floorOrder.length - 17).toString() + "px"}}
                         initial={animateIndicator.initial} animate={animateIndicator.animate} exit={animateIndicator.exit}>
                 <motion.svg width={(Number.parseInt(FIlength[1]) * 3).toString() + "px"} height="60" viewBox={"0 0 " + FIlength[1] + " 20"}
                             fill="none" xmlns="http://www.w3.org/2000/svg">

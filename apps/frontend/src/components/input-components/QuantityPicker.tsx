@@ -77,13 +77,13 @@ export default class QuantityPicker extends Component<QuantityPickerProps, Quant
         const { disableDec, disableInc } = this.state;
 
         return (
-            <span className="inline-block border border-gray-300 rounded-md align-middle">
+            <span className="inline-block rounded-md align-middle">
         <button
-            className={`h-full w-3 text-xs bg-gray-200 text-gray-400 text-center cursor-pointer ${disableDec ? 'text-gray-200' : ''} rounded-l-md`}
+            className={`h-full w-3 text-xs bg-deep-blue text-white text-center cursor-pointer ${disableDec ? 'text-gray-200' : ''} rounded-l-md`}
             onClick={this.decrement}>&ndash;</button>
-        <input className="w-7 p-2 border-0 text-center" type="text" value={this.state.value} onChange={this.handleInputChange}/>
+        <input className="w-7 p-1 px-1 border-0 text-center" type="text" value={this.state.value} onChange={this.handleInputChange}/>
         <button
-            className={`h-full w-3 text-xs bg-gray-200 text-gray-400 text-center cursor-pointer ${disableInc ? 'text-gray-200' : ''} rounded-r-md`}
+            className={`h-full w-3 text-xs bg-deep-blue text-white text-center cursor-pointer ${disableInc ? 'text-gray-200' : ''} rounded-r-md`}
             onClick={this.increment}>&#xff0b;</button>
       </span>
         );
