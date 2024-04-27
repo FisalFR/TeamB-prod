@@ -153,11 +153,11 @@ function GiftDelivery() {
             return <p>There are no items in your cart</p>;
         return cart.map((item) =>
             <div className="flex flex-col pt-2">
-                <p className={"bg-gray-200 shadow-lg rounded-lg"}>
+                <p className={"bg-blue-200 shadow-lg rounded-lg"}>
                     <div className={"flex flex-row gap-4"}>
-                        <img src={item.image} alt={item.name} className="w-20 h-20 border-2 border-gray-200 rounded-lg p-1"/>
+                        <img src={item.image} alt={item.name} className="w-20 h-20 border-2 border-blue-200 rounded-lg p-1"/>
                         <p className={"text-left pt-2 text-xs font-bold"}>{item.name}
-                            <div className="flex flex-row justify-center gap-x-32 pt-4">
+                            <div className="flex flex-row justify-center gap-x-32 pt-6">
                                 <QuantityPicker min={0} max={10} initialValue={item.quantity} onQuantityChange={(newQuantity) => {
                                     changeCart(item.name, newQuantity, item.image);
                                 }}/>
@@ -221,11 +221,11 @@ function GiftDelivery() {
 
     return (
 
-        <div className="overflow-hidden ">
+        <div className="overflow-hidden bg-gradient-to-t from-bone-white to-deep-blue relative">
             <div className={submittedWindowVisibility.formScreen}>
             <div
-                className=" rounded-3xl right-12  top-20 fixed "> {/*Entire Cart Page*/}
-                <Button onClick={handleCartScreen} color={"bg-deep-blue"} px={"px-10"} py={"py-3"}>
+                className=" rounded-3xl right-3 top-20 fixed z-20"> {/*Entire Cart Page*/}
+                <Button onClick={handleCartScreen} color={"bg-bone-white"} px={"px-6"} py={"py-3"} text={"text-deep-blue"}>
                     <div className="flex items-center">
                         <span className="mr-2">{totalItems()}</span>
                         {CartSVG}
@@ -241,10 +241,32 @@ function GiftDelivery() {
 
                 <div className="w-5/6">
                     <div className={submittedWindowVisibility.formScreen}>
-                        <div className="justify-between bg-light-white my-10 p-10 rounded-3xl">
-                            <h1 className="text-3xl font-HeadlandOne align-text-top">
-                                Gift Delivery Request Form
-                            </h1>
+                        <div className="justify-between bg-light-white my-10 p-10 rounded-3xl relative top-20">
+                            <div className="absolute bg-deep-blue rounded-t-2xl top-0 right-0 w-full p-8">
+                                <h1 className="text-4xl font-OpenSans font-extrabold text-white">
+                                    Gift Delivery Request Form
+                                </h1>
+                            </div>
+
+                            <div className="p-6 rounded-2xl mt-20 w-1/2 text-center w-full">
+                                <h2 className="font-OpenSans font-bold text-2xl text-deep-blue">How to Request a Gift
+                                    Delivery</h2>
+                                <p className="font-OpenSans text-md text-Ash-black mt-4">
+                                    To request a gift delivery, please fill out the form on this page. Start by
+                                    selecting the items you wish to send from our selection of flowers, stuffed animals,
+                                    balloons, and candy. You can adjust the quantity of each item in your cart.
+                                </p>
+                                <p className="font-OpenSans text-md text-Ash-black mt-4">
+                                    Next, provide the recipient's name and your name in the 'To' and 'From' fields
+                                    respectively. Select the location for the gift delivery and choose a delivery date.
+                                    You can also set the priority of the delivery and include a personal message.
+                                </p>
+                                <p className="font-OpenSans text-md text-Ash-black mt-4">
+                                    Once you've filled out all the necessary information, click 'Purchase' to submit
+                                    your gift delivery request. You will see a summary of your submission and the total
+                                    cost. Thank you for choosing our gift delivery service!
+                                </p>
+                            </div>
 
                             <form ref={formRef} onSubmit={e => {
                                 e.preventDefault();
@@ -252,7 +274,6 @@ function GiftDelivery() {
                                 <br/><br/>
 
 
-                                <br/><br/>
                                 {/*Flowers*/}
                                 <h1 className="text-xl font-HeadlandOne text-left text-Ash-black">
                                     Flowers:
@@ -355,8 +376,8 @@ function GiftDelivery() {
                     <div className={submittedWindowVisibility.cartScreen}>
                         <div
                             className="centerContent"> {/*Entire Cart Page*/}
-                            <div className="absolute top-[70px] left-[20px]">
-                                <Button onClick={handleBackbutton} color={"bg-deep-blue"} px={"px-3"} py={"py-3"}>
+                            <div className="absolute top-5 left-[20px]">
+                                <Button onClick={handleBackbutton} color={"bg-white"} px={"px-3"} py={"py-3"}>
                                     {BackwardSVG}
                                 </Button>
                             </div>
