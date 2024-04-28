@@ -13,14 +13,13 @@ import {startEndNodes} from "common/src/pathfinding/pathfinding.ts";
 import Node from "common/src/nodes-and-edges/node.ts";
 import ZoomButtons from "../components/map/ZoomButtons.tsx";
 import FloorSelector from "../components/map/FloorSelector.tsx";
-import {PathSelector} from "../components/map/PathSelector.tsx";
+import PathSelector from "../components/map/PathSelector.tsx";
 import PathDirections from "../components/map/PathDirections.tsx";
 import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
 import useNodes from "../hooks/useNodes.ts";
 import ToggleNodes from "../components/map/ToggleNodes.tsx";
+import FloorIndicator from "../components/map/FloorIndicator.tsx";
 import Button from "@/components/buttons/Button.tsx";
-
-
 
 export function Map(){
 
@@ -36,6 +35,7 @@ export function Map(){
     const MinusSvg = <img src={minus} alt="Minus" className={"w-5"} />;
 
     const [showPath, setShowPath] = useState(false);
+    const [changePath, setChangePath] = useState(false);
     const [showNodes, setShowNodes] = useState(false);
 
     const [request, setRequest] = useState<startEndNodes>({startNode: "", endNode: ""});
@@ -63,11 +63,11 @@ export function Map(){
         "3": l3map
     };
 
-
-
     const [currentFloor, setCurrentFloor] = useState("2");
 
-
+    function handleFloorIndicator() {
+        setChangePath(true);
+    }
 
     const findPath = useCallback((start: string, end: string) => {
         const startend = {startNode: start, endNode: end, algorithm: algo};
@@ -106,6 +106,8 @@ export function Map(){
     useEffect(() => {
         if(request.startNode && request.endNode) {
             findPath(request.startNode, request.endNode);
+            setChangePath(false);
+            setTimeout(handleFloorIndicator, 500);
         }
     }, [algo, findPath, request.endNode, request.startNode]);
 
@@ -131,7 +133,7 @@ export function Map(){
 
         );
     }
-    let ref = useRef(0);
+    const ref = useRef(0);
     function onClickCircle(Node: Node) {
         if (ref.current % 2 == 0){
             setRequest({...request, startNode: Node.nodeID});
@@ -167,9 +169,9 @@ export function Map(){
                               selectedStartOption={request.startNode !== "" ? nodeMap.get(request.startNode)?.longName : undefined}
                               selectedEndOption={request.endNode !== "" ? nodeMap.get(request.endNode)?.longName : undefined}
                               onClick={() => {
-                                  setAlgo("Astar");
-                                  setSelectedAlgo("Astar");
-                              }} selectedAlgo={selectedAlgo} onClick1={() => {
+                    setAlgo("Astar");
+                    setSelectedAlgo("Astar");
+                }} selectedAlgo={selectedAlgo} onClick1={() => {
                     setAlgo("BFS");
                     setSelectedAlgo("BFS");
                 }} onClick2={() => {
@@ -179,7 +181,7 @@ export function Map(){
                     setAlgo("Dijkstra");
                     setSelectedAlgo("Dijkstra");
                 }} />
-                {<PathDirections Path = {pathNodes}/>}
+                <PathDirections Path = {pathNodes}/>
                 <FloorSelector
                     onClick1={() => handleChangeFloor("L2")}
                     onClick2={() => handleChangeFloor("L1")}
@@ -187,6 +189,16 @@ export function Map(){
                     onClick4={() => handleChangeFloor("2")}
                     onClick5={() => handleChangeFloor("3")}
                     currentFloor={currentFloor}
+                />
+                <FloorIndicator
+                    onClick1={() => handleChangeFloor("L2")}
+                    onClick2={() => handleChangeFloor("L1")}
+                    onClick3={() => handleChangeFloor("1")}
+                    onClick4={() => handleChangeFloor("2")}
+                    onClick5={() => handleChangeFloor("3")}
+                    currentFloor={currentFloor}
+                    pathChange={changePath}
+                    path={pathNodes}
                 />
                 <ZoomControls/>
                 <ZoomOutFillButton/>
