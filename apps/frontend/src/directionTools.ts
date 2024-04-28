@@ -54,7 +54,7 @@ function pathTurn(path:Node[],index:number):[string,number]{
 
     if(index==0){
         return [`Start`,index];}
-    while(index+offset < path.length){
+    while(index+offset < path.length-1){
         // const imaginary = path[index];
         // imaginary.ycoord = path[index].ycoord+Math.sin(angle(path[index-1],path[index]))*dist(path[index],path[index+offset]);
         // imaginary.xcoord = path[index].xcoord+Math.cos(angle(path[index-1],path[index]))*dist(path[index],path[index+offset]);
@@ -76,17 +76,16 @@ function pathTurn(path:Node[],index:number):[string,number]{
 
 export default function genInstructions(path:Node[],nodemap: Map<string,Node>, edgeMap:Map<string,string[]>):Instruction[]{
     const instructions:Instruction[] =[];
-    if ((path.length < 2))
-        return [];
-    else if (dist(path[0],path[path.length-1]) < 100){
+ if (dist(path[0],path[path.length-1]) < 100  || path.length<3){
         instructions.push({type:"End",content:"You are already near your destination"});
         return instructions;
     }
     let index = 0;
     instructions.push({type: "Star",content:`Starting from ${path[0].shortName}`});
-        for (const neighbor of edgeMap.get(path[3].nodeID)!){
+        for (const node of path)
+            if (dist(node,path[0])*pix2meters > 4)
+        for (const neighbor of edgeMap.get(node.nodeID)!){
             const compNode = nodemap.get(neighbor)!;
-
             if (compNode.nodeType != "HALL" && compNode.nodeType != "ELEV" && compNode.nodeType != "STAI" && compNode.nodeType != "WALK" && dist(path[3],compNode)*pix2meters<nearThresh){
                 instructions.push({type:"Right",content:`Turn towards ${compNode.shortName}`});
                 break;}}
