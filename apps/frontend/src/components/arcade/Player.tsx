@@ -6,8 +6,8 @@ function Player(props:{xpos: number; ypos: number;
 
     return(
         <>
-            <div className="absolute flex z-20 flex-col-reverse" style = {{left: props.xpos + "px", top: props.ypos + "px"}}>
-                <img src={playerPNG} width = {50} className="min-w-[50px]"></img>
+            <div className="absolute flex z-[4] flex-col-reverse" style = {{left: props.xpos + "px", top: props.ypos + "px"}}>
+                <img alt = "player" src={playerPNG} width = {50} className="min-w-[50px]"></img>
             </div>
         </>
     );

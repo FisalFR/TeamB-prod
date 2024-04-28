@@ -83,7 +83,7 @@ function ScoreCard(props:{score: {flowers: number, vase: number, time: number}, 
     return(
         <>
             <div className="absolute centerContent flex flex-col place-content-between bg-bone-white
-            left-[300px] w-[400px] h-fit z-50 rounded-4 shadow-gray-800 shadow-2xl rounded-2xl p-6" style = {position()}>
+            left-[300px] w-[400px] h-fit z-[9] rounded-4 shadow-gray-800 shadow-2xl rounded-2xl p-6" style = {position()}>
                 {showAvgStars()}
                 <div className="flex flex-col py-5 gap-2">
                     {showStars("Flowers", "flowers", "text-xl", "text-3xl")}

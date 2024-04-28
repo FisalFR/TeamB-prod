@@ -14,6 +14,7 @@ import Vase from "@/components/arcade/Vase.tsx";
 import ScoreCard from "@/components/arcade/ScoreCard.tsx";
 import ArcadeButton from "@/components/arcade/ArcadeButton.tsx";
 
+import instVase from "../assets/arcade/instructions/flower-vase.png";
 import instBG from "../assets/arcade/instructions/full-backdrop.png";
 import instBox from "../assets/arcade/instructions/vase-box.png";
 import instTrash from "../assets/arcade/instructions/trash.png";
@@ -381,15 +382,16 @@ function Arcade() {
 
     return (
         <>
-            <div className="centerContent w-full h-screen fixed top-0 flex-col">
-                <h1 className="text-2xl">Flower Delivery Game</h1>
+            <div className="centerContent w-full h-screen top-0 flex-col gap-5">
+                <h1 className="text-4xl font-HeadlandOne">Arcade</h1>
+                <p>Looking for a way to pass the time? Play <b>Flower Delivery!</b></p>
                 <div className="relative overflow-hidden border-4 border-bone-white focus:border-deep-blue focus:border-deep-blue focus:outline-none"
                      style={{width: SCREEN_WIDTH + "px", height: SCREEN_HEIGHT + "px", backgroundColor: "#C9E4F1"}}
                      onKeyDown={(e: React.KeyboardEvent) => {
-                         movePlayer(e);
+                         movePlayer(e); e.preventDefault();
                      }}
                      onKeyUp={(e: React.KeyboardEvent) => {
-                         stopMove(e);
+                         stopMove(e); e.preventDefault();
                      }}
                      tabIndex={0}
                      ref = {gameRef}
@@ -432,10 +434,11 @@ function Arcade() {
                     </div>
 
                     <div className="absolute centerContent flex flex-col place-content-between top-[40px] bg-bone-white
-                    left-[250px] w-[500px] h-[500px] z-50 rounded-4 shadow-gray-800 shadow-2xl rounded-2xl overflow-auto"
+                    left-[250px] w-[500px] h-[500px] z-[9] rounded-4 shadow-gray-800 shadow-2xl rounded-2xl overflow-auto"
                          style={showInstructions()}>
-                        <div className="gap-2 flex flex-col p-8 ">
+                        <div className="gap-2 flex flex-col p-8 centerContent">
                             <h2 className="text-2xl font-bold">Flower Delivery!</h2>
+                            <img alt="vase with flowers" width = {320} src={instVase}></img>
                             <p>Your job is to create banquets to deliver to the hospital.</p>
                             <img alt="full game background" src={instBG}></img>
                             <p>An order includes 4 flowers and a vase pattern.</p>
@@ -452,7 +455,8 @@ function Arcade() {
                                 Plant flowers in <b>plots</b>. When flowers are fully grown, you can add them to a
                                 vase you are holding, or choose to toss the flower.
                             </p>
-                            <img src={instPlots} alt="plots for planting flowers, with a rose and a tulip fully grown already"></img>
+                            <img src={instPlots}
+                                 alt="plots for planting flowers, with a rose and a tulip fully grown already"></img>
                             <p>
                                 Bring your vase to the <b>delivery bike</b> to send the order off.
                             </p>
@@ -478,13 +482,12 @@ function Arcade() {
                             </p>
                         </div>
                         <div className="absolute sticky bottom-0 bg-bone-white w-[500px] centerContent p-6">
-                            <ArcadeButton onClick={() => {setGameState("playing"); gameRef.current.focus();}}>Start</ArcadeButton>
+                            <ArcadeButton onClick={() => {setGameState("playing"); gameRef.current.focus();}}>START</ArcadeButton>
                         </div>
                     </div>
                 </div>
 
             </div>
-
         </>
     );
 

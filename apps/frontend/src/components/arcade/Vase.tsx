@@ -168,7 +168,7 @@ function Vase(props:{mode: string, playerX: number, playerY: number, scale: numb
                 top: props.playerY - 273 + "px",
                 left: props.playerX -175 + "px",
                 display: "block",
-                zIndex: 30
+                zIndex: 8
             };
         }
         if (props.mode == "paint") {
@@ -176,7 +176,7 @@ function Vase(props:{mode: string, playerX: number, playerY: number, scale: numb
                 top: "90px",
                 left: "300px",
                 display: "block",
-                zIndex: 30
+                zIndex: 8
             };
         }
         if ((props.mode == "noVase") || (props.mode == "choose")) {
