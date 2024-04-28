@@ -74,6 +74,9 @@ export function NavBar() {
             ["/csvManager", "CSV Manager"],
             ["/mapEditor", "Map Editor"],
         ];
+        const miscDropdownList =[
+            ["/arcade", "Arcade"]
+        ];
         const userDropdownList =[
             [handleLogout, "LOGOUT"]
         ];
@@ -103,9 +106,9 @@ export function NavBar() {
                                         <NavDropDown onClick={() => handleWindow("")} mainLink={["", "Admin"]}
                                                      dropdownLinks={adminDropdownList as unknown as (string[] | (() => void))[][]}></NavDropDown>
 
-                                        <div className="px-16">
-                                            <NavLink href="/arcade">Arcade</NavLink>
-                                        </div>
+                                        <NavDropDown onClick={() => handleWindow("")} mainLink={["", "Misc."]}
+                                                     dropdownLinks={miscDropdownList as unknown as (string[] | (() => void))[][]}></NavDropDown>
+
                                     </nav>
                                     <div className="self-center">
                                         <div className="float-end centerContent ">
