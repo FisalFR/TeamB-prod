@@ -9,6 +9,7 @@ class AStarStrategy extends TemplatePathfindingStrategy {
         const endFloor: number  = this.convertFloor(endNode.floor);
         const nextFloor: number = this.convertFloor(nextNode.floor);
         const currentFloor: number = this.convertFloor(currentNode.floor);
+        const floorDiff: number = Math.abs(endFloor - nextFloor);
         let finalCost = 1000;
 
         // Determine the initial direction if it's not set
@@ -26,19 +27,8 @@ class AStarStrategy extends TemplatePathfindingStrategy {
         }
 
         if (nextNode.floor !== currentNode.floor) {
-            finalCost += 10000000000000000000000000;
+            finalCost += 10000000000000000000000000 + (floorDiff*10000000000000000000000000);
         }
-
-        // if (currentNode.building === "BTM" && currentFloor === 1 && endFloor === 5 && endNode.building !== currentNode.building){
-        //     if (nextFloor === 4){
-        //         return 0;
-        //     }
-        // }
-
-        // // Add a penalty if the next node's floor is higher than the current node's floor but lower than the end node's floor, or vice versa
-        // if ((nextFloor > currentFloor && nextFloor < endFloor) || (nextFloor < currentFloor && nextFloor > endFloor)) {
-        //     finalCost += 1000000;
-        // }
 
         // Add a penalty if the direction changes
         if ((this.initialDirection === 'up' && nextFloor < currentFloor) || (this.initialDirection === 'down' && nextFloor > currentFloor)) {

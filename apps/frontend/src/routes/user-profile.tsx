@@ -8,6 +8,7 @@ import edit from '../assets/Profile/edit.svg';
 import {useAuth0} from "@auth0/auth0-react";
 import profileUser from '../../../../packages/common/src/profile.ts';
 import { toSvg } from "jdenticon";
+import { motion } from "framer-motion";
 
 
 
@@ -406,16 +407,33 @@ function UserProfile() {
         options: {
             chart: {
                 height: 450,
-                type: "pie"
+                type: "donut"
             },
+
+            stroke:{
+                lineCap: 'butt',
+            },
+
+            markers:{
+                size: 1000,
+            },
+
             plotOptions: {
                 pie: {
                     donut: {
                         labels: {
                             show: true,
+
+                            value:{
+                                fontWeight: 1000,
+                            },
+
                             total: {
+                                fontWeight: 1000,
+                                fontSize: 17,
                                 show: true,
                             },
+
                         },
                     },
                 },
@@ -464,7 +482,13 @@ function UserProfile() {
                     donut: {
                         labels: {
                             show: true,
+
+                            value:{
+                                fontWeight: 1000,
+                            },
                             total: {
+                                fontWeight: 1000,
+                                fontSize: 17,
                                 show: true,
                             },
                         },
@@ -542,7 +566,7 @@ function UserProfile() {
     return (
         <div className={"flex flex-row w-full h-[94vh] centerContent overflow-hidden gap-5"}>
             <div className={"h-[640px] w-100 bg-white text-wrap rounded-xl shadow-xl overflow-hidden"}>
-                <div className={"flex flex-row full text-left h-[35%]"}>
+                <div className={"flex flex-row full text-left h-[35%] mb-4"}>
                     <div className={"w-[150%] text-right"}>
                         {profilePicture()}
                     </div>
@@ -551,8 +575,8 @@ function UserProfile() {
                         {handleTruncate(employee.firstName)} to your user profile!
                     </h2>
                 </div>
-                <div className={"text-left pb-2 border-b-2 px-2 pt-2"}>
-                    <h2 className={"text-3xl font-bold font-OpenSans border-gray-200 pb-2 pl-2"}>My
+                <div className={"text-left pb-2 border-t-2 px-2 pt-2"}>
+                    <h2 className={"text-3xl font-bold font-OpenSans border-gray-200 pl-2"}>My
                             Profile</h2>
                     </div>
                     <div className={"text-left pl-4 pt-2 pr-4 flex flex-col"}>
@@ -590,39 +614,43 @@ function UserProfile() {
                 <div className={"flex flex-col space-y-5"}>
                     <div className="flex flex-row w-fit h-fit space-x-5" id="rangeBar">
                         <div
-                            className={"flex flex-col centerContent bg-white rounded-xl shadow-xl h-[295px] w-[360px] space-y-10"}>
-                            <div className={"flex flex-row space-x-11"}>
+                            className={"flex flex-col centerContent bg-white rounded-xl shadow-xl h-[295px] w-[360px] space-y-14"}>
+                            <div className={"flex flex-row space-x-[60px]"}>
 
-                                <div className={"h-[85px] w-[95px] centerContent hover:cursor-pointer"} onClick={() => handleWindow(("/map"))}>
+                                <motion.button className={"h-[85px] w-[95px] centerContent hover:cursor-pointer"} onClick={() => handleWindow(("/map"))} whileHover={{scale: 1.2}}
+                                               whileTap={{scale: 0.9}}>
                                     <div>
                                         <h2 className="font-bold">Map</h2>
                                         {MapSVG}
                                     </div>
 
-                                </div>
-                                <div className={"h-[85px] w-[95px] centerContent hover:cursor-pointer"} onClick={() => handleWindow("/database")}>
+                                </motion.button>
+                                <motion.button className={"h-[85px] w-[95px] centerContent hover:cursor-pointer"} onClick={() => handleWindow("/database")} whileHover={{scale: 1.2}}
+                                               whileTap={{scale: 0.9}}>
                                     <div>
                                         <h2 className="font-bold">Database</h2>
                                         {DataSVG}
                                     </div>
 
-                                </div>
+                                </motion.button>
                             </div>
-                                <div className={"flex flex-row space-x-10 "}>
-                                    <div className={"h-[95px] w-[85px] centerContent hover:cursor-pointer"} onClick={() => handleWindow("/csvManager")}>
+                                <div className={"flex flex-row space-x-[60px] "}>
+                                    <motion.button className={"h-[85px] w-[95px] centerContent hover:cursor-pointer"} onClick={() => handleWindow("/csvManager")} whileHover={{scale: 1.2}}
+                                                   whileTap={{scale: 0.9}}>
                                         <div>
                                             <h2 className="font-bold" style={{whiteSpace:'nowrap'}} >CSV Manager</h2>
                                             {ManageSVG}
                                         </div>
 
-                                    </div>
-                                    <div className={" h-[95px] w-[110px] centerContent hover:cursor-pointer"} onClick={() => handleWindow("/mapEditor")}>
+                                    </motion.button>
+                                    <motion.button className={" h-[85px] w-[95px] centerContent hover:cursor-pointer"} onClick={() => handleWindow("/mapEditor")} whileHover={{scale: 1.2}}
+                                                   whileTap={{scale: 0.9}}>
                                         <div>
                                             <h2 className="font-bold " style={{whiteSpace:'nowrap'}} >Map Editor</h2>
                                             {EditSVG}
                                         </div>
 
-                                    </div>
+                                    </motion.button>
                                 </div>
                             </div>
 
@@ -635,7 +663,7 @@ function UserProfile() {
                                    width={300}
                             />
                         </div>
-                        <div className={" bg-white rounded-xl shadow-xl "}>
+                        <div className={" bg-white rounded-xl shadow-xl pb-2 pr-2 pl-2"}>
                             <Chart options={donutAssignment.options}
                                    series={donutAssignment.options.series}
                                    type="donut"
@@ -649,7 +677,7 @@ function UserProfile() {
                                series={yourState.series}
                                type="bar"
                                height={310}
-                               width={1000}
+                               width={1015}
                         />
                     </div>
                 </div>
