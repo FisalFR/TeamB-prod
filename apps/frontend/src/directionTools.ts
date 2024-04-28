@@ -111,7 +111,7 @@ export default function genInstructions(path:Node[],nodemap: Map<string,Node>, e
             if (dist(prevTurn,path[index])*pix2meters > tooShort || leftElevator){
                 leftElevator=false;
                 content=`Walk ${Math.round(dist(prevTurn,path[index])*pix2meters)} meters.`;
-                for (const neighbor of edgeMap.get(path[3].nodeID)!){
+                for (const neighbor of edgeMap.get(path[index].nodeID)!){
                     const compNode = nodemap.get(neighbor)!;
                     if (compNode.nodeType != "HALL" && compNode.nodeType != "ELEV" && compNode.nodeType != "STAI" && compNode.nodeType != "WALK" && dist(path[index],compNode)*pix2meters<nearThresh){
                         content=`Walk ${Math.round(dist(prevTurn,path[index])*pix2meters)} meters to ${compNode.shortName}. `;
