@@ -83,6 +83,12 @@ function UserProfile() {
     function handleWindow(path: string) {
         return window.location.href = window.location.origin.concat(path);
     }
+    function handleTruncate(email:string){
+        if(email.includes("@")){
+            return email.substring(0,email.indexOf("@"));
+        }
+        return email;
+    }
 
     function getLanguageCount(priority: string) {
         const requestData = {priority};
@@ -542,7 +548,7 @@ function UserProfile() {
                     </div>
                     <h2 className={"text-3xl font-OpenSans border-gray-200 pb-2 pt-10 pr-2"}><strong>Welcome,</strong>
                       <br/>
-                        {employee.firstName} to your user profile!
+                        {handleTruncate(employee.firstName)} to your user profile!
                     </h2>
                 </div>
                 <div className={"text-left pb-2 border-b-2 px-2 pt-2"}>
@@ -558,7 +564,7 @@ function UserProfile() {
 
                         <div className={"mt-2"}>
                             <h2 className={"text-l font-bold w-full"}>Name:</h2>
-                            <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{employee.firstName} {employee.lastName}</p>
+                            <p className={"text-l w-full bg-gray-200 rounded-md pl-2 py-1 pr-2"}>{handleTruncate(employee.firstName)} {employee.lastName}</p>
                         </div>
 
 
@@ -585,7 +591,7 @@ function UserProfile() {
                     <div className="flex flex-row w-fit h-fit ml-5 space-x-5" id="rangeBar">
                         <div
                             className={"flex flex-col centerContent bg-white rounded-xl shadow-xl h-[295px] w-[360px] space-y-10"}>
-                            <div className={"flex flex-row space-x-10"}>
+                            <div className={"flex flex-row space-x-11"}>
 
                                 <div className={"h-[85px] w-[95px] centerContent hover:cursor-pointer"} onClick={() => handleWindow(("/map"))}>
                                     <div>
