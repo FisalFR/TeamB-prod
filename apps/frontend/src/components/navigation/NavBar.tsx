@@ -102,6 +102,10 @@ export function NavBar() {
 
                                         <NavDropDown onClick={() => handleWindow("")} mainLink={["", "Admin"]}
                                                      dropdownLinks={adminDropdownList as unknown as (string[] | (() => void))[][]}></NavDropDown>
+
+                                        <div className="px-16">
+                                            <NavLink href="/arcade">Arcade</NavLink>
+                                        </div>
                                     </nav>
                                     <div className="self-center">
                                         <div className="float-end centerContent ">

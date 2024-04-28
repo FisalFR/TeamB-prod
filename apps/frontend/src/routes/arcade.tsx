@@ -14,6 +14,14 @@ import Vase from "@/components/arcade/Vase.tsx";
 import ScoreCard from "@/components/arcade/ScoreCard.tsx";
 import ArcadeButton from "@/components/arcade/ArcadeButton.tsx";
 
+import instBG from "../assets/arcade/instructions/full-backdrop.png";
+import instBox from "../assets/arcade/instructions/vase-box.png";
+import instTrash from "../assets/arcade/instructions/trash.png";
+import instPlots from "../assets/arcade/instructions/plots.png";
+import instBike from "../assets/arcade/instructions/delivery-bike.png";
+import instOrders from "../assets/arcade/instructions/orders.png";
+import instStars from "../assets/arcade/instructions/stars.png";
+
 function Arcade() {
 
     const [gameState, setGameState] = useState("StartUp");
@@ -429,36 +437,43 @@ function Arcade() {
                         <div className="gap-2 flex flex-col p-8 ">
                             <h2 className="text-2xl font-bold">Flower Delivery!</h2>
                             <p>Your job is to create banquets to deliver to the hospital.</p>
+                            <img src={instBG}></img>
                             <p>An order includes 4 flowers and a vase pattern.</p>
                             <p>
                                 Grab a vase from the <b>vase box</b> and paint
                                 your chosen pattern.
                             </p>
+                            <img src={instBox}></img>
                             <p>
                                 Use the <b>trash</b> to throw away your current vase.
                             </p>
+                            <img src={instTrash}></img>
                             <p>
                                 Plant flowers in <b>plots</b>. When flowers are fully grown, you can add them to a
                                 vase you are holding, or choose to toss the flower.
                             </p>
+                            <img src={instPlots}></img>
                             <p>
                                 Bring your vase to the <b>delivery bike</b> to send the order off.
                             </p>
+                            <img src={instBike}></img>
                             <p>
                                 The order you are currently working on is highlighted. You may change this
                                 using the <b>Switch</b> button on another order.
                             </p>
+                            <img src={instOrders}></img>
                             <p>
                                 The quality of your banquet is based on three categories: <b>Flowers</b> (correct
                                 quantities and flower order), <b>Vase</b> (pattern choice and painting),
                                 and <b>Time</b> (speed of delivery).
                             </p>
+                            <img src={instStars}></img>
                             <p>
                                 You have {ORDER_COMPLETE_TIME / 60} minutes to complete an order. The day is over
                                 after {ORDERS_PER_GAME} orders
                                 are completed or missed.
                             </p>
-                            <p>
+                            <p className="text-lg font-bold">
                                 Good luck!
                             </p>
                         </div>
