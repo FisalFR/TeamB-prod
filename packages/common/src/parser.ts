@@ -1,8 +1,8 @@
 import path from "path";
 import fs from "fs";
 import { parse } from "csv-parse";
-import Node from "./node";
-import Edge from "./edge";
+import Node from "./nodes-and-edges/node.ts";
+import Edge from "./nodes-and-edges/edge.ts";
 
 class Parser {
   static async parseNode(nodeFilePath: string): Promise<Node[]> {
