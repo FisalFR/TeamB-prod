@@ -5,7 +5,7 @@ import {AnimatePresence, motion} from "framer-motion";
 //props:
 // 2D array text with link
 // main link and  the list of links
-function NavDropDown(props: {onClick:MouseEventHandler, mainLink:string[],dropdownLinks:(string[] | (() => void))[][]}){
+function NavDropDown(props: {onClick:MouseEventHandler, mainLink:string[],dropdownLinks:(string[] | (() => void))[][], children?: React.ReactNode}) {
     const [isSeen, setIsSeen] = useState(false);
      const handleMouseEnter = () => {
         setIsSeen(true);
@@ -42,7 +42,8 @@ function NavDropDown(props: {onClick:MouseEventHandler, mainLink:string[],dropdo
         <div  className="w-fit relative" onMouseEnter = {handleMouseEnter}
              onMouseLeave = {handleMouseLeave}>
 
-            <div onClick={props.onClick} className="px-16">
+            <div onClick={props.onClick} className="relative px-16 flex flex-row">
+                {props.children ? props.children : null}
                 <NavLink href={props.mainLink[0]}>
                     {props.mainLink[1]}
                 </NavLink>

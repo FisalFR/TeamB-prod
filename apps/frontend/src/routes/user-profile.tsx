@@ -534,8 +534,8 @@ function UserProfile() {
 
 
     return (
-        <div className={"flex flex-row"}>
-            <div className={"h-[640px] w-100 bg-white text-wrap rounded-xl shadow-xl ml-10 mt-4 overflow-hidden"}>
+        <div className={"flex flex-row w-full h-[94vh] centerContent overflow-hidden gap-5"}>
+            <div className={"h-[640px] w-100 bg-white text-wrap rounded-xl shadow-xl overflow-hidden"}>
                 <div className={"flex flex-row full text-left h-[35%]"}>
                     <div className={"w-[150%] text-right"}>
                         {profilePicture()}
@@ -581,8 +581,8 @@ function UserProfile() {
 
 
                 </div>
-                <div className={"flex flex-col space-y-5 mt-4"}>
-                    <div className="flex flex-row w-fit h-fit ml-5 space-x-5" id="rangeBar">
+                <div className={"flex flex-col space-y-5"}>
+                    <div className="flex flex-row w-fit h-fit space-x-5" id="rangeBar">
                         <div
                             className={"flex flex-col centerContent bg-white rounded-xl shadow-xl h-[295px] w-[360px] space-y-10"}>
                             <div className={"flex flex-row space-x-10"}>
@@ -602,7 +602,7 @@ function UserProfile() {
 
                                 </div>
                             </div>
-                                <div className={"flex flex-row space-x-10 ml-7"}>
+                                <div className={"flex flex-row space-x-10 "}>
                                     <div className={"h-[95px] w-[85px] centerContent hover:cursor-pointer"} onClick={() => handleWindow("/csvManager")}>
                                         <div>
                                             <h2 className="font-bold" style={{whiteSpace:'nowrap'}} >CSV Manager</h2>
@@ -638,7 +638,7 @@ function UserProfile() {
                             />
                         </div>
                     </div>
-                    <div className="w-fit h-fit bg-white rounded-xl shadow-xl ml-5" id="rangeBar">
+                    <div className="w-fit h-fit bg-white rounded-xl shadow-xl" id="rangeBar">
                         <Chart options={yourState.options}
                                series={yourState.series}
                                type="bar"

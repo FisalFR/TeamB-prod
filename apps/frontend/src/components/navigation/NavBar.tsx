@@ -6,8 +6,9 @@ import {useAuth0} from "@auth0/auth0-react";
 import HandleLogout from "../authentication/HandleLogout.tsx";
 import LoginNavigationBar from "../authentication/LoginNavigationBar.tsx";
 import axios from "axios";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {employee} from "../../../../../packages/common/src/profile.ts";
+import {toSvg} from "jdenticon";
 //import navDropDown from "./NavDropDown.tsx";
 
 
@@ -25,13 +26,10 @@ export function NavBar() {
 
     const user = useAuth0();
     useEffect(() => {
-        console.log("here");
         const userEmail = user.user?.email;
         const userFirst = user.user?.name;
         if (userEmail) {
-            console.log(userEmail);
             if (userFirst) {
-                console.log(userFirst);
                         const userProfile: employee = {
                             employeeEmail: userEmail,
                             firstName: userFirst,
@@ -49,6 +47,15 @@ export function NavBar() {
                     }
                 }
     }, [user.user?.email, user.user?.name]);
+
+    const profilePicture = () => {
+        const svgString = toSvg(user.user?.email, 240);
+        const svgBlob = new Blob([svgString], { type: 'image/svg+xml' });
+        const svgUrl = URL.createObjectURL(svgBlob);
+        return (
+            <img src={svgUrl} className="size-10 bg-white absolute left-1 -top-[4px] z-20 hover:cursor-pointer " alt="Profile"/>
+        );
+    };
 
     {
 
@@ -100,11 +107,13 @@ export function NavBar() {
                                         <div className="float-end centerContent ">
 
                                             {/*<NavLink onClick={handleLogout}><div className="flex flex-row gap-2">*/}
-                                            <div className="flex items-center">
+                                            <div className="flex flex-row items-center">
 
                                                 <NavDropDown onClick={() => handleWindow("/userProfile")}
                                                              mainLink={["", "PROFILE"]}
-                                                             dropdownLinks={userDropdownList as unknown as (string[] | (() => void))[][]}/>
+                                                             dropdownLinks={userDropdownList as unknown as (string[] | (() => void))[][]}>
+                                                    {profilePicture()}
+                                                </NavDropDown>
                                             </div>
 
 
