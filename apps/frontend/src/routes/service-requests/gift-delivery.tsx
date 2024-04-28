@@ -30,6 +30,7 @@ import Datepicker from '../../components/input-components/DatePicker.tsx';
 //this is a commit just for mo :)
 function GiftDelivery() {
     const formRef = useRef<HTMLFormElement>(null);
+    const cartRef = useRef<HTMLFormElement>(null);
     const [cart, setCart] = useState<giftItem[]>([]);
     const [locationOptions, setLocationOptions] = useState<string[]>([]);
     const [cleared, setCleared] = useState(false);
@@ -101,9 +102,11 @@ function GiftDelivery() {
     function handleSubmit(e: {preventDefault: () => void}) {
         if (cart.length == 0){
         return alert("Please add an item to your cart.");}
+
         (formRef.current as HTMLFormElement).requestSubmit();
+        (cartRef.current as HTMLFormElement).requestSubmit();
         e.preventDefault();
-        if ((formRef.current as HTMLFormElement).checkValidity()) {
+        if ((formRef.current as HTMLFormElement).checkValidity() && (cartRef.current as HTMLFormElement).checkValidity()){
             axios.post("/api/gift/insert", request, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -381,6 +384,8 @@ function GiftDelivery() {
                                     {BackwardSVG}
                                 </Button>
                             </div>
+                            <form ref={cartRef} onSubmit={e => {
+                                e.preventDefault();}}>
                             <div className={"flex flex-row space-x-[40px] mt-8"}> {/*Box on Top*/}
                                 <div
                                     className={"flex flex-col bg-white p-8 rounded-xl shadow-xl"}> {/*Form Information Div (First Column)*/}
@@ -398,6 +403,7 @@ function GiftDelivery() {
                                                 <input type="text" id="receiverName" name="receiverName"
                                                        placeholder={"Recipient's Name"}
                                                        className="w-full border-solid border-gray-200 border-2 rounded p-2"
+                                                       required={true}
                                                        onChange={handleInput}></input><br/>
                                             </div>
                                             <div className={"flex flex-col text-left"}>
@@ -451,6 +457,7 @@ function GiftDelivery() {
                                                 <input type="text" id="senderName" name="senderName"
                                                        className="w-full border-solid border-gray-200 border-2 rounded p-2"
                                                        placeholder={"Sender's Name"}
+                                                       required={true}
                                                        onChange={handleInput}></input><br/>
                                             </div>
 
@@ -480,6 +487,7 @@ function GiftDelivery() {
                                                           cols={40}
                                                           placeholder={"Send a nice message!"}
                                                           onChange={handleMessage}
+                                                          required={true}
                                                           className="border-solid border-gray-200 border-2 rounded w-full h-[165px] p-2">
                                                                     </textarea>
                                             </div>
@@ -512,9 +520,11 @@ function GiftDelivery() {
                                                     rounded={"rounded-3xl"}
                                                     color={"bg-black"}/>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
+                            </form>
                         </div>
 
                     </div>
