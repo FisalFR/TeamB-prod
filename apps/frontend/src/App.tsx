@@ -13,12 +13,6 @@ import Database from "./routes/admin/database.tsx";
 import {Auth0Provider} from "@auth0/auth0-react";
 import SecurityPage from "./routes/service-requests/security-request.tsx";
 import TransportationRequestPage from "./routes/service-requests/transportation-request.tsx";
-
-import GiftDelivery from "./routes/gift-delivery.tsx";
-import MapEditor from "./routes/map-editor.tsx";
-import NavigationBar from "./components/NavigationBar.tsx";
-import {Authenticate} from "./components/authenticate.tsx";
-import InternalTransportationRequestPage from "./routes/internal-transport-page.tsx";
 import creditsPage from "@/routes/credits-page.tsx";
 import GiftDelivery from "./routes/service-requests/gift-delivery.tsx";
 import MapEditor from "./routes/admin/map-editor.tsx";
@@ -101,7 +95,7 @@ function App() {
                         {
                             path: "userProfile",
                             element: <Authenticate component={userProfile}/>
-                        }
+                        },
                         {
                             path:"/credits",
                             element:<Authenticate component={creditsPage}/>
