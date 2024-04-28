@@ -38,13 +38,18 @@ function ScoreCard(props:{score: {flowers: number, vase: number, time: number}, 
             </>
         );
     }
+    function overallLine() {
+        if (props.gameOver) {
+            return (<h3 className="text-xl font-bold pt-6">Overall Scores</h3>);
+        }
+    }
 
     function showAvgStars() {
         const avg = (props.score.flowers*3 + props.score.vase*2 + props.score.time)/6;
         return (
             <>
                 <h2 className="text-2xl font-bold">{topText()}</h2>
-                <h3 className="text-xl font-bold pt-6">Overall Scores</h3>
+                {overallLine()}
                 <p className="text-6xl">{starString(avg)}</p>
                 <div className="relative w-72 h-4 pt-2 rounded overflow-hidden">{scoreBar()}</div>
             </>
@@ -69,7 +74,7 @@ function ScoreCard(props:{score: {flowers: number, vase: number, time: number}, 
     return(
         <>
             <div className="absolute centerContent flex flex-col place-content-between top-[70px] bg-bone-white
-            left-[300px] w-[400px] h-fit z-0 rounded-4 shadow-gray-800 shadow-2xl rounded-2xl p-6">
+            left-[300px] w-[400px] h-fit z-50 rounded-4 shadow-gray-800 shadow-2xl rounded-2xl p-6">
                 {showAvgStars()}
                 <div className="flex flex-col py-2">
                     {showStars("Flowers", "flowers")}

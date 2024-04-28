@@ -3,8 +3,13 @@ import wavyVasePNG from "../../assets/arcade/vase-wavy.png";
 import stripeVasePNG from "../../assets/arcade/vase-stripe.png";
 import ArcadeButton from "@/components/arcade/ArcadeButton.tsx";
 
+import rosePNG from "@/assets/arcade/rose.png";
+import tulipPNG from "@/assets/arcade/tulip.png";
+import stem1PNG from "@/assets/arcade/stem1.png";
+import stem2PNG from "@/assets/arcade/stem2.png";
+
 function Vase(props:{mode: string, playerX: number, playerY: number, scale: number, type: string,
-    scoreVase: (score: number) => void, choosePattern: (pattern: string) => void}) {
+    scoreVase: (score: number) => void, choosePattern: (pattern: string) => void, vase: { hasVase: boolean, flowers: string[] }}) {
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -33,7 +38,33 @@ function Vase(props:{mode: string, playerX: number, playerY: number, scale: numb
 
     const ogImageColors = useRef([0,0]);
 
+    const bikeX = useRef(-5);
+
+    const lastVase = useRef<{ hasVase: boolean, flowers: string[] }>({ hasVase: true, flowers: [] });
+
     useEffect(() => {
+        if ((props.mode != "delivery") && (bikeX.current != -5)) {
+            bikeX.current = -5;
+        }
+        if (props.mode == "delivery") {
+            bikeX.current -= 10;
+        }
+
+        if (props.vase.hasVase) {
+            if (props.vase.flowers.length != lastVase.current.flowers.length) {
+                lastVase.current.flowers = [];
+                for (let i = 0; i < props.vase.flowers.length; i++) {
+                    lastVase.current.flowers.push(props.vase.flowers[i]);
+                }
+            }
+            else {
+                for (let i = 0; i < props.vase.flowers.length; i++) {
+                    if (lastVase.current.flowers[i] != props.vase.flowers[i]) {
+                        lastVase.current.flowers[i] = props.vase.flowers[i];
+                    }
+                }
+            }
+        }
 
         if (canvasRef.current != null && ctx.current != null) {
 
@@ -134,22 +165,43 @@ function Vase(props:{mode: string, playerX: number, playerY: number, scale: numb
     function getVasePosition() {
         if (props.mode == "move") {
             return {
-                top: props.playerY - 275 + "px",
-                left: props.playerX -180 + "px",
-                transform: `scale(0.25, 0.25) translate(0px, ${props.playerY/4}px)`,
-                display: "block"
+                top: props.playerY - 273 + "px",
+                left: props.playerX -175 + "px",
+                display: "block",
+                zIndex: 30
             };
         }
         if (props.mode == "paint") {
             return {
                 top: "100px",
                 left: "300px",
-                display: "block"
+                display: "block",
+                zIndex: 30
             };
         }
         if ((props.mode == "noVase") || (props.mode == "choose")) {
             return {
                 display: "none"
+            };
+        }
+        if (props.mode == "delivery") {
+            return {
+                display: "block",
+                top: "80px",
+                right: bikeX.current + "px",
+                zIndex: 2
+            };
+        }
+    }
+    function getVaseStyle() {
+        if (props.mode == "move") {
+            return {
+                transform: `scale(0.25, 0.25) translate(0px, ${props.playerY/4}px)`
+            };
+        }
+        if (props.mode == "delivery") {
+            return {
+                transform: `scale(0.25, 0.25)`,
             };
         }
     }
@@ -163,6 +215,89 @@ function Vase(props:{mode: string, playerX: number, playerY: number, scale: numb
             return {
                 display: "none"
             };
+        }
+    }
+
+    //flower stuff
+    function createFlower(flower: string, position: number) {
+        let deliveryOffset = 0;
+        if (props.mode == "delivery") {
+            deliveryOffset = 28;
+        }
+        let petals;
+        let flowerPos = {};
+        if (flower == "Rose") {
+            petals = rosePNG;
+        }
+        else {
+            petals = tulipPNG;
+        }
+        let branch;
+        if ((position == 0) || (position == 3)) {
+            branch = stem1PNG;
+        }
+        else {
+            branch = stem2PNG;
+        }
+        let branchPos = {};
+        if (position > 1) {
+            branchPos = {transform: "scaleX(-1)", bottom: 200 + deliveryOffset + "px"};
+            flowerPos = {transform: "scaleX(-1)"};
+        }
+        else {
+            branchPos = {bottom: 200 + deliveryOffset + "px"};
+        }
+        switch(position) {
+            case 0:
+                flowerPos = {
+                    left: "138px",
+                    bottom: 232 + deliveryOffset + "px",
+                    transform: "scaleX(1) rotate(-60deg)"
+                };
+                break;
+            case 1:
+                flowerPos = {
+                    left: "162px",
+                    bottom: 250 + deliveryOffset + "px",
+                    transform: "scaleX(1) rotate(-20deg)"
+                };
+                break;
+            case 2:
+                flowerPos = {
+                    left: "198px",
+                    bottom: 250 + deliveryOffset + "px",
+                    transform: "scaleX(-1) rotate(-20deg)"
+                };
+                break;
+            case 3:
+                flowerPos = {
+                    left: "222px",
+                    bottom: 232 + deliveryOffset + "px",
+                    transform: "scaleX(-1) rotate(-60deg)"
+                };
+                break;
+        }
+        return (
+            <>
+                <img src={branch} className="absolute right-[140px] max-w-[200px]" width = {120} style={branchPos}></img>
+                <img src={petals} className="absolute max-w-[200px]" width={40} style={flowerPos}></img>
+            </>
+        );
+
+    }
+
+    function createFlowers() {
+        return lastVase.current.flowers.map((flower, index) =>
+            createFlower(flower, index)
+        );
+    }
+    function createVase() {
+        if ((props.vase.hasVase) || (props.mode == "delivery")) {
+            return (
+                <>
+                    {createFlowers()}
+                </>
+            );
         }
     }
 
@@ -197,21 +332,23 @@ function Vase(props:{mode: string, playerX: number, playerY: number, scale: numb
     return(
         <>
             <div className="absolute centerContent flex flex-col bg-bone-white top-[180px] gap-6
-            left-[370px] w-[250px] h-[200px] z-0 rounded-4 shadow-2xl rounded-2xl p-3" style={showChoice()}>
+            left-[370px] w-[250px] h-[200px] z-20 rounded-4 shadow-2xl rounded-2xl p-3" style={showChoice()}>
                 <ArcadeButton onClick={() => {props.choosePattern("wavy"); drawn.current = false;}}>Wavy Vase</ArcadeButton>
                 <ArcadeButton onClick={() => {props.choosePattern("stripe"); drawn.current = false;}}>Striped Vase</ArcadeButton>
             </div>
             <div className="absolute centerContent flex flex-col shadow-gray-800 place-content-between top-[40px] bg-bone-white
-            left-[300px] w-[400px] h-[525px] z-0 rounded-4 shadow-2xl rounded-2xl p-3" style={showBox()}>
+            left-[300px] w-[400px] h-[525px] z-20 rounded-4 shadow-2xl rounded-2xl p-3" style={showBox()}>
                 <h2 className="font-bold text-lg">Paint the vase by tracing the pattern!</h2>
                 <ArcadeButton onClick={finishedPaint}>Done</ArcadeButton>
             </div>
             <div className="absolute" style={getVasePosition()}>
+                {createVase()}
+                <div style = {getVaseStyle()}>
                 <canvas width={400} height={400} ref={canvasRef}
                         onMouseDown={(e: React.MouseEvent) => toggleDraw(e, true)}
                         onMouseUp={(e: React.MouseEvent) => toggleDraw(e, false)}
                         onMouseMove={(e: React.MouseEvent) => move(e)}></canvas>
-
+                </div>
             </div>
         </>
     );

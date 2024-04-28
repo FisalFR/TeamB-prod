@@ -23,7 +23,7 @@ function Arcade() {
         {name: "Plots", image: plotsPNG},
         {name: "Pots", image: potsPNG},
         {name: "Delivery", image: deliveryPNG}];
-    const currentLoc = useRef(0);
+    const currentLoc = useRef(2);
 
     const [hasVase, setHasVase] = useState(false);
 
@@ -258,7 +258,7 @@ function Arcade() {
     }
 
     function deliverVase() {
-        setVaseMode("noVase");
+        setVaseMode("delivery");
 
         currentOrder.current.time = (orderTimes.current[currentOrderNum.current]/ORDER_COMPLETE_TIME)*100;
 
@@ -282,7 +282,7 @@ function Arcade() {
             vaseCount[flower] += 1;
         });
 
-        score -= (Math.max(Math.abs(orderCount.Tulip - vaseCount.Tulip), Math.abs(orderCount.Rose - vaseCount.Rose))) * 25;
+        score -= (Math.abs(orderCount.Tulip - vaseCount.Tulip) + Math.abs(orderCount.Rose - vaseCount.Rose)) * 25;
 
         for (let i = 0; i < 4; i++) {
             if (vase.current.flowers.length - 1 >= i) {
@@ -413,23 +413,27 @@ function Arcade() {
                                trashVase={trashVase}/>
                     <VaseBox x1={170} x2={350} playerX={playerX} currentLoc={LOCATIONS[currentLoc.current].name}
                              grabVase={grabVase} hasVase={hasVase}/>
-                    <DeliveryBike x1={650} x2={900} playerX={playerX} currentLoc={LOCATIONS[currentLoc.current].name}
-                                  hasVase={hasVase} deliverVase={deliverVase}/>
 
+                    <div className="z-[3]">
+                    <DeliveryBike x1={530} x2={850} playerX={playerX} currentLoc={LOCATIONS[currentLoc.current].name}
+                                  hasVase={hasVase} deliverVase={deliverVase} mode={vaseMode} currentTime={globalTime}/>
+                    </div>
 
-                    <Player xpos={playerX} ypos={playerY} vase={vase.current}/>
+                    <div className="z-[4]">
+                        <Player xpos={playerX} ypos={playerY} vase={vase.current}/>
+                    </div>
 
                     <Vase mode={vaseMode} playerX={playerX} playerY={playerY} type={vasePattern.current}
-                          scale={vaseScale.current}
+                          scale={vaseScale.current} vase={vase.current}
                           scoreVase={scoreVase} choosePattern={choosePattern}/>
 
-                    <div style={cardClosed()}>
+                    <div style={cardClosed()} className="z-5">
                         <ScoreCard score={scoreCardInfo.current.scores} order={"Order " + scoreCardInfo.current.order}
                                    gameOver={scoreCardInfo.current.gameOver} closeCard={closeCard}></ScoreCard>
                     </div>
 
                     <div className="absolute centerContent flex flex-col place-content-between top-[40px] bg-bone-white
-                    left-[250px] w-[500px] h-[500px] z-0 rounded-4 shadow-gray-800 shadow-2xl rounded-2xl overflow-auto"
+                    left-[250px] w-[500px] h-[500px] z-50 rounded-4 shadow-gray-800 shadow-2xl rounded-2xl overflow-auto"
                          style={showInstructions()}>
                         <div className="gap-2 flex flex-col p-8 ">
                             <h2 className="text-2xl font-bold">Flower Delivery!</h2>
