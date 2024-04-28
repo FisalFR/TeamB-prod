@@ -143,8 +143,8 @@ export default function genInstructions(path:Node[],nodemap: Map<string,Node>, e
                 const neighborNodes = edgeMap.get(path[index+3].nodeID);
                 if (neighborNodes)
             for (const neighbor of neighborNodes){
-                const compNode = nodemap.get(neighbor)!;
-                if (compNode.nodeType != "HALL" && compNode.nodeType != "ELEV" && compNode.nodeType != "STAI" && compNode.nodeType != "WALK" && dist(path[index],compNode)*pix2meters<nearThresh){
+                const compNode = nodemap.get(neighbor);
+                if (compNode && compNode.nodeType != "HALL" && compNode.nodeType != "ELEV" && compNode.nodeType != "STAI" && compNode.nodeType != "WALK" && dist(path[index],compNode)*pix2meters<nearThresh){
                     content=`Take the ${path[index].nodeType=="ELEV"?"elevator":"stairs"} ${newfloor>ogfloor?`up`:`down`} to floor ${path[index+2].floor} and turn towards ${compNode.shortName}.`;
                     break;}}}
             leftElevator=false;
