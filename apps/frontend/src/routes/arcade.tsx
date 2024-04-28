@@ -18,12 +18,13 @@ function Arcade() {
 
     const [gameState, setGameState] = useState("StartUp");
     const [globalTime, setGlobalTime] = useState(0);
+    const gameRef = useRef(null);
 
     const LOCATIONS = [
         {name: "Plots", image: plotsPNG},
         {name: "Pots", image: potsPNG},
         {name: "Delivery", image: deliveryPNG}];
-    const currentLoc = useRef(2);
+    const currentLoc = useRef(1);
 
     const [hasVase, setHasVase] = useState(false);
 
@@ -57,7 +58,7 @@ function Arcade() {
     //Order constants
     const FLOWERS = ["Tulip", "Rose"];
     const ORDER_MAX = 4;
-    const ORDER_COMPLETE_TIME = 180;
+    const ORDER_COMPLETE_TIME = 300;
 
     const ORDERS_PER_GAME = 5;
 
@@ -81,49 +82,37 @@ function Arcade() {
             if (gameState == "playing") {
                 setGlobalTime(globalTime + 40);
 
-                let wall = false;
-                // if (((moveDirection.current == 1) && (currentLoc.current == LOCATIONS.length-1) && (playerX > SCREEN_WIDTH)) ||
-                //     ((moveDirection.current == -1) && (currentLoc.current == 0) && (playerX < 0))) {
-                //     wall = true;
-                //     lastMove.current = moveDirection.current*-1;
-                // }
-                // else wall = false;
-
-                if (!wall) {
-                    //speed up and slow down and changing directions
-                    if (speed.current <= 0) {
-                        speed.current = 0;
-                        lastMove.current = moveDirection.current;
-                    }
-                    if ((playerX > SCREEN_WIDTH - 40) && (currentLoc.current == LOCATIONS.length-1)) {
-                        lastMove.current = -1;
-                        speed.current = MOVE_MULTIPLIER;
-                    }
-                    if ((playerX < 0) && (currentLoc.current == 0)) {
-                        lastMove.current = 1;
-                        speed.current = MOVE_MULTIPLIER;
-                    }
-                    if (playerX > SCREEN_WIDTH) {
-                        setPlayerX(0);
-                        currentLoc.current += 1;
-                    }
-                    else if (playerX < 0 - 40){
-                        setPlayerX(SCREEN_WIDTH);
-                        currentLoc.current -= 1;
-                    }
-                    else if ((speed.current > 0) && (moveDirection.current != lastMove.current)) {
-                        speed.current -= 0.1 + speed.current/MOVE_MULTIPLIER;
-                        setPlayerX(playerX + lastMove.current*speed.current);
-                    }
-                    else if ((speed.current < MOVE_MULTIPLIER) && (moveDirection.current !=0)) {
-                        speed.current += 0.1 + speed.current/MOVE_MULTIPLIER;
-                        setPlayerX(playerX + moveDirection.current*speed.current);
-                    }
-                    else {
-                        setPlayerX(playerX + moveDirection.current*speed.current);
-                    }
+                if (speed.current <= 0) {
+                    speed.current = 0;
+                    lastMove.current = moveDirection.current;
                 }
-
+                if ((playerX > SCREEN_WIDTH - 40) && (currentLoc.current == LOCATIONS.length-1)) {
+                    lastMove.current = -1;
+                    speed.current = MOVE_MULTIPLIER;
+                }
+                if ((playerX < 0) && (currentLoc.current == 0)) {
+                    lastMove.current = 1;
+                    speed.current = MOVE_MULTIPLIER;
+                }
+                if (playerX > SCREEN_WIDTH) {
+                    setPlayerX(0);
+                    currentLoc.current += 1;
+                }
+                else if (playerX < 0 - 40){
+                    setPlayerX(SCREEN_WIDTH);
+                    currentLoc.current -= 1;
+                }
+                else if ((speed.current > 0) && (moveDirection.current != lastMove.current)) {
+                    speed.current -= 0.1 + speed.current/MOVE_MULTIPLIER;
+                    setPlayerX(playerX + lastMove.current*speed.current);
+                }
+                else if ((speed.current < MOVE_MULTIPLIER) && (moveDirection.current !=0)) {
+                    speed.current += 0.1 + speed.current/MOVE_MULTIPLIER;
+                    setPlayerX(playerX + moveDirection.current*speed.current);
+                }
+                else {
+                    setPlayerX(playerX + moveDirection.current*speed.current);
+                }
 
                 //Change playerY if jumping
                 if (jumping.current == "down") {
@@ -167,11 +156,6 @@ function Arcade() {
         //Clearing the interval
         return () => clearInterval(interval);
     }, [playerX, moveDirection, playerY, LOCATIONS.length, globalTime, gameState]);
-
-    /*function startGame() {
-        alert(gameState);
-        setGameState("Play");
-    }*/
 
 
     function movePlayer(e: React.KeyboardEvent) {
@@ -231,8 +215,9 @@ function Arcade() {
         ordersShowing.current.push(ordersCreated.current);
     }
     function removeOrder(index: number) {
-        scoreCardInfo.current.scores = currentOrder.current;
+        scoreCardInfo.current.scores = {flowers: 0, vase: 0, time: 0};
         scoreCardInfo.current.order = ordersShowing.current[currentOrderNum.current];
+        currentOrder.current = {flowers: 0, vase: 0, time: 0};
 
         orders.current.splice(index,1);
         orderTimes.current.splice(index,1);
@@ -246,11 +231,6 @@ function Arcade() {
         orderScoresAvg.current.vase = (orderScoresAvg.current.vase*ordersComplete.current)/(ordersComplete.current+1);
         orderScoresAvg.current.time = (orderScoresAvg.current.time*ordersComplete.current)/(ordersComplete.current+1);
 
-        if (ordersComplete.current + 1 == ORDERS_PER_GAME) {
-            scoreCardInfo.current.scores = orderScoresAvg.current;
-            scoreCardInfo.current.gameOver = true;
-            setGameState("end");
-        }
         isCardShowing.current = true;
 
 
@@ -282,8 +262,12 @@ function Arcade() {
             vaseCount[flower] += 1;
         });
 
-        score -= (Math.abs(orderCount.Tulip - vaseCount.Tulip) + Math.abs(orderCount.Rose - vaseCount.Rose)) * 25;
-
+        if (orderCount.Tulip - vaseCount.Tulip > 0) {
+            score -= (orderCount.Tulip - vaseCount.Tulip) * 25;
+        }
+        if (orderCount.Rose - vaseCount.Rose > 0) {
+            score -= (orderCount.Rose - vaseCount.Rose) * 25;
+        }
         for (let i = 0; i < 4; i++) {
             if (vase.current.flowers.length - 1 >= i) {
                 if (vase.current.flowers[i] != toScore[i]) score -= 5;
@@ -310,11 +294,6 @@ function Arcade() {
 
         scoreCardInfo.current.scores = currentOrder.current;
         scoreCardInfo.current.order = ordersShowing.current[currentOrderNum.current];
-        if (ordersComplete.current + 1 == ORDERS_PER_GAME) {
-            scoreCardInfo.current.scores = orderScoresAvg.current;
-            scoreCardInfo.current.gameOver = true;
-            setGameState("end");
-        }
         isCardShowing.current = true;
 
         ordersShowing.current.splice(currentOrderNum.current,1);
@@ -326,6 +305,7 @@ function Arcade() {
         }
 
         ordersComplete.current += 1;
+        currentOrder.current = {flowers: 0, vase: 0, time: 0};
     }
 
     function scoreVase(score: number){
@@ -352,8 +332,16 @@ function Arcade() {
     }
     function closeCard() {
         isCardShowing.current = false;
+        scoreCardInfo.current = {scores: {flowers: 0, vase: 0, time: 0}, order: 0, gameOver: false};
         if (ordersComplete.current == ORDERS_PER_GAME) {
-            resetGame();
+            if (gameState == "playing") {
+                scoreCardInfo.current.scores = orderScoresAvg.current;
+                scoreCardInfo.current.gameOver = true;
+                isCardShowing.current = true;
+                setGameState("end");
+            }
+            else if (gameState == "end")
+                resetGame();
         }
     }
     function showInstructions() {
@@ -374,6 +362,7 @@ function Arcade() {
         orderScoresAvg.current = {flowers: 0, vase: 0, time: 0};
         vase.current.flowers = [];
         vase.current.hasVase = false;
+        currentLoc.current = 1;
         scoreCardInfo.current = {scores: {flowers: 0, vase: 0, time: 0}, order: 0, gameOver: false};
         setHasVase(false);
         setVaseMode("noVase");
@@ -381,11 +370,12 @@ function Arcade() {
         setGameState("playing");
     }
 
+
     return (
         <>
             <div className="centerContent w-full h-screen fixed top-0 flex-col">
                 <h1 className="text-2xl">Flower Delivery Game</h1>
-                <div className="relative border-4 border-black overflow-hidden"
+                <div className="relative overflow-hidden border-4 border-bone-white focus:border-deep-blue focus:border-deep-blue focus:outline-none"
                      style={{width: SCREEN_WIDTH + "px", height: SCREEN_HEIGHT + "px", backgroundColor: "#C9E4F1"}}
                      onKeyDown={(e: React.KeyboardEvent) => {
                          movePlayer(e);
@@ -394,6 +384,7 @@ function Arcade() {
                          stopMove(e);
                      }}
                      tabIndex={0}
+                     ref = {gameRef}
                 >
                     <img className="absolute bottom-0 left-0" src={LOCATIONS[currentLoc.current].image}></img>
                     <OrderManager orderMax={ORDER_MAX} flowers={FLOWERS} currentTime={globalTime}
@@ -467,9 +458,12 @@ function Arcade() {
                                 after {ORDERS_PER_GAME} orders
                                 are completed or missed.
                             </p>
+                            <p>
+                                Good luck!
+                            </p>
                         </div>
                         <div className="absolute sticky bottom-0 bg-bone-white w-[500px] centerContent p-6">
-                            <ArcadeButton onClick={() => setGameState("playing")}>Start</ArcadeButton>
+                            <ArcadeButton onClick={() => {setGameState("playing"); gameRef.current.focus();}}>Start</ArcadeButton>
                         </div>
                     </div>
                 </div>

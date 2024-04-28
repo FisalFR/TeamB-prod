@@ -173,7 +173,7 @@ function Vase(props:{mode: string, playerX: number, playerY: number, scale: numb
         }
         if (props.mode == "paint") {
             return {
-                top: "100px",
+                top: "90px",
                 left: "300px",
                 display: "block",
                 zIndex: 30
@@ -336,7 +336,7 @@ function Vase(props:{mode: string, playerX: number, playerY: number, scale: numb
                 <ArcadeButton onClick={() => {props.choosePattern("wavy"); drawn.current = false;}}>Wavy Vase</ArcadeButton>
                 <ArcadeButton onClick={() => {props.choosePattern("stripe"); drawn.current = false;}}>Striped Vase</ArcadeButton>
             </div>
-            <div className="absolute centerContent flex flex-col shadow-gray-800 place-content-between top-[40px] bg-bone-white
+            <div className="absolute centerContent flex flex-col shadow-gray-800 place-content-between top-[33px] pt-4 bg-bone-white
             left-[300px] w-[400px] h-[525px] z-20 rounded-4 shadow-2xl rounded-2xl p-3" style={showBox()}>
                 <h2 className="font-bold text-lg">Paint the vase by tracing the pattern!</h2>
                 <ArcadeButton onClick={finishedPaint}>Done</ArcadeButton>

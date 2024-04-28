@@ -55,11 +55,13 @@ function ScoreCard(props:{score: {flowers: number, vase: number, time: number}, 
             </>
         );
     }
-    function showStars(title: string, key: string) {
+    function showStars(title: string, key: string, titleSize: string, starSize: string) {
         return (
             <>
-                <h3 className="text-lg">{title}</h3>
-                <p className="text-2xl">{starString(props.score[key])}</p>
+                <div>
+                    <h3 className={titleSize}>{title}</h3>
+                    <p className={starSize}>{starString(props.score[key])}</p>
+                </div>
             </>
         );
     }
@@ -71,15 +73,22 @@ function ScoreCard(props:{score: {flowers: number, vase: number, time: number}, 
         return "Close";
     }
 
+    function position() {
+        if (props.gameOver) {
+            return {top: "40px"};
+        }
+        return {top: "70px"};
+    }
+
     return(
         <>
-            <div className="absolute centerContent flex flex-col place-content-between top-[70px] bg-bone-white
-            left-[300px] w-[400px] h-fit z-50 rounded-4 shadow-gray-800 shadow-2xl rounded-2xl p-6">
+            <div className="absolute centerContent flex flex-col place-content-between bg-bone-white
+            left-[300px] w-[400px] h-fit z-50 rounded-4 shadow-gray-800 shadow-2xl rounded-2xl p-6" style = {position()}>
                 {showAvgStars()}
-                <div className="flex flex-col py-2">
-                    {showStars("Flowers", "flowers")}
-                    {showStars("Vase", "vase")}
-                    {showStars("Time", "time")}
+                <div className="flex flex-col py-5 gap-2">
+                    {showStars("Flowers", "flowers", "text-xl", "text-3xl")}
+                    {showStars("Vase", "vase", "text-lg", "text-2xl")}
+                    {showStars("Time", "time", "text-md", "text-xl")}
                 </div>
                 <ArcadeButton onClick={props.closeCard}>{buttonText()}</ArcadeButton>
             </div>
