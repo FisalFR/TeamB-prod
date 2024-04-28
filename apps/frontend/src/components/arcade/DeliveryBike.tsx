@@ -45,7 +45,7 @@ function DeliveryBike(props:{x1: number, x2: number,playerX: number, currentLoc:
 
     return(
         <>
-            <img src={bikePNG} className="absolute max-w-[800px] max-h-[800px]" width={320} style={getStyle()}></img>
+            <img src={bikePNG} alt = "delivery bike" className="absolute max-w-[800px] max-h-[800px]" width={320} style={getStyle()}></img>
             <HoverDivs showLoc="Delivery" currentLoc={props.currentLoc} playerX={props.playerX} x1={props.x1}
                        x2={props.x2}>
                 {deliveryButton()}

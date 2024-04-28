@@ -394,7 +394,7 @@ function Arcade() {
                      tabIndex={0}
                      ref = {gameRef}
                 >
-                    <img className="absolute bottom-0 left-0" src={LOCATIONS[currentLoc.current].image}></img>
+                    <img className="absolute bottom-0 left-0" src={LOCATIONS[currentLoc.current].image} alt="background image"></img>
                     <OrderManager orderMax={ORDER_MAX} flowers={FLOWERS} currentTime={globalTime}
                                   currentOrder={currentOrderNum.current} setCurrent={setCurrent}
                                   addOrder={addOrder} orders={orders.current} orderTimes={orderTimes.current}
@@ -437,37 +437,37 @@ function Arcade() {
                         <div className="gap-2 flex flex-col p-8 ">
                             <h2 className="text-2xl font-bold">Flower Delivery!</h2>
                             <p>Your job is to create banquets to deliver to the hospital.</p>
-                            <img src={instBG}></img>
+                            <img alt="full game background" src={instBG}></img>
                             <p>An order includes 4 flowers and a vase pattern.</p>
                             <p>
                                 Grab a vase from the <b>vase box</b> and paint
                                 your chosen pattern.
                             </p>
-                            <img src={instBox}></img>
+                            <img alt="vase box" src={instBox}></img>
                             <p>
                                 Use the <b>trash</b> to throw away your current vase.
                             </p>
-                            <img src={instTrash}></img>
+                            <img src={instTrash} alt="vase trash"></img>
                             <p>
                                 Plant flowers in <b>plots</b>. When flowers are fully grown, you can add them to a
                                 vase you are holding, or choose to toss the flower.
                             </p>
-                            <img src={instPlots}></img>
+                            <img src={instPlots} alt="plots for planting flowers, with a rose and a tulip fully grown already"></img>
                             <p>
                                 Bring your vase to the <b>delivery bike</b> to send the order off.
                             </p>
-                            <img src={instBike}></img>
+                            <img src={instBike} alt="delivery bike"></img>
                             <p>
                                 The order you are currently working on is highlighted. You may change this
                                 using the <b>Switch</b> button on another order.
                             </p>
-                            <img src={instOrders}></img>
+                            <img src={instOrders} alt="two order cards with the first one set to current"></img>
                             <p>
                                 The quality of your banquet is based on three categories: <b>Flowers</b> (correct
                                 quantities and flower order), <b>Vase</b> (pattern choice and painting),
                                 and <b>Time</b> (speed of delivery).
                             </p>
-                            <img src={instStars}></img>
+                            <img src={instStars} alt="4/5 stars"></img>
                             <p>
                                 You have {ORDER_COMPLETE_TIME / 60} minutes to complete an order. The day is over
                                 after {ORDERS_PER_GAME} orders

@@ -279,8 +279,8 @@ function Vase(props:{mode: string, playerX: number, playerY: number, scale: numb
         }
         return (
             <>
-                <img src={branch} className="absolute right-[140px] max-w-[200px]" width = {120} style={branchPos}></img>
-                <img src={petals} className="absolute max-w-[200px]" width={40} style={flowerPos}></img>
+                <img src={branch} alt = "stem" className="absolute right-[140px] max-w-[200px]" width = {120} style={branchPos}></img>
+                <img src={petals} alt = "petals" className="absolute max-w-[200px]" width={40} style={flowerPos}></img>
             </>
         );
 
