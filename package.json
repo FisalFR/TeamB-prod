@@ -68,6 +68,7 @@
     "flowbite": "^2.3.0",
     "frontend": "workspace:^",
     "fs": "^0.0.1-security",
+    "jdenticon": "^3.2.0",
     "node-fs": "^0.1.7",
     "number-to-words": "^1.2.4",
     "react": "^18.2.0",

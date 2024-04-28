@@ -19,6 +19,7 @@ import MapEditor from "./routes/admin/map-editor.tsx";
 import NavBar from "./components/navigation/NavBar.tsx";
 import {Authenticate} from "./components/authentication/Authenticate.tsx";
 import InternalTransportationRequestPage from "./routes/service-requests/internal-transport-page.tsx";
+import userProfile from "./routes/user-profile.tsx";
 
 function App() {
 
@@ -91,6 +92,10 @@ function App() {
                             path:"/internalTransport",
                             element:<Authenticate component={InternalTransportationRequestPage}/>
                         },
+                        {
+                            path: "userProfile",
+                            element: <Authenticate component={userProfile}/>
+                        }
 
             ],
         },
