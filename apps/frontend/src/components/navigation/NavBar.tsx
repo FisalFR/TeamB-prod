@@ -79,7 +79,7 @@ export function NavBar() {
         ];
 
         const miscList = [
-            ["/about", "About"],
+            ["/about", "About Us"],
         ];
 
         return (
