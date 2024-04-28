@@ -23,12 +23,13 @@ export function CreditsPage() {
     return(
         <>
 
-            <div className="bg-gradient-to-t from-bone-white to-deep-blue w-screen ">
+            <div className="bg-deep-blue overflow-scroll bg-opacity-60">
                 <div className="pt-5">
                     <h1 className="font-bold text-bone-white font-OpenSans">Credits</h1>
                 </div>
 
-                <h1 className="font-bold text-bone-white font-OpenSans text-left py-4 px-14"> Software Tools:</h1>
+                <h1 className="font-bold text-bone-white font-OpenSans text-left text-3xl py-4 px-14 "> Software Tools:</h1>
+
                 <div className="grid grid-cols-5 place-items-center h-40">
                     <div className="w-56">
                         <div className=" border-2 rounded-3xl bg-gradient-to-t from-white to-blue-300 text-center">
@@ -109,7 +110,7 @@ export function CreditsPage() {
                 <br/>
                 <br/>
 
-                <h1 className="font-bold text-deep-blue font-OpenSans text-left py-4 px-14 mt-32"> Software
+                <h1 className="font-bold text-bone-white font-OpenSans text-3xl text-left py-4 px-14 mt-32"> Software
                     Libraries:</h1>
                 <div className="grid grid-cols-4 place-items-center h-40">
                     <div className="w-56">
@@ -173,7 +174,7 @@ export function CreditsPage() {
                     </div>
                 </div>
 
-                <h1 className="font-bold text-deep-blue font-OpenSans text-left py-4 px-14 mt-48"> Frameworks:</h1>
+                <h1 className="font-bold text-bone-white font-OpenSans text-left text-3xl py-4 px-14 mt-48"> Frameworks:</h1>
                 <div className="grid grid-cols-4 place-items-center h-40">
                     <div className="w-56 pb-10">
                         <div className=" border-2 rounded-3xl bg-gradient-to-t from-white to-blue-300 text-center">
