@@ -88,9 +88,16 @@ export default function FloorIndicator (props:{
     function createFloors() {
         const floorPolygons: JSX.Element[] = [];
         for(let i = 0; i < floorOrder.length; i++) {
+            const x = 22 - floorOrder[i].length * 2;
             floorPolygons.push(
-                <motion.polygon points={getPoints(i)} fill={colorFloor(floorOrder[i])}
-                                key={i} onClick={getClick(floorOrder[i])} cursor="pointer"/>
+                <>
+                    <polygon points={getPoints(i)} fill={colorFloor(floorOrder[i])}
+                             key={i} onClick={getClick(floorOrder[i])} cursor="pointer"/>
+                    <text x={(x + 25 * i).toString()} y="13" className="fill-deep-blue font-bold" fontSize="8px"
+                          key={i} onClick={getClick(floorOrder[i])} cursor="pointer">
+                        {floorOrder[i]}
+                    </text>
+                </>
             );
         }
         return (
@@ -100,13 +107,16 @@ export default function FloorIndicator (props:{
 
     return (
         <AnimatePresence> {props.pathChange &&
-            <motion.div className={"fixed bottom-[15%]"} style={{left: (screen.width / 2 - 37.5 * floorOrder.length - 17).toString() + "px"}}
+            <motion.div className="fixed bottom-[15%]" style={{left: (screen.width / 2 - 37.5 * floorOrder.length - 17).toString() + "px"}}
                         initial={animateIndicator.initial} animate={animateIndicator.animate} exit={animateIndicator.exit}>
-                <motion.svg width={(Number.parseInt(FIlength[1]) * 3).toString() + "px"} height="60" viewBox={"0 0 " + FIlength[1] + " 20"}
+                <svg width={(Number.parseInt(FIlength[1]) * 3).toString() + "px"} height="60"
+                            viewBox={"0 0 " + FIlength[1] + " 20"}
                             fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <motion.polygon points={"0,0 " + FIlength[0] + ",0 " + FIlength[1] + ",10 " + FIlength[0] + ",20 0,20 10,10"} fill="#012D5A"/>
+                    <polygon
+                        points={"0,0 " + FIlength[0] + ",0 " + FIlength[1] + ",10 " + FIlength[0] + ",20 0,20 10,10"}
+                        fill="#012D5A"/>
                     {createFloors()}
-                </motion.svg>
+                </svg>
             </motion.div>}
         </AnimatePresence>
     );
