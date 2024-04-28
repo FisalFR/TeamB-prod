@@ -16,7 +16,7 @@ function HoverDivs(props:{x1: number, x2: number, playerX: number, showLoc: stri
             display = "flex";
         }
         return {
-            top: "200px",
+            top: "230px",
             left: props.x1 + "px",
             display: display,
             width: props.x2 - props.x1 + "px"

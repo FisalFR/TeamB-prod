@@ -1,7 +1,9 @@
 import {useEffect, useRef} from "react";
 import HoverDivs from "@/components/arcade/HoverDivs.tsx";
 import ArcadeButton from "@/components/arcade/ArcadeButton.tsx";
-
+import tulipPNG from "../../assets/arcade/tulip.png";
+import rosePNG from "../../assets/arcade/rose.png";
+import closedPNG from "../../assets/arcade/flower-closed.png";
 
 function Plot(props:{x1: number, x2: number,playerX: number, plot: number, currentLoc: string, currentTime: number;
     vase: { hasVase: boolean, flowers: string[] }, addToVase: (flower: string) => void}) {
@@ -13,7 +15,11 @@ function Plot(props:{x1: number, x2: number,playerX: number, plot: number, curre
     const endGrow = useRef(0);
 
     useEffect(() => {
-        if ((plotStatus != "empty") && (props.currentTime != 0)) {
+        if (props.currentTime == 0) {
+            plotStatus.current = "empty";
+            endGrow.current = 0;
+        }
+        if ((plotStatus.current != "empty") && (props.currentTime != 0)) {
             if (props.currentTime == endGrow.current) {
                 plotStatus.current = "Grown" + flower.current;
             }
@@ -29,26 +35,30 @@ function Plot(props:{x1: number, x2: number,playerX: number, plot: number, curre
     function showFlower() {
         if ((plotStatus.current != "empty") && (!plotStatus.current.includes("Grown"))) {
             const branch = {
-                height: 30 * (1-(endGrow.current-props.currentTime)/GROW_TIME)
+                height: 75 * (1-(endGrow.current-props.currentTime)/GROW_TIME)
+            };
+            const bulb = {
+                bottom: 34 + 75 * (1-(endGrow.current-props.currentTime)/GROW_TIME) + "px"
             };
             return (
                 <>
-                    <div className="absolute bottom-[75px] w-[3px] bg-green-800" style={branch}></div>
+                    <div className="absolute rounded bottom-[38px] w-[5px] bg-[#526523]" style={branch}></div>
+                    <img src={closedPNG} className="absolute" width = {38} style = {bulb}></img>
                 </>
             );
         }
         if (plotStatus.current.includes("Grown")) {
-            let color = "pink";
+            let petals;
             if (flower.current == "Rose") {
-                color = "red";
+                petals = rosePNG;
             }
-            const petals = {
-                backgroundColor: color
-            };
+            else {
+                petals = tulipPNG;
+            }
             return (
                 <>
-                    <div className="absolute bottom-[75px] w-[3px] bg-green-800 h-[30px]"></div>
-                    <div className="absolute bottom-[105px] w-[5px] h-[8px] bg-pink-400" style={petals}></div>
+                    <div className="absolute bottom-[38px] rounded w-[5px] bg-[#526523] h-[75px]"></div>
+                    <img src={petals} className="absolute bottom-[105px]" width={40}></img>
                 </>
             );
         }
@@ -106,14 +116,14 @@ function Plot(props:{x1: number, x2: number,playerX: number, plot: number, curre
 
     return (
         <>
+            <div className="absolute flex flex-row centerContent" style={plotPos()}>
+                {showFlower()}
+            </div>
             <HoverDivs showLoc="Plots" currentLoc={props.currentLoc} playerX={props.playerX} x1={props.x1}
                        x2={props.x2}>
                 {createButtons()}
             </HoverDivs>
 
-            <div className="absolute flex flex-row centerContent" style = {plotPos()}>
-                {showFlower()}
-            </div>
         </>
     );
 }

@@ -11,10 +11,12 @@ import VaseTrash from "@/components/arcade/VaseTrash.tsx";
 import VaseBox from "@/components/arcade/VaseBox.tsx";
 import DeliveryBike from "@/components/arcade/DeliveryBike.tsx";
 import Vase from "@/components/arcade/Vase.tsx";
+import ScoreCard from "@/components/arcade/ScoreCard.tsx";
+import ArcadeButton from "@/components/arcade/ArcadeButton.tsx";
 
 function Arcade() {
 
-    //const [gameState, setGameState] = useState("StartUp");
+    const [gameState, setGameState] = useState("StartUp");
     const [globalTime, setGlobalTime] = useState(0);
 
     const LOCATIONS = [
@@ -30,6 +32,8 @@ function Arcade() {
         flowers: []
     });
 
+    const isCardShowing = useRef(false);
+
     const [vaseMode, setVaseMode] = useState("noVase");
     const vaseScale = useRef(1);
     const vasePattern = useRef("wavy");
@@ -42,7 +46,7 @@ function Arcade() {
     const SCREEN_HEIGHT = 600;
 
     //Player movement states/refs
-    const [playerX, setPlayerX] = useState(100);
+    const [playerX, setPlayerX] = useState(460);
     const [playerY, setPlayerY] = useState(START_HEIGHT);
     const moveDirection = useRef(0);
     const keyDown = useRef("");
@@ -53,88 +57,116 @@ function Arcade() {
     //Order constants
     const FLOWERS = ["Tulip", "Rose"];
     const ORDER_MAX = 4;
-    const ORDER_COMPLETE_TIME = 120;
+    const ORDER_COMPLETE_TIME = 180;
 
-    const orders = useRef([]);
-    const orderTimes = useRef([]);
+    const ORDERS_PER_GAME = 5;
 
-    const orderNum = useRef(0);
-    const currentOrder = useRef({flowers: 0, vase: 0, time: 0});
-    const orderScoresAvg = useRef({flowers: 0, vase: 0, time: 0});
+    const orders = useRef<{flowers: string[]; vase: string;}[]>([]);
+    const orderTimes = useRef<number[]>([]);
+    const currentOrderNum = useRef(0);
+
+    const ordersShowing = useRef<number[]>([]);
+
+    const ordersComplete = useRef(0);
+    const ordersCreated = useRef(0);
+    const currentOrder = useRef<{flowers: number, vase: number, time: number}>({flowers: 0, vase: 0, time: 0});
+    const orderScoresAvg = useRef<{flowers: number, vase: number, time: number}>({flowers: 0, vase: 0, time: 0});
+
+    const scoreCardInfo = useRef({scores: {flowers: 0, vase: 0, time: 0}, order: 0, gameOver: false});
 
     useEffect(() => {
         //Implementing the setInterval method
         const interval = setInterval(() => {
 
-            setGlobalTime(globalTime + 40);
+            if (gameState == "playing") {
+                setGlobalTime(globalTime + 40);
 
-            //speed up and slow down and changing directions
-            if (speed.current <= 0) {
-                speed.current = 0;
-                lastMove.current = moveDirection.current;
-            }
+                let wall = false;
+                // if (((moveDirection.current == 1) && (currentLoc.current == LOCATIONS.length-1) && (playerX > SCREEN_WIDTH)) ||
+                //     ((moveDirection.current == -1) && (currentLoc.current == 0) && (playerX < 0))) {
+                //     wall = true;
+                //     lastMove.current = moveDirection.current*-1;
+                // }
+                // else wall = false;
 
-            if (playerX > SCREEN_WIDTH) {
-                setPlayerX(0);
-                currentLoc.current += 1;
-            }
-            else if (playerX < 0 - 40){
-                setPlayerX(SCREEN_WIDTH);
-                currentLoc.current -= 1;
-            }
-            else if ((speed.current > 0) && (moveDirection.current != lastMove.current)) {
-                speed.current -= 0.1 + speed.current/MOVE_MULTIPLIER;
-                setPlayerX(playerX + lastMove.current*speed.current);
-            }
-            else if ((speed.current < MOVE_MULTIPLIER) && (moveDirection.current !=0)) {
-                speed.current += 0.1 + speed.current/MOVE_MULTIPLIER;
-                setPlayerX(playerX + moveDirection.current*speed.current);
-            }
-            else {
-                setPlayerX(playerX + moveDirection.current*speed.current);
-            }
-
-            //Change playerY if jumping
-            if (jumping.current == "down") {
-                if (playerY < START_HEIGHT) {
-                    const distDown = ((playerY/(START_HEIGHT-MAX_JUMP))-1)*40+MOVE_MULTIPLIER;
-                    if (playerY + distDown < START_HEIGHT) {
-                        setPlayerY(playerY + distDown);
+                if (!wall) {
+                    //speed up and slow down and changing directions
+                    if (speed.current <= 0) {
+                        speed.current = 0;
+                        lastMove.current = moveDirection.current;
+                    }
+                    if ((playerX > SCREEN_WIDTH - 40) && (currentLoc.current == LOCATIONS.length-1)) {
+                        lastMove.current = -1;
+                        speed.current = MOVE_MULTIPLIER;
+                    }
+                    if ((playerX < 0) && (currentLoc.current == 0)) {
+                        lastMove.current = 1;
+                        speed.current = MOVE_MULTIPLIER;
+                    }
+                    if (playerX > SCREEN_WIDTH) {
+                        setPlayerX(0);
+                        currentLoc.current += 1;
+                    }
+                    else if (playerX < 0 - 40){
+                        setPlayerX(SCREEN_WIDTH);
+                        currentLoc.current -= 1;
+                    }
+                    else if ((speed.current > 0) && (moveDirection.current != lastMove.current)) {
+                        speed.current -= 0.1 + speed.current/MOVE_MULTIPLIER;
+                        setPlayerX(playerX + lastMove.current*speed.current);
+                    }
+                    else if ((speed.current < MOVE_MULTIPLIER) && (moveDirection.current !=0)) {
+                        speed.current += 0.1 + speed.current/MOVE_MULTIPLIER;
+                        setPlayerX(playerX + moveDirection.current*speed.current);
                     }
                     else {
+                        setPlayerX(playerX + moveDirection.current*speed.current);
+                    }
+                }
+
+
+                //Change playerY if jumping
+                if (jumping.current == "down") {
+                    if (playerY < START_HEIGHT) {
+                        const distDown = ((playerY/(START_HEIGHT-MAX_JUMP))-1)*40+MOVE_MULTIPLIER;
+                        if (playerY + distDown < START_HEIGHT) {
+                            setPlayerY(playerY + distDown);
+                        }
+                        else {
+                            setPlayerY(START_HEIGHT);
+                        }
+                    }
+                    else {
+                        jumping.current = "no";
                         setPlayerY(START_HEIGHT);
                     }
                 }
-                else {
-                    jumping.current = "no";
-                    setPlayerY(START_HEIGHT);
-                }
-            }
-            if (jumping.current == "up") {
-                if (playerY > START_HEIGHT - MAX_JUMP) {
-                    setPlayerY(playerY - ((playerY/(START_HEIGHT-MAX_JUMP))-1)*40-MOVE_MULTIPLIER);
-                }
-                else {
-                    jumping.current = "down";
-                    setPlayerY(START_HEIGHT-MAX_JUMP);
-                }
-            }
-
-            if (globalTime%1000 == 0) {
-                orderTimes.current.map((time, index) =>
-                    {
-                        orderTimes.current[index] -= 1;
-                        if (time == 0) {
-                           removeOrder(index);
-                        }
+                if (jumping.current == "up") {
+                    if (playerY > START_HEIGHT - MAX_JUMP) {
+                        setPlayerY(playerY - ((playerY/(START_HEIGHT-MAX_JUMP))-1)*40-MOVE_MULTIPLIER);
                     }
-                );
+                    else {
+                        jumping.current = "down";
+                        setPlayerY(START_HEIGHT-MAX_JUMP);
+                    }
+                }
+
+                if (globalTime%1000 == 0) {
+                    orderTimes.current.map((time, index) =>
+                        {
+                            orderTimes.current[index] -= 1;
+                            if (time == 0) {
+                               removeOrder(index);
+                            }
+                        }
+                    );
+                }
             }
         }, 40);
 
         //Clearing the interval
         return () => clearInterval(interval);
-    }, [playerX, moveDirection, playerY, LOCATIONS.length, globalTime]);
+    }, [playerX, moveDirection, playerY, LOCATIONS.length, globalTime, gameState]);
 
     /*function startGame() {
         alert(gameState);
@@ -188,20 +220,51 @@ function Arcade() {
         }
     }
 
-    function addOrder(order: string[]) {
-        orders.current.push(order);
+    function addOrder(order: string[], orderVase: string) {
+        const orderToAdd = {
+            flowers: order,
+            vase: orderVase
+        };
+        orders.current.push(orderToAdd);
         orderTimes.current.push(ORDER_COMPLETE_TIME);
+        ordersCreated.current += 1;
+        ordersShowing.current.push(ordersCreated.current);
     }
     function removeOrder(index: number) {
+        scoreCardInfo.current.scores = currentOrder.current;
+        scoreCardInfo.current.order = ordersShowing.current[currentOrderNum.current];
+
         orders.current.splice(index,1);
         orderTimes.current.splice(index,1);
+        ordersShowing.current.splice(index,1);
+
+        if (currentOrderNum.current > 0) {
+            currentOrderNum.current -= 1;
+        }
+
+        orderScoresAvg.current.flowers = (orderScoresAvg.current.flowers*ordersComplete.current)/(ordersComplete.current+1);
+        orderScoresAvg.current.vase = (orderScoresAvg.current.vase*ordersComplete.current)/(ordersComplete.current+1);
+        orderScoresAvg.current.time = (orderScoresAvg.current.time*ordersComplete.current)/(ordersComplete.current+1);
+
+        if (ordersComplete.current + 1 == ORDERS_PER_GAME) {
+            scoreCardInfo.current.scores = orderScoresAvg.current;
+            scoreCardInfo.current.gameOver = true;
+            setGameState("end");
+        }
+        isCardShowing.current = true;
+
+
+        ordersComplete.current += 1;
     }
 
     function deliverVase() {
         setVaseMode("noVase");
+
+        currentOrder.current.time = (orderTimes.current[currentOrderNum.current]/ORDER_COMPLETE_TIME)*100;
+
         vaseScale.current = 1;
-        const toScore = [];
-        toScore.push(orders.current[0]);
+        let toScore = [];
+        toScore = orders.current[currentOrderNum.current].flowers;
         let score = 100;
 
         const orderCount = {
@@ -219,7 +282,7 @@ function Arcade() {
             vaseCount[flower] += 1;
         });
 
-        score -= Math.max(Math.abs(orderCount.Tulip - vaseCount.Tulip), Math.abs(orderCount.Rose - vaseCount.Rose)) * 25;
+        score -= (Math.max(Math.abs(orderCount.Tulip - vaseCount.Tulip), Math.abs(orderCount.Rose - vaseCount.Rose))) * 25;
 
         for (let i = 0; i < 4; i++) {
             if (vase.current.flowers.length - 1 >= i) {
@@ -229,21 +292,40 @@ function Arcade() {
         }
         score = Math.max(0, score);
 
-        alert(score);
         currentOrder.current.flowers = score;
 
-        orderScoresAvg.current.flowers = (orderScoresAvg.current.flowers + score)/(orderNum.current+1);
-        orderScoresAvg.current.vase = (orderScoresAvg.current.vase + currentOrder.current.vase)/(orderNum.current+1);
-        orderScoresAvg.current.time = (orderScoresAvg.current.flowers + currentOrder.current.time)/(orderNum.current+1);
+        if (vasePattern.current != orders.current[currentOrderNum.current].vase) {
+            currentOrder.current.vase = Math.max(currentOrder.current.vase - 50, 0);
+        }
+
+        orderScoresAvg.current.flowers = (orderScoresAvg.current.flowers*ordersComplete.current + score)/(ordersComplete.current+1);
+        orderScoresAvg.current.vase = (orderScoresAvg.current.vase*ordersComplete.current + currentOrder.current.vase)/(ordersComplete.current+1);
+        orderScoresAvg.current.time = (orderScoresAvg.current.time*ordersComplete.current + currentOrder.current.time)/(ordersComplete.current+1);
 
         vase.current.hasVase = false;
         vase.current.flowers = [];
         setHasVase(false);
 
-        orders.current.splice(0,1);
-        orderTimes.current.splice(0,1);
 
-        orderNum.current += 1;
+
+        scoreCardInfo.current.scores = currentOrder.current;
+        scoreCardInfo.current.order = ordersShowing.current[currentOrderNum.current];
+        if (ordersComplete.current + 1 == ORDERS_PER_GAME) {
+            scoreCardInfo.current.scores = orderScoresAvg.current;
+            scoreCardInfo.current.gameOver = true;
+            setGameState("end");
+        }
+        isCardShowing.current = true;
+
+        ordersShowing.current.splice(currentOrderNum.current,1);
+
+        orders.current.splice(currentOrderNum.current,1);
+        orderTimes.current.splice(currentOrderNum.current,1);
+        if (currentOrderNum.current >0) {
+            currentOrderNum.current -= 1;
+        }
+
+        ordersComplete.current += 1;
     }
 
     function scoreVase(score: number){
@@ -257,20 +339,68 @@ function Arcade() {
         setVaseMode("paint");
     }
 
+    function setCurrent(num: number) {
+        currentOrderNum.current = num;
+    }
+
+
+    function cardClosed() {
+        if (isCardShowing.current) {
+            return {display: "block"};
+        }
+        return {display: "none"};
+    }
+    function closeCard() {
+        isCardShowing.current = false;
+        if (ordersComplete.current == ORDERS_PER_GAME) {
+            resetGame();
+        }
+    }
+    function showInstructions() {
+        if (gameState == "StartUp") {
+            return {display: "flex"};
+        }
+        return {display: "none"};
+    }
+
+    function resetGame() {
+        orders.current = [];
+        orderTimes.current = [];
+        currentOrderNum.current = 0;
+        ordersShowing.current = [];
+        ordersComplete.current = 0;
+        ordersCreated.current = 0;
+        currentOrder.current = {flowers: 0, vase: 0, time: 0};
+        orderScoresAvg.current = {flowers: 0, vase: 0, time: 0};
+        vase.current.flowers = [];
+        vase.current.hasVase = false;
+        scoreCardInfo.current = {scores: {flowers: 0, vase: 0, time: 0}, order: 0, gameOver: false};
+        setHasVase(false);
+        setVaseMode("noVase");
+        setGlobalTime(0);
+        setGameState("playing");
+    }
 
     return (
         <>
             <div className="centerContent w-full h-screen fixed top-0 flex-col">
                 <h1 className="text-2xl">Flower Delivery Game</h1>
                 <div className="relative border-4 border-black overflow-hidden"
-                     style = {{width: SCREEN_WIDTH + "px", height: SCREEN_HEIGHT + "px", backgroundColor: "#C9E4F1"}}
-                     onKeyDown={(e: React.KeyboardEvent) => {movePlayer(e);}}
-                     onKeyUp={(e: React.KeyboardEvent) => {stopMove(e);}}
+                     style={{width: SCREEN_WIDTH + "px", height: SCREEN_HEIGHT + "px", backgroundColor: "#C9E4F1"}}
+                     onKeyDown={(e: React.KeyboardEvent) => {
+                         movePlayer(e);
+                     }}
+                     onKeyUp={(e: React.KeyboardEvent) => {
+                         stopMove(e);
+                     }}
                      tabIndex={0}
-                     >
+                >
                     <img className="absolute bottom-0 left-0" src={LOCATIONS[currentLoc.current].image}></img>
                     <OrderManager orderMax={ORDER_MAX} flowers={FLOWERS} currentTime={globalTime}
-                                  addOrder={addOrder} orders = {orders.current} orderTimes={orderTimes.current}/>
+                                  currentOrder={currentOrderNum.current} setCurrent={setCurrent}
+                                  addOrder={addOrder} orders={orders.current} orderTimes={orderTimes.current}
+                                  ordersPerGame={ORDERS_PER_GAME} created={ordersCreated.current}
+                                  showing={ordersShowing.current}/>
 
                     <Plot x1={115} x2={300} playerX={playerX} plot={1} currentLoc={LOCATIONS[currentLoc.current].name}
                           currentTime={globalTime} vase={vase.current} addToVase={addToVase}/>
@@ -289,8 +419,55 @@ function Arcade() {
 
                     <Player xpos={playerX} ypos={playerY} vase={vase.current}/>
 
-                    <Vase mode={vaseMode} playerX={playerX} playerY={playerY} type={vasePattern.current} scale={vaseScale.current}
-                          scoreVase = {scoreVase} choosePattern={choosePattern}/>
+                    <Vase mode={vaseMode} playerX={playerX} playerY={playerY} type={vasePattern.current}
+                          scale={vaseScale.current}
+                          scoreVase={scoreVase} choosePattern={choosePattern}/>
+
+                    <div style={cardClosed()}>
+                        <ScoreCard score={scoreCardInfo.current.scores} order={"Order " + scoreCardInfo.current.order}
+                                   gameOver={scoreCardInfo.current.gameOver} closeCard={closeCard}></ScoreCard>
+                    </div>
+
+                    <div className="absolute centerContent flex flex-col place-content-between top-[40px] bg-bone-white
+                    left-[250px] w-[500px] h-[500px] z-0 rounded-4 shadow-gray-800 shadow-2xl rounded-2xl overflow-auto"
+                         style={showInstructions()}>
+                        <div className="gap-2 flex flex-col p-8 ">
+                            <h2 className="text-2xl font-bold">Flower Delivery!</h2>
+                            <p>Your job is to create banquets to deliver to the hospital.</p>
+                            <p>An order includes 4 flowers and a vase pattern.</p>
+                            <p>
+                                Grab a vase from the <b>vase box</b> and paint
+                                your chosen pattern.
+                            </p>
+                            <p>
+                                Use the <b>trash</b> to throw away your current vase.
+                            </p>
+                            <p>
+                                Plant flowers in <b>plots</b>. When flowers are fully grown, you can add them to a
+                                vase you are holding, or choose to toss the flower.
+                            </p>
+                            <p>
+                                Bring your vase to the <b>delivery bike</b> to send the order off.
+                            </p>
+                            <p>
+                                The order you are currently working on is highlighted. You may change this
+                                using the <b>Switch</b> button on another order.
+                            </p>
+                            <p>
+                                The quality of your banquet is based on three categories: <b>Flowers</b> (correct
+                                quantities and flower order), <b>Vase</b> (pattern choice and painting),
+                                and <b>Time</b> (speed of delivery).
+                            </p>
+                            <p>
+                                You have {ORDER_COMPLETE_TIME / 60} minutes to complete an order. The day is over
+                                after {ORDERS_PER_GAME} orders
+                                are completed or missed.
+                            </p>
+                        </div>
+                        <div className="absolute sticky bottom-0 bg-bone-white w-[500px] centerContent p-6">
+                            <ArcadeButton onClick={() => setGameState("playing")}>Start</ArcadeButton>
+                        </div>
+                    </div>
                 </div>
 
             </div>
