@@ -19,12 +19,12 @@ import Modal from "../components/display/Modal.tsx";
 
 export function AboutPage(){
 
-    const moQuote = "\"Be yourself; everyone else is already taken.\" – Oscar Wilde";
+    const moQuote = "\"That's mad chill.\" -Mo Nguyen";
     const colinQuote = "\"I need to nuke the database real quick.\" -Colin Nguyen";
     const jadeQuote = "\"If you dare nothing, then when the day is over, nothing is all you will have gained.\" - Neil Gaiman, The Graveyard Book";
     const nickQuote = "\"My mission in life is not merely to survive, but to thrive; and to do so with some passion, some compassion, some humor, and some style.\" - Maya Angelou ";
     const jeremyQuote = "\"I am the bug finder, not the bug fixer.\" -Colin Nguyen";
-    const henryQuote = "\"You must be the change you wish to see in the world.\" – Mahatma Gandhi";
+    const henryQuote = "\"Come to me, all you who labor and are burdened, and I will give you rest. Take my yoke upon you and learn from me, for I am meek and humble of heart; and you will find rest for yourselves. For my yoke is easy, and my burden light.\" - Matthew 11:28-30";
     const theresaQuote = "\"In the middle of difficulty lies opportunity.\" -Albert Einstein";
     const fisalQuote = "\"I was lost at the Brigham hospital.\"";
     const kendallQuote = "\"The only thing we have to fear is fear itself.\" -Franklin D. Roosevelt";
@@ -115,6 +115,13 @@ export function AboutPage(){
                                     <p> Doc. Analyst </p>
                                 </div>
                                 <div>
+                                    <img src={lilyPic} alt="Lily Picture"
+                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
+                                         onClick={() => handleQuote(lilyQuote)}/>
+                                    <p className="font-bold"> Lily Jones </p>
+                                    <p> Doc. Analyst </p>
+                                </div>
+                                <div>
                                     <img src={theresaPic} alt="Theresa Picture"
                                          className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(theresaQuote)}/>
@@ -137,13 +144,6 @@ export function AboutPage(){
                                     <p> Full-Stack Eng. </p>
                                 </div>
                                 <div>
-                                    <img src={lilyPic} alt="Lily Picture"
-                                         className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
-                                         onClick={() => handleQuote(lilyQuote)}/>
-                                    <p className="font-bold"> Lily Jones </p>
-                                    <p> Doc. Analyst </p>
-                                </div>
-                                <div>
                                     <img src={benPic} alt="Ben Picture"
                                          className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(benQuote)}/>
@@ -164,11 +164,8 @@ export function AboutPage(){
                                     <h1 className="font-OpenSans text-deep-blue pt-10 font-bold">Thank You </h1>
                                     <hr className=" w-64 h-0.5 mx-auto bg-deep-blue border-deep-blue"/>
                                     <p className="font-bold text-deep-blue text-2xl pt-4"> We express our
-                                        gratitude
-                                        to
-                                        Professor
-                                        Wong, Nick Leslie, Andrew Shinn, and the entirety of Brigham and Women’s
-                                        Hospital for your time and input into our project. </p>
+                                        gratitude to Professor Wong, Nick Leslie, Andrew Shinn, and the entirety of Brigham and Women’s
+                                        Hospital for their time and input into our project. </p>
                                     <br/>
                                 </div>
 
@@ -194,10 +191,9 @@ export function AboutPage(){
             <div className={quoteWindowVisibility.quoteScreen}>
                 <Modal open={openQuote} onClose={() => setOpenQuote(false)}>
                     <div className=" w-100 ">
-                        <h1 className="text-deep-blue">Favorite Quote: </h1>
-                        <hr className=" w-64 h-0.5 mx-auto mt-4 bg-deep-blue border-deep-blue"/>
-                        <br/>
-                        <p className="text-deep-blue px-2 pb-4"> {setQuote.current}</p>
+                        <h1 className="text-deep-blue text-3xl font-bold mt-2">Favorite Quote: </h1>
+                        <hr className=" w-64 h-0.5 mx-auto mt-2 bg-deep-blue border-deep-blue"/>
+                        <p className="text-deep-blue px-2 pt-2 pb-4 text-lg"> {setQuote.current}</p>
                     </div>
                 </Modal>
                 <div className="h-fit bg-deep-blue bg-opacity-60">
@@ -249,19 +245,29 @@ export function AboutPage(){
                                 <div className="grid grid-cols-6 px-8 pb-5 text-deep-blue">
                                     <div>
                                         <img src={henryPic} alt="Henry Picture"
-                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(henryQuote)}/>
+                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
+                                             onClick={() => handleQuote(henryQuote)}/>
                                         <p className="font-bold"> Henry Hribar </p>
                                         <p> Doc. Analyst </p>
                                     </div>
                                     <div>
+                                        <img src={lilyPic} alt="Lily Picture"
+                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
+                                             onClick={() => handleQuote(lilyQuote)}/>
+                                        <p className="font-bold"> Lily Jones </p>
+                                        <p> Doc. Analyst </p>
+                                    </div>
+                                    <div>
                                         <img src={theresaPic} alt="Theresa Picture"
-                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(theresaQuote)}/>
+                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
+                                             onClick={() => handleQuote(theresaQuote)}/>
                                         <p className="font-bold"> Theresa Acheampong </p>
                                         <p> Scrum Master </p>
                                     </div>
                                     <div>
                                         <img src={fisalPic} alt="Fisal Picture"
-                                             className="h-56 w-fit object-cover rounded-full aspect-square px-4" onClick={() => handleQuote(fisalQuote)}/>
+                                             className="h-56 w-fit object-cover rounded-full aspect-square px-4"
+                                             onClick={() => handleQuote(fisalQuote)}/>
                                         <p className="font-bold"> Fisal Qutubzad </p>
                                         <p> Product Owner </p>
                                     </div>
@@ -274,14 +280,9 @@ export function AboutPage(){
                                         <p> Full-Stack Eng. </p>
                                     </div>
                                     <div>
-                                        <img src={lilyPic} alt="Lily Picture"
-                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(lilyQuote)}/>
-                                        <p className="font-bold"> Lily Jones </p>
-                                        <p> Doc. Analyst </p>
-                                    </div>
-                                    <div>
                                         <img src={benPic} alt="Ben Picture"
-                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(benQuote)}/>
+                                             className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
+                                             onClick={() => handleQuote(benQuote)}/>
                                         <p className="font-bold"> Benjamin Cruse </p>
                                         <p> Full-Stack Eng. </p>
                                     </div>
@@ -292,18 +293,15 @@ export function AboutPage(){
                             </div>
                         </div>
 
-                            <div>
-                                <div className="bg-bone-white rounded-lg bg-opacity-90">
+                    <div>
+                        <div className="bg-bone-white rounded-lg bg-opacity-90">
                                     <div className="bg-gradient-to-b from-bone-white to-deep-blue px-10">
                                         <div className="text-center">
                                             <h1 className="font-OpenSans text-deep-blue pt-10 font-bold">Thank You </h1>
                                             <hr className=" w-64 h-0.5 mx-auto bg-deep-blue border-deep-blue"/>
                                             <p className="font-bold text-deep-blue text-2xl pt-4"> We express our
-                                                gratitude
-                                                to
-                                                Professor
-                                                Wong, Nick Leslie, Andrew Shinn, and the entirety of Brigham and Women’s
-                                                Hospital for your time and input into our project. </p>
+                                                gratitude to Professor Wong, Nick Leslie, Andrew Shinn, and the entirety of Brigham and Women’s
+                                                Hospital for their time and input into our project. </p>
                                             <br/>
                                         </div>
 
