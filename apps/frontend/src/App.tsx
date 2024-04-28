@@ -13,19 +13,13 @@ import Database from "./routes/admin/database.tsx";
 import {Auth0Provider} from "@auth0/auth0-react";
 import SecurityPage from "./routes/service-requests/security-request.tsx";
 import TransportationRequestPage from "./routes/service-requests/transportation-request.tsx";
-
-import GiftDelivery from "./routes/service-requests/gift-delivery.tsx";
-import MapEditor from "./routes/admin/map-editor.tsx";
-import NavBar from "./components/navigation/NavBar.tsx";
-import {Authenticate} from "./components/authentication/Authenticate.tsx";
-import InternalTransportationRequestPage from "./routes/service-requests/internal-transport-page.tsx";
-import userProfile from "./routes/user-profile.tsx";
-import GiftDelivery from "./routes/gift-delivery.tsx";
-import MapEditor from "./routes/map-editor.tsx";
-import NavigationBar from "./components/NavigationBar.tsx";
-import {Authenticate} from "./components/authenticate.tsx";
-import InternalTransportationRequestPage from "./routes/internal-transport-page.tsx";
 import aboutPage from "./routes/about-page.tsx";
+import {Authenticate} from "@/components/authentication/Authenticate.tsx";
+import GiftDelivery from "@/routes/service-requests/gift-delivery.tsx";
+import MapEditor from "@/routes/admin/map-editor.tsx";
+import InternalTransportationRequestPage from "@/routes/service-requests/internal-transport-page.tsx";
+import userProfile from "@/routes/user-profile.tsx";
+import NavBar from "@/components/navigation/NavBar.tsx";
 
 function App() {
 
@@ -101,7 +95,7 @@ function App() {
                         {
                             path: "userProfile",
                             element: <Authenticate component={userProfile}/>
-                        }
+                        },
                         {
                             path:"/about",
                             element:<Authenticate component={aboutPage}/>
