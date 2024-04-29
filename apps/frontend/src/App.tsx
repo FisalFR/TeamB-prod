@@ -102,7 +102,6 @@ function App() {
                             path:"/about",
                             element:<Authenticate component={aboutPage}/>
                         },
-                        },
                         {
                             path:"/arcade",
                             element:<Authenticate component={Arcade}/>
