@@ -81,6 +81,7 @@ export function NavBar() {
         const miscDropdownList = [
             ["/about", "About Us"],
             ["/arcade", "Arcade"],
+            ["/credits", "Credits"],
         ];
 
         return (

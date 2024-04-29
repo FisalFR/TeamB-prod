@@ -195,6 +195,7 @@ export function TransportationRequestPage() {
                                                          onChange={handlePriorityInput} required={true} width={"w-76"}/>
                                             <RadioButton value={"Emergency"} name={"priority"} id={"priority4"}
                                                          state={request.priority}
+                                                         color={"bg-light-white"}
                                                          onChange={handlePriorityInput} required={true} width={"w-76"}/>
                                         </div>
                                     </div>
