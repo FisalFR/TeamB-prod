@@ -21,7 +21,8 @@ import InternalTransportationRequestPage from "@/routes/service-requests/interna
 import userProfile from "@/routes/user-profile.tsx";
 import NavBar from "@/components/navigation/NavBar.tsx";
 import Arcade from "./routes/arcade.tsx";
-
+import AdminLanding from "@/routes/admin-landing.tsx";
+import RequestLanding from "@/routes/request-landing.tsx";
 
 function App() {
 
@@ -105,6 +106,14 @@ function App() {
                         {
                             path:"/arcade",
                             element:<Authenticate component={Arcade}/>
+                        },
+                        {
+                            path:"/request",
+                            element:<Authenticate component={RequestLanding}/>
+                        },
+                        {
+                            path:"/admin",
+                            element:<Authenticate component={AdminLanding}/>
                         },
 
             ],
