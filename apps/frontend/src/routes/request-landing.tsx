@@ -20,7 +20,7 @@ export function RequestLanding(){
                 <div className="flex flex-col w-full">
                     <div className="flex justify-center gap-10">
                         <ServiceCard onClick={() => window.location.href = "/maintenance"} icon={Maintenance}
-                                     Request={"Maintenance Request"}
+                                     Request={"Maintenance "}
                                      description={"Report issue to maintenance using this request form"}/>
                         <ServiceCard onClick={() => window.location.href = "/giftdelivery"} icon={GiftIcon}
                                      Request={"Gift Delivery"}
@@ -37,14 +37,14 @@ export function RequestLanding(){
                     <br/>
                     <div className="flex justify-center gap-10">
                         <ServiceCard onClick={() => window.location.href = "/sanitation"} icon={Sanitation}
-                                     Request={"Sanitation Request"}
+                                     Request={"Sanitation"}
                                      description={"Report spills, and areas needed to be cleaned using this form"}/>
                         <ServiceCard onClick={() => window.location.href = "/security"} icon={Security}
                                      Request={"Security Request"}
                                      description={"Request the need for security using this form"}/>
                         <ServiceCard onClick={() => window.location.href ="/internaltransport"}
                                      icon={InternalTransport} Request={"Int. Transportation"}
-                                     description={"Request transport of a patient internal to the hospital using this form "}/>
+                                     description={"Request transport of a patient in the hospital using this form"}/>
                         <ServiceCard onClick={() => window.location.href ="/transport"}
                                      icon={ExternalTransport} Request={"Ext. Transportation"}
                                      description={"Request of a patient outside of the hospital using this form"}/>
