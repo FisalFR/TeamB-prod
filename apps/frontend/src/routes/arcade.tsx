@@ -411,7 +411,7 @@ function Arcade() {
                           currentTime={globalTime} vase={vase.current} addToVase={addToVase}/>
 
                     <VaseTrash x1={710} x2={810} playerX={playerX} currentLoc={LOCATIONS[currentLoc.current].name}
-                               trashVase={trashVase}/>
+                               trashVase={trashVase} vaseMode={vaseMode}/>
                     <VaseBox x1={170} x2={350} playerX={playerX} currentLoc={LOCATIONS[currentLoc.current].name}
                              grabVase={grabVase} hasVase={hasVase}/>
 
