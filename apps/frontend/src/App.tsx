@@ -13,16 +13,17 @@ import Database from "./routes/admin/database.tsx";
 import {Auth0Provider} from "@auth0/auth0-react";
 import SecurityPage from "./routes/service-requests/security-request.tsx";
 import TransportationRequestPage from "./routes/service-requests/transportation-request.tsx";
-
-import GiftDelivery from "./routes/service-requests/gift-delivery.tsx";
-import MapEditor from "./routes/admin/map-editor.tsx";
-import NavBar from "./components/navigation/NavBar.tsx";
-import {Authenticate} from "./components/authentication/Authenticate.tsx";
-import InternalTransportationRequestPage from "./routes/service-requests/internal-transport-page.tsx";
-import userProfile from "./routes/user-profile.tsx";
+import aboutPage from "./routes/about-page.tsx";
+import {Authenticate} from "@/components/authentication/Authenticate.tsx";
+import GiftDelivery from "@/routes/service-requests/gift-delivery.tsx";
+import MapEditor from "@/routes/admin/map-editor.tsx";
+import InternalTransportationRequestPage from "@/routes/service-requests/internal-transport-page.tsx";
+import userProfile from "@/routes/user-profile.tsx";
+import NavBar from "@/components/navigation/NavBar.tsx";
 import Arcade from "./routes/arcade.tsx";
 import AdminLanding from "@/routes/admin-landing.tsx";
 import RequestLanding from "@/routes/request-landing.tsx";
+
 function App() {
 
     const router = createBrowserRouter([
@@ -97,6 +98,10 @@ function App() {
                         {
                             path: "userProfile",
                             element: <Authenticate component={userProfile}/>
+                        },
+                        {
+                            path:"/about",
+                            element:<Authenticate component={aboutPage}/>
                         },
                         {
                             path:"/arcade",
