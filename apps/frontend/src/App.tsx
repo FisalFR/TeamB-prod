@@ -20,6 +20,8 @@ import MapEditor from "@/routes/admin/map-editor.tsx";
 import InternalTransportationRequestPage from "@/routes/service-requests/internal-transport-page.tsx";
 import userProfile from "@/routes/user-profile.tsx";
 import NavBar from "@/components/navigation/NavBar.tsx";
+import Arcade from "./routes/arcade.tsx";
+
 
 function App() {
 
@@ -99,6 +101,11 @@ function App() {
                         {
                             path:"/about",
                             element:<Authenticate component={aboutPage}/>
+                        },
+                        },
+                        {
+                            path:"/arcade",
+                            element:<Authenticate component={Arcade}/>
                         },
 
             ],
