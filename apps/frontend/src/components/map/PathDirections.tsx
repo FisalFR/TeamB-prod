@@ -63,7 +63,7 @@ export default function PathDirections(props: { Path: Node[] }) {
     const { edgeMap } = useEdges();
     const voices = speechSynthesis.getVoices();
 
-    const selectedVoice = voices[18];
+    const selectedVoice = voices[1];
     const speech = new SpeechSynthesisUtterance();
 
 
@@ -114,7 +114,7 @@ export default function PathDirections(props: { Path: Node[] }) {
                     <div className="h-full w-full flex items-start justify-center pb-1">
                         <b className="ml-2 w-1/2 text-left" style={{fontWeight: "bold", color: "#012D5A", fontSize: "large"}}>DIRECTIONS</b>
                         <a onClick={speak}
-                           className="mr-3 w-1/2 font-medium text-blue-600 dark:text-blue-500 hover:underline top-[1px] text-right ">Read
+                           className="cursor-pointer mr-3 w-1/2 font-medium text-blue-600 dark:text-blue-500 hover:underline top-[1px] text-right ">Read
                             Aloud</a>
 
                     </div>
