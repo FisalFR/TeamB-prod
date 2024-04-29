@@ -135,7 +135,7 @@ export function SecurityPage() {
                                                       id={"employeeName"} value={cleared}
                                                       setInput={handleEmployeeInput} required={true}
                                                       color={"bg-light-white"}
-                                                      width={"w-100"}/>
+                                                      width={"w-full"}/>
                                         </div>
                                     </div>
 
