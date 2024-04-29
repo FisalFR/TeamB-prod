@@ -95,7 +95,7 @@ function Arcade() {
                     speed.current = 0;
                     lastMove.current = moveDirection.current;
                 }
-                if ((playerX > SCREEN_WIDTH - 40) && (currentLoc.current == LOCATIONS.length-1)) {
+                if ((playerX > SCREEN_WIDTH - 50) && (currentLoc.current == LOCATIONS.length-1)) {
                     lastMove.current = -1;
                     speed.current = MOVE_MULTIPLIER;
                 }
@@ -107,7 +107,7 @@ function Arcade() {
                     setPlayerX(0);
                     currentLoc.current += 1;
                 }
-                else if (playerX < 0 - 40){
+                else if (playerX < 0 - 50){
                     setPlayerX(SCREEN_WIDTH);
                     currentLoc.current -= 1;
                 }
