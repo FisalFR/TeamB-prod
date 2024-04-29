@@ -582,4 +582,224 @@ router.get(
     res.status(200).json(internalTransportationCount);
   },
 );
+
+router.post(
+  "/countMaintenancePriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const maintenanceCount = await client.forms.count({
+      where: {
+        type: "Maintenance",
+        priority: priority,
+      },
+    });
+    res.status(200).json(maintenanceCount);
+  },
+);
+
+router.post(
+  "/countLanguagePriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const languageCount = await client.forms.count({
+      where: {
+        type: "Language",
+        priority: priority,
+      },
+    });
+    res.status(200).json(languageCount);
+  },
+);
+
+router.post(
+  "/countSanitationPriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const sanitationCount = await client.forms.count({
+      where: {
+        type: "Sanitation",
+        priority: priority,
+      },
+    });
+    res.status(200).json(sanitationCount);
+  },
+);
+
+router.post(
+  "/countMedicinePriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const medicineCount = await client.forms.count({
+      where: {
+        type: "Medicine",
+        priority: priority,
+      },
+    });
+    res.status(200).json(medicineCount);
+  },
+);
+
+router.post(
+  "/countSecurityPriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const securityCount = await client.forms.count({
+      where: {
+        type: "Security",
+        priority: priority,
+      },
+    });
+    res.status(200).json(securityCount);
+  },
+);
+
+router.post(
+  "/countInternalPriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const internalCount = await client.forms.count({
+      where: {
+        type: "Internal Transport",
+        priority: priority,
+      },
+    });
+    res.status(200).json(internalCount);
+  },
+);
+
+router.post(
+  "/countExternalPriority",
+  async function (req: Request, res: Response) {
+    const { priority }: { priority: string } = req.body;
+    const externalCount = await client.forms.count({
+      where: {
+        type: "External Transportation",
+        priority: priority,
+      },
+    });
+    res.status(200).json(externalCount);
+  },
+);
+
+router.post("/countGiftPriority", async function (req: Request, res: Response) {
+  const { priority }: { priority: string } = req.body;
+  const giftCount = await client.forms.count({
+    where: {
+      type: "Gift",
+      priority: priority,
+    },
+  });
+  res.status(200).json(giftCount);
+});
+
+router.post(
+  "/countFormUnassigned",
+  async function (req: Request, res: Response) {
+    const { name }: { name: string } = req.body;
+    const formCount = await client.forms.count({
+      where: {
+        employeeName: name,
+        status: "Unassigned",
+      },
+    });
+    // const totalForms = await totalFormCount(name);
+    res.status(200).json(formCount);
+  },
+);
+
+router.post("/countFormAssigned", async function (req: Request, res: Response) {
+  const { name }: { name: string } = req.body;
+  const formCount = await client.forms.count({
+    where: {
+      employeeName: name,
+      status: "Assigned",
+    },
+  });
+  // const totalForms = await totalFormCount(name);
+  res.status(200).json(formCount);
+});
+
+router.post(
+  "/countFormInProgress",
+  async function (req: Request, res: Response) {
+    const { name }: { name: string } = req.body;
+    const formCount = await client.forms.count({
+      where: {
+        employeeName: name,
+        status: "InProgress",
+      },
+    });
+    // const totalForms = await totalFormCount(name);
+    res.status(200).json(formCount);
+  },
+);
+
+router.post("/countFormClosed", async function (req: Request, res: Response) {
+  const { name }: { name: string } = req.body;
+  const formCount = await client.forms.count({
+    where: {
+      employeeName: name,
+      status: "Closed",
+    },
+  });
+  // const totalForms = await totalFormCount(name);
+  res.status(200).json(formCount);
+});
+
+router.post("/countFormLow", async function (req: Request, res: Response) {
+  const { name }: { name: string } = req.body;
+  const formCount = await client.forms.count({
+    where: {
+      employeeName: name,
+      priority: "Low",
+    },
+  });
+  res.status(200).json(formCount);
+});
+
+router.post("/countFormMedium", async function (req: Request, res: Response) {
+  const { name }: { name: string } = req.body;
+  const formCount = await client.forms.count({
+    where: {
+      employeeName: name,
+      priority: "Medium",
+    },
+  });
+  res.status(200).json(formCount);
+});
+
+router.post("/countFormHigh", async function (req: Request, res: Response) {
+  const { name }: { name: string } = req.body;
+  const formCount = await client.forms.count({
+    where: {
+      employeeName: name,
+      priority: "High",
+    },
+  });
+  res.status(200).json(formCount);
+});
+
+router.post(
+  "/countFormEmergency",
+  async function (req: Request, res: Response) {
+    const { name }: { name: string } = req.body;
+    const formCount = await client.forms.count({
+      where: {
+        employeeName: name,
+        priority: "Emergency",
+      },
+    });
+    res.status(200).json(formCount);
+  },
+);
+
+async function totalFormCount(name: string) {
+  const totalForms = await client.forms.count({
+    where: {
+      employeeName: name,
+    },
+  });
+  return totalForms;
+}
+
 export default router;
