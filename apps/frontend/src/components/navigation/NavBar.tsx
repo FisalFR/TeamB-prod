@@ -78,6 +78,10 @@ export function NavBar() {
             [handleLogout, "LOGOUT"]
         ];
 
+        const miscDropdownList = [
+            ["/about", "About Us"],
+            ["/arcade", "Arcade"],
+        ];
 
         return (
             <div>
@@ -103,6 +107,9 @@ export function NavBar() {
 
                                         <NavDropDown onClick={() => handleWindow("")} mainLink={["", "Admin"]}
                                                      dropdownLinks={adminDropdownList as unknown as (string[] | (() => void))[][]}></NavDropDown>
+
+                                        <NavDropDown onClick={() => handleWindow("")} mainLink={["", "Misc."]}
+                                                     dropdownLinks={miscDropdownList as unknown as (string[] | (() => void))[][]}></NavDropDown>
 
                                     </nav>
                                     <div className="self-center">

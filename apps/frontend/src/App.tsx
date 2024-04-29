@@ -14,12 +14,15 @@ import {Auth0Provider} from "@auth0/auth0-react";
 import SecurityPage from "./routes/service-requests/security-request.tsx";
 import TransportationRequestPage from "./routes/service-requests/transportation-request.tsx";
 import creditsPage from "@/routes/credits-page.tsx";
-import GiftDelivery from "./routes/service-requests/gift-delivery.tsx";
-import MapEditor from "./routes/admin/map-editor.tsx";
-import NavBar from "./components/navigation/NavBar.tsx";
-import {Authenticate} from "./components/authentication/Authenticate.tsx";
-import InternalTransportationRequestPage from "./routes/service-requests/internal-transport-page.tsx";
-import userProfile from "./routes/user-profile.tsx";
+import aboutPage from "./routes/about-page.tsx";
+import {Authenticate} from "@/components/authentication/Authenticate.tsx";
+import GiftDelivery from "@/routes/service-requests/gift-delivery.tsx";
+import MapEditor from "@/routes/admin/map-editor.tsx";
+import InternalTransportationRequestPage from "@/routes/service-requests/internal-transport-page.tsx";
+import userProfile from "@/routes/user-profile.tsx";
+import NavBar from "@/components/navigation/NavBar.tsx";
+import Arcade from "./routes/arcade.tsx";
+
 
 function App() {
 
@@ -99,6 +102,14 @@ function App() {
                         {
                             path:"/credits",
                             element:<Authenticate component={creditsPage}/>
+                        },
+                        {
+                            path:"/about",
+                            element:<Authenticate component={aboutPage}/>
+                        },
+                        {
+                            path:"/arcade",
+                            element:<Authenticate component={Arcade}/>
                         },
 
             ],
