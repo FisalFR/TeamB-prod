@@ -3,7 +3,7 @@ import Button from "@/components/buttons/Button.tsx";
 
 function ServiceCard(props:{onClick:MouseEventHandler, icon:ImageAnnotations, Request:string, description:string }) {
     return(
-        <div className="w-1/4 h-1/2 centerContent">
+        <div className="w-1/4 min-h-50 centerContent">
             <Button onClick={props.onClick} color={"bg-bone-white"} rounded={"rounded-2xl"}>
                 <div className="flex flex-col centerContent">
                     <img src={props.icon} className={"size-24"}></img>
