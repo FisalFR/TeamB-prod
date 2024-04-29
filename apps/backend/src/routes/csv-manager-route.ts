@@ -56,7 +56,8 @@ router.post("/filter", async (req, res) => {
     whereCondition.status = { search: formType.status };
   }
   if (formType.assignee !== "") {
-    whereCondition.assignee = { search: formType.assignee };
+    const escapedAssignee = formType.assignee.replace(/\s/g, "\\ ");
+    whereCondition.assignee = { search: `"${escapedAssignee}"` };
   }
   if (formType.priority !== "") {
     whereCondition.priority = formType.priority;
