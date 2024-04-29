@@ -189,7 +189,7 @@ export function MedicineRequest(){
                                                   name={"locationDropdown"}
                                                   id={"dropdown1"} value={cleared}
                                                   setInput={handleLocationInput} required={true}
-                                                  width={"w-100"}/>
+                                                  width={"w-full"}/>
                                     </div>
 
                                     <br/>
