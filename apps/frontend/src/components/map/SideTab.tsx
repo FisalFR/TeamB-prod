@@ -1,6 +1,6 @@
 import React, {ReactNode, useState} from "react";
 import {motion, AnimatePresence} from "framer-motion";
-import arrow from "../../assets/from_to_icons/arrow.svg";
+import arrow from "@/assets/icons/from_to_icons/arrow.svg";
 
 export function SideTab(props: {height: string, yPos: string, arrow: boolean, tabChildren: ReactNode, bodyChildren: ReactNode}) {
     const [isVisible, setIsVisible] = useState(false);
