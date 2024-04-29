@@ -37,7 +37,7 @@ function HoverDivs(props:{x1: number, x2: number, playerX: number, showLoc: stri
                 <BoundingRect x1={props.x1} x2={props.x2} changeOverlap={changeOverlap} playerX={props.playerX}/>
             </div>
 
-            <div className="absolute flex-col h-fit gap-2 z-40 centerContent" style={divStyle()}>
+            <div className="absolute flex-col h-fit gap-2 z-[9] centerContent" style={divStyle()}>
                 {props.children}
             </div>
         </>
