@@ -63,7 +63,7 @@ export default function PathDirections(props: { Path: Node[] }) {
     const { edgeMap } = useEdges();
     const voices = speechSynthesis.getVoices();
 
-    const selectedVoice = voices[18];
+    const selectedVoice = voices[1];
     const speech = new SpeechSynthesisUtterance();
 
 
