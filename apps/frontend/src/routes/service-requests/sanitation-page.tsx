@@ -116,7 +116,7 @@ function Sanitation() {
                                               name={"employeeDropdown"}
                                               id={"employeeName"} value={cleared}
                                               setInput={handleEmployeeInput} required={true}
-                                              width={"w-100"}/>
+                                              width={"w-full"}/>
                                 </div>
 
                                 <br/>
@@ -175,7 +175,7 @@ function Sanitation() {
                                               id={"dropdown1"} value={cleared}
                                               setInput={handleLocationInput} required={true}
                                               color={"bg-light-white"}
-                                              width={"w-100"}/>
+                                              width={"w-full"}/>
                                 </div>
                                 <br/>
                                 <p className={"text-left font-bold"}>Contaminant</p>
