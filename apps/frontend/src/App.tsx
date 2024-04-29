@@ -20,6 +20,7 @@ import NavBar from "./components/navigation/NavBar.tsx";
 import {Authenticate} from "./components/authentication/Authenticate.tsx";
 import InternalTransportationRequestPage from "./routes/service-requests/internal-transport-page.tsx";
 import userProfile from "./routes/user-profile.tsx";
+import Arcade from "./routes/arcade.tsx";
 
 function App() {
 
@@ -95,7 +96,11 @@ function App() {
                         {
                             path: "userProfile",
                             element: <Authenticate component={userProfile}/>
-                        }
+                        },
+                        {
+                            path:"/arcade",
+                            element:<Authenticate component={Arcade}/>
+                        },
 
             ],
         },
