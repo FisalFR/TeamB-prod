@@ -99,15 +99,15 @@ export function NavBar() {
                                     <nav
                                         className="uppercase divide-x divide-solid centerContent w-fit justify-self-center">
 
-                                        <NavDropDown onClick={() => handleWindow("")} mainLink={["", "Request"]}
-                                                     dropdownLinks={dropdownList as unknown as (string[] | (() => void))[][]}/>
+                                        <NavDropDown mainLink= {["/request", "Request"]} dropdownLinks={dropdownList}/>
+
 
                                         <div className="px-16">
                                             <NavLink href="/map">Map</NavLink>
                                         </div>
 
-                                        <NavDropDown onClick={() => handleWindow("")} mainLink={["", "Admin"]}
-                                                     dropdownLinks={adminDropdownList as unknown as (string[] | (() => void))[][]}></NavDropDown>
+                                        <NavDropDown mainLink={["/admin", "Admin"]} dropdownLinks={adminDropdownList}></NavDropDown>
+
 
                                         <NavDropDown onClick={() => handleWindow("")} mainLink={["", "Misc."]}
                                                      dropdownLinks={miscDropdownList as unknown as (string[] | (() => void))[][]}></NavDropDown>
