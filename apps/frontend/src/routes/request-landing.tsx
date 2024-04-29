@@ -18,7 +18,7 @@ export function RequestLanding(){
                     Service Requests</h1>
                 <br/>
                 <div className="flex flex-col w-full">
-                    <div className="flex justify-center gap-20">
+                    <div className="flex justify-center gap-10">
                         <ServiceCard onClick={() => window.location.href = "/maintenance"} icon={Maintenance}
                                      Request={"Maintenance Request"}
                                      description={"Report issue to maintenance using this request form"}/>
@@ -32,10 +32,10 @@ export function RequestLanding(){
                         <ServiceCard onClick={() => window.location.href = "/medicinerequest"} icon={Medicine}
                                      Request={"Medicine Request"}
                                      description={"Request medicine to your patient using this form "}/>
-
                     </div>
                     <br/>
-                    <div className="flex justify-center gap-20">
+                    <br/>
+                    <div className="flex justify-center gap-10">
                         <ServiceCard onClick={() => window.location.href = "/sanitation"} icon={Sanitation}
                                      Request={"Sanitation Request"}
                                      description={"Report spills, and areas needed to be cleaned using this form"}/>
@@ -43,10 +43,10 @@ export function RequestLanding(){
                                      Request={"Security Request"}
                                      description={"Request the need for security using this form"}/>
                         <ServiceCard onClick={() => window.location.href ="/internaltransport"}
-                                     icon={InternalTransport} Request={"Internal Transportation Request"}
-                                     description={"Request transport of a patient to another place in the hospital using this form "}/>
+                                     icon={InternalTransport} Request={"Int. Transportation"}
+                                     description={"Request transport of a patient internal to the hospital using this form "}/>
                         <ServiceCard onClick={() => window.location.href ="/transport"}
-                                     icon={ExternalTransport} Request={"External Transportation Request"}
+                                     icon={ExternalTransport} Request={"Ext. Transportation"}
                                      description={"Request of a patient outside of the hospital using this form"}/>
                     </div>
 
