@@ -74,11 +74,13 @@ export function NavBar() {
             ["/csvManager", "CSV Manager"],
             ["/mapEditor", "Map Editor"],
         ];
-        const miscDropdownList =[
-            ["/arcade", "Arcade"]
-        ];
         const userDropdownList =[
             [handleLogout, "LOGOUT"]
+        ];
+
+        const miscDropdownList = [
+            ["/about", "About Us"],
+            ["/arcade", "Arcade"],
         ];
 
         return (
