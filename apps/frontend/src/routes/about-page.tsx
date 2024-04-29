@@ -1,5 +1,4 @@
 import React, {useRef, useState} from "react";
-//import defaultPic from "../assets/AboutPagePictures/defaultProfile.jpeg";
 import kendallPic from "../assets/AboutPagePictures/KendallHulburt.jpg";
 import moPic from "../assets/AboutPagePictures/mo.jpg";
 import colinPic from "../assets/AboutPagePictures/colin.jpg";
@@ -8,7 +7,6 @@ import jeremyPic from "../assets/AboutPagePictures/jeremy.jpg";
 import henryPic from "../assets/AboutPagePictures/Henry.jpg";
 import fisalPic from "../assets/AboutPagePictures/FisalQ.jpeg";
 import lilyPic from "../assets/AboutPagePictures/lily.jpg";
-//import wongPic from "../assets/AboutPagePictures/wong.jpeg";
 import theresaPic from "../assets/AboutPagePictures/Theresa.jpg";
 import nickPic from "../assets/AboutPagePictures/nick.png";
 import heroImage from "../assets/Hero_Image/brighams_hero.jpg";
