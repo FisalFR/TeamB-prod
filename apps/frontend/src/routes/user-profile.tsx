@@ -344,6 +344,7 @@ function UserProfile() {
                 type: 'bar',
                 stacked: true,
             },
+            colors: ['#F0322B', '#F09000', '#F0D600', '#00CEF0', '#00F08D', '#B050F0', '#F050DA', '#3F00F5'].reverse(),
             plotOptions: {
                 bar: {
                     columnWidth: 150,
