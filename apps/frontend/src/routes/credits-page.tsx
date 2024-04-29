@@ -1,5 +1,4 @@
 import React from "react";
-//import brighamImage from "../assets/Hero_Image/brighams_hero.jpg";
 import webstorm from "../assets/creditPictures/Webstorm.jpeg";
 import Docker from "../assets/creditPictures/docker.png";
 import github from "../assets/creditPictures/github.png";
