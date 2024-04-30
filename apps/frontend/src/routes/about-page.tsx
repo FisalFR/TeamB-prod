@@ -67,35 +67,35 @@ export function AboutPage(){
                             <p className="font-OpenSans text-deep-blue text-lg"> CS3733-D24 Software
                                 Engineering </p>
                             <div className="grid grid-cols-5 px-28 pt-10 text-deep-blue">
-                                <div>
+                                <div className="flex flex-col centerContent">
                                     <img src={moPic} alt="Mo Picture"
                                          className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(moQuote)}/>
                                     <p className="font-bold"> Mo Nguyen </p>
                                     <p> Lead Soft Eng. </p>
                                 </div>
-                                <div>
+                                <div className="flex flex-col centerContent">
                                     <img src={colinPic} alt="Colin Picture"
                                          className="h-56 w-fit object-cover rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(colinQuote)}/>
                                     <p className="font-bold"> Colin Nguyen </p>
                                     <p> Assistant Lead Eng. </p>
                                 </div>
-                                <div>
+                                <div className="flex flex-col centerContent">
                                     <img src={jadePic} alt="Jade Picture"
                                          className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(jadeQuote)}/>
                                     <p className="font-bold"> Jade Logan </p>
                                     <p> Assistant Lead Eng. </p>
                                 </div>
-                                <div>
+                                <div className="flex flex-col centerContent">
                                     <img src={nickPic} alt="Nick Picture"
                                          className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(nickQuote)}/>
                                     <p className="font-bold"> Nick Gill </p>
                                     <p> Assistant Lead Eng. </p>
                                 </div>
-                                <div>
+                                <div className="flex flex-col centerContent">
                                     <img src={jeremyPic} alt="Jeremy Picture"
                                          className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(jeremyQuote)}/>
@@ -105,35 +105,35 @@ export function AboutPage(){
                             </div>
                             <br/><br/>
                             <div className="grid grid-cols-6 px-8 pb-5 text-deep-blue">
-                                <div>
+                                <div className="flex flex-col centerContent">
                                     <img src={henryPic} alt="Henry Picture"
                                          className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(henryQuote)}/>
                                     <p className="font-bold"> Henry Hribar </p>
                                     <p> Doc. Analyst </p>
                                 </div>
-                                <div>
+                                <div className="flex flex-col centerContent">
                                     <img src={lilyPic} alt="Lily Picture"
                                          className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(lilyQuote)}/>
                                     <p className="font-bold"> Lily Jones </p>
                                     <p> Doc. Analyst </p>
                                 </div>
-                                <div>
+                                <div className="flex flex-col centerContent">
                                     <img src={theresaPic} alt="Theresa Picture"
                                          className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(theresaQuote)}/>
                                     <p className="font-bold"> Theresa Acheampong </p>
                                     <p> Scrum Master </p>
                                 </div>
-                                <div>
+                                <div className="flex flex-col centerContent">
                                     <img src={fisalPic} alt="Fisal Picture"
                                          className="h-56 w-fit object-cover rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(fisalQuote)}/>
                                     <p className="font-bold"> Fisal Qutubzad </p>
                                     <p> Product Owner </p>
                                 </div>
-                                <div>
+                                <div className="flex flex-col centerContent">
                                     <img src={kendallPic} alt="Kendall Picture"
                                          className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(kendallQuote)}>
@@ -141,7 +141,7 @@ export function AboutPage(){
                                     <p className="font-bold"> Kendall Hulburt </p>
                                     <p> Full-Stack Eng. </p>
                                 </div>
-                                <div>
+                                <div className="flex flex-col centerContent">
                                     <img src={benPic} alt="Ben Picture"
                                          className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                          onClick={() => handleQuote(benQuote)}/>
