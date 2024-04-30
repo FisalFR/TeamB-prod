@@ -224,19 +224,19 @@ export function AboutPage(){
                                         <img src={jadePic} alt="Jade Picture"
                                              className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(jadeQuote)}/>
                                         <p className="font-bold"> Jade Logan </p>
-                                        <p> Assistant Lead Eng. </p>
+                                        <p> Assistant Lead Eng.</p>
                                     </div>
                                     <div>
                                         <img src={nickPic} alt="Nick Picture"
                                              className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(nickQuote)}/>
                                         <p className="font-bold"> Nick Gill </p>
-                                        <p> Assistant Lead Eng. </p>
+                                        <p> Assistant Lead Eng.</p>
                                     </div>
                                     <div>
                                         <img src={jeremyPic} alt="Jeremy Picture"
                                              className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4" onClick={() => handleQuote(jeremyQuote)}/>
                                         <p className="font-bold"> Jeremy Kurtz </p>
-                                        <p> Project Manager </p>
+                                        <p> Assistant Lead Eng., <br/>Project Manager</p>
                                     </div>
                                 </div>
                                 <br/><br/>
@@ -246,28 +246,28 @@ export function AboutPage(){
                                              className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                              onClick={() => handleQuote(henryQuote)}/>
                                         <p className="font-bold"> Henry Hribar </p>
-                                        <p> Doc. Analyst </p>
+                                        <p> Doc. Analyst, <br/>Full Stack Eng. </p>
                                     </div>
                                     <div>
                                         <img src={lilyPic} alt="Lily Picture"
                                              className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                              onClick={() => handleQuote(lilyQuote)}/>
                                         <p className="font-bold"> Lily Jones </p>
-                                        <p> Doc. Analyst </p>
+                                        <p> Doc. Analyst, <br/>Full Stack Eng. </p>
                                     </div>
                                     <div>
                                         <img src={theresaPic} alt="Theresa Picture"
                                              className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                              onClick={() => handleQuote(theresaQuote)}/>
                                         <p className="font-bold"> Theresa Acheampong </p>
-                                        <p> Scrum Master </p>
+                                        <p> Scrum Master, <br/>Full Stack Eng. </p>
                                     </div>
                                     <div>
                                         <img src={fisalPic} alt="Fisal Picture"
                                              className="h-56 w-fit object-cover rounded-full aspect-square px-4"
                                              onClick={() => handleQuote(fisalQuote)}/>
                                         <p className="font-bold"> Fisal Qutubzad </p>
-                                        <p> Product Owner </p>
+                                        <p> Product Owner, <br/>Full Stack Eng. </p>
                                     </div>
                                     <div>
                                         <img src={kendallPic} alt="Kendall Picture"
@@ -275,14 +275,14 @@ export function AboutPage(){
                                              onClick={() => handleQuote(kendallQuote)}>
                                         </img>
                                         <p className="font-bold"> Kendall Hulburt </p>
-                                        <p> Full-Stack Eng. </p>
+                                        <p> Full-Stack Eng.</p>
                                     </div>
                                     <div>
                                         <img src={benPic} alt="Ben Picture"
                                              className="h-56 w-fit object-cover object-top rounded-full aspect-square px-4"
                                              onClick={() => handleQuote(benQuote)}/>
                                         <p className="font-bold"> Benjamin Cruse </p>
-                                        <p> Full-Stack Eng. </p>
+                                        <p className={"text-balance"}> Full-Stack Eng. </p>
                                     </div>
                                 </div>
                                 <p className="text-deep-blue font-bold text-lg pt-5 "> Team Coach: Nick Leslie </p>
