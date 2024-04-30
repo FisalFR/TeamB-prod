@@ -438,7 +438,17 @@ function Arcade() {
                          style={showInstructions()}>
                         <div className="gap-2 flex flex-col p-8 centerContent">
                             <h2 className="text-2xl font-bold">Flower Delivery!</h2>
-                            <img alt="vase with flowers" width = {320} src={instVase}></img>
+                            <img alt="vase with flowers" width={320} src={instVase}></img>
+                            <h4 className="text-lg font-bold">Controls:</h4>
+                            <div className="w-full centerContent flex flex-row gap-10">
+                                <p><b>A</b> - Move Left </p>
+                                <p><b>D</b> - Move Right</p>
+                            </div>
+
+                            <p>Navigate to <b>past</b> the <b>left</b> side of the screen to find the flower
+                                garden. <br/>
+                                Navigate <b>past</b> the <b>right</b> side of the screen to find the delivery bike.</p>
+                            <h4 className="text-lg font-bold">Instructions:</h4>
                             <p>Your job is to create banquets to deliver to the hospital.</p>
                             <img alt="full game background" src={instBG}></img>
                             <p>An order includes 4 flowers and a vase pattern.</p>
@@ -453,7 +463,8 @@ function Arcade() {
                             <img src={instTrash} alt="vase trash"></img>
                             <p>
                                 Plant flowers in <b>plots</b>. When flowers are fully grown, you can add them to a
-                                vase you are holding, or choose to toss the flower.
+                                vase you are holding, or choose to toss the flower. <br/>
+
                             </p>
                             <img src={instPlots}
                                  alt="plots for planting flowers, with a rose and a tulip fully grown already"></img>
