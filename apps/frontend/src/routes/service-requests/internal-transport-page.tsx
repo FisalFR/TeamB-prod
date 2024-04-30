@@ -95,7 +95,8 @@ export function InternalTransportationRequestPage() {
                     <div className={submittedWindowVisibility.formScreen}>
                         <div className="relative bg-light-white my-10 p-10 px-20 rounded-3xl w-[860px] drop-shadow-2xl">
                             <div className="absolute bg-deep-blue rounded-t-2xl top-0 right-0 w-full p-6">
-                            <h1 className="text-4xl font-OpenSans py-4 font-extrabold text-white"> Internal Transportation Service Request</h1>
+                                <h1 className="text-4xl font-OpenSans py-4 font-extrabold text-white"> Internal
+                                    Transportation Service Request</h1>
                             </div>
                             <p className="text-left mt-24">
                                 Our facility is committed to providing efficient and safe internal transportation for
@@ -204,6 +205,10 @@ export function InternalTransportationRequestPage() {
 
                             </form>
                         </div>
+                        <div>
+                            <p className={"font-HeadlandOne text-deep-blue"}>Created by Kendall</p>
+                            <br/>
+                        </div>
                     </div>
                     <div className={submittedWindowVisibility.submittedScreen}>
                         <div className="pt-32">
@@ -233,10 +238,7 @@ export function InternalTransportationRequestPage() {
                     </div>
                 </div>
             </div>
-            <div>
-                <p className={"font-HeadlandOne text-deep-blue"}>Created by Kendall</p>
-                <br/>
-            </div>
+
         </>
 
     );

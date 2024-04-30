@@ -30,7 +30,7 @@ export function RequestLanding(){
                                      Request={"Language Interpreter"}
                                      description={"Request an interpreter for you or your patient using this form"}/>
                         <ServiceCard onClick={() => window.location.href = "/medicinerequest"} icon={Medicine}
-                                     Request={"Medicine Request"}
+                                     Request={"Medicine"}
                                      description={"Request medicine to your patient using this form "}/>
                     </div>
                     <br/>
@@ -40,7 +40,7 @@ export function RequestLanding(){
                                      Request={"Sanitation"}
                                      description={"Report spills, and areas needed to be cleaned using this form"}/>
                         <ServiceCard onClick={() => window.location.href = "/security"} icon={Security}
-                                     Request={"Security Request"}
+                                     Request={"Security"}
                                      description={"Request the need for security using this form"}/>
                         <ServiceCard onClick={() => window.location.href ="/internaltransport"}
                                      icon={InternalTransport} Request={"Int. Transportation"}
