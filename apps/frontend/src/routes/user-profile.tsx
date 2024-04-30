@@ -545,6 +545,7 @@ function UserProfile() {
 
     useEffect(() => {
         const userEmail = user.user?.email;
+        console.log(userEmail);
         if (userEmail) {
             axios.post("/api/employee/employeeInfo", {employeeEmail: userEmail}, {
                 headers: {

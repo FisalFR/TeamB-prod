@@ -142,7 +142,7 @@ router.post("/delete", async (req, res) => {
         },
       });
       break;
-    case "Transportation":
+    case "External Transportation":
       await client.transportationRequests.delete({
         where: {
           transportationRequest: formType.formID,
