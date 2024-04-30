@@ -62,6 +62,8 @@ function UserProfile() {
     const [giftHighCount, setGiftHighCount] = useState(0);
     const [giftEmergencyCount, setGiftEmergencyCount] = useState(0);
 
+    const user = useAuth0();
+
     function getMaintenanceCount(priority: string) {
         const requestData = {priority};
         axios.post("/api/csvManager/countMaintenancePriority", JSON.stringify(requestData), {
@@ -237,8 +239,12 @@ function UserProfile() {
             getExternalCount(priorities[j]);
             getGiftCount(priorities[j]);
         }
-        getCreatedBy("Colin");
-    }, []);
+        const name = user.user?.name;
+        console.log(name);
+        if(name){
+            getCreatedBy(name);
+        }
+    }, [user.user?.name]);
 
     const [unassignedCount, setUnassignedCount] = useState(0);
     const [assignedCount, setAssignedCount] = useState(0);
@@ -527,7 +533,6 @@ function UserProfile() {
         },
     };
 
-    const user = useAuth0();
 
     const [employee, setEmployee] = useState<profileUser>({
         employeeEmail: "",
