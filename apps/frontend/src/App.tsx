@@ -1,24 +1,29 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider, Outlet, useNavigate} from "react-router-dom";
 
-import MaintenancePage from "./routes/MaintenancePage";
+import MaintenancePage from "./routes/service-requests/maintenance-page.tsx";
 import Map from "./routes/map";
 import LoginPage from "./routes/login-page";
-import LanguageInterpreter from "./routes/language-interpreter-page";
-import CsvManager from "./routes/csv-manager.tsx";
-import LogBook from "./routes/requests-log-page.tsx";
-import MedicineRequest from "./routes/MedicineRequest.tsx";
-import Sanitation from "./routes/sanitation-page.tsx";
-import Database from "./routes/Database.tsx";
+import LanguageInterpreter from "./routes/service-requests/language-interpreter-page.tsx";
+import CsvManager from "./routes/admin/csv-manager.tsx";
+import LogBook from "./routes/admin/requests-log-page.tsx";
+import MedicineRequest from "./routes/service-requests/medicine-request.tsx";
+import Sanitation from "./routes/service-requests/sanitation-page.tsx";
+import Database from "./routes/admin/database.tsx";
 import {Auth0Provider} from "@auth0/auth0-react";
-import SecurityPage from "./routes/SecurityRequest.tsx";
-import TransportationRequestPage from "./routes/transportationRequest.tsx";
-
-import GiftDelivery from "./routes/gift-delivery.tsx";
-import MapEditor from "./routes/map-editor.tsx";
-import NavigationBar from "./components/NavigationBar.tsx";
-import {Authenticate} from "./components/authenticate.tsx";
-import InternalTransportationRequestPage from "./routes/internal-transport-page.tsx";
+import SecurityPage from "./routes/service-requests/security-request.tsx";
+import TransportationRequestPage from "./routes/service-requests/transportation-request.tsx";
+import creditsPage from "@/routes/credits-page.tsx";
+import aboutPage from "./routes/about-page.tsx";
+import {Authenticate} from "@/components/authentication/Authenticate.tsx";
+import GiftDelivery from "@/routes/service-requests/gift-delivery.tsx";
+import MapEditor from "@/routes/admin/map-editor.tsx";
+import InternalTransportationRequestPage from "@/routes/service-requests/internal-transport-page.tsx";
+import userProfile from "@/routes/user-profile.tsx";
+import NavBar from "@/components/navigation/NavBar.tsx";
+import Arcade from "./routes/arcade.tsx";
+import AdminLanding from "@/routes/admin/admin-landing.tsx";
+import RequestLanding from "@/routes/service-requests/request-landing.tsx";
 
 function App() {
 
@@ -91,6 +96,30 @@ function App() {
                             path:"/internalTransport",
                             element:<Authenticate component={InternalTransportationRequestPage}/>
                         },
+                        {
+                            path: "userProfile",
+                            element: <Authenticate component={userProfile}/>
+                        },
+                        {
+                            path:"/credits",
+                            element:<Authenticate component={creditsPage}/>
+                        },
+                        {
+                            path:"/about",
+                            element:<Authenticate component={aboutPage}/>
+                        },
+                        {
+                            path:"/arcade",
+                            element:<Authenticate component={Arcade}/>
+                        },
+                        {
+                            path:"/request",
+                            element:<Authenticate component={RequestLanding}/>
+                        },
+                        {
+                            path:"/admin",
+                            element:<Authenticate component={AdminLanding}/>
+                        },
 
             ],
         },
@@ -124,7 +153,7 @@ function App() {
             >
 
                 <div className="w-full h-full bs-scroll ...">
-                <NavigationBar/>
+                <NavBar/>
 
                 <Outlet/>
 
