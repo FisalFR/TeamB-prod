@@ -445,7 +445,7 @@ function Arcade() {
                                 <p><b>D</b> - Move Right</p>
                             </div>
 
-                            <p>Navigate to <b>past</b> the <b>left</b> side of the screen to find the flower
+                            <p>Navigate <b>past</b> the <b>left</b> side of the screen to find the flower
                                 garden. <br/>
                                 Navigate <b>past</b> the <b>right</b> side of the screen to find the delivery bike.</p>
                             <h4 className="text-lg font-bold">Instructions:</h4>
