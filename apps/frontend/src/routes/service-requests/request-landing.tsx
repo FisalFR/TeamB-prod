@@ -1,12 +1,12 @@
-import ServiceCard from "../components/ServiceCard.tsx";
-import Maintenance from "../assets/Service_Request_Icon/Maintenance.svg";
-import GiftIcon from "../assets/Service_Request_Icon/Gift.svg";
-import Language from "../assets/Service_Request_Icon/Language.svg";
-import Medicine from "../assets/Service_Request_Icon/Medicine.svg";
-import Sanitation from "../assets/Service_Request_Icon/Sanitation.svg";
-import Security from "../assets/Service_Request_Icon/Security.svg";
-import InternalTransport from "../assets/Service_Request_Icon/InternalTransportation.svg";
-import ExternalTransport from "../assets/Service_Request_Icon/ExternalTransportation.svg";
+import ServiceCard from "../../components/ServiceCard.tsx";
+import Maintenance from "../../assets/Service_Request_Icon/Maintenance.svg";
+import GiftIcon from "../../assets/Service_Request_Icon/Gift.svg";
+import Language from "../../assets/Service_Request_Icon/Language.svg";
+import Medicine from "../../assets/Service_Request_Icon/Medicine.svg";
+import Sanitation from "../../assets/Service_Request_Icon/Sanitation.svg";
+import Security from "../../assets/Service_Request_Icon/Security.svg";
+import InternalTransport from "../../assets/Service_Request_Icon/InternalTransportation.svg";
+import ExternalTransport from "../../assets/Service_Request_Icon/ExternalTransportation.svg";
 
 
 export function RequestLanding(){

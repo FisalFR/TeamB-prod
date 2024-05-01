@@ -1,31 +1,31 @@
- import DatabaseImage from "../assets/Landing_Page_Images/newdatabase.png";
-
-import CSVImage from "../assets/Landing_Page_Images/newcsv.png";
-import MapEditImage from "../assets/Landing_Page_Images/map editor.png";
+ import DatabaseImage from "../../assets/Landing_Page_Images/newdatabase.png";
+import CSVImage from "../../assets/Landing_Page_Images/newcsv.png";
+import MapEditImage from "../../assets/Landing_Page_Images/map editor.png";
 import AdminCard from "@/components/AdminCard.tsx";
-import AdminCard2 from "@/components/AdminCard2.tsx";
+
 export function adminLanding(){
     return(
         <>
             <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
                 
                 <AdminCard onClick={() => window.location.href ="/database"}
+                           className="flex flex-row"
                            Image={DatabaseImage}
                            Title={"Database"}
                            Description={"Find and keep track of all service requests made."}/>
                 {/*Div for CSV data */}
-                <AdminCard2 onClick={() => window.location.href ="/csvManager"}
+                <AdminCard onClick={() => window.location.href ="/csvManager"}
+                           className="flex flex-row-reverse"
                            Image={CSVImage}
                            Title={"CSV Manager"}
                            Description={"Add and edit node and edge data, as well as, manage employee\n" +
-                    "                            information."}/>
-
+                                        "information."}/>
                 {/*div for map editing*/}
                 <AdminCard onClick={() => window.location.href ="/mapEditor"}
+                           className="flex flex-row"
                            Image={MapEditImage}
                            Title={"Map Editor"}
                            Description={"Edit nodes on the map."}/>
-
             </div>
         </>
     );

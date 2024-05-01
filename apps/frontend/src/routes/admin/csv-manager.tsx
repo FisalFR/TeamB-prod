@@ -273,7 +273,7 @@ export function CsvManager() {
         switch (activeTab) {
             case "nodes":
                 return (
-                    <div className="shadow-xl p-3 rounded-xl bg-white w-full">
+                    <div className="p-3 rounded-xl bg-white w-full">
                         <h3 className={"flex items-start text-xl font-OpenSans font-bold pb-4 pt-2"}>Upload Node
                             CSV</h3>
                         <form ref={formRefNodes} onSubmit={e => {
@@ -291,7 +291,7 @@ export function CsvManager() {
                 );
             case "edges":
                 return (
-                    <div className="shadow-xl p-3 rounded-xl bg-white w-full">
+                    <div className="p-3 rounded-xl bg-white w-full">
                     <h3 className={"flex items-start text-xl font-OpenSans font-bold pb-4 pt-2"}>Upload Edge CSV</h3>
                 <form ref={formRefEdges} onSubmit={e => {
                     e.preventDefault();
@@ -310,7 +310,7 @@ export function CsvManager() {
                 ;
             case "employees":
                 return (
-                    <div className="shadow-xl p-3 rounded-xl bg-white w-full">
+                    <div className="p-3 rounded-xl bg-white w-full">
                         <h3 className={"flex items-start text-xl font-OpenSans font-bold pb-4 pt-2"}>Upload Employee CSV</h3>
                         <form ref={formRefEmployees} onSubmit={e => {
                             e.preventDefault();
@@ -342,7 +342,7 @@ export function CsvManager() {
                                 Manager</h2>
                             {/* Tabbed interface */}
                             <div className={"flex flex-col w-full max-h-[93vh]"}>
-                                <div className="border-b border-gray-200 pb-1 overflow-hidden">
+                                <div>
                                     <ul className="flex justify-centerz` text-sm font-medium text-center w-full rounded-md bg-gray-200 mb-4"
                                         role="tablist">
                                         {/* Node tab button */}
@@ -377,7 +377,7 @@ export function CsvManager() {
 
                                 </div>
 
-                                <div className="flex flex-col flex-grow items-center bg-white p-4 mt-5 rounded-xl shadowl-xl">
+                                <div className="flex flex-col flex-grow items-center bg-white p-4 mt-5 rounded-xl">
                                     <div className="flex flex-grow" id="chart">
                                         <Chart options={options}
                                                series={series}

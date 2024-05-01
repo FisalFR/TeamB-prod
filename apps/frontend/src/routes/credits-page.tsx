@@ -28,7 +28,7 @@ export function CreditsPage() {
 
                 <h1 className="font-bold text-bone-white font-OpenSans text-left text-3xl py-4 px-14 "> Software Tools:</h1>
 
-                <div className="grid grid-cols-5 place-items-center h-40">
+                <div className="grid grid-cols-5 place-items-center h-full w-full">
                     <div className="w-56">
                         <div className="border-2 rounded-3xl bg-gradient-to-t from-white to-blue-300 flex flex-col centerContent">
                             <div className="h-56 my-auto">
@@ -109,7 +109,7 @@ export function CreditsPage() {
 
                 <h1 className="font-bold text-bone-white font-OpenSans text-3xl text-left py-4 px-14 mt-32"> Software
                     Libraries:</h1>
-                <div className="grid grid-cols-4 place-items-center h-40">
+                <div className="grid grid-cols-4 place-items-center h-full w-full">
                     <div className="w-56">
                         <div className=" border-2 rounded-3xl bg-gradient-to-t from-white to-blue-300 flex flex-col centerContent">
                             <div className="h-56 my-auto">
@@ -142,7 +142,7 @@ export function CreditsPage() {
 
                     <div className="w-56">
                         <div className=" border-2 rounded-3xl bg-gradient-to-t from-white to-blue-300 flex flex-col centerContent">
-                            <div className="h-56 my-auto">
+                            <div className="h-56 my-auto w-full">
                                 <img src={axios} alt="axios"
                                      className="object-cover w-full h-full rounded-t-3xl"/>
                             </div>
@@ -172,7 +172,7 @@ export function CreditsPage() {
                 </div>
 
                 <h1 className="font-bold text-bone-white font-OpenSans text-left text-3xl py-4 px-14 mt-48"> Frameworks:</h1>
-                <div className="grid grid-cols-4 place-items-center h-40">
+                <div className="grid grid-cols-4 place-items-center h-full w-full">
                     <div className="w-56 pb-10">
                         <div className=" border-2 rounded-3xl bg-gradient-to-t from-white to-blue-300 flex flex-col centerContent">
                             <div className="h-56 my-auto">

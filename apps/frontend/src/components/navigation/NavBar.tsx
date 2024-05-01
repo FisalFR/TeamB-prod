@@ -109,7 +109,7 @@ export function NavBar() {
                                         <NavDropDown mainLink={["/admin", "Admin"]} dropdownLinks={adminDropdownList}></NavDropDown>
 
 
-                                        <NavDropDown onClick={() => handleWindow("")} mainLink={["", "Misc."]}
+                                        <NavDropDown mainLink={["", "Misc."]}
                                                      dropdownLinks={miscDropdownList as unknown as (string[] | (() => void))[][]}></NavDropDown>
 
                                     </nav>
