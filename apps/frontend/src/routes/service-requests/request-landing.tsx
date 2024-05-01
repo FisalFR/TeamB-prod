@@ -33,8 +33,7 @@ export function RequestLanding(){
                                      Request={"Medicine"}
                                      description={"Request medicine to your patient using this form "}/>
                     </div>
-                    <br/>
-                    <br/>
+                    <div className="h-10"/>
                     <div className="flex justify-center gap-10">
                         <ServiceCard onClick={() => window.location.href = "/sanitation"} icon={Sanitation}
                                      Request={"Sanitation"}
