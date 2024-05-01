@@ -209,7 +209,7 @@ export function CsvManager() {
             alert(response.data);
             resetTable();
         });
-    };
+    }
 
     function handleImportEmployees() {
         const formEmployeeData = new FormData(formRefEmployees.current as HTMLFormElement);
@@ -221,7 +221,7 @@ export function CsvManager() {
             alert(response.data);
             resetTable();
         });
-    };
+    }
 
     const [activeTab, setActiveTab] = useState<string>("nodes"); // State for active tab
 
@@ -377,17 +377,17 @@ export function CsvManager() {
 
                                 </div>
 
-                                <div className="flex flex-col flex-grow items-center bg-white p-4 mt-5 rounded-xl shadowl-xl">
-                                    <div className="flex flex-grow" id="chart">
-                                        <Chart options={options}
-                                               series={series}
-                                               type="bar"
-                                               height={285}
-                                        />
+                                <div className="border-b border-gray-200 pb-1 overflow-hidden">
+                                    <div className="flex flex-col flex-grow items-center bg-white p-4 mt-5 rounded-xl shadow-xl">
+                                        <div className="flex flex-grow" id="chart">
+                                            <Chart options={options}
+                                                   series={series}
+                                                   type="bar"
+                                                   height={285}/>
+                                        </div>
+                                        <div id="html-dist"/>
                                     </div>
-                                    <div id="html-dist"></div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

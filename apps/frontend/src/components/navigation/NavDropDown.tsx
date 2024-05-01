@@ -16,8 +16,8 @@ function NavDropDown(props: {onClick:MouseEventHandler, mainLink:string[],dropdo
      function createDropdown(){
          return props.dropdownLinks.map((link, index) =>
              <motion.div className="centerContent py-1 opacity-0"
-                         animate={{opacity: 1, transition: {duration: 0.05 * props.dropdownLinks.length, delay: 0.025 * index, ease: "backOut"}}}
-                         exit={{opacity: 0, transition: {duration: 0.05, delay: 0.025 * (props.dropdownLinks.length - index - 1), ease: "backOut"}}}>
+                         animate={{opacity: 1, transition: {duration: 0.04 * props.dropdownLinks.length, delay: 0.04 * index, ease: "backOut"}}}
+                         exit={{opacity: 0, transition: {duration: 0.03, delay: 0.03 * (props.dropdownLinks.length - index - 1), ease: "backOut"}}}>
                  {typeof  link[0] == 'function' ?
                      <div className="text-white hover:cursor-pointer  " onClick={link[0]}>
 

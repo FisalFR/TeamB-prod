@@ -22,8 +22,8 @@ import InternalTransportationRequestPage from "@/routes/service-requests/interna
 import userProfile from "@/routes/user-profile.tsx";
 import NavBar from "@/components/navigation/NavBar.tsx";
 import Arcade from "./routes/arcade.tsx";
-import AdminLanding from "@/routes/admin-landing.tsx";
-import RequestLanding from "@/routes/request-landing.tsx";
+import AdminLanding from "@/routes/admin/admin-landing.tsx";
+import RequestLanding from "@/routes/service-requests/request-landing.tsx";
 
 function App() {
 

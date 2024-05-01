@@ -1,12 +1,12 @@
-import ServiceCard from "../components/ServiceCard.tsx";
-import Maintenance from "../assets/Service_Request_Icon/Maintenance.svg";
-import GiftIcon from "../assets/Service_Request_Icon/Gift.svg";
-import Language from "../assets/Service_Request_Icon/Language.svg";
-import Medicine from "../assets/Service_Request_Icon/Medicine.svg";
-import Sanitation from "../assets/Service_Request_Icon/Sanitation.svg";
-import Security from "../assets/Service_Request_Icon/Security.svg";
-import InternalTransport from "../assets/Service_Request_Icon/InternalTransportation.svg";
-import ExternalTransport from "../assets/Service_Request_Icon/ExternalTransportation.svg";
+import ServiceCard from "../../components/ServiceCard.tsx";
+import Maintenance from "../../assets/Service_Request_Icon/Maintenance.svg";
+import GiftIcon from "../../assets/Service_Request_Icon/Gift.svg";
+import Language from "../../assets/Service_Request_Icon/Language.svg";
+import Medicine from "../../assets/Service_Request_Icon/Medicine.svg";
+import Sanitation from "../../assets/Service_Request_Icon/Sanitation.svg";
+import Security from "../../assets/Service_Request_Icon/Security.svg";
+import InternalTransport from "../../assets/Service_Request_Icon/InternalTransportation.svg";
+import ExternalTransport from "../../assets/Service_Request_Icon/ExternalTransportation.svg";
 
 
 export function RequestLanding(){
@@ -17,7 +17,7 @@ export function RequestLanding(){
                 <h1 className={"text-3xl font-OpenSans text-bone-white font-bold py-4"}>
                     Service Requests</h1>
                 <br/>
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col w-full px-10">
                     <div className="flex justify-center gap-10">
                         <ServiceCard onClick={() => window.location.href = "/maintenance"} icon={Maintenance}
                                      Request={"Maintenance "}
@@ -33,8 +33,7 @@ export function RequestLanding(){
                                      Request={"Medicine"}
                                      description={"Request medicine to your patient using this form "}/>
                     </div>
-                    <br/>
-                    <br/>
+                    <div className="h-10"/>
                     <div className="flex justify-center gap-10">
                         <ServiceCard onClick={() => window.location.href = "/sanitation"} icon={Sanitation}
                                      Request={"Sanitation"}
