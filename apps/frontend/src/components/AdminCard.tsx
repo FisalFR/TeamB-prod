@@ -4,7 +4,7 @@ import Button from "@/components/buttons/Button.tsx";
 function AdminCard(props:{onClick: MouseEventHandler, className: string, Image: string, Title: string, Description: string}) {
 
     return (
-        <Button onClick={props.onClick} color={"bg-bone-white"}>
+        <Button onClick={props.onClick} color={"bg-bone-white m-4"}>
             <div onClick={props.onClick} className={props.className}>
                 <img src={props.Image} className="w-2/3"/>
                 <div className="flex flex-col w-1/3 bg-bone-white centerContent">

@@ -209,7 +209,7 @@ export function CsvManager() {
             alert(response.data);
             resetTable();
         });
-    };
+    }
 
     function handleImportEmployees() {
         const formEmployeeData = new FormData(formRefEmployees.current as HTMLFormElement);
@@ -221,7 +221,7 @@ export function CsvManager() {
             alert(response.data);
             resetTable();
         });
-    };
+    }
 
     const [activeTab, setActiveTab] = useState<string>("nodes"); // State for active tab
 

@@ -7,7 +7,7 @@ import HandleLogout from "../authentication/HandleLogout.tsx";
 import LoginNavigationBar from "../authentication/LoginNavigationBar.tsx";
 import axios from "axios";
 import React, {useEffect} from "react";
-import {employee} from "../../../../../packages/common/src/profile.ts";
+import {employee} from "../../../../packages/common/src/profile.ts";
 import {toSvg} from "jdenticon";
 //import navDropDown from "./NavDropDown.tsx";
 

@@ -6,8 +6,7 @@ import AdminCard from "@/components/AdminCard.tsx";
 export function adminLanding(){
     return(
         <>
-            <div className="bg-gradient-to-t from-bone-white to-deep-blue relative h-full">
-                
+            <div className="bg-bone-white relative h-full">
                 <AdminCard onClick={() => window.location.href ="/database"}
                            className="flex flex-row"
                            Image={DatabaseImage}
