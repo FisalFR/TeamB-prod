@@ -17,7 +17,7 @@ export function RequestLanding(){
                 <h1 className={"text-3xl font-OpenSans text-bone-white font-bold py-4"}>
                     Service Requests</h1>
                 <br/>
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col w-full px-10">
                     <div className="flex justify-center gap-10">
                         <ServiceCard onClick={() => window.location.href = "/maintenance"} icon={Maintenance}
                                      Request={"Maintenance "}
