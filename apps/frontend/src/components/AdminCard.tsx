@@ -6,7 +6,7 @@ function AdminCard(props:{onClick: MouseEventHandler, className: string, Image: 
     return (
         <Button onClick={props.onClick} color={"bg-bone-white m-4"}>
             <div onClick={props.onClick} className={props.className}>
-                <img src={props.Image} className="w-2/3"/>
+                <img alt="AdminCardImage" src={props.Image} className="w-2/3"/>
                 <div className="flex flex-col w-1/3 bg-bone-white centerContent">
                     <h1 className="text-3xl font-OpenSans font-bold text-black py-4">{props.Title}</h1>
                     <p className="font-OpenSans text-black">{props.Description}</p>
